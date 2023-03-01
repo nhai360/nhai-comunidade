@@ -31,5 +31,6 @@ export const TitleContainer = styled("section", {
 
   h1: {
     maxWidth: "492px",
+    textAlign: "center",
   },
 });

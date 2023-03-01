@@ -14,8 +14,6 @@ export const Input = styled("input", {
   display: "flex",
   alignItems: "center",
 
-  padding: "$4",
-
   "&::placeholder": {
     color: "$textAuxiliary",
     transition: "all 0.2s",
@@ -41,5 +39,18 @@ export const Input = styled("input", {
         borderColor: "$pinkMedium",
       },
     },
+
+    size: {
+      large: {
+        padding: "$4",
+      },
+      medium: {
+        padding: "$3 $4",
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: "medium",
   },
 });

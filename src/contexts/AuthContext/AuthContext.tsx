@@ -6,8 +6,8 @@ type AuthProviderProps = {
 
 type AuthContextParams = {
   isAuthenticated: boolean;
-  signIn: () => void;
-  signOut: () => void;
+  login: () => void;
+  logout: () => void;
 };
 
 const AuthContext = createContext({} as AuthContextParams);
@@ -15,16 +15,16 @@ const AuthContext = createContext({} as AuthContextParams);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function signIn() {
+  function login() {
     setIsAuthenticated(true);
   }
 
-  function signOut() {
+  function logout() {
     setIsAuthenticated(false);
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

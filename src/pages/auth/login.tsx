@@ -1,5 +1,5 @@
 import { AuthLayout } from "@/layouts";
-import { BackButton, LoginForm } from "@/features/login";
+import { BackButton, LoginForm } from "@/features/auth";
 
 import Head from "next/head";
 

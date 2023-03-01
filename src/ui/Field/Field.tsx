@@ -34,7 +34,14 @@ const FieldElement: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         </S.LabelContainer>
       )}
 
-      <Input ref={ref} id={name} name={name} error={hasError} {...rest} />
+      <Input
+        ref={ref}
+        id={name}
+        name={name}
+        error={hasError}
+        {...rest}
+        size="medium"
+      />
 
       {helperText && (
         <Typography.Text as="small" color="secondary">

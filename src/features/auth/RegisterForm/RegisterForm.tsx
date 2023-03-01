@@ -1,52 +1,62 @@
 import { HiArrowNarrowRight } from "react-icons/hi";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import zod from "zod";
 
-import { useAuthContext } from "@/contexts";
-import { Button, Checkbox, Field, Typography } from "@/ui";
+import { Button, Field, Typography } from "@/ui";
 
-import * as S from "./LoginForm.styles";
-import { useRouter } from "next/router";
+import * as S from "./RegisterForm.styles";
 
-const loginSchema = zod.object({
+const registerSchema = zod.object({
+  name: zod.string().min(1, "Nome obrigatório"),
+  nickname: zod.string(),
   email: zod
     .string()
     .email({ message: "E-mail inválido" })
     .min(1, "E-mail obrigatório"),
   password: zod.string().min(1, "Senha obrigatória"),
-  remember: zod.boolean(),
 });
 
-type LoginParams = zod.TypeOf<typeof loginSchema>;
+type RegisterParams = zod.TypeOf<typeof registerSchema>;
 
-export function LoginForm() {
-  const { signIn } = useAuthContext();
+export function RegisterForm() {
   const router = useRouter();
 
-  const { formState, register, handleSubmit, control } = useForm<LoginParams>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      remember: false,
-    },
+  const { formState, register, handleSubmit } = useForm<RegisterParams>({
+    resolver: zodResolver(registerSchema),
   });
 
   const { errors } = formState;
 
-  function handleSignIn() {
-    signIn();
-    router.push("/");
+  function handleRegister() {
+    router.push("/auth/login");
   }
 
   return (
-    <S.FormContainer onSubmit={handleSubmit(handleSignIn)}>
+    <S.FormContainer onSubmit={handleSubmit(handleRegister)}>
       <Typography.Text as="h3" size="body1" weight="bold" color="title">
         Preencha os campos para
         <br />
-        acessar sua conta
+        criar sua nova conta
       </Typography.Text>
 
       <S.FieldContainer>
+        <Field
+          required
+          label="Nome"
+          placeholder="Digite seu nome"
+          errorText={errors.name?.message}
+          {...register("name")}
+        />
+
+        <Field
+          label="Apelido"
+          placeholder="Digite seu apelido"
+          errorText={errors.nickname?.message}
+          {...register("nickname")}
+        />
+
         <Field
           required
           label="E-mail"
@@ -65,13 +75,12 @@ export function LoginForm() {
         />
       </S.FieldContainer>
 
-      <Checkbox name="remember" label="Lembrar de mim?" control={control} />
       <Button fullWidth type="submit">
-        Entrar
+        Criar conta
         <HiArrowNarrowRight size={24} />
       </Button>
-      <S.ForgotPasswordLink href="/auth/forgotPassword">
-        Esqueci minha senha
+      <S.ForgotPasswordLink href="/auth/login">
+        Já sou membro
       </S.ForgotPasswordLink>
     </S.FormContainer>
   );
