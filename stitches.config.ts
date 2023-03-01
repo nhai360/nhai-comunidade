@@ -100,6 +100,10 @@ export const { styled, getCssText, globalCss } = createStitches({
     radii: {
       large: "32px",
       medium: "16px",
+      small: "6px",
+    },
+    shadows: {
+      xs: "0px 1px 2px rgba(0, 0, 0, 0.06), 0px 5px 4px -4px rgba(0, 0, 0, 0.02);",
     },
   },
 });
