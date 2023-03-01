@@ -1,3 +1,5 @@
+import NextLink from "next/link";
+
 import { styled } from "@/../stitches.config";
 
 const BaseText = styled("span", {
@@ -17,6 +19,9 @@ const BaseText = styled("span", {
       },
       neutral100: {
         color: "$neutral100",
+      },
+      pink: {
+        color: "$pinkMedium",
       },
     },
   },
@@ -98,7 +103,21 @@ const Title = styled(BaseText, {
   },
 });
 
+const Link = styled(NextLink, {
+  color: "$blueDark",
+  fontWeight: 700,
+  fontSize: "$body3",
+  lineHeight: "150%",
+  textDecoration: "none",
+  transition: "all 0.2s",
+
+  "&:hover": {
+    opacity: 0.8,
+  },
+});
+
 export const Typography = {
   Text,
   Title,
+  Link,
 };
