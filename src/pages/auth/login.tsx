@@ -1,5 +1,5 @@
 import { AuthLayout } from "@/layouts";
-import { LoginForm } from "@/features/login";
+import { BackButton, LoginForm } from "@/features/login";
 
 import Head from "next/head";
 
@@ -11,6 +11,7 @@ export default function Login() {
       </Head>
 
       <AuthLayout title="Que bom te ver, seja bem vind@ de volta!">
+        <BackButton />
         <LoginForm />
       </AuthLayout>
     </>
