@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import zod from "zod";
 
+import { useAuthContext } from "@/contexts";
 import { Button, Checkbox, Field, Typography } from "@/ui";
 
 import * as S from "./LoginForm.styles";
+import { useRouter } from "next/router";
 
 const loginSchema = zod.object({
   email: zod
@@ -19,14 +21,21 @@ const loginSchema = zod.object({
 type LoginParams = zod.TypeOf<typeof loginSchema>;
 
 export function LoginForm() {
+  const { signIn } = useAuthContext();
+  const router = useRouter();
+
   const { formState, register, handleSubmit, control } = useForm<LoginParams>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      remember: false,
+    },
   });
 
   const { errors } = formState;
 
   function handleSignIn() {
-    console.log("teste");
+    signIn();
+    router.push("/");
   }
 
   return (
