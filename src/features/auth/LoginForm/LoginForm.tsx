@@ -12,9 +12,9 @@ import * as S from "./LoginForm.styles";
 const loginSchema = zod.object({
   email: zod
     .string()
-    .email({ message: "E-mail inválido" })
-    .min(1, "E-mail obrigatório"),
-  password: zod.string().min(1, "Senha obrigatória"),
+    .email({ message: "O formato de e-mail é inválido" })
+    .min(1, "E-mail é obrigatório"),
+  password: zod.string().min(1, "Senha é obrigatória"),
   remember: zod.boolean(),
 });
 

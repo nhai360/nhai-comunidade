@@ -6,6 +6,8 @@ export const Container = styled("fieldset", {
   display: "flex",
   flexDirection: "column",
   gap: "$3",
+
+  width: "100%",
 });
 
 export const LabelContainer = styled("div", {

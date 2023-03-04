@@ -9,13 +9,13 @@ import { Button, Field, Typography } from "@/ui";
 import * as S from "./RegisterForm.styles";
 
 const registerSchema = zod.object({
-  name: zod.string().min(1, "Nome obrigatório"),
+  name: zod.string().min(1, "Nome é obrigatório"),
   nickname: zod.string(),
   email: zod
     .string()
-    .email({ message: "E-mail inválido" })
-    .min(1, "E-mail obrigatório"),
-  password: zod.string().min(1, "Senha obrigatória"),
+    .email({ message: "O formato de e-mail é inválido" })
+    .min(1, "E-mail é obrigatório"),
+  password: zod.string().min(1, "Senha é obrigatória"),
 });
 
 type RegisterParams = zod.TypeOf<typeof registerSchema>;

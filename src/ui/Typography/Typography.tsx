@@ -24,6 +24,18 @@ const BaseText = styled("span", {
         color: "$pinkMedium",
       },
     },
+
+    align: {
+      center: {
+        textAlign: "center",
+      },
+      left: {
+        textAlign: "left",
+      },
+      right: {
+        textAlign: "right",
+      },
+    },
   },
 });
 
@@ -106,10 +118,14 @@ const Title = styled(BaseText, {
 const Link = styled(NextLink, {
   color: "$blueDark",
   fontWeight: 700,
-  fontSize: "$body3",
+  fontSize: "$body2",
   lineHeight: "150%",
   textDecoration: "none",
   transition: "all 0.2s",
+
+  display: "flex",
+  alignItems: "center",
+  gap: "$2",
 
   "&:hover": {
     opacity: 0.8,
