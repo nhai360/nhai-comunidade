@@ -5,7 +5,12 @@ export const Container = styled("header", {
   top: 0,
 
   background: "$neutral100",
-  padding: "$4",
+  height: "80px",
+
+  display: "flex",
+  alignItems: "center",
+
+  borderBottom: "1px solid $neutral200",
 });
 
 export const Content = styled("div", {

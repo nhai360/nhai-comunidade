@@ -1,12 +1,20 @@
-import { Header } from "./Header";
+import { ReactNode } from "react";
 
-export function AppLayout() {
+import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
+
+import * as S from "./AppLayout.styles";
+
+type Props = {
+  children: ReactNode;
+};
+
+export function AppLayout({ children }: Props) {
   return (
     <>
       <Header />
-      <main>
-        <h1>Content</h1>
-      </main>
+      <Sidebar />
+      <S.Content>{children}</S.Content>
     </>
   );
 }
