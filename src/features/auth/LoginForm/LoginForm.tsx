@@ -70,7 +70,7 @@ export function LoginForm() {
         Entrar
         <HiArrowNarrowRight size={24} />
       </Button>
-      <S.ForgotPasswordLink href="/auth/forgotPassword">
+      <S.ForgotPasswordLink href="/password/forgot">
         Esqueci minha senha
       </S.ForgotPasswordLink>
     </S.FormContainer>
