@@ -42,6 +42,10 @@ export const NavItem = styled("li", {
       true: {
         background: "$pinkMedium",
         color: "$neutral100",
+
+        "&:hover": {
+          background: "$pinkMedium",
+        },
       },
     },
   },
