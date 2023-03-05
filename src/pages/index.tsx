@@ -1,5 +1,5 @@
 import { AppLayout } from "@/layouts";
-import { CreatePostCard, MainTrends } from "@/features/timeline";
+import { CreatePostCard, MainTrends, PopularToday } from "@/features/timeline";
 
 export default function Timeline() {
   return (
@@ -10,6 +10,7 @@ export default function Timeline() {
         </AppLayout.Content>
         <AppLayout.Sider>
           <MainTrends />
+          <PopularToday />
         </AppLayout.Sider>
       </AppLayout.GridWithSider>
     </AppLayout>

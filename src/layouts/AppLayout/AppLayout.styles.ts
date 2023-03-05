@@ -5,6 +5,10 @@ export const Content = styled("main");
 export const Sider = styled("aside", {
   position: "sticky",
   top: 0,
+
+  display: "flex",
+  flexDirection: "column",
+  gap: "$6",
 });
 
 export const SimpleGrid = styled("div", {
@@ -17,6 +21,6 @@ export const GridWithSider = styled("div", {
   padding: "$6",
 
   display: "grid",
-  gridTemplateColumns: "2fr 1fr",
+  gridTemplateColumns: "auto 416px",
   gap: "$6",
 });
