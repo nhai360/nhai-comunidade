@@ -1,5 +1,5 @@
 import { AppLayout } from "@/layouts";
-import { CreatePostCard, MainTrends, PopularToday } from "@/features/timeline";
+import { CreatePostCard, PopularToday, MainTrends } from "@/features/timeline";
 
 export default function Timeline() {
   return (
