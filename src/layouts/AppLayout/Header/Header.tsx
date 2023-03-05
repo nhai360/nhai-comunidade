@@ -1,23 +1,24 @@
-import { FiBell, FiPlusCircle } from "react-icons/fi";
-
 import { Avatar, Button, Logo, Tag, Typography } from "@/ui";
-import { theme } from "@/../stitches.config";
+import { InputSearch } from "@/ui/Input/Search";
+import { AddCircleIcon, NotificationIcon } from "@/ui/_icons";
 
 import * as S from "./Header.styles";
-import { InputSearch } from "@/ui/Input/Search";
+import Link from "next/link";
 
 export function Header() {
   return (
     <S.Container>
       <S.Content>
-        <Logo variant="rainbow" />
+        <Link href="/">
+          <Logo variant="rainbow" />
+        </Link>
         <S.Actions>
           <InputSearch />
-          <Button title="Criar post" variant="transparent" size="small">
-            <FiPlusCircle size={24} color={theme.colors.textPrimary.value} />
+          <Button icon variant="transparent">
+            <AddCircleIcon />
           </Button>
-          <Button title="Notifications" variant="transparent" size="small">
-            <FiBell size={24} color={theme.colors.textPrimary.value} />
+          <Button icon variant="transparent">
+            <NotificationIcon />
           </Button>
           <S.UserContainer>
             <Avatar

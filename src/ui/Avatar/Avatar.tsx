@@ -2,6 +2,7 @@ import { ImgHTMLAttributes } from "react";
 
 import { CircularProgressBar } from "@/ui";
 
+import { Square } from "./Square";
 import * as S from "./Avatar.styles";
 
 type Props = {
@@ -18,3 +19,5 @@ export function Avatar({ fallback, ...rest }: Props) {
     </S.Root>
   );
 }
+
+Avatar.Square = Square;

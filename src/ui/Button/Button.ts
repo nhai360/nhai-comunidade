@@ -24,9 +24,21 @@ export const Button = styled("button", {
   },
 
   variants: {
+    icon: {
+      true: {
+        width: "48px",
+        height: "48px",
+        color: "$textTitle !important",
+        padding: "0 !important",
+
+        "&:not(:disabled):hover": {
+          background: "$blueLight",
+        },
+      },
+    },
     variant: {
       primary: {
-        color: "$neutral100",
+        color: "$neutral100 !important",
         background: "$blueMedium",
 
         "&:not(:disabled):hover": {

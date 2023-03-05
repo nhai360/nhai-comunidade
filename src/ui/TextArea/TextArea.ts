@@ -1,6 +1,6 @@
 import { styled } from "@/../stitches.config";
 
-export const Input = styled("input", {
+export const TextArea = styled("textarea", {
   background: "$neutral200",
   borderRadius: "$medium",
   border: "2px solid transparent",
@@ -8,13 +8,15 @@ export const Input = styled("input", {
 
   fontWeight: 700,
   fontSize: "$body2",
+  fontFamily: "$body",
   lineHeight: "150%",
   color: "$textPrimary",
 
   display: "flex",
   alignItems: "center",
 
-  width: "100%",
+  flex: 1,
+  resize: "none",
 
   "&::placeholder": {
     color: "$textAuxiliary",

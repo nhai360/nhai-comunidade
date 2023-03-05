@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from "react";
-import { FiSearch } from "react-icons/fi";
+
+import { SearchIcon } from "@/ui/_icons";
 
 import * as S from "./Search.styles";
 
@@ -11,7 +12,7 @@ export function InputSearch({
     <S.Container as="div">
       <input placeholder="Buscar" disabled={disabled} {...rest} />
       <button title="Buscar" disabled={disabled}>
-        <FiSearch size={24} />
+        <SearchIcon size={24} />
       </button>
     </S.Container>
   );

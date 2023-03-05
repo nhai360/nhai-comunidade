@@ -1,8 +1,11 @@
 import Link from "next/link";
 
-import { FiHome, FiSettings } from "react-icons/fi";
-import { AiOutlineVideoCamera } from "react-icons/ai";
-import { CiViewList } from "react-icons/ci";
+import {
+  CameraIcon,
+  HomeIcon,
+  ListLineParagraphSquareIcon,
+  SettingsIcon,
+} from "@/ui/_icons";
 
 import * as S from "./Sidebar.styles";
 
@@ -13,24 +16,24 @@ export function Sidebar() {
         <S.NavigationList>
           <Link href="/">
             <S.NavItem active>
-              <FiHome size={20} />
+              <HomeIcon />
             </S.NavItem>
           </Link>
           <Link href="/">
             <S.NavItem>
-              <AiOutlineVideoCamera size={24} />
+              <CameraIcon />
             </S.NavItem>
           </Link>
           <Link href="/">
             <S.NavItem>
-              <CiViewList size={24} strokeWidth={0.5} />
+              <ListLineParagraphSquareIcon />
             </S.NavItem>
           </Link>
         </S.NavigationList>
       </nav>
 
       <S.NavItem>
-        <FiSettings size={24} />
+        <SettingsIcon />
       </S.NavItem>
     </S.Container>
   );
