@@ -1,12 +1,12 @@
 import { styled } from "@/../stitches.config";
 
 export const Tag = styled("span", {
-  padding: "2px $1",
+  padding: "$1 $2",
   borderRadius: "$xsmall",
 
-  fontWeight: 600,
-  fontSize: "$caption",
-  lineHeight: "$caption",
+  fontWeight: 500,
+  fontSize: "$nano",
+  lineHeight: "$nano",
   textAlign: "center",
 
   variants: {

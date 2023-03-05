@@ -82,4 +82,15 @@ export const Button = styled("button", {
     size: "large",
     fullWidth: false,
   },
+
+  compoundVariants: [
+    {
+      icon: true,
+      size: "small",
+      css: {
+        height: "40px",
+        width: "40px",
+      },
+    },
+  ],
 });

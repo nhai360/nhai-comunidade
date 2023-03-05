@@ -14,7 +14,12 @@ export function AppLayout({ children }: Props) {
     <>
       <Header />
       <Sidebar />
-      <S.Content>{children}</S.Content>
+      {children}
     </>
   );
 }
+
+AppLayout.Content = S.Content;
+AppLayout.Sider = S.Sider;
+AppLayout.SimpleGrid = S.SimpleGrid;
+AppLayout.GridWithSider = S.GridWithSider;
