@@ -1,3 +1,3 @@
-export default function Dashboard() {
-  return <h1>Dashboard</h1>;
+export default function Timeline() {
+  return <h1>Timeline</h1>;
 }
