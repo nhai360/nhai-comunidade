@@ -41,6 +41,7 @@ const FieldElement: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         error={hasError}
         {...rest}
         size="medium"
+        color="neutral"
       />
 
       {helperText && (
