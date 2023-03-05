@@ -8,6 +8,7 @@ export * from "./Field";
 export * from "./Input";
 export * from "./Label";
 export * from "./Logo";
+export * from "./RadioGroup";
 export * from "./Tag";
 export * from "./TextArea";
 export * from "./Typography";

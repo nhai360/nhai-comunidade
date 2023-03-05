@@ -1,6 +1,11 @@
-import { ColorBrushIcon, AddPhotoIcon } from "@/ui/_icons";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { Avatar, Button, Dialog, Input, TextArea } from "@/ui";
+import { Avatar, Button, Dialog } from "@/ui";
+import { CreatePostFields, CreatePostUpload } from "@/features/timeline";
+
+import { ColorSelect } from "./ColorSelect";
+import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
 
@@ -8,7 +13,21 @@ type Props = {
   onClose: () => void;
 };
 
+export type Tabs = "color" | "upload";
+
 export function CreatePostDialog({ onClose }: Props) {
+  const form = useForm();
+
+  const [selectedTab, setSelectedTab] = useState<Tabs>();
+
+  const { handleSubmit, control } = form;
+
+  const isUpload = selectedTab === "upload";
+
+  function handleCreatePost() {
+    onClose();
+  }
+
   return (
     <Dialog.Root open onOpenChange={onClose}>
       <Dialog title="Criar novo post">
@@ -19,17 +38,23 @@ export function CreatePostDialog({ onClose }: Props) {
             alt="Colm Tuite"
             fallback="CT"
           />
-          <S.Form>
-            <Input placeholder="Começar nova publicação" />
-            <TextArea placeholder="Em que você está pensando?" rows={10} />
+          <S.Form onSubmit={handleSubmit(handleCreatePost)}>
+            <FormProvider {...form}>
+              {isUpload ? <CreatePostUpload /> : <CreatePostFields />}
+            </FormProvider>
             <S.Footer>
               <S.Actions>
-                <Button icon variant="transparent" type="button">
-                  <ColorBrushIcon />
-                </Button>
-                <Button icon variant="transparent" type="button">
-                  <AddPhotoIcon />
-                </Button>
+                <ColorSelect
+                  name="color"
+                  control={control}
+                  selected={selectedTab === "color"}
+                  onSelectTab={setSelectedTab}
+                />
+
+                <UploadButton
+                  selected={selectedTab === "upload"}
+                  onSelectTab={setSelectedTab}
+                />
               </S.Actions>
 
               <Button type="submit">Publicar</Button>

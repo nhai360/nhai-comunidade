@@ -12,14 +12,14 @@ export const Image = styled(Avatar.Image, {
   variants: {
     size: {
       large: {
-        width: "56px",
-        height: "56px",
+        width: "72px",
+        height: "72px",
         borderRadius: "$medium",
       },
       medium: {
-        width: "32px",
-        height: "32px",
-        borderRadius: "8px",
+        width: "56px",
+        height: "56px",
+        borderRadius: "$medium",
       },
     },
   },

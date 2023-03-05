@@ -13,7 +13,6 @@ export function CreatePostCard() {
     <Card>
       <S.Content>
         <Avatar.Square
-          size="large"
           src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
           alt="Colm Tuite"
           fallback="CT"
