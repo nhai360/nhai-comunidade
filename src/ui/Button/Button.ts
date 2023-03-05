@@ -24,13 +24,29 @@ export const Button = styled("button", {
   },
 
   variants: {
+    icon: {
+      true: {
+        width: "48px",
+        height: "48px",
+        color: "$textTitle !important",
+        padding: "0 !important",
+
+        "&:focus-visible": {
+          background: "$blueLight",
+        },
+
+        "&:not(:disabled):hover": {
+          background: "$blueLight",
+        },
+      },
+    },
     variant: {
       primary: {
-        color: "$neutral100",
+        color: "$neutral100 !important",
         background: "$blueMedium",
 
         "&:not(:disabled):hover": {
-          background: "$blueDark",
+          background: "$blueDark !important",
         },
       },
       outline: {
@@ -66,4 +82,15 @@ export const Button = styled("button", {
     size: "large",
     fullWidth: false,
   },
+
+  compoundVariants: [
+    {
+      icon: true,
+      size: "small",
+      css: {
+        height: "40px",
+        width: "40px",
+      },
+    },
+  ],
 });

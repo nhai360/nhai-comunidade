@@ -1,4 +1,3 @@
-import { HiArrowNarrowRight } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +5,7 @@ import zod from "zod";
 
 import { useAuthContext } from "@/contexts";
 import { Button, Checkbox, Field, Typography } from "@/ui";
+import { ArrowNarrowRightIcon } from "@/ui/_icons";
 
 import * as S from "./LoginForm.styles";
 
@@ -68,7 +68,7 @@ export function LoginForm() {
       <Checkbox name="remember" label="Lembrar de mim?" control={control} />
       <Button fullWidth type="submit">
         Entrar
-        <HiArrowNarrowRight size={24} />
+        <ArrowNarrowRightIcon />
       </Button>
       <S.ForgotPasswordLink href="/password/forgot">
         Esqueci minha senha

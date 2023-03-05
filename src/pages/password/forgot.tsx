@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FiArrowLeft } from "react-icons/fi";
 
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
@@ -26,11 +25,6 @@ export default function ForgotPassword() {
         <Button fullWidth css={{ marginBlock: "$8" }}>
           Abrir meu aplicativo de e-mail
         </Button>
-
-        <Typography.Link href="/auth/login">
-          <FiArrowLeft size={20} />
-          Voltar para o login
-        </Typography.Link>
       </PasswordLayout>
     );
   }

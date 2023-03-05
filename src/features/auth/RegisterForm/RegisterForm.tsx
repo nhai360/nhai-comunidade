@@ -1,10 +1,10 @@
-import { HiArrowNarrowRight } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import zod from "zod";
 
 import { Button, Field, Typography } from "@/ui";
+import { ArrowNarrowRightIcon } from "@/ui/_icons";
 
 import * as S from "./RegisterForm.styles";
 
@@ -77,7 +77,7 @@ export function RegisterForm() {
 
       <Button fullWidth type="submit">
         Criar conta
-        <HiArrowNarrowRight size={24} />
+        <ArrowNarrowRightIcon />
       </Button>
       <S.ForgotPasswordLink href="/auth/login">
         Já sou membro

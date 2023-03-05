@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
-import { FiArrowLeft } from "react-icons/fi";
 
 import { Logo, Typography } from "@/ui";
 
 import * as S from "./PasswordLayout.styles";
+import { ArrowLeftIcon } from "@/ui/_icons";
 
 type Props = {
   children: ReactNode;
@@ -14,9 +14,9 @@ export function PasswordLayout({ children }: Props) {
     <S.Container>
       <Logo variant="rainbow" />
       <S.Content>
-        {children}{" "}
+        {children}
         <S.BackLink href="/auth/login">
-          <FiArrowLeft size={20} />
+          <ArrowLeftIcon />
           Voltar para o login
         </S.BackLink>
       </S.Content>

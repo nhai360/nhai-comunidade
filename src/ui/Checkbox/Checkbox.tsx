@@ -1,4 +1,3 @@
-import { FiCheck } from "react-icons/fi";
 import {
   FieldPath,
   FieldValues,
@@ -9,6 +8,7 @@ import {
 import { Label } from "@/ui";
 
 import * as S from "./Checkbox.styles";
+import { CheckIcon } from "../_icons";
 
 type Props<T extends FieldValues> = {
   label?: string;
@@ -32,7 +32,7 @@ export function Checkbox<T extends FieldValues>({
         disabled={disabled}
       >
         <S.Indicator>
-          <FiCheck size={14} />
+          <CheckIcon />
         </S.Indicator>
       </S.Root>
 
