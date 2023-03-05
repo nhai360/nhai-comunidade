@@ -24,7 +24,7 @@ export function ColorSelect<T extends FieldValues>({
   const { field } = useController(rest);
 
   useEffect(() => {
-    if (!selected) {
+    if (!selected && field.value) {
       field.onChange(undefined);
     }
   }, [selected, field]);

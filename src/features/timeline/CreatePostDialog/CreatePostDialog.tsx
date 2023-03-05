@@ -2,7 +2,11 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { Avatar, Button, Dialog } from "@/ui";
-import { CreatePostFields, CreatePostUpload } from "@/features/timeline";
+import {
+  CreatePostFields,
+  CreatePostSuccess,
+  CreatePostUpload,
+} from "@/features/timeline";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
@@ -17,15 +21,25 @@ export type Tabs = "color" | "upload";
 
 export function CreatePostDialog({ onClose }: Props) {
   const form = useForm();
-
   const [selectedTab, setSelectedTab] = useState<Tabs>();
 
-  const { handleSubmit, control } = form;
+  const [isSuccess, setIsSuccess] = useState(false);
 
+  const { handleSubmit, control } = form;
   const isUpload = selectedTab === "upload";
 
   function handleCreatePost() {
-    onClose();
+    setIsSuccess(true);
+  }
+
+  if (isSuccess) {
+    return (
+      <Dialog.Root open onOpenChange={onClose}>
+        <Dialog closable={false}>
+          <CreatePostSuccess onClose={onClose} />
+        </Dialog>
+      </Dialog.Root>
+    );
   }
 
   return (

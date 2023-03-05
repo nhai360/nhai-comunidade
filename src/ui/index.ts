@@ -4,6 +4,7 @@ export * from "./Card";
 export * from "./Checkbox";
 export * from "./CircularProgressBar";
 export * from "./Dialog";
+export * from "./Dropzone";
 export * from "./Field";
 export * from "./Input";
 export * from "./Label";

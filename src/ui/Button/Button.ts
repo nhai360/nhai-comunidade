@@ -31,6 +31,10 @@ export const Button = styled("button", {
         color: "$textTitle !important",
         padding: "0 !important",
 
+        "&:focus-visible": {
+          background: "$blueLight",
+        },
+
         "&:not(:disabled):hover": {
           background: "$blueLight",
         },
@@ -42,7 +46,7 @@ export const Button = styled("button", {
         background: "$blueMedium",
 
         "&:not(:disabled):hover": {
-          background: "$blueDark",
+          background: "$blueDark !important",
         },
       },
       outline: {

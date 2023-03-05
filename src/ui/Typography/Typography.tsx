@@ -17,11 +17,14 @@ const BaseText = styled("span", {
       auxiliary: {
         color: "$textAuxiliary",
       },
-      neutral100: {
+      neutral: {
         color: "$neutral100",
       },
       pink: {
         color: "$pinkMedium",
+      },
+      blue: {
+        color: "$blueMedium",
       },
     },
 

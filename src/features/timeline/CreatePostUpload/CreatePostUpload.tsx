@@ -1,16 +1,19 @@
 import { useFormContext } from "react-hook-form";
-import { TextArea } from "@/ui";
+
+import { Dropzone, TextArea } from "@/ui";
 
 export function CreatePostUpload() {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <>
       <TextArea
+        autoFocus
         placeholder="Em que você está pensando?"
-        rows={3}
+        rows={5}
         {...register("content")}
       />
+      <Dropzone {...register("attachments")} control={control} />
     </>
   );
 }

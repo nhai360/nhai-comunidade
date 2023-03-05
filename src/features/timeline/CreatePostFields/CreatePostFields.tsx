@@ -10,6 +10,7 @@ export function CreatePostFields() {
   return (
     <>
       <Input
+        autoFocus
         color={selectedColor}
         placeholder="Qual o título da sua publicação"
         {...register("title")}

@@ -12,3 +12,4 @@ export * from "./ListLineParagraphSquareIcon";
 export * from "./NotificationIcon";
 export * from "./SearchIcon";
 export * from "./SettingsIcon";
+export * from "./TrashIcon";

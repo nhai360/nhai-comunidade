@@ -34,7 +34,7 @@ export const NavItem = styled("li", {
   transition: "all 0.2s",
 
   "&:hover": {
-    opacity: 0.8,
+    background: "$pinkLight",
   },
 
   variants: {
