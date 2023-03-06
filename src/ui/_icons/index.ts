@@ -10,6 +10,7 @@ export * from "./ColorBrushIcon";
 export * from "./FilterCircleIcon";
 export * from "./HomeIcon";
 export * from "./ListLineParagraphSquareIcon";
+export * from "./LoadingIcon";
 export * from "./NotificationIcon";
 export * from "./QuestionCircleIcon";
 export * from "./SearchIcon";

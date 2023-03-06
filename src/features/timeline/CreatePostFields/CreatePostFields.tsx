@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { Input, TextArea } from "@/ui";
 
 export function CreatePostFields() {
-  const { register, watch } = useFormContext();
+  const { register, watch, control } = useFormContext();
 
   const selectedColor = watch("color");
 
@@ -17,9 +17,10 @@ export function CreatePostFields() {
       />
       <TextArea
         color={selectedColor}
+        control={control}
+        name="content"
         placeholder="Em que você está pensando?"
-        rows={10}
-        {...register("content")}
+        css={{ minHeight: "362px" }}
       />
     </>
   );

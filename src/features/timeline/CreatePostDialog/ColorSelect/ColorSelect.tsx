@@ -37,7 +37,7 @@ export function ColorSelect<T extends FieldValues>({
         type="button"
         onClick={() => {
           if (selected) {
-            onSelectTab(undefined);
+            return onSelectTab(undefined);
           }
 
           onSelectTab("color");

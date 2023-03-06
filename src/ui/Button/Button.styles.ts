@@ -1,6 +1,12 @@
-import { styled } from "@/../stitches.config";
+import { styled, keyframes } from "@/../stitches.config";
 
-export const Button = styled("button", {
+const loadingAnimation = keyframes({
+  to: {
+    transform: "rotate(360deg)",
+  },
+});
+
+export const Container = styled("button", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -93,4 +99,10 @@ export const Button = styled("button", {
       },
     },
   ],
+});
+
+export const Loading = styled("div", {
+  height: 20,
+  width: 20,
+  animation: `${loadingAnimation} 1s infinite linear`,
 });

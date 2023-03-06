@@ -28,7 +28,8 @@ export function CreatePostDialog({ onClose }: Props) {
   const { handleSubmit, control } = form;
   const isUpload = selectedTab === "upload";
 
-  function handleCreatePost() {
+  function handleCreatePost(data: any) {
+    console.log(data);
     setIsSuccess(true);
   }
 

@@ -11,7 +11,7 @@ type Props = {
 export function UploadButton({ selected, onSelectTab }: Props) {
   function handleClick() {
     if (selected) {
-      onSelectTab(undefined);
+      return onSelectTab(undefined);
     }
 
     onSelectTab("upload");

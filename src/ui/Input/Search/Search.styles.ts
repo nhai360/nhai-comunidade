@@ -9,6 +9,8 @@ export const Container = styled("div", {
   display: "flex",
   alignItems: "center",
 
+  transition: "al 0.2s",
+
   input: {
     background: "transparent",
     border: 0,

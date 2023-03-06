@@ -9,9 +9,9 @@ export function CreatePostUpload() {
     <>
       <TextArea
         autoFocus
+        control={control}
+        name="content"
         placeholder="Em que você está pensando?"
-        rows={5}
-        {...register("content")}
       />
       <Dropzone {...register("attachments")} control={control} />
     </>
