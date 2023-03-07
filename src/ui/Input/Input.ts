@@ -1,4 +1,5 @@
 import { styled } from "@/../stitches.config";
+import { ComponentProps } from "react";
 
 export const Input = styled("input", {
   borderRadius: "$medium",
@@ -100,3 +101,5 @@ export const Input = styled("input", {
     color: "neutral",
   },
 });
+
+export type InputProps = ComponentProps<typeof Input>;

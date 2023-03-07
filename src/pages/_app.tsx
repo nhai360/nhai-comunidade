@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { globalStyles } from "@/../stitches.config";
 
@@ -8,8 +9,10 @@ export default function App({ Component, pageProps }: AppProps) {
   globalStyles();
 
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <QueryClientProvider client={new QueryClient()}>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

@@ -42,7 +42,7 @@ export function RegisterForm() {
       </Typography.Text>
 
       <S.FieldContainer>
-        <Field
+        <Field.Input
           required
           label="Nome"
           placeholder="Digite seu nome"
@@ -50,14 +50,14 @@ export function RegisterForm() {
           {...register("name")}
         />
 
-        <Field
+        <Field.Input
           label="Apelido"
           placeholder="Digite seu apelido"
           errorText={errors.nickname?.message}
           {...register("nickname")}
         />
 
-        <Field
+        <Field.Input
           required
           label="E-mail"
           placeholder="Digite seu e-mail"
@@ -65,7 +65,7 @@ export function RegisterForm() {
           {...register("email")}
         />
 
-        <Field
+        <Field.Input
           required
           type="password"
           label="Senha"

@@ -1,14 +1,10 @@
-import {
-  ComponentProps,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ComponentProps, SyntheticEvent, useRef, useState } from "react";
 
 import {
   FieldPath,
   FieldValues,
+  Path,
+  PathValue,
   UseControllerProps,
   useController,
 } from "react-hook-form";
@@ -26,16 +22,15 @@ import { EmojiSuggestions, plugins } from "./plugins";
 
 import * as S from "./TextArea.styles";
 
-type ExternalProps = Partial<EditorProps> &
-  UseControllerProps<FieldValues, FieldPath<FieldValues>> &
+type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
+  UseControllerProps<T, FieldPath<T>> &
   ComponentProps<typeof S.Container>;
 
-type Props = {
-  autoFocus?: boolean;
+export type TextAreaProps<T extends FieldValues> = {
   defaultValue?: RawDraftContentState;
-} & Omit<ExternalProps, "defaultValue">;
+} & Omit<ExternalProps<T>, "defaultValue">;
 
-export function TextArea({
+export function TextArea<T extends FieldValues>({
   name,
   control,
   rules,
@@ -43,11 +38,10 @@ export function TextArea({
   color,
   css,
   defaultValue,
-  autoFocus,
   onFocus,
   onBlur,
   ...rest
-}: Props) {
+}: TextAreaProps<T>) {
   const editorRef = useRef<Editor>(null);
 
   const { field } = useController({
@@ -55,7 +49,7 @@ export function TextArea({
     control,
     rules,
     shouldUnregister,
-    defaultValue,
+    defaultValue: defaultValue as PathValue<T, Path<T>>,
   });
 
   const [isFocused, setIsFocused] = useState(false);
@@ -67,13 +61,6 @@ export function TextArea({
 
     return EditorState.createEmpty();
   });
-
-  useEffect(() => {
-    if (autoFocus && editorRef?.current) {
-      setIsFocused(true);
-      editorRef?.current?.focus();
-    }
-  }, [autoFocus]);
 
   function handleChange(newEditorState: EditorState) {
     const contentState = newEditorState.getCurrentContent();

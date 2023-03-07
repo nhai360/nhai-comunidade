@@ -1,11 +1,6 @@
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import ReactDropzone from "react-dropzone";
-import {
-  FieldPath,
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { FieldPath, UseControllerProps, useController } from "react-hook-form";
 
 import { Typography } from "@/ui";
 import { TrashIcon } from "@/ui/_icons";
@@ -15,7 +10,7 @@ import * as S from "./Dropzone.styles";
 
 const DropzoneComponent: ForwardRefRenderFunction<
   HTMLInputElement,
-  UseControllerProps<FieldValues, FieldPath<FieldValues>>
+  UseControllerProps<any, FieldPath<any>>
 > = (props, ref) => {
   const { field } = useController(props);
 

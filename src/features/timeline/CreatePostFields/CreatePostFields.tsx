@@ -1,18 +1,22 @@
 import { useFormContext } from "react-hook-form";
 
-import { Input, TextArea } from "@/ui";
+import { Field, TextArea } from "@/ui";
+import { CreatePostParams } from "@/client/posts";
 
 export function CreatePostFields() {
-  const { register, watch, control } = useFormContext();
+  const { register, watch, control, formState } =
+    useFormContext<CreatePostParams>();
 
   const selectedColor = watch("color");
+  const { errors } = formState;
 
   return (
     <>
-      <Input
+      <Field.Input
         autoFocus
         color={selectedColor}
         placeholder="Qual o título da sua publicação"
+        errorText={errors.title?.message}
         {...register("title")}
       />
       <TextArea

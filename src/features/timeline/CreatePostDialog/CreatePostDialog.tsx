@@ -7,11 +7,17 @@ import {
   CreatePostSuccess,
   CreatePostUpload,
 } from "@/features/timeline";
+import {
+  CreatePostParams,
+  createPostSchema,
+  useCreatePost,
+} from "@/client/posts";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   onClose: () => void;
@@ -20,17 +26,19 @@ type Props = {
 export type Tabs = "color" | "upload";
 
 export function CreatePostDialog({ onClose }: Props) {
-  const form = useForm();
+  const form = useForm<CreatePostParams>({
+    resolver: zodResolver(createPostSchema),
+  });
+
   const [selectedTab, setSelectedTab] = useState<Tabs>();
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  const { createPost, isSuccess, isLoading } = useCreatePost();
 
   const { handleSubmit, control } = form;
   const isUpload = selectedTab === "upload";
 
-  function handleCreatePost(data: any) {
-    console.log(data);
-    setIsSuccess(true);
+  function handleCreatePost(data: CreatePostParams) {
+    createPost(data);
   }
 
   if (isSuccess) {
@@ -72,7 +80,9 @@ export function CreatePostDialog({ onClose }: Props) {
                 />
               </S.Actions>
 
-              <Button type="submit">Publicar</Button>
+              <Button type="submit" loading={isLoading}>
+                Publicar
+              </Button>
             </S.Footer>
           </S.Form>
         </S.Container>

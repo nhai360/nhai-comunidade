@@ -47,7 +47,7 @@ export function LoginForm() {
       </Typography.Text>
 
       <S.FieldContainer>
-        <Field
+        <Field.Input
           required
           label="E-mail"
           placeholder="Digite seu e-mail"
@@ -55,7 +55,7 @@ export function LoginForm() {
           {...register("email")}
         />
 
-        <Field
+        <Field.Input
           required
           type="password"
           label="Senha"

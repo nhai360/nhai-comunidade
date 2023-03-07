@@ -49,6 +49,7 @@ export const Preview = styled("div", {
 
 export const ThumbnailImage = styled("img", {
   objectFit: "cover",
+  maxHeight: "363px",
 });
 
 export const PreviewRemoveButton = styled(Button, {

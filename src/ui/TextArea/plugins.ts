@@ -21,8 +21,9 @@ const hashtagPlugin = createHashtagPlugin({
 const emojiPlugin = createEmojiPlugin({
   useNativeArt: true,
 });
-const { EmojiSuggestions } = emojiPlugin;
+
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
 const plugins = [hashtagPlugin, emojiPlugin, linkifyPlugin];
 
-export { plugins, EmojiSuggestions };
+export { plugins, EmojiSuggestions, EmojiSelect };
