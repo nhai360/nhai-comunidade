@@ -22,6 +22,7 @@ export const Overlay = styled(Dialog.Overlay, {
   inset: 0,
   background: "rgba(0, 0, 0, 0.25)",
   animation: `${overlayFadeIn} 1s`,
+  zIndex: 2,
 });
 
 export const Content = styled(Dialog.Content, {
@@ -35,6 +36,7 @@ export const Content = styled(Dialog.Content, {
   transform: "translate(-50%, -50%)",
 
   minWidth: "856px",
+  zIndex: 3,
 });
 
 export const Header = styled("header", {

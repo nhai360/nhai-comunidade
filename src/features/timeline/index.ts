@@ -5,5 +5,7 @@ export * from "./CreatePostSuccess";
 export * from "./CreatePostUpload";
 export * from "./MainTrends";
 export * from "./PopularToday";
+export * from "./Post";
 export * from "./PostCard";
+export * from "./PostDialog";
 export * from "./PostsList";

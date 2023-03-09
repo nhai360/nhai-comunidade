@@ -1,7 +1,7 @@
 import * as Avatar from "@radix-ui/react-avatar";
 
 import { styled } from "@/../stitches.config";
-import { Tag } from "@/ui";
+import { Tag } from "@/ui/Tag";
 
 export const Root = styled(Avatar.Root, {
   position: "relative",

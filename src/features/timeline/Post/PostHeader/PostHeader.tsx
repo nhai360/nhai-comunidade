@@ -3,9 +3,9 @@ import { HorizontalDotsIcon, LinkIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 
-import * as S from "./Header.styles";
+import * as S from "./PostHeader.styles";
 
-export function Header() {
+export function PostHeader() {
   return (
     <S.Container>
       <S.User>

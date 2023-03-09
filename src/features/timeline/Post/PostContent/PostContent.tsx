@@ -8,13 +8,13 @@ import { plugins } from "@/ui/TextArea/plugins";
 
 import { Post } from "@/client/posts";
 
-import * as S from "./Content.styles";
+import * as S from "./PostContent.styles";
 
 type Props = {
   post: Post;
 };
 
-export function Content({ post }: Props) {
+export function PostContent({ post }: Props) {
   const contentState = convertFromRaw(post.content);
 
   const [editorState, setEditorState] = useState(

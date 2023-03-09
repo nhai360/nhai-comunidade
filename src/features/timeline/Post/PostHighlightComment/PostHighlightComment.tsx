@@ -8,9 +8,9 @@ import { plugins } from "@/ui/TextArea/plugins";
 import { theme } from "@/../stitches.config";
 import { HorizontalDotsIcon } from "@/ui/_icons";
 
-import * as S from "./Comment.styles";
+import * as S from "./PostHighlightComment.styles";
 
-export function Comment() {
+export function PostHighlightComment() {
   const [editorState, setEditorState] = useState(
     createEditorStateWithText(
       "Adorei ver essa iniciativa de apoio aos empreendedores LGBT. Vamos mostrar que somos capazes de alcançar o sucesso também!",

@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 
 import { Avatar, TextArea } from "@/ui";
 
-import * as S from "./CommentField.styles";
+import * as S from "./PostCommentField.styles";
 
-export function CommentField() {
+export function PostCommentField() {
   const { control } = useForm();
 
   return (
