@@ -87,6 +87,7 @@ export const Container = styled("button", {
     variant: "primary",
     size: "large",
     fullWidth: false,
+    icon: false,
   },
 
   compoundVariants: [
@@ -96,6 +97,16 @@ export const Container = styled("button", {
       css: {
         height: "40px",
         width: "40px",
+      },
+    },
+    {
+      icon: false,
+      variant: "transparent",
+      css: {
+        "&:not(:disabled):hover": {
+          color: "$neutral100",
+          background: "$blueDark !important",
+        },
       },
     },
   ],

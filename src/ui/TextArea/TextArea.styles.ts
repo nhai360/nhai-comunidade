@@ -34,6 +34,7 @@ export const Container = styled("div", {
         boxShadow: "$xs",
 
         ".public-DraftEditorPlaceholder-root": {
+          position: "absolute",
           color: "$textAuxiliary",
           transition: "all 0.2s",
         },

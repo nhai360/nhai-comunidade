@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Avatar, Button, Dialog } from "@/ui";
 import {
@@ -17,7 +18,6 @@ import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   onClose: () => void;

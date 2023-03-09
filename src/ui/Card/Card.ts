@@ -6,4 +6,12 @@ export const Card = styled("div", {
 
   borderRadius: "$large",
   padding: "$6",
+
+  variants: {
+    ghost: {
+      true: {
+        padding: "0",
+      },
+    },
+  },
 });

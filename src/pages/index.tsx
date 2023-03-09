@@ -1,12 +1,19 @@
 import { AppLayout } from "@/layouts";
-import { CreatePostCard, PopularToday, MainTrends } from "@/features/timeline";
+
+import {
+  CreatePostCard,
+  PopularToday,
+  MainTrends,
+  PostsList,
+} from "@/features/timeline";
 
 export default function Timeline() {
   return (
     <AppLayout>
       <AppLayout.GridWithSider>
-        <AppLayout.Content>
+        <AppLayout.Content css={{ gap: "$6" }}>
           <CreatePostCard />
+          <PostsList />
         </AppLayout.Content>
         <AppLayout.Sider>
           <MainTrends />

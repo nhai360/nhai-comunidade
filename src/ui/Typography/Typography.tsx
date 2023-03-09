@@ -103,6 +103,11 @@ const Title = styled(BaseText, {
         fontSize: "$h3",
         lineHeight: "$h3",
       },
+      h5: {
+        fontFamily: "$body",
+        fontSize: "$body3",
+        lineHeight: "$body",
+      },
     },
     weight: {
       black: {

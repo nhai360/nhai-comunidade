@@ -5,3 +5,5 @@ export * from "./CreatePostSuccess";
 export * from "./CreatePostUpload";
 export * from "./MainTrends";
 export * from "./PopularToday";
+export * from "./PostCard";
+export * from "./PostsList";

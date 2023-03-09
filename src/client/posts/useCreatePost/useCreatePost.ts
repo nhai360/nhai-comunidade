@@ -1,6 +1,10 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
-import { CreatePostParams, getPosts } from "@/client/posts";
+import {
+  CreatePostParams,
+  getPosts,
+  invalidatePostsQueries,
+} from "@/client/posts";
 
 async function createPostRequest(params: CreatePostParams) {
   const post = {
@@ -22,8 +26,13 @@ async function createPostRequest(params: CreatePostParams) {
 }
 
 export function useCreatePost() {
+  const queryClient = useQueryClient();
+
   const { mutate: createPost, ...rest } = useMutation({
     mutationFn: createPostRequest,
+    onSuccess: () => {
+      invalidatePostsQueries(queryClient);
+    },
   });
 
   return {

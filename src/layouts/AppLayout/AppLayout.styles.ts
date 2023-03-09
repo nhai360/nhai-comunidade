@@ -1,6 +1,9 @@
 import { styled } from "@/../stitches.config";
 
-export const Content = styled("main");
+export const Content = styled("main", {
+  display: "flex",
+  flexDirection: "column",
+});
 
 export const Sider = styled("aside", {
   position: "sticky",

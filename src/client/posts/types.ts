@@ -24,7 +24,7 @@ export type Post = {
 };
 
 export const createPostSchema = zod.object({
-  title: zod.string().min(1, "Título obrigatório"),
+  title: zod.string(),
   content: zod.unknown(),
   file: file.optional(),
   color: postColor.optional(),

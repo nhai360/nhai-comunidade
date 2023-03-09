@@ -25,7 +25,7 @@ export const Tag = styled("span", {
       },
       blue: {
         color: "$blueMedium",
-        background: "$blueLight",
+        background: "rgba(1, 161, 255, 0.08)",
       },
     },
   },
