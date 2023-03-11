@@ -43,50 +43,56 @@ export function CreatePostDialog({ onClose }: Props) {
 
   if (isSuccess) {
     return (
-      <Dialog.Root open onOpenChange={onClose}>
-        <Dialog closable={false}>
-          <CreatePostSuccess onClose={onClose} />
-        </Dialog>
-      </Dialog.Root>
+      <Dialog open onOpenChange={onClose}>
+        <Dialog.Content>
+          <Dialog.Header closable={false} />
+          <Dialog.Body>
+            <CreatePostSuccess onClose={onClose} />
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog>
     );
   }
 
   return (
-    <Dialog.Root open onOpenChange={onClose}>
-      <Dialog title="Criar novo post">
-        <S.Container>
-          <Avatar.Square
-            size="large"
-            src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-            alt="Colm Tuite"
-            fallback="CT"
-          />
-          <S.Form onSubmit={handleSubmit(handleCreatePost)}>
-            <FormProvider {...form}>
-              {isUpload ? <CreatePostUpload /> : <CreatePostFields />}
-            </FormProvider>
-            <S.Footer>
-              <S.Actions>
-                <ColorSelect
-                  name="color"
-                  control={control}
-                  selected={selectedTab === "color"}
-                  onSelectTab={setSelectedTab}
-                />
+    <Dialog open onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header title="Criar novo post" closable />
+        <Dialog.Body>
+          <S.Container>
+            <Avatar.Square
+              size="large"
+              src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+              alt="Colm Tuite"
+              fallback="CT"
+            />
+            <S.Form onSubmit={handleSubmit(handleCreatePost)}>
+              <FormProvider {...form}>
+                {isUpload ? <CreatePostUpload /> : <CreatePostFields />}
+              </FormProvider>
+              <S.Footer>
+                <S.Actions>
+                  <ColorSelect
+                    name="color"
+                    control={control}
+                    selected={selectedTab === "color"}
+                    onSelectTab={setSelectedTab}
+                  />
 
-                <UploadButton
-                  selected={selectedTab === "upload"}
-                  onSelectTab={setSelectedTab}
-                />
-              </S.Actions>
+                  <UploadButton
+                    selected={selectedTab === "upload"}
+                    onSelectTab={setSelectedTab}
+                  />
+                </S.Actions>
 
-              <Button type="submit" loading={isLoading}>
-                Publicar
-              </Button>
-            </S.Footer>
-          </S.Form>
-        </S.Container>
-      </Dialog>
-    </Dialog.Root>
+                <Button type="submit" loading={isLoading}>
+                  Publicar
+                </Button>
+              </S.Footer>
+            </S.Form>
+          </S.Container>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog>
   );
 }

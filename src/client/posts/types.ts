@@ -15,6 +15,13 @@ export const postColor = zod.union([
 
 export type PostColor = zod.TypeOf<typeof postColor>;
 
+export type Author = {
+  id: string;
+  name: string;
+  level: string;
+  avatarUrl: string;
+};
+
 export type Post = {
   id: string;
   title: string;

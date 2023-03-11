@@ -5,7 +5,7 @@ export const Container = styled("header", {
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "$6",
+  paddingBlock: "$6",
 });
 
 export const User = styled("div", {

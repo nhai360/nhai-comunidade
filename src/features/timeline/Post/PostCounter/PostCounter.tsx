@@ -12,9 +12,10 @@ import * as S from "./PostCounter.styles";
 
 type Props = {
   post: PostType;
+  expanded?: boolean;
 };
 
-export function PostCounter({ post }: Props) {
+export function PostCounter({ post, expanded = false }: Props) {
   const [isPostDialogVisible, setIsPostDialogVisible] = useState(false);
 
   return (
@@ -22,13 +23,15 @@ export function PostCounter({ post }: Props) {
       <LikedBy />
 
       <S.Actions>
-        <Button
-          size="medium"
-          variant="transparent"
-          onClick={() => setIsPostDialogVisible(true)}
-        >
-          Ver mais 369 comentários
-        </Button>
+        {!expanded && (
+          <Button
+            size="medium"
+            variant="transparent"
+            onClick={() => setIsPostDialogVisible(true)}
+          >
+            Ver mais 369 comentários
+          </Button>
+        )}
         <Button size="medium">
           <HeartIcon />
           Curtir

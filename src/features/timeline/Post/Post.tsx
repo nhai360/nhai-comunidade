@@ -4,28 +4,22 @@ import { Post as PostType } from "@/client/posts";
 import { PostHeader } from "./PostHeader";
 import { PostContent } from "./PostContent";
 import { PostCounter } from "./PostCounter";
-import { PostHighlightComment } from "./PostHighlightComment";
+import { PostFooter } from "./PostFooter";
+import { PostCommentList } from "./PostCommentList";
 import { PostCommentField } from "./PostCommentField";
-
-import * as S from "./Post.styles";
 
 type Props = {
   post: PostType;
+  expanded?: boolean;
 };
 
-export function Post({ post }: Props) {
+export function Post({ post, expanded }: Props) {
   return (
     <>
       <PostHeader />
       <PostContent post={post} />
       <Divider />
-      <S.Footer>
-        <PostCounter post={post} />
-
-        <PostHighlightComment />
-
-        <PostCommentField />
-      </S.Footer>
+      <PostFooter post={post} expanded={expanded} />
     </>
   );
 }
@@ -33,4 +27,5 @@ export function Post({ post }: Props) {
 Post.Header = PostHeader;
 Post.Content = PostContent;
 Post.Counter = PostCounter;
+Post.CommentList = PostCommentList;
 Post.CommentField = PostCommentField;

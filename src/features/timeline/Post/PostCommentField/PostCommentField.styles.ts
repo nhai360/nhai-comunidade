@@ -5,4 +5,8 @@ export const Form = styled("form", {
   alignItems: "flex-start",
   gap: "$4",
   marginTop: "$6",
+
+  ".DraftEditor-root": {
+    position: "relative",
+  },
 });

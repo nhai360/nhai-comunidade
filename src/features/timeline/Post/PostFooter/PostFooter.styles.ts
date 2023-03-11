@@ -1,6 +1,6 @@
 import { styled } from "@/../stitches.config";
 
-export const Footer = styled("footer", {
+export const Container = styled("footer", {
   display: "flex",
   flexDirection: "column",
 

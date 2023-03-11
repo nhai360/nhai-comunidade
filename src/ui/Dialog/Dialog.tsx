@@ -1,38 +1,31 @@
-import { ReactNode } from "react";
-
-import { Button } from "@/ui";
-import { CloseIcon } from "@/ui/_icons";
+import { DialogHeader } from "./Header";
 
 import * as S from "./Dialog.styles";
+import { DialogProps } from "@radix-ui/react-dialog";
 
-type Props = {
-  title?: string;
-  children: ReactNode;
-  closable?: boolean;
-};
-
-export function Dialog({ title, children, closable = true }: Props) {
+export function Dialog({ children, ...rest }: DialogProps) {
   return (
-    <S.Portal>
-      <S.Overlay />
-      <S.Content>
-        <S.Header>
-          {title && <S.Title>{title}</S.Title>}
-
-          {closable && (
-            <S.Close asChild>
-              <Button icon variant="transparent" type="button">
-                <CloseIcon />
-              </Button>
-            </S.Close>
-          )}
-        </S.Header>
-        <S.Body>{children}</S.Body>
-      </S.Content>
-    </S.Portal>
+    <S.Root {...rest}>
+      <S.Portal>
+        <S.Overlay />
+        {children}
+      </S.Portal>
+    </S.Root>
   );
 }
 
 Dialog.Root = S.Root;
 
 Dialog.Trigger = S.Trigger;
+
+Dialog.Content = S.Content;
+
+Dialog.Body = S.Body;
+
+Dialog.Overlay = S.Overlay;
+
+Dialog.Portal = S.Portal;
+
+Dialog.Header = DialogHeader;
+
+Dialog.Footer = S.Footer;

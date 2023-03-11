@@ -81,6 +81,19 @@ export const Container = styled("button", {
         width: "100%",
       },
     },
+    ghost: {
+      true: {
+        padding: "0 !important",
+        height: "auto !important",
+        width: "auto !important",
+        background: "transparent !important",
+
+        "&:hover": {
+          background: "transparent !important",
+          opacity: 0.6,
+        },
+      },
+    },
   },
 
   defaultVariants: {
@@ -88,6 +101,7 @@ export const Container = styled("button", {
     size: "large",
     fullWidth: false,
     icon: false,
+    ghost: false,
   },
 
   compoundVariants: [

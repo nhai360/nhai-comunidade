@@ -2,11 +2,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 
 import { styled, keyframes } from "@/../stitches.config";
 
-export const Root = styled(Dialog.Root, {});
+export const Root = Dialog.Root;
 
-export const Trigger = styled(Dialog.Trigger, {});
+export const Trigger = Dialog.Trigger;
 
-export const Portal = styled(Dialog.Portal, {});
+export const Portal = Dialog.Portal;
 
 const overlayFadeIn = keyframes({
   from: {
@@ -37,32 +37,18 @@ export const Content = styled(Dialog.Content, {
 
   minWidth: "856px",
   zIndex: 3,
-});
 
-export const Header = styled("header", {
-  display: "flex",
-  alignItems: "center",
-  padding: "$4",
-
-  width: "100%",
-});
-
-export const Title = styled(Dialog.Title, {
-  fontWeight: 500,
-  fontSize: "$h3",
-  fontFamily: "$heading",
-  lineHeight: "$h3",
-  marginInline: "auto",
-});
-
-export const Close = styled(Dialog.Close, {
-  marginLeft: "auto",
-  color: "$textPrimary",
-
-  position: "absolute",
-  right: 10,
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 });
 
 export const Body = styled("main", {
-  padding: "$4 $6 $6 $6",
+  margin: "$4 $6 $6 $6",
+  maxHeight: "70vh",
+  overflowY: "auto",
+});
+
+export const Footer = styled("footer", {
+  padding: "0 $6 $6 $6",
 });
