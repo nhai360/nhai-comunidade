@@ -10,6 +10,7 @@ import { Actions } from "./Actions";
 
 import * as S from "./Comment.styles";
 import { Reply } from "./Reply";
+import { Options } from "./Options";
 
 type Props = {
   comment: CommentWithColor;
@@ -42,6 +43,8 @@ export function Comment({ comment }: Props) {
             editorState={editorState}
             onChange={setEditorState}
           />
+
+          {comment.options && <Options options={comment.options} />}
 
           {comment.replies && (
             <>

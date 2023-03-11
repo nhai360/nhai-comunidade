@@ -10,6 +10,7 @@ export * from "./Field";
 export * from "./Input";
 export * from "./Label";
 export * from "./Logo";
+export * from "./ProgressBar";
 export * from "./RadioGroup";
 export * from "./Tag";
 export * from "./TextArea";

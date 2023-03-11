@@ -7,8 +7,9 @@ export type Comment = {
   likesCount: number;
   createdAt: Date;
   replies?: Comment[];
+  options?: string[];
 };
 
 export type CommentWithColor = {
-  color: "green" | "pink" | "blue";
+  color: "green" | "pink" | "yellow";
 } & Comment;

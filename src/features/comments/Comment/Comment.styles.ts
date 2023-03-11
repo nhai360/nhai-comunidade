@@ -35,8 +35,9 @@ export const Content = styled("div", {
       pink: {
         background: "$pinkLight",
       },
-      blue: {
-        background: "$blueLight",
+      yellow: {
+        background: "$yellowLight",
+        width: "50%",
       },
     },
   },
