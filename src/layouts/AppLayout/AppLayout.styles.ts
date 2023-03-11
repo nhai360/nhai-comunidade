@@ -6,8 +6,9 @@ export const Content = styled("main", {
 });
 
 export const Sider = styled("aside", {
-  position: "sticky",
-  top: 0,
+  position: "fixed",
+  top: "calc(80px + $6)",
+  right: "$6",
 
   display: "flex",
   flexDirection: "column",
