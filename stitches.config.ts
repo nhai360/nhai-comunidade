@@ -132,4 +132,8 @@ export const globalStyles = globalCss({
   ul: {
     listStyle: "none",
   },
+
+  ".DraftEditor-root": {
+    position: "relative",
+  },
 });
