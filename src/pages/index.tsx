@@ -1,7 +1,12 @@
 import { AppLayout } from "@/layouts";
 
 import { CreatePostCard } from "@/features/posts";
-import { PopularToday, MainTrends, FeedList } from "@/features/feed";
+import {
+  PopularToday,
+  MainTrends,
+  FeedList,
+  Suggestions,
+} from "@/features/feed";
 
 export default function Feed() {
   return (
@@ -14,6 +19,7 @@ export default function Feed() {
         <AppLayout.Sider>
           <MainTrends />
           <PopularToday />
+          <Suggestions />
         </AppLayout.Sider>
       </AppLayout.GridWithSider>
     </AppLayout>
