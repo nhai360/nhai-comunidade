@@ -6,7 +6,7 @@ import {
   useController,
 } from "react-hook-form";
 
-import { Button, RadioGroup } from "@/ui";
+import { Button, RadioGroup, Tooltip } from "@/ui";
 import { ColorBrushIcon } from "@/ui/_icons";
 
 import { Tabs } from "../CreatePostDialog";
@@ -31,20 +31,22 @@ export function ColorSelect<T extends FieldValues>({
 
   return (
     <>
-      <Button
-        icon
-        variant={selected ? "primary" : "transparent"}
-        type="button"
-        onClick={() => {
-          if (selected) {
-            return onSelectTab(undefined);
-          }
+      <Tooltip message="Cores">
+        <Button
+          icon
+          variant={selected ? "primary" : "transparent"}
+          type="button"
+          onClick={() => {
+            if (selected) {
+              return onSelectTab(undefined);
+            }
 
-          onSelectTab("color");
-        }}
-      >
-        <ColorBrushIcon />
-      </Button>
+            onSelectTab("color");
+          }}
+        >
+          <ColorBrushIcon />
+        </Button>
+      </Tooltip>
 
       {selected && (
         <RadioGroup value={field.value} onValueChange={field.onChange}>

@@ -14,4 +14,5 @@ export * from "./ProgressBar";
 export * from "./RadioGroup";
 export * from "./Tag";
 export * from "./TextArea";
+export * from "./Tooltip";
 export * from "./Typography";

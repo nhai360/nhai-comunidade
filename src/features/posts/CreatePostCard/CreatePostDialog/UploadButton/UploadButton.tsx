@@ -1,4 +1,4 @@
-import { Button } from "@/ui";
+import { Button, Tooltip } from "@/ui";
 import { AddPhotoIcon } from "@/ui/_icons";
 
 import { Tabs } from "../CreatePostDialog";
@@ -18,13 +18,15 @@ export function UploadButton({ selected, onSelectTab }: Props) {
   }
 
   return (
-    <Button
-      icon
-      variant={selected ? "primary" : "transparent"}
-      type="button"
-      onClick={handleClick}
-    >
-      <AddPhotoIcon />
-    </Button>
+    <Tooltip message="Upload">
+      <Button
+        icon
+        variant={selected ? "primary" : "transparent"}
+        type="button"
+        onClick={handleClick}
+      >
+        <AddPhotoIcon />
+      </Button>
+    </Tooltip>
   );
 }

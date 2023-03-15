@@ -1,4 +1,4 @@
-import { Avatar, Button, Logo, Tag, Typography } from "@/ui";
+import { Avatar, Button, Logo, Tag, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon, NotificationIcon } from "@/ui/_icons";
 
@@ -17,9 +17,11 @@ export function Header() {
           <Button icon variant="transparent">
             <AddCircleIcon />
           </Button>
-          <Button icon variant="transparent">
-            <NotificationIcon />
-          </Button>
+          <Tooltip message="Notificações" position="bottom">
+            <Button icon variant="transparent">
+              <NotificationIcon />
+            </Button>
+          </Tooltip>
           <S.UserContainer>
             <Avatar
               src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
