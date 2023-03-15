@@ -8,16 +8,36 @@ export const Root = styled(Avatar.Root, {
 });
 
 export const Image = styled(Avatar.Image, {
-  width: "46px",
-  height: "46px",
   borderRadius: "50%",
   objectFit: "cover",
+
+  variants: {
+    size: {
+      xlarge: {
+        width: "128px",
+        height: "128px",
+      },
+      large: {
+        width: "72px",
+        height: "72px",
+      },
+      medium: {
+        width: "46px",
+        height: "46px",
+      },
+      small: {
+        width: "42px",
+        height: "42px",
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: "medium",
+  },
 });
 
 export const Fallback = styled(Avatar.Fallback, {
-  width: "46px",
-  height: "46px",
-
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -26,4 +46,29 @@ export const Fallback = styled(Avatar.Fallback, {
   color: "$textPrimary",
 
   borderRadius: "50%",
+
+  variants: {
+    size: {
+      xlarge: {
+        width: "128px",
+        height: "128px",
+      },
+      large: {
+        width: "72px",
+        height: "72px",
+      },
+      medium: {
+        width: "46px",
+        height: "46px",
+      },
+      small: {
+        width: "42px",
+        height: "42px",
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: "medium",
+  },
 });

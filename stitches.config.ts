@@ -133,6 +133,10 @@ export const globalStyles = globalCss({
     listStyle: "none",
   },
 
+  a: {
+    textDecoration: "none",
+  },
+
   ".DraftEditor-root": {
     position: "relative",
   },

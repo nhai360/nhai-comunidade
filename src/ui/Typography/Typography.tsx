@@ -45,6 +45,11 @@ const BaseText = styled("span", {
 const Text = styled(BaseText, {
   variants: {
     size: {
+      h3: {
+        fontFamily: "$body",
+        fontSize: "$h3",
+        lineHeight: "$h3",
+      },
       body1: {
         fontFamily: "$body",
         fontSize: "$body1",
@@ -107,6 +112,10 @@ const Title = styled(BaseText, {
         fontFamily: "$body",
         fontSize: "$body3",
         lineHeight: "$body",
+      },
+      subHeadline: {
+        fontFamily: "$subHeadline",
+        fontSize: "$body1",
       },
     },
     weight: {
