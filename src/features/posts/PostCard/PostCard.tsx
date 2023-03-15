@@ -1,5 +1,5 @@
 import { Card, Divider } from "@/ui";
-import { Post } from "@/features/timeline";
+import { Post } from "@/features/posts";
 import { Post as PostType } from "@/client/posts";
 
 import * as S from "./PostCard.styles";

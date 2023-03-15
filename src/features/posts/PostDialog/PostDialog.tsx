@@ -1,6 +1,6 @@
 import { Dialog, Divider } from "@/ui";
 
-import { Post } from "@/features/timeline";
+import { Post } from "@/features/posts";
 import { Post as PostType } from "@/client/posts";
 
 type Props = {

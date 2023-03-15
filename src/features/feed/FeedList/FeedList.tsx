@@ -1,10 +1,10 @@
 import { usePosts } from "@/client/posts";
 
-import { PostCard } from "@/features/timeline";
+import { PostCard } from "@/features/posts";
 
-import * as S from "./PostsList.styles";
+import * as S from "./FeedList.styles";
 
-export function PostsList() {
+export function FeedList() {
   const { posts } = usePosts();
 
   return (

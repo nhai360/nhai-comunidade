@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { Avatar, Card, Input } from "@/ui";
-import { CreatePostDialog } from "@/features/timeline";
 
+import { CreatePostDialog } from "./CreatePostDialog";
 import * as S from "./CreatePostCard.styles";
 
 export function CreatePostCard() {

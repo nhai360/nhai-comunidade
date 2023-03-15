@@ -1,8 +1,8 @@
 import { Post } from "@/client/posts";
 
-import { PostCounter } from "@/features/timeline/Post/PostCounter";
-import { PostCommentList } from "@/features/timeline/Post/PostCommentList";
-import { PostCommentField } from "@/features/timeline/Post/PostCommentField";
+import { PostCounter } from "@/features/posts/Post/PostCounter";
+import { PostCommentList } from "@/features/posts/Post/PostCommentList";
+import { PostCommentField } from "@/features/posts/Post/PostCommentField";
 
 import * as S from "./PostFooter.styles";
 

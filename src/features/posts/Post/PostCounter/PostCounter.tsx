@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/ui";
 import { HeartIcon } from "@/ui/_icons";
 
-import { PostDialog } from "@/features/timeline";
+import { PostDialog } from "@/features/posts";
 import { Post as PostType } from "@/client/posts";
 
 import { LikedBy } from "./LikedBy";
