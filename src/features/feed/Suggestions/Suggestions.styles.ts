@@ -7,6 +7,11 @@ export const Container = styled("ul", {
   overflowX: "auto",
   padding: "10px",
   margin: "-10px",
+
+  "&::-webkit-scrollbar": {
+    width: 0,
+    height: 0,
+  },
 });
 
 export const SuggestionItem = styled("li", {

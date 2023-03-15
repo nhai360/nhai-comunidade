@@ -8,6 +8,11 @@ export const PostList = styled("ul", {
   marginTop: "$3",
 
   maxWidth: "368px",
+
+  "&::-webkit-scrollbar": {
+    width: 0,
+    height: 0,
+  },
 });
 
 export const PostItem = styled("li", {

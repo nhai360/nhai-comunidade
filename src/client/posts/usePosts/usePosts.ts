@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { Post } from "@/client/posts/types";
 
 export async function getPosts() {
-  const posts = localStorage.getItem("@nhai-comunidade:posts");
+  const posts = localStorage.getItem("@nhai-comunidade-v0.0.1:posts");
 
   if (posts) {
     return JSON.parse(posts);

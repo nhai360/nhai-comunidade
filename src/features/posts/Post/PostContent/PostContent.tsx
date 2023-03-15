@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import { EditorState, convertFromRaw } from "draft-js";
-import Editor from "@draft-js-plugins/editor";
+import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Typography } from "@/ui";
 import { plugins } from "@/ui/TextArea/plugins";
@@ -15,10 +14,8 @@ type Props = {
 };
 
 export function PostContent({ post }: Props) {
-  const contentState = convertFromRaw(post.content);
-
   const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(contentState),
+    createEditorStateWithText(post.content),
   );
 
   const hasColor = Boolean(post.color);

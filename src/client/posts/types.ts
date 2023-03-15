@@ -1,4 +1,3 @@
-import { RawDraftContentState } from "draft-js";
 import zod from "zod";
 
 export const file = zod.object({
@@ -25,7 +24,7 @@ export type Author = {
 export type Post = {
   id: string;
   title: string;
-  content: RawDraftContentState;
+  content: string;
   file?: File;
   color?: PostColor;
 };

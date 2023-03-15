@@ -16,7 +16,10 @@ async function createPostRequest(params: CreatePostParams) {
 
   const newPosts = [...posts, post];
 
-  localStorage.setItem("@nhai-comunidade:posts", JSON.stringify(newPosts));
+  localStorage.setItem(
+    "@nhai-comunidade-v0.0.1:posts",
+    JSON.stringify(newPosts),
+  );
 
   await new Promise((resolve) => {
     setTimeout(() => {
