@@ -7,7 +7,7 @@ import {
   CreatePostFields,
   CreatePostSuccess,
   CreatePostUpload,
-} from "@/features/timeline";
+} from "@/features/posts";
 import {
   CreatePostParams,
   createPostSchema,
