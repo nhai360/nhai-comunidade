@@ -8,6 +8,7 @@ import {
 } from "@/ui/_icons";
 
 import * as S from "./Sidebar.styles";
+import { Tooltip } from "@/ui";
 
 export function Sidebar() {
   return (
@@ -15,26 +16,34 @@ export function Sidebar() {
       <nav>
         <S.NavigationList>
           <Link href="/">
-            <S.NavItem active>
-              <HomeIcon />
-            </S.NavItem>
+            <Tooltip message="Feed" position="right">
+              <S.NavItem active>
+                <HomeIcon />
+              </S.NavItem>
+            </Tooltip>
           </Link>
           <Link href="/">
-            <S.NavItem>
-              <CameraIcon />
-            </S.NavItem>
+            <Tooltip message="Vídeos" position="right">
+              <S.NavItem>
+                <CameraIcon />
+              </S.NavItem>
+            </Tooltip>
           </Link>
           <Link href="/">
-            <S.NavItem>
-              <ListLineParagraphSquareIcon />
-            </S.NavItem>
+            <Tooltip message="Artigos" position="right">
+              <S.NavItem>
+                <ListLineParagraphSquareIcon />
+              </S.NavItem>
+            </Tooltip>
           </Link>
         </S.NavigationList>
       </nav>
 
-      <S.NavItem>
-        <SettingsIcon />
-      </S.NavItem>
+      <Tooltip message="Configurações" position="right">
+        <S.NavItem>
+          <SettingsIcon />
+        </S.NavItem>
+      </Tooltip>
     </S.Container>
   );
 }

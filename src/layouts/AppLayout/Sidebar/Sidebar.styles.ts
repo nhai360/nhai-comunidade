@@ -12,6 +12,7 @@ export const Container = styled("aside", {
   justifyContent: "space-between",
 
   paddingBlock: "$20 $8",
+  zIndex: 2,
 });
 
 export const NavigationList = styled("ul", {

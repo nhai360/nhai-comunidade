@@ -1,4 +1,5 @@
 import { styled } from "@/../stitches.config";
+import { ComponentProps } from "react";
 
 export const Input = styled("input", {
   borderRadius: "$medium",
@@ -12,6 +13,7 @@ export const Input = styled("input", {
   alignItems: "center",
 
   width: "100%",
+  transition: "al 0.2s",
 
   variants: {
     error: {
@@ -47,27 +49,39 @@ export const Input = styled("input", {
         },
       },
       green: {
-        background: "$greenMedium",
-        color: "$neutral100",
+        background: "$greenLight",
+        color: "$textPrimary",
 
         "&::placeholder": {
-          color: "$neutral100",
+          color: "$textPrimary",
+        },
+
+        "&:focus": {
+          borderColor: "$greenMedium",
         },
       },
       pink: {
-        background: "$pinkMedium",
-        color: "$neutral100",
+        background: "$pinkLight",
+        color: "$textPrimary",
 
         "&::placeholder": {
-          color: "$neutral100",
+          color: "$textPrimary",
+        },
+
+        "&:focus": {
+          borderColor: "$pinkMedium",
         },
       },
       blue: {
-        background: "$blueMedium",
-        color: "$neutral100",
+        background: "$blueLight",
+        color: "$textPrimary",
 
         "&::placeholder": {
-          color: "$neutral100",
+          color: "$textPrimary",
+        },
+
+        "&:focus": {
+          borderColor: "$blueMedium",
         },
       },
     },
@@ -87,3 +101,5 @@ export const Input = styled("input", {
     color: "neutral",
   },
 });
+
+export type InputProps = ComponentProps<typeof Input>;

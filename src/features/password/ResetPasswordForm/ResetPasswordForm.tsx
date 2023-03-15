@@ -40,7 +40,7 @@ export function ResetPasswordForm({ onResetPassword }: Props) {
   return (
     <S.Container onSubmit={handleSubmit(handleSendEmail)}>
       <S.FieldContainer>
-        <Field
+        <Field.Input
           required
           type="password"
           label="Senha"
@@ -49,7 +49,7 @@ export function ResetPasswordForm({ onResetPassword }: Props) {
           helperText="Sua nova senha precisa ter no mínimo 8 dígitos e que contenha, números, letras e símbolos"
           {...register("password")}
         />
-        <Field
+        <Field.Input
           required
           type="password"
           label="Confirmar senha"

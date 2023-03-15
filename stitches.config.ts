@@ -1,6 +1,6 @@
 import { createStitches } from "@stitches/react";
 
-export const { styled, getCssText, globalCss, keyframes, theme } =
+export const { styled, getCssText, globalCss, keyframes, css, theme } =
   createStitches({
     theme: {
       fonts: {
@@ -131,5 +131,13 @@ export const globalStyles = globalCss({
 
   ul: {
     listStyle: "none",
+  },
+
+  a: {
+    textDecoration: "none",
+  },
+
+  ".DraftEditor-root": {
+    position: "relative",
   },
 });

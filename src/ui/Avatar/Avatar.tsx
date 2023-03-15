@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes } from "react";
+import { ComponentProps } from "react";
 
 import { CircularProgressBar } from "@/ui";
 
@@ -7,15 +7,35 @@ import * as S from "./Avatar.styles";
 
 type Props = {
   fallback: string;
-} & ImgHTMLAttributes<HTMLImageElement>;
+  progressBar?: boolean;
+} & ComponentProps<typeof S.Image>;
 
-export function Avatar({ fallback, ...rest }: Props) {
+export function Avatar({
+  fallback,
+  progressBar = false,
+  size = "medium",
+  css,
+  ...rest
+}: Props) {
+  if (progressBar) {
+    return (
+      <S.Root>
+        <CircularProgressBar value={75}>
+          <S.Image css={css} size={size} {...rest} />
+          <S.Fallback css={css} size={size} delayMs={600}>
+            {fallback}
+          </S.Fallback>
+        </CircularProgressBar>
+      </S.Root>
+    );
+  }
+
   return (
     <S.Root>
-      <CircularProgressBar value={75}>
-        <S.Image {...rest} />
-        <S.Fallback delayMs={600}>{fallback}</S.Fallback>
-      </CircularProgressBar>
+      <S.Image css={css} size={size} {...rest} />
+      <S.Fallback css={css} size={size} delayMs={600}>
+        {fallback}
+      </S.Fallback>
     </S.Root>
   );
 }

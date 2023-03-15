@@ -1,30 +1,31 @@
-import {
-  ForwardRefRenderFunction,
-  forwardRef,
-  InputHTMLAttributes,
-} from "react";
+import { ForwardRefRenderFunction, forwardRef, ReactNode } from "react";
 
-import { Input, Label, Typography } from "@/ui";
+import { Input, InputProps, Label, Typography } from "@/ui";
 
 import * as S from "./Field.styles";
 
-type Props = {
+type FieldProps = {
+  htmlFor?: string;
   label?: string;
   helperText?: string;
   errorText?: string;
-} & InputHTMLAttributes<HTMLInputElement>;
+  required?: boolean;
+  children?: ReactNode;
+};
 
-const FieldElement: ForwardRefRenderFunction<HTMLInputElement, Props> = (
-  { label, helperText, errorText, name, required, ...rest },
-  ref,
-) => {
-  const hasError = Boolean(errorText);
-
+export function Field({
+  label,
+  helperText,
+  htmlFor,
+  errorText,
+  required = true,
+  children,
+}: FieldProps) {
   return (
     <S.Container>
       {label && (
         <S.LabelContainer>
-          <Label htmlFor={name}>{label}</Label>
+          <Label htmlFor={htmlFor}>{label}</Label>
 
           {!required && (
             <Typography.Text size="body3" color="secondary">
@@ -34,15 +35,7 @@ const FieldElement: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         </S.LabelContainer>
       )}
 
-      <Input
-        ref={ref}
-        id={name}
-        name={name}
-        error={hasError}
-        {...rest}
-        size="medium"
-        color="neutral"
-      />
+      {children}
 
       {helperText && (
         <Typography.Text as="small" color="secondary">
@@ -57,6 +50,34 @@ const FieldElement: ForwardRefRenderFunction<HTMLInputElement, Props> = (
       )}
     </S.Container>
   );
+}
+
+type FieldInputProps = FieldProps & InputProps;
+
+const FieldInput: ForwardRefRenderFunction<
+  HTMLInputElement,
+  FieldInputProps
+> = ({ label, helperText, errorText, name, required, ...rest }, ref) => {
+  const hasError = Boolean(errorText);
+
+  return (
+    <Field
+      label={label}
+      helperText={helperText}
+      errorText={errorText}
+      htmlFor={name}
+      required={required}
+    >
+      <Input
+        ref={ref}
+        id={name}
+        name={name}
+        error={hasError}
+        {...rest}
+        size="medium"
+      />
+    </Field>
+  );
 };
 
-export const Field = forwardRef(FieldElement);
+Field.Input = forwardRef(FieldInput);

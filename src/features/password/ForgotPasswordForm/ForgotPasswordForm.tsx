@@ -34,7 +34,7 @@ export function ForgotPasswordForm({ onSendEmail }: Props) {
   return (
     <S.Container onSubmit={handleSubmit(handleSendEmail)}>
       <S.FieldContainer>
-        <Field
+        <Field.Input
           required
           label="E-mail"
           placeholder="Digite seu e-mail"
