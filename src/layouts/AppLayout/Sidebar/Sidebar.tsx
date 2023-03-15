@@ -30,7 +30,7 @@ export function Sidebar() {
             </Tooltip>
           </Link>
           <Link href="/">
-            <Tooltip message="Feed" position="right">
+            <Tooltip message="Artigos" position="right">
               <S.NavItem>
                 <ListLineParagraphSquareIcon />
               </S.NavItem>
