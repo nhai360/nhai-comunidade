@@ -1,41 +1,56 @@
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import zod from "zod";
+import { useRouter } from "next/router";
 
 import { useAuthContext } from "@/contexts";
 import { Button, Checkbox, Field, Typography } from "@/ui";
 import { ArrowNarrowRightIcon } from "@/ui/_icons";
 
+import {
+  CreateSessionDecoder,
+  CreateSessionParams,
+  useCreateSession,
+} from "@/client/users";
+
 import * as S from "./LoginForm.styles";
 
-const loginSchema = zod.object({
-  email: zod
-    .string()
-    .email({ message: "O formato de e-mail é inválido" })
-    .min(1, "E-mail é obrigatório"),
-  password: zod.string().min(1, "Senha é obrigatória"),
-  remember: zod.boolean(),
-});
-
-type LoginParams = zod.TypeOf<typeof loginSchema>;
-
 export function LoginForm() {
-  const { login } = useAuthContext();
   const router = useRouter();
 
-  const { formState, register, handleSubmit, control } = useForm<LoginParams>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      remember: false,
-    },
-  });
+  const { login } = useAuthContext();
+
+  const { createSession, isLoading } = useCreateSession();
+
+  const { formState, register, handleSubmit, control, setError } =
+    useForm<CreateSessionParams>({
+      resolver: zodResolver(CreateSessionDecoder),
+      defaultValues: {
+        remember: false,
+      },
+    });
 
   const { errors } = formState;
 
-  function handleLogin() {
-    login();
-    router.push("/");
+  function handleLogin(params: CreateSessionParams) {
+    createSession(params, {
+      onSuccess: (response) => {
+        login({
+          session: response,
+          remember: params.remember,
+        });
+
+        router.push("/");
+      },
+      onError: () => {
+        const fields = ["password", "email"] as const;
+
+        fields.forEach((field) => {
+          setError(field, {
+            message: "E-mail ou senha inválido",
+          });
+        });
+      },
+    });
   }
 
   return (
@@ -66,7 +81,7 @@ export function LoginForm() {
       </S.FieldContainer>
 
       <Checkbox name="remember" label="Lembrar de mim?" control={control} />
-      <Button fullWidth type="submit">
+      <Button fullWidth type="submit" loading={isLoading}>
         Entrar
         <ArrowNarrowRightIcon />
       </Button>

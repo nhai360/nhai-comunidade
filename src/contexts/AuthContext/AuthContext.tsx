@@ -1,30 +1,62 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { Session } from "@/client/users";
 
 type AuthProviderProps = {
   children: ReactNode;
 };
 
+type LoginParams = {
+  session: Session;
+  remember?: boolean;
+};
+
 type AuthContextParams = {
+  session: Session | null;
   isAuthenticated: boolean;
-  login: () => void;
+  login: (params: LoginParams) => void;
   logout: () => void;
 };
 
 const AuthContext = createContext({} as AuthContextParams);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
 
-  function login() {
-    setIsAuthenticated(true);
+  const isAuthenticated = Boolean(session);
+
+  useEffect(() => {
+    if (!session) {
+      const sessionFromStorage = localStorage.getItem(
+        "@nhai-comunidade:session",
+      );
+
+      if (sessionFromStorage) {
+        setSession(JSON.parse(sessionFromStorage));
+      }
+    }
+  }, [session]);
+
+  function login({ session, remember }: LoginParams) {
+    setSession(session);
+
+    if (remember) {
+      localStorage.setItem("@nhai-comunidade:session", JSON.stringify(session));
+    }
   }
 
   function logout() {
-    setIsAuthenticated(false);
+    setSession(null);
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ session, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
