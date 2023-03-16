@@ -29,7 +29,7 @@ const AuthContext = createContext({} as AuthContextParams);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [session, setSession] = useState<Session | null>(null);
 
-  const isAuthenticated = Boolean(session);
+  const isAuthenticated = session !== null;
 
   useEffect(() => {
     if (!session) {

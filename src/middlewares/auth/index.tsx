@@ -3,21 +3,31 @@ import { useRouter } from "next/router";
 
 import { useAuthContext } from "@/contexts";
 
+type NavigateProps = {
+  href: string;
+};
+
+function Navigate({ href }: NavigateProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(href);
+  }, [router, href]);
+
+  return <></>;
+}
+
 export function withAuth<T extends { children?: ReactNode }>(
   Component: ComponentType<T>,
 ) {
   const AuthenticatedComponent = (props: T) => {
-    const router = useRouter();
-
     const { isAuthenticated } = useAuthContext();
 
-    useEffect(() => {
-      if (!isAuthenticated) {
-        router.push("/auth/login");
-      }
-    }, [isAuthenticated, router]);
+    if (isAuthenticated) {
+      return <Component {...props} />;
+    }
 
-    return <Component {...props} />;
+    return <Navigate href="/auth/login" />;
   };
 
   return AuthenticatedComponent;
@@ -27,17 +37,13 @@ export function withoutAuth<T extends { children?: ReactNode }>(
   Component: ComponentType<T>,
 ) {
   const UnauthenticatedComponent = (props: T) => {
-    const router = useRouter();
-
     const { isAuthenticated } = useAuthContext();
 
-    useEffect(() => {
-      if (isAuthenticated) {
-        router.push("/");
-      }
-    }, [isAuthenticated, router]);
+    if (!isAuthenticated) {
+      return <Component {...props} />;
+    }
 
-    return <Component {...props} />;
+    return <Navigate href="/" />;
   };
 
   return UnauthenticatedComponent;
