@@ -1,8 +1,9 @@
 import { AppLayout } from "@/layouts";
 
 import { UserProfileBanner, UserProfileInformation } from "@/features/profile";
+import { withAuth } from "@/middlewares";
 
-export default function Profile() {
+function Profile() {
   return (
     <AppLayout>
       <AppLayout.SimpleGrid>
@@ -12,3 +13,5 @@ export default function Profile() {
     </AppLayout>
   );
 }
+
+export default withAuth(Profile);
