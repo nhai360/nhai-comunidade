@@ -25,6 +25,7 @@ export function CreatePostFields() {
         name="content"
         placeholder="Em que você está pensando?"
         css={{ minHeight: "362px" }}
+        emojiSelectPosition="bottom"
       />
     </>
   );

@@ -12,6 +12,7 @@ export function CreatePostUpload() {
         control={control}
         name="content"
         placeholder="Em que você está pensando?"
+        emojiSelectPosition="bottom"
         css={{
           ".public-DraftEditor-content": {
             maxHeight: "200px",

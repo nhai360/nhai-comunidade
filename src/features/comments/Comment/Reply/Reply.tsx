@@ -3,7 +3,7 @@ import { useState } from "react";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Avatar, Typography } from "@/ui";
-import { plugins } from "@/ui/TextArea/plugins";
+import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Comment } from "@/client/comments/types";
 
@@ -55,7 +55,7 @@ export function Reply({ reply, parentId }: Props) {
           <S.Content>
             <Editor
               readOnly
-              plugins={plugins}
+              plugins={defaultPlugins}
               editorState={editorState}
               onChange={setEditorState}
             />

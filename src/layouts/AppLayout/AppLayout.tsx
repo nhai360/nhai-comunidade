@@ -11,11 +11,11 @@ type Props = {
 
 export function AppLayout({ children }: Props) {
   return (
-    <>
+    <S.Wrapper>
       <Header />
       <Sidebar />
       {children}
-    </>
+    </S.Wrapper>
   );
 }
 
