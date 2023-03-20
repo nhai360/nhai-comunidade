@@ -19,6 +19,8 @@ export const Message = styled("span", {
   transition: "all 0.2s",
   zIndex: 1,
 
+  whiteSpace: "nowrap",
+
   variants: {
     position: {
       top: {
