@@ -16,9 +16,10 @@ import * as S from "./RegisterForm.styles";
 export function RegisterForm() {
   const router = useRouter();
 
-  const { formState, register, handleSubmit } = useForm<CreateUserParams>({
-    resolver: zodResolver(CreateUserDecoder),
-  });
+  const { formState, register, handleSubmit, setError } =
+    useForm<CreateUserParams>({
+      resolver: zodResolver(CreateUserDecoder),
+    });
 
   const { createUser, isLoading } = useCreateUser();
 
@@ -28,6 +29,11 @@ export function RegisterForm() {
     createUser(params, {
       onSuccess: () => {
         router.push("/auth/login");
+      },
+      onError: () => {
+        setError("email", {
+          message: "Já existe um usuário cadastrado com esse e-mail",
+        });
       },
     });
   }
