@@ -118,6 +118,22 @@ export const EmojiStyles = css({
   position: "relative",
 }).toString();
 
+export const EmojiSuggestionsEntryStyles = css({
+  display: "flex",
+  alignItems: "center",
+
+  padding: "$2 $4",
+}).toString();
+
+export const EmojiSuggestionsEntryFocusedStyles = css({
+  background: "$pinkLight",
+
+  display: "flex",
+  alignItems: "center",
+
+  padding: "$2 $4",
+}).toString();
+
 export const EmojiSelectButtonStyles = css({
   background: "transparent",
   border: 0,

@@ -14,6 +14,8 @@ import {
   EmojiSelectPopoverOnBottomStyles,
   EmojiSelectPopoverOnTopStyles,
   EmojiStyles,
+  EmojiSuggestionsEntryStyles,
+  EmojiSuggestionsEntryFocusedStyles,
   TextBlueStyles,
 } from "../TextArea.styles";
 import { useMemo } from "react";
@@ -49,6 +51,8 @@ export function usePlugins({ emojiSelectPosition }: Props) {
       useNativeArt: true,
       theme: {
         ...defaultTheme,
+        emojiSuggestionsEntry: EmojiSuggestionsEntryStyles,
+        emojiSuggestionsEntryFocused: EmojiSuggestionsEntryFocusedStyles,
         emojiSelect: EmojiStyles,
         emojiSelectButton: EmojiSelectButtonStyles,
         emojiSelectButtonPressed: EmojiSelectButtonStyles,
