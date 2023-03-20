@@ -1,9 +1,10 @@
-import { AuthLayout } from "@/layouts";
-import { RegisterForm } from "@/features/auth";
-
 import Head from "next/head";
 
-export default function Register() {
+import { AuthLayout } from "@/layouts";
+import { RegisterForm } from "@/features/auth";
+import { withoutAuth } from "@/middlewares";
+
+function Register() {
   return (
     <>
       <Head>
@@ -16,3 +17,5 @@ export default function Register() {
     </>
   );
 }
+
+export default withoutAuth(Register);

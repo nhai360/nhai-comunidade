@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
 import { ForgotPasswordForm } from "@/features/password";
+import { withoutAuth } from "@/middlewares";
 
-export default function ForgotPassword() {
+function ForgotPassword() {
   const [sendedEmail, setSendedEmail] = useState<string | null>(null);
 
   const isSendedEmail = Boolean(sendedEmail);
@@ -42,3 +43,5 @@ export default function ForgotPassword() {
     </PasswordLayout>
   );
 }
+
+export default withoutAuth(ForgotPassword);

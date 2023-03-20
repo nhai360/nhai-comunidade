@@ -1,17 +1,12 @@
 import { useRouter } from "next/router";
 
-import { useAuthContext } from "@/contexts";
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
 
 export function ResetPasswordSuccess() {
   const router = useRouter();
 
-  const { login } = useAuthContext();
-
   function handleLogin() {
-    login();
-
     router.push("/");
   }
 

@@ -7,8 +7,9 @@ import {
   FeedList,
   Suggestions,
 } from "@/features/feed";
+import { withAuth } from "@/middlewares";
 
-export default function Feed() {
+function Feed() {
   return (
     <AppLayout>
       <AppLayout.GridWithSider>
@@ -25,3 +26,5 @@ export default function Feed() {
     </AppLayout>
   );
 }
+
+export default withAuth(Feed);

@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import { Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
+import { withoutAuth } from "@/middlewares";
 import { ResetPasswordForm, ResetPasswordSuccess } from "@/features/password";
 
-export default function ResetPassword() {
+function ResetPassword() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   function handleResetPassword() {
@@ -28,3 +29,5 @@ export default function ResetPassword() {
     </PasswordLayout>
   );
 }
+
+export default withoutAuth(ResetPassword);

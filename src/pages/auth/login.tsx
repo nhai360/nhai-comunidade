@@ -1,9 +1,10 @@
-import { AuthLayout } from "@/layouts";
-import { BackButton, LoginForm } from "@/features/auth";
-
 import Head from "next/head";
 
-export default function Login() {
+import { AuthLayout } from "@/layouts";
+import { BackButton, LoginForm } from "@/features/auth";
+import { withoutAuth } from "@/middlewares";
+
+function Login() {
   return (
     <>
       <Head>
@@ -17,3 +18,5 @@ export default function Login() {
     </>
   );
 }
+
+export default withoutAuth(Login);

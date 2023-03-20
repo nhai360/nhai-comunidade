@@ -1,36 +1,41 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import zod from "zod";
 
 import { Button, Field, Typography } from "@/ui";
 import { ArrowNarrowRightIcon } from "@/ui/_icons";
 
+import {
+  CreateUserDecoder,
+  CreateUserParams,
+  useCreateUser,
+} from "@/client/users";
+
 import * as S from "./RegisterForm.styles";
-
-const registerSchema = zod.object({
-  name: zod.string().min(1, "Nome é obrigatório"),
-  nickname: zod.string(),
-  email: zod
-    .string()
-    .email({ message: "O formato de e-mail é inválido" })
-    .min(1, "E-mail é obrigatório"),
-  password: zod.string().min(1, "Senha é obrigatória"),
-});
-
-type RegisterParams = zod.TypeOf<typeof registerSchema>;
 
 export function RegisterForm() {
   const router = useRouter();
 
-  const { formState, register, handleSubmit } = useForm<RegisterParams>({
-    resolver: zodResolver(registerSchema),
-  });
+  const { formState, register, handleSubmit, setError } =
+    useForm<CreateUserParams>({
+      resolver: zodResolver(CreateUserDecoder),
+    });
+
+  const { createUser, isLoading } = useCreateUser();
 
   const { errors } = formState;
 
-  function handleRegister() {
-    router.push("/auth/login");
+  function handleRegister(params: CreateUserParams) {
+    createUser(params, {
+      onSuccess: () => {
+        router.push("/auth/login");
+      },
+      onError: () => {
+        setError("email", {
+          message: "Já existe um usuário cadastrado com esse e-mail",
+        });
+      },
+    });
   }
 
   return (
@@ -46,8 +51,8 @@ export function RegisterForm() {
           required
           label="Nome"
           placeholder="Digite seu nome"
-          errorText={errors.name?.message}
-          {...register("name")}
+          errorText={errors.fullName?.message}
+          {...register("fullName")}
         />
 
         <Field.Input
@@ -75,7 +80,7 @@ export function RegisterForm() {
         />
       </S.FieldContainer>
 
-      <Button fullWidth type="submit">
+      <Button fullWidth type="submit" loading={isLoading}>
         Criar conta
         <ArrowNarrowRightIcon />
       </Button>
