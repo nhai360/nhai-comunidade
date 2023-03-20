@@ -4,7 +4,7 @@ import { fromZodError } from "zod-validation-error";
 import axios, { AxiosResponse } from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3010/v1/",
+  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
 });
 
 export function decodeResponse<T>(
