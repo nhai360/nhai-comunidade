@@ -3,7 +3,7 @@ import { useState } from "react";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Typography } from "@/ui";
-import { plugins } from "@/ui/TextArea/plugins";
+import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Post } from "@/client/posts";
 
@@ -33,7 +33,7 @@ export function PostContent({ post }: Props) {
           <Editor
             readOnly
             editorState={editorState}
-            plugins={plugins}
+            plugins={defaultPlugins}
             onChange={setEditorState}
           />
         )}
@@ -52,7 +52,7 @@ export function PostContent({ post }: Props) {
         <Editor
           readOnly
           editorState={editorState}
-          plugins={plugins}
+          plugins={defaultPlugins}
           onChange={setEditorState}
         />
       )}

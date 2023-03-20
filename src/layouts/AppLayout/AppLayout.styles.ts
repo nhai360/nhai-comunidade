@@ -1,15 +1,16 @@
 import { styled } from "@/../stitches.config";
 
+export const Wrapper = styled("div", {
+  maxWidth: "1880px",
+  marginInline: "auto",
+});
+
 export const Content = styled("main", {
   display: "flex",
   flexDirection: "column",
 });
 
 export const Sider = styled("aside", {
-  // position: "fixed",
-  // top: "calc(80px + $6)",
-  // right: "$6",
-
   display: "flex",
   flexDirection: "column",
   gap: "$6",

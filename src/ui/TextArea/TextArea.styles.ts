@@ -4,13 +4,15 @@ export const Container = styled("div", {
   borderRadius: "$medium",
   border: "2px solid transparent",
 
+  maxWidth: "100%",
+
   fontWeight: 700,
   fontSize: "$body2",
   fontFamily: "$body",
   lineHeight: "150%",
 
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
 
   width: "100%",
   transition: "al 0.2s",
@@ -111,3 +113,129 @@ export const Container = styled("div", {
 });
 
 export const TextBlueStyles = css({ color: "$blueMedium" }).toString();
+
+export const EmojiStyles = css({
+  position: "relative",
+}).toString();
+
+export const EmojiSuggestionsEntryStyles = css({
+  display: "flex",
+  alignItems: "center",
+
+  padding: "$2 $4",
+}).toString();
+
+export const EmojiSuggestionsEntryFocusedStyles = css({
+  background: "$pinkLight",
+
+  display: "flex",
+  alignItems: "center",
+
+  padding: "$2 $4",
+}).toString();
+
+export const EmojiSelectButtonStyles = css({
+  background: "transparent",
+  border: 0,
+
+  fontSize: "32px",
+  color: "$textPrimary",
+  transition: "all 0.2s",
+
+  "&:hover": {
+    opacity: 0.8,
+  },
+}).toString();
+
+export const EmojiSelectPopoverEntryStyles = css({
+  background: "transparent",
+  border: 0,
+
+  height: "32px",
+  width: "32px",
+
+  borderRadius: "$small",
+
+  display: "grid",
+  placeItems: "center",
+
+  fontSize: "16px",
+  transition: "all 0.2s",
+
+  "&:hover": {
+    background: "$neutral200",
+  },
+}).toString();
+
+export const EmojiSelectPopoverOnTopStyles = css({
+  background: "$neutral100",
+  borderRadius: "$medium",
+  border: "1px solid $neutral200",
+
+  position: "absolute",
+  zIndex: 99,
+
+  bottom: "100%",
+  right: "0",
+}).toString();
+
+export const EmojiSelectPopoverOnBottomStyles = css({
+  background: "$neutral100",
+  borderRadius: "$medium",
+  border: "1px solid $neutral200",
+
+  position: "absolute",
+  zIndex: 99,
+
+  top: "100%",
+  right: "0",
+}).toString();
+
+export const EmojiSelectPopoverNavEntryStyles = css({
+  background: "$neutral200",
+  border: 0,
+
+  height: "32px",
+  width: "32px",
+
+  borderRadius: "$small",
+
+  display: "grid",
+  placeItems: "center",
+
+  fontSize: "16px",
+  color: "$textSecondary",
+  transition: "all 0.2s",
+
+  "&:hover": {
+    color: "$pinkMedium",
+  },
+}).toString();
+
+export const EmojiSelectPopoverNavEntryActiveStyles = css({
+  background: "$pinkLight",
+  border: 0,
+
+  height: "32px",
+  width: "32px",
+
+  borderRadius: "$small",
+
+  display: "grid",
+  placeItems: "center",
+
+  fontSize: "16px",
+  color: "$pinkMedium",
+}).toString();
+
+export const EmojiSelectPopoverNavStyles = css({
+  display: "flex",
+  width: "100%",
+  padding: "$3",
+  gap: "$2",
+}).toString();
+
+export const EmojiSelectPopoverGroupsStyles = css({
+  height: "150px",
+  width: "100%",
+}).toString();

@@ -3,7 +3,6 @@ import { useState } from "react";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Avatar, Divider, Typography } from "@/ui";
-import { plugins } from "@/ui/TextArea/plugins";
 import { CommentWithColor } from "@/client/comments";
 
 import { Actions } from "./Actions";
@@ -11,6 +10,7 @@ import { Actions } from "./Actions";
 import * as S from "./Comment.styles";
 import { Reply } from "./Reply";
 import { Options } from "./Options";
+import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 type Props = {
   comment: CommentWithColor;
@@ -39,7 +39,7 @@ export function Comment({ comment }: Props) {
         <S.Content color={comment.color}>
           <Editor
             readOnly
-            plugins={plugins}
+            plugins={defaultPlugins}
             editorState={editorState}
             onChange={setEditorState}
           />

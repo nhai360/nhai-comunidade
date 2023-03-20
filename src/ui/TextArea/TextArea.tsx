@@ -14,8 +14,7 @@ import { EditorProps, EditorState, RawDraftContentState } from "draft-js";
 
 import { convertToText } from "@/lib/draftjs";
 
-import { EmojiSuggestions, plugins } from "./plugins";
-
+import { usePlugins } from "./usePlugins";
 import * as S from "./TextArea.styles";
 
 type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
@@ -24,6 +23,7 @@ type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
 
 export type TextAreaProps<T extends FieldValues> = {
   defaultValue?: RawDraftContentState;
+  emojiSelectPosition?: "top" | "bottom";
 } & Omit<ExternalProps<T>, "defaultValue">;
 
 export function TextArea<T extends FieldValues>({
@@ -34,11 +34,16 @@ export function TextArea<T extends FieldValues>({
   color,
   css,
   defaultValue,
+  emojiSelectPosition = "top",
   onFocus,
   onBlur,
   ...rest
 }: TextAreaProps<T>) {
   const editorRef = useRef<Editor>(null);
+
+  const { plugins, EmojiSelect, EmojiSuggestions } = usePlugins({
+    emojiSelectPosition,
+  });
 
   const { field } = useController({
     name,
@@ -88,6 +93,7 @@ export function TextArea<T extends FieldValues>({
         onBlur={handleBlur}
         plugins={plugins}
       />
+      <EmojiSelect />
       <EmojiSuggestions />
     </S.Container>
   );
