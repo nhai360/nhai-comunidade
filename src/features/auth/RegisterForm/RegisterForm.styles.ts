@@ -9,6 +9,10 @@ export const FormContainer = styled("form", {
   marginTop: "$8",
   maxWidth: "488px",
   width: "100%",
+  maxHeight: "85vh",
+
+  overflowY: "auto",
+  padding: "$4",
 });
 
 export const FieldContainer = styled("div", {

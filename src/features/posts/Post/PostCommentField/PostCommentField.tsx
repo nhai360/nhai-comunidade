@@ -20,6 +20,11 @@ export function PostCommentField() {
         name="comment"
         control={control}
         placeholder="Deixe sua opinião..."
+        css={{
+          ".public-DraftEditor-content": {
+            maxHeight: "50px",
+          },
+        }}
       />
     </S.Form>
   );

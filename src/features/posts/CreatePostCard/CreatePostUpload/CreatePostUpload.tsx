@@ -12,6 +12,11 @@ export function CreatePostUpload() {
         control={control}
         name="content"
         placeholder="Em que você está pensando?"
+        css={{
+          ".public-DraftEditor-content": {
+            maxHeight: "200px",
+          },
+        }}
       />
       <Dropzone {...register("file")} control={control} />
     </>

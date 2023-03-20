@@ -8,6 +8,8 @@ export const Container = styled("main", {
 
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
+
+  overflow: "hidden",
 });
 
 export const Content = styled("section", {
