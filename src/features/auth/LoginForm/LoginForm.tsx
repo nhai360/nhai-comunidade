@@ -13,6 +13,7 @@ import {
 } from "@/client/users";
 
 import * as S from "./LoginForm.styles";
+import { authenticatedAPI } from "@/client";
 
 export function LoginForm() {
   const router = useRouter();
@@ -34,6 +35,8 @@ export function LoginForm() {
   function handleLogin(params: CreateSessionParams) {
     createSession(params, {
       onSuccess: (response) => {
+        authenticatedAPI.defaults.headers.Authorization = `Bearer ${response.access_token}`;
+
         login({
           session: response,
           remember: params.remember,

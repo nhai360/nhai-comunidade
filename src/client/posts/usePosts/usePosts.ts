@@ -18,8 +18,8 @@ export async function getPosts({
 
 export function usePosts(params: GetParams = {}) {
   const { data: posts, ...rest } = useQuery<Post[]>({
+    queryKey: "posts",
     queryFn: () => getPosts(params),
-    queryKey: ["posts", params],
   });
 
   return {

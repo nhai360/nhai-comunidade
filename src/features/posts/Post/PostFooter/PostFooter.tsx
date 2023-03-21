@@ -1,6 +1,6 @@
 import { Post } from "@/client/posts";
 
-import { PostCounter } from "@/features/posts/Post/PostCounter";
+import { PostStats } from "@/features/posts/Post/PostStats";
 import { PostCommentList } from "@/features/posts/Post/PostCommentList";
 import { PostCommentField } from "@/features/posts/Post/PostCommentField";
 
@@ -14,7 +14,7 @@ type Props = {
 export function PostFooter({ post, expanded = false }: Props) {
   return (
     <S.Container>
-      <PostCounter post={post} expanded={expanded} />
+      <PostStats post={post} expanded={expanded} />
 
       <PostCommentList expanded={expanded} />
       <PostCommentField />

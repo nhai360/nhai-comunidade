@@ -7,6 +7,21 @@ export const PostColorDecoder = t.enum(["GREEN", "PINK", "BLUE"]);
 
 export type PostColor = t.TypeOf<typeof PostColorDecoder>;
 
+export const PostStatsDecoder = t.object({
+  id: t.string(),
+  likes: t.number(),
+  comments: t.number(),
+});
+
+export type PostStats = t.TypeOf<typeof PostStatsDecoder>;
+
+export const PostLikeDecoder = t.object({
+  id: t.string(),
+  authorId: t.string(),
+  postId: t.string(),
+  author: UserDecoder,
+});
+
 export const PostDecoder = t.object({
   id: t.string(),
   title: t.string(),
@@ -17,6 +32,8 @@ export const PostDecoder = t.object({
   createdAt: t.string().datetime(),
   updatedAt: t.string().datetime(),
   images: MediaDecoder.array().optional(),
+  stats: PostStatsDecoder,
+  likes: PostLikeDecoder.array(),
 });
 
 export type Post = t.TypeOf<typeof PostDecoder>;
@@ -33,4 +50,9 @@ export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
 export type GetParams = {
   orderBy?: keyof Post;
   orderDirection?: "asc" | "desc";
+};
+
+export type LikePostParams = {
+  postId: string;
+  alreadyLiked: boolean;
 };

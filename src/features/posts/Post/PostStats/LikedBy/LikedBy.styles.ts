@@ -11,7 +11,7 @@ export const AvatarGroup = styled("div", {
   alignItems: "center",
 
   "*": {
-    border: "4px solid transparent",
+    border: "4px solid $neutral100",
     borderLeft: 0,
 
     "&:not(:first-child) *": {
