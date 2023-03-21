@@ -1,9 +1,9 @@
-import { Author } from "@/client/posts";
+// import { Author } from "@/client/posts";
 
 export type Comment = {
   id: string;
   content: string;
-  author: Author;
+  author: any;
   likesCount: number;
   createdAt: Date;
   replies?: Comment[];
