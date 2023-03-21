@@ -3,28 +3,38 @@ import { HorizontalDotsIcon, LinkIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 
+import { Post } from "@/client/posts";
+import { getInitials } from "@/lib/string";
+import { formatDistanceToNow } from "@/lib/date-fns";
+
 import * as S from "./PostHeader.styles";
 
-export function PostHeader() {
+type Props = {
+  post: Post;
+};
+
+export function PostHeader({ post }: Props) {
+  const createdAtFormatted = formatDistanceToNow(new Date(post.createdAt));
+
   return (
     <S.Container>
       <S.User>
         <Avatar.Square
-          src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-          alt="Colm Tuite"
-          fallback="CT"
+          src=""
+          alt={post.author.fullName}
+          fallback={getInitials(post.author.fullName)}
         />
 
         <S.Info>
           <S.FullName>
-            Colm Tuite
+            {post.author.fullName}
             <Tag variant="blue">ADMIN</Tag>
             <Typography.Text color="secondary" size="caption">
-              10 dias atrás
+              {createdAtFormatted} atrás
             </Typography.Text>
           </S.FullName>
           <Typography.Text color="secondary" size="caption">
-            Nhaí
+            {post.author.nickname}
           </Typography.Text>
         </S.Info>
       </S.User>

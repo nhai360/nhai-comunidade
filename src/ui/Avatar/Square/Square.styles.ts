@@ -43,6 +43,8 @@ export const Fallback = styled(Avatar.Fallback, {
   background: "$neutral100",
   color: "$textPrimary",
 
+  border: "1px solid $neutral200",
+
   variants: {
     size: {
       large: {

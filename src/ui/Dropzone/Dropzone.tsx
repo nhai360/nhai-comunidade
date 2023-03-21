@@ -1,4 +1,4 @@
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { ForwardRefRenderFunction, forwardRef, useState } from "react";
 import ReactDropzone from "react-dropzone";
 import { FieldPath, UseControllerProps, useController } from "react-hook-form";
 
@@ -14,18 +14,19 @@ const DropzoneComponent: ForwardRefRenderFunction<
 > = (props, ref) => {
   const { field } = useController(props);
 
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   function handleDropAccepted(acceptedFiles: File[]) {
-    field.onChange({
-      ...acceptedFiles[0],
-      preview: URL.createObjectURL(acceptedFiles[0]),
-    });
+    field.onChange(acceptedFiles[0]);
+
+    setPreviewUrl(URL.createObjectURL(acceptedFiles[0]));
   }
 
   function handleRemoveFile() {
     field.onChange(undefined);
   }
 
-  if (field.value) {
+  if (previewUrl) {
     return (
       <S.Preview>
         <S.PreviewRemoveButton
@@ -35,7 +36,7 @@ const DropzoneComponent: ForwardRefRenderFunction<
         >
           <TrashIcon />
         </S.PreviewRemoveButton>
-        <S.ThumbnailImage src={field.value.preview} />
+        <S.ThumbnailImage src={previewUrl} />
       </S.Preview>
     );
   }

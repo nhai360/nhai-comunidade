@@ -1,4 +1,5 @@
 import { styled } from "@/../stitches.config";
+import { PostColorDecoder } from "@/client/posts";
 
 export const DefaultContainer = styled("article", {
   display: "flex",
@@ -23,13 +24,13 @@ export const ColoredContainer = styled("article", {
 
   variants: {
     color: {
-      green: {
+      [PostColorDecoder.Values.GREEN]: {
         background: "$greenLight",
       },
-      pink: {
+      [PostColorDecoder.Values.PINK]: {
         background: "$pinkLight",
       },
-      blue: {
+      [PostColorDecoder.Values.BLUE]: {
         background: "$blueLight",
       },
     },

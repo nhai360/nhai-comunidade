@@ -16,7 +16,7 @@ type Props = {
 export function Post({ post, expanded }: Props) {
   return (
     <>
-      <PostHeader />
+      <PostHeader post={post} />
       <PostContent post={post} />
       <Divider />
       <PostFooter post={post} expanded={expanded} />

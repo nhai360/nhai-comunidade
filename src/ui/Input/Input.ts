@@ -1,4 +1,5 @@
 import { styled } from "@/../stitches.config";
+import { PostColorDecoder } from "@/client/posts";
 import { ComponentProps } from "react";
 
 export const Input = styled("input", {
@@ -48,7 +49,7 @@ export const Input = styled("input", {
           },
         },
       },
-      green: {
+      [PostColorDecoder.Values.GREEN]: {
         background: "$greenLight",
         color: "$textPrimary",
 
@@ -60,7 +61,7 @@ export const Input = styled("input", {
           borderColor: "$greenMedium",
         },
       },
-      pink: {
+      [PostColorDecoder.Values.PINK]: {
         background: "$pinkLight",
         color: "$textPrimary",
 
@@ -72,7 +73,7 @@ export const Input = styled("input", {
           borderColor: "$pinkMedium",
         },
       },
-      blue: {
+      [PostColorDecoder.Values.BLUE]: {
         background: "$blueLight",
         color: "$textPrimary",
 
