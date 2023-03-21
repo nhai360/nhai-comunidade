@@ -1,39 +1,36 @@
-import zod from "zod";
+import t from "zod";
 
-export const file = zod.object({
-  preview: zod.string(),
+import { MediaDecoder } from "@/client/media/types";
+import { UserDecoder } from "../users";
+
+export const PostColorDecoder = t.enum(["GREEN", "PINK", "BLUE"]);
+
+export type PostColor = t.TypeOf<typeof PostColorDecoder>;
+
+export const PostDecoder = t.object({
+  id: t.string(),
+  title: t.string(),
+  content: t.string(),
+  color: PostColorDecoder.nullish(),
+  authorId: t.string(),
+  author: UserDecoder,
+  createdAt: t.string().datetime(),
+  updatedAt: t.string().datetime(),
+  images: MediaDecoder.array().optional(),
 });
 
-type File = zod.TypeOf<typeof file>;
+export type Post = t.TypeOf<typeof PostDecoder>;
 
-export const postColor = zod.union([
-  zod.literal("green"),
-  zod.literal("pink"),
-  zod.literal("blue"),
-]);
-
-export type PostColor = zod.TypeOf<typeof postColor>;
-
-export type Author = {
-  id: string;
-  name: string;
-  level: string;
-  avatarUrl: string;
-};
-
-export type Post = {
-  id: string;
-  title: string;
-  content: string;
-  file?: File;
-  color?: PostColor;
-};
-
-export const createPostSchema = zod.object({
-  title: zod.string(),
-  content: zod.unknown(),
-  file: file.optional(),
-  color: postColor.optional(),
+export const CreatePostDecoder = t.object({
+  title: t.string(),
+  content: t.string(),
+  image: t.any().optional(),
+  color: PostColorDecoder.optional(),
 });
 
-export type CreatePostParams = zod.TypeOf<typeof createPostSchema>;
+export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
+
+export type GetParams = {
+  orderBy?: keyof Post;
+  orderDirection?: "asc" | "desc";
+};

@@ -1,31 +1,12 @@
 import { useMutation, useQueryClient } from "react-query";
 
-import {
-  CreatePostParams,
-  getPosts,
-  invalidatePostsQueries,
-} from "@/client/posts";
+import { authenticatedAPI } from "@/client";
+import { CreatePostParams, invalidatePostsQueries } from "@/client/posts";
 
 async function createPostRequest(params: CreatePostParams) {
-  const post = {
-    id: String(Math.random()),
-    ...params,
-  };
+  const response = await authenticatedAPI.post("/post", params);
 
-  const posts = await getPosts();
-
-  const newPosts = [...posts, post];
-
-  localStorage.setItem(
-    "@nhai-comunidade-v0.0.1:posts",
-    JSON.stringify(newPosts),
-  );
-
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(newPosts);
-    }, 3000);
-  });
+  console.log(response.data);
 }
 
 export function useCreatePost() {
