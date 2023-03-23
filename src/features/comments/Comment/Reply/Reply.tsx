@@ -14,6 +14,8 @@ import {
   Header,
 } from "@/features/comments/Comment/Comment.styles";
 
+import { getInitials } from "@/lib/string";
+
 import * as S from "./Reply.styles";
 
 type Props = {
@@ -40,15 +42,15 @@ export function Reply({ reply, parentId }: Props) {
       <Wrapper>
         <Avatar.Square
           size="small"
-          level={reply.author.level}
-          src={reply.author.avatarUrl}
-          alt={reply.author.name}
-          fallback="JZ"
+          // level={reply.author.level}
+          src=""
+          alt={reply.author.fullName}
+          fallback={getInitials(reply.author.fullName)}
         />
         <Container>
           <Header>
             <Typography.Title size="h5" weight="bold">
-              {reply.author.name}
+              {reply.author.fullName}
             </Typography.Title>
             <Actions comment={reply} />
           </Header>

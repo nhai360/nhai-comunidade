@@ -1,9 +1,9 @@
 import { Divider } from "@/ui";
 
 import { Comment } from "@/features/comments";
+import { useComments } from "@/client/comments";
 
 import * as S from "./PostCommentList.styles";
-import { useComments } from "@/client/comments";
 
 type Props = {
   expanded?: boolean;

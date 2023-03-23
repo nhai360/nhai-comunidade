@@ -4,13 +4,14 @@ import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Avatar, Divider, Typography } from "@/ui";
 import { CommentWithColor } from "@/client/comments";
+import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
+import { getInitials } from "@/lib/string";
+
+import { Reply } from "./Reply";
 import { Actions } from "./Actions";
 
 import * as S from "./Comment.styles";
-import { Reply } from "./Reply";
-import { Options } from "./Options";
-import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 type Props = {
   comment: CommentWithColor;
@@ -24,15 +25,14 @@ export function Comment({ comment }: Props) {
   return (
     <S.Wrapper>
       <Avatar.Square
-        level={comment.author.level}
-        src={comment.author.avatarUrl}
-        alt={comment.author.name}
-        fallback="JZ"
+        src=""
+        alt={comment.author.fullName}
+        fallback={getInitials(comment.author.fullName)}
       />
       <S.Container>
         <S.Header>
           <Typography.Title size="h5" weight="bold">
-            {comment.author.name}
+            {comment.author.fullName}
           </Typography.Title>
           <Actions comment={comment} />
         </S.Header>
@@ -44,7 +44,7 @@ export function Comment({ comment }: Props) {
             onChange={setEditorState}
           />
 
-          {comment.options && <Options options={comment.options} />}
+          {/* {comment.options && <Options options={comment.options} />} */}
 
           {comment.replies && (
             <>

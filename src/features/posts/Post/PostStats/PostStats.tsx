@@ -19,7 +19,7 @@ type Props = {
 export function PostStats({ post, expanded = false }: Props) {
   const [isPostDialogVisible, setIsPostDialogVisible] = useState(false);
 
-  const { likePost, isLoading: isLoadingLike } = useLikePost();
+  const { likePost, isLoading } = useLikePost();
 
   const { session } = useAuthContext();
 
@@ -49,12 +49,12 @@ export function PostStats({ post, expanded = false }: Props) {
           </Button>
         )}
         <Button
-          loading={isLoadingLike}
-          variant={alreadyLikedPost ? "primary" : "light"}
           size="medium"
+          loading={isLoading}
+          variant={alreadyLikedPost ? "primary" : "light"}
           onClick={handleLikePost}
         >
-          <HeartIcon />
+          <HeartIcon fill={alreadyLikedPost ? "currentColor" : "none"} />
           Curtir
         </Button>
       </S.Actions>
