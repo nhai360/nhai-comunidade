@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
@@ -23,9 +24,16 @@ function ForgotPassword() {
           {sendedEmail}
         </Typography.Text>
 
-        <Button fullWidth css={{ marginBlock: "$8" }}>
-          Abrir meu aplicativo de e-mail
-        </Button>
+        <Link
+          href={`mailto:${sendedEmail}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ width: "100%" }}
+        >
+          <Button fullWidth css={{ marginBlock: "$8" }}>
+            Abrir meu aplicativo de e-mail
+          </Button>
+        </Link>
       </PasswordLayout>
     );
   }
