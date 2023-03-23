@@ -8,13 +8,13 @@ import {
   useRecoverPassword,
 } from "@/client/password";
 
-import * as S from "./ForgotPasswordForm.styles";
+import * as S from "./RecoverPasswordForm.styles";
 
 type Props = {
   onSendEmail: (email: string) => void;
 };
 
-export function ForgotPasswordForm({ onSendEmail }: Props) {
+export function RecoverPasswordForm({ onSendEmail }: Props) {
   const { formState, register, handleSubmit, setError } =
     useForm<RecoverPasswordParams>({
       resolver: zodResolver(RecoverPasswordDecoder),

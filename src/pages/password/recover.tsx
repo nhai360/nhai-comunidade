@@ -3,10 +3,10 @@ import Link from "next/link";
 
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
-import { ForgotPasswordForm } from "@/features/password";
+import { RecoverPasswordForm } from "@/features/password";
 import { withoutAuth } from "@/middlewares";
 
-function ForgotPassword() {
+function RecoverPassword() {
   const [sendedEmail, setSendedEmail] = useState<string | null>(null);
 
   const isSendedEmail = Boolean(sendedEmail);
@@ -47,9 +47,9 @@ function ForgotPassword() {
         Não se preocupe, vamos te ajudar a resetar sua senha, ok?
       </Typography.Text>
 
-      <ForgotPasswordForm onSendEmail={setSendedEmail} />
+      <RecoverPasswordForm onSendEmail={setSendedEmail} />
     </PasswordLayout>
   );
 }
 
-export default withoutAuth(ForgotPassword);
+export default withoutAuth(RecoverPassword);

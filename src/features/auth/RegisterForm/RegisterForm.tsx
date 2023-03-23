@@ -84,9 +84,9 @@ export function RegisterForm() {
         Criar conta
         <ArrowNarrowRightIcon />
       </Button>
-      <S.ForgotPasswordLink href="/auth/login">
+      <S.RecoverPasswordLink href="/auth/login">
         Já sou membro
-      </S.ForgotPasswordLink>
+      </S.RecoverPasswordLink>
     </S.FormContainer>
   );
 }
