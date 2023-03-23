@@ -40,7 +40,7 @@ export const Fallback = styled(Avatar.Fallback, {
   alignItems: "center",
   justifyContent: "center",
 
-  background: "$neutral100",
+  background: "$neutral200",
   color: "$textPrimary",
 
   variants: {

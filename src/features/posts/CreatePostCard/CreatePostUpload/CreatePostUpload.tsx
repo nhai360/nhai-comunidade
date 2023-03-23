@@ -13,13 +13,17 @@ export function CreatePostUpload() {
         name="content"
         placeholder="Em que você está pensando?"
         emojiSelectPosition="bottom"
+        shouldUnregister
         css={{
           ".public-DraftEditor-content": {
             maxHeight: "200px",
           },
         }}
       />
-      <Dropzone {...register("file")} control={control} />
+      <Dropzone
+        {...register("image", { shouldUnregister: true })}
+        control={control}
+      />
     </>
   );
 }

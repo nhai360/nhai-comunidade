@@ -53,6 +53,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function logout() {
     setSession(null);
+    localStorage.removeItem("@nhai-comunidade:session");
   }
 
   return (

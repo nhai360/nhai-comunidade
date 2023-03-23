@@ -18,10 +18,7 @@ export function PostContent({ post }: Props) {
     createEditorStateWithText(post.content),
   );
 
-  const hasColor = Boolean(post.color);
-  const hasFile = Boolean(post.file);
-
-  if (hasColor) {
+  if (post.color) {
     return (
       <S.ColoredContainer color={post.color}>
         {post.title && (
@@ -56,7 +53,7 @@ export function PostContent({ post }: Props) {
           onChange={setEditorState}
         />
       )}
-      {hasFile && <S.Image src={post.file?.preview} />}
+      {/* {hasImage && <S.Image src={post.images?[0].sourceUrl} />} */}
     </S.DefaultContainer>
   );
 }

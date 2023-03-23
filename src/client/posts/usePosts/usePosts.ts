@@ -1,21 +1,25 @@
 import { useQuery } from "react-query";
 
-import { Post } from "@/client/posts/types";
+import { authenticatedAPI, decodeResponse } from "@/client";
+import { GetParams, Post, PostDecoder } from "@/client/posts/types";
 
-export async function getPosts() {
-  const posts = localStorage.getItem("@nhai-comunidade-v0.0.1:posts");
+export async function getPosts({
+  orderBy = "createdAt",
+  orderDirection = "desc",
+}: GetParams) {
+  const response = await authenticatedAPI.get("/post", {
+    params: {
+      orderBy: `${orderBy}:${orderDirection}`,
+    },
+  });
 
-  if (posts) {
-    return JSON.parse(posts);
-  }
-
-  return [];
+  return decodeResponse<Post[]>(response, PostDecoder.array());
 }
 
-export function usePosts() {
+export function usePosts(params: GetParams = {}) {
   const { data: posts, ...rest } = useQuery<Post[]>({
-    queryFn: getPosts,
-    queryKey: ["posts"],
+    queryKey: "posts",
+    queryFn: () => getPosts(params),
   });
 
   return {

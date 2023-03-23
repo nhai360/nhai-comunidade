@@ -6,8 +6,8 @@ export const UserDecoder = t.object({
   email: t.string(),
   nickname: t.string().nullable(),
   bio: t.string().nullable(),
-  birthDate: t.string().nullable(),
-  userGenderId: t.string().nullable(),
+  birthDate: t.string().datetime().nullable(),
+  userGenderId: t.string().nullish(),
   updatedAt: t.string(),
 });
 
@@ -27,6 +27,7 @@ export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
 
 export const SessionDecoder = t.object({
   access_token: t.string(),
+  userId: t.string(),
 });
 
 export type Session = t.TypeOf<typeof SessionDecoder>;

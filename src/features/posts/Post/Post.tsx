@@ -3,7 +3,7 @@ import { Post as PostType } from "@/client/posts";
 
 import { PostHeader } from "./PostHeader";
 import { PostContent } from "./PostContent";
-import { PostCounter } from "./PostCounter";
+import { PostStats } from "./PostStats";
 import { PostFooter } from "./PostFooter";
 import { PostCommentList } from "./PostCommentList";
 import { PostCommentField } from "./PostCommentField";
@@ -16,7 +16,7 @@ type Props = {
 export function Post({ post, expanded }: Props) {
   return (
     <>
-      <PostHeader />
+      <PostHeader post={post} />
       <PostContent post={post} />
       <Divider />
       <PostFooter post={post} expanded={expanded} />
@@ -26,6 +26,6 @@ export function Post({ post, expanded }: Props) {
 
 Post.Header = PostHeader;
 Post.Content = PostContent;
-Post.Counter = PostCounter;
+Post.Counter = PostStats;
 Post.CommentList = PostCommentList;
 Post.CommentField = PostCommentField;

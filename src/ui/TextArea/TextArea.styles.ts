@@ -1,4 +1,5 @@
 import { styled, css } from "@/../stitches.config";
+import { PostColorDecoder } from "@/client/posts";
 
 export const Container = styled("div", {
   borderRadius: "$medium",
@@ -49,7 +50,7 @@ export const Container = styled("div", {
           color: "$textPrimary",
         },
       },
-      green: {
+      [PostColorDecoder.Values.GREEN]: {
         background: "$greenLight",
         color: "$textPrimary",
 
@@ -57,7 +58,7 @@ export const Container = styled("div", {
           color: "$textPrimary",
         },
       },
-      pink: {
+      [PostColorDecoder.Values.PINK]: {
         background: "$pinkLight",
         color: "$textPrimary",
 
@@ -65,7 +66,7 @@ export const Container = styled("div", {
           color: "$textPrimary",
         },
       },
-      blue: {
+      [PostColorDecoder.Values.BLUE]: {
         background: "$blueLight",
         color: "$textPrimary",
 

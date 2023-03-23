@@ -55,6 +55,15 @@ export const Container = styled("button", {
           background: "$blueDark !important",
         },
       },
+      light: {
+        color: "$textPrimary !important",
+        background: "$blueLight",
+
+        "&:not(:disabled):hover": {
+          background: "$blueMedium !important",
+          color: "$neutral100 !important",
+        },
+      },
       outline: {
         background: "transparent",
         color: "$textPrimary",

@@ -10,7 +10,7 @@ import {
 } from "@/features/posts";
 import {
   CreatePostParams,
-  createPostSchema,
+  CreatePostDecoder,
   useCreatePost,
 } from "@/client/posts";
 
@@ -27,7 +27,7 @@ export type Tabs = "color" | "upload";
 
 export function CreatePostDialog({ onClose }: Props) {
   const form = useForm<CreatePostParams>({
-    resolver: zodResolver(createPostSchema),
+    resolver: zodResolver(CreatePostDecoder),
   });
 
   const [selectedTab, setSelectedTab] = useState<Tabs>();

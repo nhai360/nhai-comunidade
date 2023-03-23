@@ -12,7 +12,7 @@ export function PostCard({ post }: Props) {
   return (
     <Card ghost>
       <S.Wrapper>
-        <Post.Header />
+        <Post.Header post={post} />
         <Post.Content post={post} />
       </S.Wrapper>
       <Divider css={{ marginBlock: "$6" }} />

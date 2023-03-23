@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
+import { Tooltip } from "@/ui";
 import {
   CameraIcon,
   HomeIcon,
@@ -7,10 +9,24 @@ import {
   SettingsIcon,
 } from "@/ui/_icons";
 
+import { authenticatedAPI } from "@/client";
+import { useAuthContext } from "@/contexts";
+
 import * as S from "./Sidebar.styles";
-import { Tooltip } from "@/ui";
 
 export function Sidebar() {
+  const router = useRouter();
+
+  const { logout } = useAuthContext();
+
+  function handleLogout() {
+    logout();
+
+    authenticatedAPI.defaults.headers.Authorization = null;
+
+    router.push("/auth/login");
+  }
+
   return (
     <S.Container>
       <nav>
@@ -41,6 +57,11 @@ export function Sidebar() {
 
       <Tooltip message="Configurações" position="right">
         <S.NavItem>
+          <SettingsIcon />
+        </S.NavItem>
+      </Tooltip>
+      <Tooltip message="Sair" position="right">
+        <S.NavItem onClick={handleLogout}>
           <SettingsIcon />
         </S.NavItem>
       </Tooltip>

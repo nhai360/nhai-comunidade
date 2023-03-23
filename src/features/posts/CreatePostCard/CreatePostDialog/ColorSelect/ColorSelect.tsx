@@ -10,6 +10,7 @@ import { Button, RadioGroup, Tooltip } from "@/ui";
 import { ColorBrushIcon } from "@/ui/_icons";
 
 import { Tabs } from "../CreatePostDialog";
+import { PostColorDecoder } from "@/client/posts";
 
 type Props<T extends FieldValues> = {
   selected?: boolean;
@@ -50,9 +51,12 @@ export function ColorSelect<T extends FieldValues>({
 
       {selected && (
         <RadioGroup value={field.value} onValueChange={field.onChange}>
-          <RadioGroup.Radio value="green" color="green" />
-          <RadioGroup.Radio value="pink" color="pink" />
-          <RadioGroup.Radio value="blue" color="blue" />
+          <RadioGroup.Radio
+            value={PostColorDecoder.Values.GREEN}
+            color="green"
+          />
+          <RadioGroup.Radio value={PostColorDecoder.Values.PINK} color="pink" />
+          <RadioGroup.Radio value={PostColorDecoder.Values.BLUE} color="blue" />
         </RadioGroup>
       )}
     </>

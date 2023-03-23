@@ -14,7 +14,7 @@ export function PostDialog({ post, onClose }: Props) {
       <Dialog.Content>
         <Dialog.Header title="Publicação de Colm Tuite" closable />
         <Dialog.Body css={{ maxHeight: "53vh" }}>
-          <Post.Header />
+          <Post.Header post={post} />
           <Post.Content post={post} />
           <Divider css={{ marginBlock: "$6" }} />
           <Post.Counter post={post} expanded />
