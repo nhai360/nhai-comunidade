@@ -1,38 +1,49 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import zod from "zod";
 
 import { Button, Field } from "@/ui";
+import {
+  RecoverPasswordDecoder,
+  RecoverPasswordParams,
+  useRecoverPassword,
+} from "@/client/password";
 
 import * as S from "./ForgotPasswordForm.styles";
-
-const forgotPasswordSchema = zod.object({
-  email: zod
-    .string()
-    .email({ message: "O formato de e-mail é inválido" })
-    .min(1, "E-mail é obrigatório"),
-});
-
-type ForgotPasswordFormParams = zod.TypeOf<typeof forgotPasswordSchema>;
 
 type Props = {
   onSendEmail: (email: string) => void;
 };
 
 export function ForgotPasswordForm({ onSendEmail }: Props) {
-  const { formState, register, handleSubmit } =
-    useForm<ForgotPasswordFormParams>({
-      resolver: zodResolver(forgotPasswordSchema),
+  const { formState, register, handleSubmit, setError } =
+    useForm<RecoverPasswordParams>({
+      resolver: zodResolver(RecoverPasswordDecoder),
     });
 
   const { errors } = formState;
 
-  function handleSendEmail({ email }: ForgotPasswordFormParams) {
-    onSendEmail(email);
+  const { recoverPassword, isLoading } = useRecoverPassword();
+
+  function handleRecoverPassword({ email }: RecoverPasswordParams) {
+    recoverPassword(
+      {
+        email,
+      },
+      {
+        onSuccess: () => {
+          onSendEmail(email);
+        },
+        onError: () => {
+          setError("email", {
+            message: "Não foi possível enviar e-mail de recuperação de senha.",
+          });
+        },
+      },
+    );
   }
 
   return (
-    <S.Container onSubmit={handleSubmit(handleSendEmail)}>
+    <S.Container onSubmit={handleSubmit(handleRecoverPassword)}>
       <S.FieldContainer>
         <Field.Input
           required
@@ -41,7 +52,7 @@ export function ForgotPasswordForm({ onSendEmail }: Props) {
           errorText={errors.email?.message}
           {...register("email")}
         />
-        <Button fullWidth type="submit">
+        <Button fullWidth type="submit" loading={isLoading}>
           Resetar senha
         </Button>
       </S.FieldContainer>
