@@ -1,11 +1,12 @@
 import { useState } from "react";
+import Link from "next/link";
 
 import { Button, Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
-import { ForgotPasswordForm } from "@/features/password";
+import { RecoverPasswordForm } from "@/features/password";
 import { withoutAuth } from "@/middlewares";
 
-function ForgotPassword() {
+function RecoverPassword() {
   const [sendedEmail, setSendedEmail] = useState<string | null>(null);
 
   const isSendedEmail = Boolean(sendedEmail);
@@ -23,9 +24,16 @@ function ForgotPassword() {
           {sendedEmail}
         </Typography.Text>
 
-        <Button fullWidth css={{ marginBlock: "$8" }}>
-          Abrir meu aplicativo de e-mail
-        </Button>
+        <Link
+          href={`mailto:${sendedEmail}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ width: "100%" }}
+        >
+          <Button fullWidth css={{ marginBlock: "$8" }}>
+            Abrir meu aplicativo de e-mail
+          </Button>
+        </Link>
       </PasswordLayout>
     );
   }
@@ -39,9 +47,9 @@ function ForgotPassword() {
         Não se preocupe, vamos te ajudar a resetar sua senha, ok?
       </Typography.Text>
 
-      <ForgotPasswordForm onSendEmail={setSendedEmail} />
+      <RecoverPasswordForm onSendEmail={setSendedEmail} />
     </PasswordLayout>
   );
 }
 
-export default withoutAuth(ForgotPassword);
+export default withoutAuth(RecoverPassword);

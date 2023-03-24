@@ -17,6 +17,6 @@ export const FieldContainer = styled("div", {
   rowGap: "$10",
 });
 
-export const ForgotPasswordLink = styled(Typography.Link, {
+export const RecoverPasswordLink = styled(Typography.Link, {
   marginInline: "auto",
 });

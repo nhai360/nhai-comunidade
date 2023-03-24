@@ -3,17 +3,19 @@ import { useState } from "react";
 import { Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
 import { withoutAuth } from "@/middlewares";
+import { CreateSessionParams } from "@/client/users";
 import { ResetPasswordForm, ResetPasswordSuccess } from "@/features/password";
 
 function ResetPassword() {
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [sessionParams, setSessionParams] =
+    useState<CreateSessionParams | null>(null);
 
-  function handleResetPassword() {
-    setIsSuccess(true);
+  function handleResetPassword(params: CreateSessionParams) {
+    setSessionParams(params);
   }
 
-  if (isSuccess) {
-    return <ResetPasswordSuccess />;
+  if (sessionParams) {
+    return <ResetPasswordSuccess {...sessionParams} />;
   }
 
   return (

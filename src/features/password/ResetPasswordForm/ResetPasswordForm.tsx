@@ -1,40 +1,57 @@
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import zod from "zod";
 
 import { Button, Field } from "@/ui";
+import {
+  ResetPasswordAndConfirmationDecoder,
+  ResetPasswordParams,
+  useResetPassword,
+} from "@/client/password";
+import { CreateSessionParams } from "@/client/users";
 
 import * as S from "./ResetPasswordForm.styles";
 
-const resetPasswordSchema = zod
-  .object({
-    password: zod
-      .string()
-      .min(1, "Senha é obrigatória")
-      .regex(/^[a-zA-Z\d@$!%*?&]{8,}$/, "O formato da senha é inválido"),
-    confirmPassword: zod.string().min(1, "Confirmar senha é obrigatório"),
-  })
-  .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: "As senhas precisam ser iguais",
-    path: ["confirmPassword"],
-  });
-
-type ResetPasswordFormParams = zod.TypeOf<typeof resetPasswordSchema>;
-
 type Props = {
-  onResetPassword: () => void;
+  onResetPassword: (params: CreateSessionParams) => void;
 };
 
 export function ResetPasswordForm({ onResetPassword }: Props) {
-  const { formState, register, handleSubmit } =
-    useForm<ResetPasswordFormParams>({
-      resolver: zodResolver(resetPasswordSchema),
+  const router = useRouter();
+
+  const { resetPassword, isLoading } = useResetPassword();
+
+  const { formState, register, handleSubmit, setError } =
+    useForm<ResetPasswordParams>({
+      resolver: zodResolver(ResetPasswordAndConfirmationDecoder),
     });
 
   const { errors } = formState;
+  const { uid } = router.query;
 
-  function handleSendEmail() {
-    onResetPassword();
+  function handleSendEmail({ password }: ResetPasswordParams) {
+    if (!uid || typeof uid !== "string") return;
+
+    resetPassword(
+      {
+        password,
+        uid,
+      },
+      {
+        onSuccess: (user) => {
+          onResetPassword({
+            email: user.email,
+            password,
+            remember: true,
+          });
+        },
+        onError: () => {
+          setError("password", {
+            message: "Seu token expirou, tente novamente com outro link",
+          });
+        },
+      },
+    );
   }
 
   return (
@@ -57,7 +74,7 @@ export function ResetPasswordForm({ onResetPassword }: Props) {
           errorText={errors.confirmPassword?.message}
           {...register("confirmPassword")}
         />
-        <Button fullWidth type="submit">
+        <Button fullWidth type="submit" loading={isLoading}>
           Resetar senha
         </Button>
       </S.FieldContainer>

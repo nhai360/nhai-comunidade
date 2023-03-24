@@ -88,9 +88,9 @@ export function LoginForm() {
         Entrar
         <ArrowNarrowRightIcon />
       </Button>
-      <S.ForgotPasswordLink href="/password/forgot">
+      <S.RecoverPasswordLink href="/password/recover">
         Esqueci minha senha
-      </S.ForgotPasswordLink>
+      </S.RecoverPasswordLink>
     </S.FormContainer>
   );
 }
