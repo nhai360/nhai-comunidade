@@ -55,16 +55,18 @@ export function Sidebar() {
         </S.NavigationList>
       </nav>
 
-      <Tooltip message="Configurações" position="right">
-        <S.NavItem>
-          <SettingsIcon />
-        </S.NavItem>
-      </Tooltip>
-      <Tooltip message="Sair" position="right">
-        <S.NavItem onClick={handleLogout}>
-          <SettingsIcon />
-        </S.NavItem>
-      </Tooltip>
+      <div>
+        <Tooltip message="Configurações" position="right">
+          <S.NavItem>
+            <SettingsIcon />
+          </S.NavItem>
+        </Tooltip>
+        <Tooltip message="Sair" position="right">
+          <S.NavItem onClick={handleLogout}>
+            <SettingsIcon />
+          </S.NavItem>
+        </Tooltip>
+      </div>
     </S.Container>
   );
 }
