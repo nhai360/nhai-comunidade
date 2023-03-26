@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
 import { Avatar, TextArea, TextAreaRefProps } from "@/ui";
 import {
@@ -17,6 +18,8 @@ type Props = {
 };
 
 export function PostCommentField({ post }: Props) {
+  const { replyTo } = useCommentContext();
+
   const fieldRef = useRef<TextAreaRefProps>(null);
 
   const { createComment } = useCreateComment();
@@ -31,6 +34,7 @@ export function PostCommentField({ post }: Props) {
     createComment(
       {
         postId: post.id,
+        replyId: replyTo?.id,
         content,
       },
       {

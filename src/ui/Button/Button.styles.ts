@@ -73,6 +73,10 @@ export const Container = styled("button", {
         background: "transparent",
         color: "$blueDark",
       },
+      text: {
+        background: "transparent",
+        color: "$textPrimary",
+      },
     },
     size: {
       large: {

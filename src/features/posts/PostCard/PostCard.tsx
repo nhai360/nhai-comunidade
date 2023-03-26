@@ -3,6 +3,7 @@ import { Post } from "@/features/posts";
 import { Post as PostType } from "@/client/posts";
 
 import * as S from "./PostCard.styles";
+import { CommentProvider } from "@/contexts";
 
 type Props = {
   post: PostType;
@@ -19,8 +20,10 @@ export function PostCard({ post }: Props) {
       <S.Wrapper css={{ paddingBottom: "$6" }}>
         <Post.Counter post={post} />
 
-        <Post.CommentList comments={post.comments} />
-        <Post.CommentField post={post} />
+        <CommentProvider>
+          <Post.CommentList comments={post.comments} />
+          <Post.CommentField post={post} />
+        </CommentProvider>
       </S.Wrapper>
     </Card>
   );

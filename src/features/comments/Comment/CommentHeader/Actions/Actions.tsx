@@ -1,16 +1,11 @@
 import { theme } from "@/../stitches.config";
 
 import { Button, Typography } from "@/ui";
-import {
-  DeleteIcon,
-  EditIcon,
-  HorizontalDotsIcon,
-  ReplyIcon,
-} from "@/ui/_icons";
+import { DeleteIcon, EditIcon, ReplyIcon } from "@/ui/_icons";
 
 import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
-import { formatDistanceToNow } from "@/lib/date-fns";
+import { format } from "@/lib/date-fns";
 
 import * as S from "./Actions.styles";
 
@@ -24,7 +19,10 @@ export function Actions({ comment }: Props) {
   const isUserIdFromSessionIsEqualAuthorId =
     comment.author.id === session?.userId;
 
-  const createdAtFormatted = formatDistanceToNow(new Date(comment.createdAt));
+  const createdAtFormatted = format(
+    new Date(comment.createdAt),
+    "dd 'de' MMMM",
+  );
 
   return (
     <S.Container>
@@ -32,9 +30,9 @@ export function Actions({ comment }: Props) {
         173 Gostaram
       </Typography.Text>
       <Typography.Text size="caption" color="title">
-        {createdAtFormatted} atrás
+        {createdAtFormatted}
       </Typography.Text>
-      {isUserIdFromSessionIsEqualAuthorId ? (
+      {isUserIdFromSessionIsEqualAuthorId && (
         <S.Box>
           <Button ghost icon variant="transparent" size="small">
             <EditIcon color={theme.colors.textSecondary.value} />
@@ -46,13 +44,6 @@ export function Actions({ comment }: Props) {
             <ReplyIcon color={theme.colors.textSecondary.value} />
           </Button>
         </S.Box>
-      ) : (
-        <Button ghost icon variant="transparent" size="small">
-          <HorizontalDotsIcon
-            size={19}
-            color={theme.colors.textSecondary.value}
-          />
-        </Button>
       )}
     </S.Container>
   );

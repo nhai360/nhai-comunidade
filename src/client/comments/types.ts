@@ -10,7 +10,7 @@ export type Comment = {
   authorId: string;
   createdAt: string;
   updatedAt: string;
-  replies: Comment[];
+  replies?: Comment[];
   replyToId?: string | null;
 };
 
@@ -23,7 +23,7 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     authorId: t.string(),
     createdAt: t.string().datetime(),
     updatedAt: t.string().datetime(),
-    replies: CommentDecoder.array(),
+    replies: CommentDecoder.array().optional(),
     replyToId: t.string().nullish(),
   }),
 );
@@ -34,6 +34,7 @@ export const CreateCommentDecoder = t.object({
 
 export type CreateCommentParams = {
   postId: string;
+  replyId?: string;
   content: string;
 };
 

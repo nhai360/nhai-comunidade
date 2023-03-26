@@ -4,9 +4,7 @@ import { authenticatedAPI } from "@/client";
 import { CreatePostParams, invalidatePostsQueries } from "@/client/posts";
 
 async function createPostRequest(params: CreatePostParams) {
-  const response = await authenticatedAPI.post("/post", params);
-
-  console.log(response.data);
+  await authenticatedAPI.post("/post", params);
 }
 
 export function useCreatePost() {

@@ -1,12 +1,14 @@
-import { Checkbox, ProgressBar, Typography } from "@/ui";
-import * as S from "./Options.styles";
 import { useState } from "react";
+
+import { Checkbox, ProgressBar, Typography } from "@/ui";
+
+import * as S from "./Poll.styles";
 
 type Props = {
   options: string[];
 };
 
-export function Options({ options }: Props) {
+export function Poll({ options }: Props) {
   const [selectedOption, setSelectedOption] = useState<string>();
 
   function handleChange(option: string) {

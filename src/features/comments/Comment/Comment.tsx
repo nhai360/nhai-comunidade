@@ -2,14 +2,15 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar, Divider, Typography } from "@/ui";
+import { Avatar } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { getInitials } from "@/lib/string";
 import { Comment as CommentType } from "@/client/comments";
 
-import { Reply } from "./Reply";
-import { Actions } from "./Actions";
+import { CommentHeader } from "./CommentHeader";
+import { RepliesList } from "./RepliesList";
+import { LikeAndReplyButtons } from "./LikeAndReplyButtons";
 
 import * as S from "./Comment.styles";
 
@@ -30,12 +31,7 @@ export function Comment({ comment }: Props) {
         fallback={getInitials(comment.author.fullName)}
       />
       <S.Container>
-        <S.Header>
-          <Typography.Title size="h5" weight="bold">
-            {comment.author.fullName}
-          </Typography.Title>
-          <Actions comment={comment} />
-        </S.Header>
+        <CommentHeader comment={comment} />
         <S.Content color="pink">
           {content && (
             <Editor
@@ -46,19 +42,11 @@ export function Comment({ comment }: Props) {
             />
           )}
 
-          {/* {comment.options && <Options options={comment.options} />} */}
+          {/* POLL: {comment.options && <Poll options={comment.options} />} */}
 
-          {comment.replies?.length > 0 && (
-            <>
-              <Divider />
-              <S.RepliesList>
-                {comment.replies.map((reply) => (
-                  <Reply key={reply.id} reply={reply} />
-                ))}
-              </S.RepliesList>
-            </>
-          )}
+          <RepliesList replies={comment.replies} />
         </S.Content>
+        <LikeAndReplyButtons comment={comment} />
       </S.Container>
     </S.Wrapper>
   );

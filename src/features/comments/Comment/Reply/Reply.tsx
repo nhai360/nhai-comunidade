@@ -2,17 +2,15 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar, Typography } from "@/ui";
+import { Avatar } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Comment } from "@/client/comments/types";
 
-import { Actions } from "@/features/comments/Comment/Actions";
-import {
-  Wrapper,
-  Container,
-  Header,
-} from "@/features/comments/Comment/Comment.styles";
+import { Wrapper, Container } from "@/features/comments/Comment/Comment.styles";
+import { LikeAndReplyButtons } from "@/features/comments/Comment/LikeAndReplyButtons";
+import { CommentHeader } from "@/features/comments/Comment/CommentHeader";
+import { RepliesList } from "@/features/comments/Comment/RepliesList";
 
 import { getInitials } from "@/lib/string";
 
@@ -47,32 +45,26 @@ export function Reply({ reply, parentId }: Props) {
           fallback={getInitials(reply.author.fullName)}
         />
         <Container>
-          <Header>
-            <Typography.Title size="h5" weight="bold">
-              {reply.author.fullName}
-            </Typography.Title>
-            <Actions comment={reply} />
-          </Header>
-          <S.Content>
-            {content && (
+          <CommentHeader comment={reply} />
+
+          {content && (
+            <S.Content>
               <Editor
                 readOnly
                 plugins={defaultPlugins}
                 editorState={content}
                 onChange={setContent}
               />
-            )}
-          </S.Content>
-
-          {replies && (
-            <>
-              <S.RepliesList css={{ marginTop: "$4" }}>
-                {replies.map((r) => (
-                  <Reply key={r.id} reply={r} parentId={reply.id} />
-                ))}
-              </S.RepliesList>
-            </>
+            </S.Content>
           )}
+
+          <LikeAndReplyButtons comment={reply} />
+
+          <RepliesList
+            replies={replies}
+            parentId={reply.id}
+            css={{ marginTop: "$4" }}
+          />
         </Container>
       </Wrapper>
       {!parentId && hasMoreToSee && (

@@ -22,4 +22,5 @@ export const RepliesList = styled("ul", {
 
 export const Content = styled("div", {
   maxWidth: "460px",
+  marginBottom: "$2",
 });

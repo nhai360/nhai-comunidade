@@ -69,6 +69,7 @@ const Text = styled(BaseText, {
         fontFamily: "$caption",
         fontSize: "$caption",
         lineHeight: "$caption",
+        letterSpacing: 0,
       },
       nano: {
         fontFamily: "$nano",
