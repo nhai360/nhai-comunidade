@@ -36,8 +36,3 @@ export const Content = styled("div", {
     },
   },
 });
-
-export const SeeMoreButton = styled("button", {
-  all: "unset",
-  cursor: "pointer",
-});

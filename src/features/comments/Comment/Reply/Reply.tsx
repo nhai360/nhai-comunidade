@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar } from "@/ui";
+import { Avatar, Button } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Comment } from "@/client/comments/types";
@@ -68,13 +68,16 @@ export function Reply({ reply, parentId }: Props) {
         </Container>
       </Wrapper>
       {!parentId && hasMoreToSee && (
-        <S.SeeMoreButton
+        <Button
+          ghost
+          variant="text"
+          css={{ marginRight: "auto" }}
           onClick={() => setIsExpanded((prevState) => !prevState)}
         >
           {isExpanded
             ? `Esconder ${hiddenReplies} respostas`
             : `Ver mais ${hiddenReplies} respostas`}
-        </S.SeeMoreButton>
+        </Button>
       )}
     </>
   );

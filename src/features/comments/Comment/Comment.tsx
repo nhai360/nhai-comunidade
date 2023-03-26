@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar } from "@/ui";
+import { Avatar, Typography } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
+import { Post } from "@/client/posts";
 import { getInitials } from "@/lib/string";
 import { Comment as CommentType } from "@/client/comments";
 
@@ -15,10 +16,12 @@ import { LikeAndReplyButtons } from "./LikeAndReplyButtons";
 import * as S from "./Comment.styles";
 
 type Props = {
+  post: Post;
   comment: CommentType;
+  maxReplies?: number;
 };
 
-export function Comment({ comment }: Props) {
+export function Comment({ post, comment, maxReplies }: Props) {
   const [content, setContent] = useState(
     comment.content ? createEditorStateWithText(comment.content) : null,
   );
@@ -33,6 +36,12 @@ export function Comment({ comment }: Props) {
       <S.Container>
         <CommentHeader comment={comment} />
         <S.Content color="pink">
+          {comment.title && (
+            <Typography.Text size="body2" weight="bold">
+              {comment.title}
+            </Typography.Text>
+          )}
+
           {content && (
             <Editor
               readOnly
@@ -44,7 +53,11 @@ export function Comment({ comment }: Props) {
 
           {/* POLL: {comment.options && <Poll options={comment.options} />} */}
 
-          <RepliesList replies={comment.replies} />
+          <RepliesList
+            post={post}
+            replies={comment.replies}
+            maxReplies={maxReplies}
+          />
         </S.Content>
         <LikeAndReplyButtons comment={comment} />
       </S.Container>

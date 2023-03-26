@@ -21,7 +21,7 @@ export function PostCard({ post }: Props) {
         <Post.Counter post={post} />
 
         <CommentProvider>
-          <Post.CommentList comments={post.comments} />
+          <Post.CommentList post={post} />
           <Post.CommentField post={post} />
         </CommentProvider>
       </S.Wrapper>

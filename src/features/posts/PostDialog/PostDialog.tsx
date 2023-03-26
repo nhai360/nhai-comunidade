@@ -13,7 +13,10 @@ export function PostDialog({ post, onClose }: Props) {
   return (
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Header title="Publicação de Colm Tuite" closable />
+        <Dialog.Header
+          title={`Publicação de ${post.author.fullName}`}
+          closable
+        />
         <CommentProvider>
           <Dialog.Body css={{ maxHeight: "53vh" }}>
             <Post.Header post={post} />
@@ -21,7 +24,7 @@ export function PostDialog({ post, onClose }: Props) {
             <Divider css={{ marginBlock: "$6" }} />
             <Post.Counter post={post} expanded />
 
-            <Post.CommentList comments={post.comments} expanded />
+            <Post.CommentList post={post} expanded />
           </Dialog.Body>
           <Dialog.Footer>
             <Post.CommentField post={post} />
