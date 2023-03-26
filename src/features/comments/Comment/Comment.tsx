@@ -18,8 +18,8 @@ type Props = {
 };
 
 export function Comment({ comment }: Props) {
-  const [editorState, setEditorState] = useState(
-    createEditorStateWithText(comment.content),
+  const [content, setContent] = useState(
+    comment.content ? createEditorStateWithText(comment.content) : null,
   );
 
   return (
@@ -37,12 +37,14 @@ export function Comment({ comment }: Props) {
           <Actions comment={comment} />
         </S.Header>
         <S.Content color="pink">
-          <Editor
-            readOnly
-            plugins={defaultPlugins}
-            editorState={editorState}
-            onChange={setEditorState}
-          />
+          {content && (
+            <Editor
+              readOnly
+              plugins={defaultPlugins}
+              editorState={content}
+              onChange={setContent}
+            />
+          )}
 
           {/* {comment.options && <Options options={comment.options} />} */}
 

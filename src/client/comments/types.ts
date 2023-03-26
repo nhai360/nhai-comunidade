@@ -4,7 +4,8 @@ import { UserDecoder, User } from "@/client/users";
 
 export type Comment = {
   id: string;
-  content: string;
+  title?: string | null;
+  content?: string;
   author: User;
   authorId: string;
   createdAt: string;
@@ -16,7 +17,8 @@ export type Comment = {
 export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
   t.object({
     id: t.string(),
-    content: t.string(),
+    title: t.string().nullish(),
+    content: t.string().optional(),
     author: UserDecoder,
     authorId: t.string(),
     createdAt: t.string().datetime(),

@@ -26,8 +26,8 @@ type Props = {
 export function Reply({ reply, parentId }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const [editorState, setEditorState] = useState(
-    createEditorStateWithText(reply.content),
+  const [content, setContent] = useState(
+    reply.content ? createEditorStateWithText(reply.content) : null,
   );
 
   const repliesCount = reply.replies?.length || 0;
@@ -42,7 +42,6 @@ export function Reply({ reply, parentId }: Props) {
       <Wrapper>
         <Avatar.Square
           size="small"
-          // level={reply.author.level}
           src=""
           alt={reply.author.fullName}
           fallback={getInitials(reply.author.fullName)}
@@ -55,12 +54,14 @@ export function Reply({ reply, parentId }: Props) {
             <Actions comment={reply} />
           </Header>
           <S.Content>
-            <Editor
-              readOnly
-              plugins={defaultPlugins}
-              editorState={editorState}
-              onChange={setEditorState}
-            />
+            {content && (
+              <Editor
+                readOnly
+                plugins={defaultPlugins}
+                editorState={content}
+                onChange={setContent}
+              />
+            )}
           </S.Content>
 
           {replies && (
