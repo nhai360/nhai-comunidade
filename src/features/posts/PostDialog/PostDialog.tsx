@@ -19,10 +19,10 @@ export function PostDialog({ post, onClose }: Props) {
           <Divider css={{ marginBlock: "$6" }} />
           <Post.Counter post={post} expanded />
 
-          <Post.CommentList expanded />
+          <Post.CommentList comments={post.comments} expanded />
         </Dialog.Body>
         <Dialog.Footer>
-          <Post.CommentField />
+          <Post.CommentField post={post} />
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>

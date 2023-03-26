@@ -3,10 +3,10 @@ import { useState } from "react";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Avatar, Divider, Typography } from "@/ui";
-import { CommentWithColor } from "@/client/comments";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { getInitials } from "@/lib/string";
+import { Comment as CommentType } from "@/client/comments";
 
 import { Reply } from "./Reply";
 import { Actions } from "./Actions";
@@ -14,7 +14,7 @@ import { Actions } from "./Actions";
 import * as S from "./Comment.styles";
 
 type Props = {
-  comment: CommentWithColor;
+  comment: CommentType;
 };
 
 export function Comment({ comment }: Props) {
@@ -36,7 +36,7 @@ export function Comment({ comment }: Props) {
           </Typography.Title>
           <Actions comment={comment} />
         </S.Header>
-        <S.Content color={comment.color}>
+        <S.Content color="pink">
           <Editor
             readOnly
             plugins={defaultPlugins}
@@ -46,7 +46,7 @@ export function Comment({ comment }: Props) {
 
           {/* {comment.options && <Options options={comment.options} />} */}
 
-          {comment.replies && (
+          {comment.replies?.length > 0 && (
             <>
               <Divider />
               <S.RepliesList>

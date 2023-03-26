@@ -10,6 +10,7 @@ export type Comment = {
   createdAt: string;
   updatedAt: string;
   replies: Comment[];
+  replyToId?: string | null;
 };
 
 export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
@@ -21,9 +22,19 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     createdAt: t.string().datetime(),
     updatedAt: t.string().datetime(),
     replies: CommentDecoder.array(),
+    replyToId: t.string().nullish(),
   }),
 );
 
-export type CommentWithColor = {
-  color: "green" | "pink" | "yellow";
-} & Comment;
+export const CreateCommentDecoder = t.object({
+  content: t.string().min(1, "O conteúdo do comentário é obrigatório"),
+});
+
+export type CreateCommentParams = {
+  postId: string;
+  content: string;
+};
+
+export type GetParams = {
+  postId: string;
+};

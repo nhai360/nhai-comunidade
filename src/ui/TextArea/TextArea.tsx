@@ -1,4 +1,12 @@
-import { ComponentProps, SyntheticEvent, useRef, useState } from "react";
+import {
+  ComponentProps,
+  ForwardRefRenderFunction,
+  SyntheticEvent,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import {
   FieldPath,
@@ -26,19 +34,29 @@ export type TextAreaProps<T extends FieldValues> = {
   emojiSelectPosition?: "top" | "bottom";
 } & Omit<ExternalProps<T>, "defaultValue">;
 
-export function TextArea<T extends FieldValues>({
-  name,
-  control,
-  rules,
-  shouldUnregister,
-  color,
-  css,
-  defaultValue,
-  emojiSelectPosition = "top",
-  onFocus,
-  onBlur,
-  ...rest
-}: TextAreaProps<T>) {
+export type TextAreaRefProps = {
+  clearInput: () => void;
+};
+
+const ForwardTextArea: ForwardRefRenderFunction<
+  TextAreaRefProps,
+  TextAreaProps<any>
+> = (
+  {
+    name,
+    control,
+    rules,
+    shouldUnregister,
+    color,
+    css,
+    defaultValue,
+    emojiSelectPosition = "top",
+    onFocus,
+    onBlur,
+    ...rest
+  },
+  ref,
+) => {
   const editorRef = useRef<Editor>(null);
 
   const { plugins, EmojiSelect, EmojiSuggestions } = usePlugins({
@@ -50,7 +68,16 @@ export function TextArea<T extends FieldValues>({
     control,
     rules,
     shouldUnregister,
-    defaultValue: defaultValue as PathValue<T, Path<T>>,
+    defaultValue: defaultValue as PathValue<any, Path<any>>,
+  });
+
+  useImperativeHandle(ref, () => {
+    return {
+      clearInput: () => {
+        setEditorState(EditorState.createEmpty());
+        field.onChange("");
+      },
+    };
   });
 
   const [isFocused, setIsFocused] = useState(false);
@@ -97,4 +124,6 @@ export function TextArea<T extends FieldValues>({
       <EmojiSuggestions />
     </S.Container>
   );
-}
+};
+
+export const TextArea = forwardRef(ForwardTextArea);

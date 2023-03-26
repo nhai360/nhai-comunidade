@@ -16,8 +16,8 @@ export function PostFooter({ post, expanded = false }: Props) {
     <S.Container>
       <PostStats post={post} expanded={expanded} />
 
-      <PostCommentList expanded={expanded} />
-      <PostCommentField />
+      <PostCommentList comments={post.comments} expanded={expanded} />
+      <PostCommentField post={post} />
     </S.Container>
   );
 }

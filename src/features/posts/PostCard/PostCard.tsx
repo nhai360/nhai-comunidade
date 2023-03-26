@@ -19,8 +19,8 @@ export function PostCard({ post }: Props) {
       <S.Wrapper css={{ paddingBottom: "$6" }}>
         <Post.Counter post={post} />
 
-        <Post.CommentList />
-        <Post.CommentField />
+        <Post.CommentList comments={post.comments} />
+        <Post.CommentField post={post} />
       </S.Wrapper>
     </Card>
   );
