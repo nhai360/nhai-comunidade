@@ -27,6 +27,7 @@ export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
 
 export const SessionDecoder = t.object({
   access_token: t.string(),
+  refresh_token: t.string(),
   userId: t.string(),
 });
 

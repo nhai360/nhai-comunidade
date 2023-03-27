@@ -2,7 +2,11 @@ import * as t from "zod";
 import { fromZodError } from "zod-validation-error";
 import axios, { AxiosResponse } from "axios";
 
-import { getToken } from "@/lib/auth";
+import {
+  authorizationInterceptor,
+  getToken,
+  refreshTokenInterceptor,
+} from "@/lib/auth";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
@@ -17,17 +21,12 @@ export const authenticatedAPI = axios.create({
 
 authenticatedAPI.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error?.response?.status === 401) {
-      const token = getToken();
+  authorizationInterceptor,
+);
 
-      if (token) {
-        authenticatedAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
-      }
-    }
-
-    return error;
-  },
+authenticatedAPI.interceptors.response.use(
+  (response) => response,
+  refreshTokenInterceptor,
 );
 
 export function decodeResponse<T>(
