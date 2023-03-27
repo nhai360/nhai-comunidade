@@ -26,6 +26,6 @@ export function Post({ post, expanded }: Props) {
 
 Post.Header = PostHeader;
 Post.Content = PostContent;
-Post.Counter = PostStats;
+Post.Stats = PostStats;
 Post.CommentList = PostCommentList;
 Post.CommentField = PostCommentField;

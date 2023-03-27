@@ -18,7 +18,7 @@ export function PostCard({ post }: Props) {
       </S.Wrapper>
       <Divider css={{ marginBlock: "$6" }} />
       <S.Wrapper css={{ paddingBottom: "$6" }}>
-        <Post.Counter post={post} />
+        <Post.Stats post={post} />
 
         <CommentProvider>
           <Post.CommentList post={post} />

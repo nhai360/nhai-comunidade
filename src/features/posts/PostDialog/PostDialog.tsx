@@ -22,7 +22,7 @@ export function PostDialog({ post, onClose }: Props) {
             <Post.Header post={post} />
             <Post.Content post={post} />
             <Divider css={{ marginBlock: "$6" }} />
-            <Post.Counter post={post} expanded />
+            <Post.Stats post={post} expanded />
 
             <Post.CommentList post={post} expanded />
           </Dialog.Body>

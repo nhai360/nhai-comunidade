@@ -70,7 +70,7 @@ export const Fallback = styled(Avatar.Fallback, {
 
 export const LevelTag = styled(Tag, {
   position: "absolute",
-  zIndex: 1,
+  zIndex: "$middle",
 
   left: "50%",
   bottom: "-10px",
