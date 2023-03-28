@@ -60,7 +60,10 @@ export function PostStats({ post, expanded = false }: Props) {
       </S.Actions>
 
       {isPostDialogVisible && (
-        <PostDialog post={post} onClose={() => setIsPostDialogVisible(false)} />
+        <PostDialog
+          postId={post.id}
+          onClose={() => setIsPostDialogVisible(false)}
+        />
       )}
     </S.Container>
   );

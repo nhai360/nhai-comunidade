@@ -54,6 +54,10 @@ export type GetParams = {
   orderDirection?: "asc" | "desc";
 };
 
+export type GetPostParams = {
+  postId: string;
+};
+
 export type LikePostParams = {
   postId: string;
   alreadyLiked: boolean;
