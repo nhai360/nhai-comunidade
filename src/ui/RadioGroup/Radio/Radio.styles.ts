@@ -35,7 +35,7 @@ export const Indicator = styled(RadioGroup.Indicator, {
   height: "18px",
 
   display: "flex",
-  zIndex: -1,
+  zIndex: "$alwaysOnBottom",
 
   position: "absolute",
   top: "50%",

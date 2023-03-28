@@ -2,17 +2,15 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar, Typography } from "@/ui";
+import { Avatar, Button } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Comment } from "@/client/comments/types";
 
-import { Actions } from "@/features/comments/Comment/Actions";
-import {
-  Wrapper,
-  Container,
-  Header,
-} from "@/features/comments/Comment/Comment.styles";
+import { Wrapper, Container } from "@/features/comments/Comment/Comment.styles";
+import { LikeAndReplyButtons } from "@/features/comments/Comment/LikeAndReplyButtons";
+import { CommentHeader } from "@/features/comments/Comment/CommentHeader";
+import { RepliesList } from "@/features/comments/Comment/RepliesList";
 
 import { getInitials } from "@/lib/string";
 
@@ -26,8 +24,8 @@ type Props = {
 export function Reply({ reply, parentId }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const [editorState, setEditorState] = useState(
-    createEditorStateWithText(reply.content),
+  const [content, setContent] = useState(
+    reply.content ? createEditorStateWithText(reply.content) : null,
   );
 
   const repliesCount = reply.replies?.length || 0;
@@ -42,46 +40,44 @@ export function Reply({ reply, parentId }: Props) {
       <Wrapper>
         <Avatar.Square
           size="small"
-          // level={reply.author.level}
           src=""
           alt={reply.author.fullName}
           fallback={getInitials(reply.author.fullName)}
         />
         <Container>
-          <Header>
-            <Typography.Title size="h5" weight="bold">
-              {reply.author.fullName}
-            </Typography.Title>
-            <Actions comment={reply} />
-          </Header>
-          <S.Content>
-            <Editor
-              readOnly
-              plugins={defaultPlugins}
-              editorState={editorState}
-              onChange={setEditorState}
-            />
-          </S.Content>
+          <CommentHeader comment={reply} />
 
-          {replies && (
-            <>
-              <S.RepliesList css={{ marginTop: "$4" }}>
-                {replies.map((r) => (
-                  <Reply key={r.id} reply={r} parentId={reply.id} />
-                ))}
-              </S.RepliesList>
-            </>
+          {content && (
+            <S.Content>
+              <Editor
+                readOnly
+                plugins={defaultPlugins}
+                editorState={content}
+                onChange={setContent}
+              />
+            </S.Content>
           )}
+
+          <LikeAndReplyButtons comment={reply} />
+
+          <RepliesList
+            replies={replies}
+            parentId={reply.id}
+            css={{ marginTop: "$4" }}
+          />
         </Container>
       </Wrapper>
       {!parentId && hasMoreToSee && (
-        <S.SeeMoreButton
+        <Button
+          ghost
+          variant="text"
+          css={{ marginRight: "auto" }}
           onClick={() => setIsExpanded((prevState) => !prevState)}
         >
           {isExpanded
             ? `Esconder ${hiddenReplies} respostas`
             : `Ver mais ${hiddenReplies} respostas`}
-        </S.SeeMoreButton>
+        </Button>
       )}
     </>
   );

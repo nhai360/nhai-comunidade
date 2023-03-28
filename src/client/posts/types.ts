@@ -1,7 +1,8 @@
 import t from "zod";
 
 import { MediaDecoder } from "@/client/media/types";
-import { UserDecoder } from "../users";
+import { UserDecoder } from "@/client/users";
+import { CommentDecoder } from "@/client/comments";
 
 export const PostColorDecoder = t.enum(["GREEN", "PINK", "BLUE"]);
 
@@ -27,13 +28,13 @@ export const PostDecoder = t.object({
   title: t.string(),
   content: t.string(),
   color: PostColorDecoder.nullish(),
-  authorId: t.string(),
   author: UserDecoder,
   createdAt: t.string().datetime(),
   updatedAt: t.string().datetime(),
   images: MediaDecoder.array().optional(),
   stats: PostStatsDecoder,
   likes: PostLikeDecoder.array(),
+  comments: CommentDecoder.array(),
 });
 
 export type Post = t.TypeOf<typeof PostDecoder>;

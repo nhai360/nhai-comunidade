@@ -56,5 +56,5 @@ export const PreviewRemoveButton = styled(Button, {
   position: "absolute",
   right: 10,
   top: 10,
-  zIndex: 1,
+  zIndex: "$middle",
 });

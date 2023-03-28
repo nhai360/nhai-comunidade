@@ -11,7 +11,7 @@ export const Container = styled("header", {
   alignItems: "center",
 
   borderBottom: "1px solid $neutral200",
-  zIndex: 2,
+  zIndex: "$fixed",
 });
 
 export const Content = styled("div", {

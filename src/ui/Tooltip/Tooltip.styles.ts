@@ -17,7 +17,7 @@ export const Message = styled("span", {
 
   padding: "$2 $3",
   transition: "all 0.2s",
-  zIndex: 1,
+  zIndex: "$middle",
 
   whiteSpace: "nowrap",
 
@@ -70,7 +70,7 @@ export const Indicator = styled("div", {
   width: "10px",
 
   transition: "all 0.2s",
-  zIndex: 1,
+  zIndex: "$middle",
 
   variants: {
     position: {

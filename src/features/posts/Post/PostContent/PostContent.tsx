@@ -14,7 +14,7 @@ type Props = {
 };
 
 export function PostContent({ post }: Props) {
-  const [editorState, setEditorState] = useState(
+  const [content, setContent] = useState(
     createEditorStateWithText(post.content),
   );
 
@@ -29,9 +29,9 @@ export function PostContent({ post }: Props) {
         {post.content && (
           <Editor
             readOnly
-            editorState={editorState}
+            editorState={content}
             plugins={defaultPlugins}
-            onChange={setEditorState}
+            onChange={setContent}
           />
         )}
       </S.ColoredContainer>
@@ -48,9 +48,9 @@ export function PostContent({ post }: Props) {
       {post.content && (
         <Editor
           readOnly
-          editorState={editorState}
+          editorState={content}
           plugins={defaultPlugins}
-          onChange={setEditorState}
+          onChange={setContent}
         />
       )}
       {/* {hasImage && <S.Image src={post.images?[0].sourceUrl} />} */}

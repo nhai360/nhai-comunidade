@@ -2,24 +2,28 @@ import { useState } from "react";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
-import { Avatar, Divider, Typography } from "@/ui";
-import { CommentWithColor } from "@/client/comments";
+import { Avatar, Typography } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
+import { Post } from "@/client/posts";
 import { getInitials } from "@/lib/string";
+import { Comment as CommentType } from "@/client/comments";
 
-import { Reply } from "./Reply";
-import { Actions } from "./Actions";
+import { CommentHeader } from "./CommentHeader";
+import { RepliesList } from "./RepliesList";
+import { LikeAndReplyButtons } from "./LikeAndReplyButtons";
 
 import * as S from "./Comment.styles";
 
 type Props = {
-  comment: CommentWithColor;
+  post: Post;
+  comment: CommentType;
+  maxReplies?: number;
 };
 
-export function Comment({ comment }: Props) {
-  const [editorState, setEditorState] = useState(
-    createEditorStateWithText(comment.content),
+export function Comment({ post, comment, maxReplies }: Props) {
+  const [content, setContent] = useState(
+    comment.content ? createEditorStateWithText(comment.content) : null,
   );
 
   return (
@@ -30,33 +34,32 @@ export function Comment({ comment }: Props) {
         fallback={getInitials(comment.author.fullName)}
       />
       <S.Container>
-        <S.Header>
-          <Typography.Title size="h5" weight="bold">
-            {comment.author.fullName}
-          </Typography.Title>
-          <Actions comment={comment} />
-        </S.Header>
-        <S.Content color={comment.color}>
-          <Editor
-            readOnly
-            plugins={defaultPlugins}
-            editorState={editorState}
-            onChange={setEditorState}
-          />
-
-          {/* {comment.options && <Options options={comment.options} />} */}
-
-          {comment.replies && (
-            <>
-              <Divider />
-              <S.RepliesList>
-                {comment.replies.map((reply) => (
-                  <Reply key={reply.id} reply={reply} />
-                ))}
-              </S.RepliesList>
-            </>
+        <CommentHeader comment={comment} />
+        <S.Content color="pink">
+          {comment.title && (
+            <Typography.Text size="body2" weight="bold">
+              {comment.title}
+            </Typography.Text>
           )}
+
+          {content && (
+            <Editor
+              readOnly
+              plugins={defaultPlugins}
+              editorState={content}
+              onChange={setContent}
+            />
+          )}
+
+          {/* POLL: {comment.options && <Poll options={comment.options} />} */}
+
+          <RepliesList
+            post={post}
+            replies={comment.replies}
+            maxReplies={maxReplies}
+          />
         </S.Content>
+        <LikeAndReplyButtons comment={comment} />
       </S.Container>
     </S.Wrapper>
   );

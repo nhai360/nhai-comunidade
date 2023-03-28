@@ -39,15 +39,15 @@ export function PostStats({ post, expanded = false }: Props) {
       <LikedBy post={post} />
 
       <S.Actions>
-        {!expanded && post.stats.comments > 0 && (
-          <Button
-            size="medium"
-            variant="transparent"
-            onClick={() => setIsPostDialogVisible(true)}
-          >
-            Ver mais {post.stats.comments} comentários
-          </Button>
-        )}
+        {/* {!expanded && post.stats.comments > 0 && ( */}
+        <Button
+          size="medium"
+          variant="transparent"
+          onClick={() => setIsPostDialogVisible(true)}
+        >
+          Ver mais {post.stats.comments} comentários
+        </Button>
+        {/* )} */}
         <Button
           size="medium"
           loading={isLoading}

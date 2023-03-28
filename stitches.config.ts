@@ -107,6 +107,12 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
       shadows: {
         xs: "0px 1px 2px rgba(0, 0, 0, 0.06), 0px 5px 4px -4px rgba(0, 0, 0, 0.02);",
       },
+      zIndices: {
+        alwaysOnBottom: -1,
+        middle: 1,
+        alwaysOnTop: 2,
+        fixed: 3,
+      },
     },
   });
 

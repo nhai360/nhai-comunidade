@@ -174,7 +174,7 @@ export const EmojiSelectPopoverOnTopStyles = css({
   border: "1px solid $neutral200",
 
   position: "absolute",
-  zIndex: 99,
+  zIndex: "$alwaysOnTop",
 
   bottom: "100%",
   right: "0",
@@ -186,7 +186,7 @@ export const EmojiSelectPopoverOnBottomStyles = css({
   border: "1px solid $neutral200",
 
   position: "absolute",
-  zIndex: 99,
+  zIndex: "$alwaysOnTop",
 
   top: "100%",
   right: "0",
