@@ -1,19 +1,33 @@
-import { InputHTMLAttributes } from "react";
+import { FormEvent, InputHTMLAttributes } from "react";
 
+import { Button } from "@/ui";
 import { SearchIcon } from "@/ui/_icons";
 
 import * as S from "./Search.styles";
 
-export function InputSearch({
-  disabled = false,
-  ...rest
-}: InputHTMLAttributes<HTMLInputElement>) {
+type Props = {
+  onSearch: () => void;
+} & InputHTMLAttributes<HTMLInputElement>;
+
+export function InputSearch({ disabled = false, onSearch, ...rest }: Props) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    onSearch();
+  }
+
   return (
-    <S.Container as="div">
+    <S.Container onSubmit={handleSubmit}>
       <input placeholder="Buscar" disabled={disabled} {...rest} />
-      <button title="Buscar" disabled={disabled}>
+      <Button
+        icon
+        type="submit"
+        variant="transparent"
+        size="small"
+        disabled={disabled}
+      >
         <SearchIcon size={24} />
-      </button>
+      </Button>
     </S.Container>
   );
 }

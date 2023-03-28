@@ -23,6 +23,7 @@ export const Content = styled("div", {
   width: "100%",
 
   marginInline: "auto",
+  paddingInline: "$6",
 });
 
 export const Actions = styled("div", {

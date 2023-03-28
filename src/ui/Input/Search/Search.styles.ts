@@ -1,6 +1,6 @@
 import { styled } from "@/../stitches.config";
 
-export const Container = styled("div", {
+export const Container = styled("form", {
   background: "$neutral200",
   borderRadius: "$medium",
   border: "2px solid transparent",
@@ -46,7 +46,7 @@ export const Container = styled("div", {
 
   button: {
     background: "transparent",
-    marginRight: "$3",
+    marginRight: "$2",
     color: "$textTitle",
     border: 0,
     transition: "all 0.2s",
@@ -70,7 +70,7 @@ export const Container = styled("div", {
       },
       medium: {
         input: {
-          padding: "$3 $4",
+          padding: "$3",
         },
       },
     },

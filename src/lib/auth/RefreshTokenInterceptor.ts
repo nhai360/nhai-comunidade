@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import Router from "next/router";
 
 import { api, authenticatedAPI } from "@/client";
 
@@ -40,6 +41,11 @@ export async function refreshTokenInterceptor(error: AxiosError) {
 
     return axios(config).then((retrySuccess) => retrySuccess);
   } catch {
+    localStorage.removeItem("@nhai-comunidade:session");
+    authenticatedAPI.defaults.headers.common.Authorization = undefined;
+
+    Router.push("/auth/login");
+
     return Promise.reject(error);
   }
 }

@@ -6,10 +6,12 @@ import { GetParams, Post, PostDecoder } from "@/client/posts/types";
 export async function getPosts({
   orderBy = "createdAt",
   orderDirection = "desc",
+  search,
 }: GetParams) {
   const response = await authenticatedAPI.get("/post", {
     params: {
       orderBy: `${orderBy}:${orderDirection}`,
+      search,
     },
   });
 
