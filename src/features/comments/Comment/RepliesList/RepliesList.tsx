@@ -39,7 +39,10 @@ export function RepliesList({
   return (
     <>
       {isPostDialogVisible && post && (
-        <PostDialog post={post} onClose={() => setIsPostDialogVisible(false)} />
+        <PostDialog
+          postId={post.id}
+          onClose={() => setIsPostDialogVisible(false)}
+        />
       )}
 
       {divider && <Divider />}

@@ -7,23 +7,26 @@ import {
   FeedList,
   Suggestions,
 } from "@/features/feed";
-import { withAuth } from "@/middlewares";
+import { withAuth } from "../middlewares";
+import { FeedProvider } from "@/contexts";
 
 function Feed() {
   return (
-    <AppLayout>
-      <AppLayout.GridWithSider>
-        <AppLayout.Content css={{ gap: "$6" }}>
-          <CreatePostCard />
-          <FeedList />
-        </AppLayout.Content>
-        <AppLayout.Sider>
-          <MainTrends />
-          <PopularToday />
-          <Suggestions />
-        </AppLayout.Sider>
-      </AppLayout.GridWithSider>
-    </AppLayout>
+    <FeedProvider>
+      <AppLayout>
+        <AppLayout.GridWithSider>
+          <AppLayout.Content css={{ gap: "$6" }}>
+            <CreatePostCard />
+            <FeedList />
+          </AppLayout.Content>
+          <AppLayout.Sider>
+            <MainTrends />
+            <PopularToday />
+            <Suggestions />
+          </AppLayout.Sider>
+        </AppLayout.GridWithSider>
+      </AppLayout>
+    </FeedProvider>
   );
 }
 

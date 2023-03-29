@@ -49,8 +49,13 @@ export const CreatePostDecoder = t.object({
 export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
 
 export type GetParams = {
+  search?: string;
   orderBy?: keyof Post;
   orderDirection?: "asc" | "desc";
+};
+
+export type GetPostParams = {
+  postId: string;
 };
 
 export type LikePostParams = {

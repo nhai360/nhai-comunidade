@@ -1,15 +1,23 @@
 import { Dialog, Divider } from "@/ui";
 
 import { Post } from "@/features/posts";
-import { Post as PostType } from "@/client/posts";
+import { usePost } from "@/client/posts";
 import { CommentProvider } from "@/contexts";
 
 type Props = {
-  post: PostType;
+  postId: string;
   onClose: () => void;
 };
 
-export function PostDialog({ post, onClose }: Props) {
+export function PostDialog({ postId, onClose }: Props) {
+  const { post } = usePost({
+    postId,
+  });
+
+  if (!post) {
+    return null;
+  }
+
   return (
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>

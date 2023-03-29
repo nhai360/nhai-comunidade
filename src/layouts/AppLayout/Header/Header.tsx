@@ -5,11 +5,14 @@ import { Avatar, Button, Logo, Tag, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon, NotificationIcon } from "@/ui/_icons";
 
+import { useFeedContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 
 import * as S from "./Header.styles";
 
 export function Header() {
+  const { searchTerm, setSearchTerm, handleSearch } = useFeedContext();
+
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
 
@@ -25,7 +28,11 @@ export function Header() {
             <Logo variant="rainbow" />
           </Link>
           <S.Actions>
-            <InputSearch />
+            <InputSearch
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.currentTarget.value)}
+              onSearch={handleSearch}
+            />
             <Tooltip message="Novo post" position="bottom">
               <Button
                 icon

@@ -1,11 +1,10 @@
-import { usePosts } from "@/client/posts";
-
+import { useFeedContext } from "@/contexts";
 import { PostCard } from "@/features/posts";
 
 import * as S from "./FeedList.styles";
 
 export function FeedList() {
-  const { posts } = usePosts();
+  const { posts } = useFeedContext();
 
   return (
     <S.Container>
