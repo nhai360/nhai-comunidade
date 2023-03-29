@@ -12,6 +12,7 @@ type Props = {
 export function LikedBy({ post }: Props) {
   const likesCount = post.stats.likes;
 
+  const hasLikes = likesCount > 0;
   const hasMoreLikes = likesCount >= 2;
 
   const usersLiked = post.likes.slice(0, 3).map((like) => like.author);
@@ -22,23 +23,24 @@ export function LikedBy({ post }: Props) {
     hasMoreLikes ? `e mais ${likesCount - 1} pessoas` : "",
   ].join(" ");
 
-  const likedBy =
-    likesCount > 0
-      ? firstUserLikedAndLikesCount
-      : "Essa publicação não possui curtidas";
+  const likedBy = hasLikes
+    ? firstUserLikedAndLikesCount
+    : "Essa publicação não possui curtidas";
 
   return (
     <S.Container>
-      <S.AvatarGroup>
-        {usersLiked.map((user) => (
-          <Avatar.Square
-            key={user.id}
-            size="small"
-            alt={user.fullName}
-            fallback={getInitials(user.fullName)}
-          />
-        ))}
-      </S.AvatarGroup>
+      {hasLikes && (
+        <S.AvatarGroup>
+          {usersLiked.map((user) => (
+            <Avatar.Square
+              key={user.id}
+              size="small"
+              alt={user.fullName}
+              fallback={getInitials(user.fullName)}
+            />
+          ))}
+        </S.AvatarGroup>
+      )}
       <Typography.Text size="body3" color="secondary">
         {likedBy}
       </Typography.Text>

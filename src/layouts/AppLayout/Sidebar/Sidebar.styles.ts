@@ -49,5 +49,11 @@ export const NavItem = styled("li", {
         },
       },
     },
+    disabled: {
+      true: {
+        cursor: "not-allowed",
+        opacity: 0.5,
+      },
+    },
   },
 });

@@ -39,15 +39,15 @@ export function Sidebar() {
             </Tooltip>
           </Link>
           <Link href="/">
-            <Tooltip message="Vídeos" position="right">
-              <S.NavItem>
+            <Tooltip message="Em breve" position="right">
+              <S.NavItem disabled>
                 <CameraIcon />
               </S.NavItem>
             </Tooltip>
           </Link>
           <Link href="/">
-            <Tooltip message="Artigos" position="right">
-              <S.NavItem>
+            <Tooltip message="Em breve" position="right">
+              <S.NavItem disabled>
                 <ListLineParagraphSquareIcon />
               </S.NavItem>
             </Tooltip>

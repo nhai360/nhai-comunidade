@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
-import { AddCircleIcon, NotificationIcon } from "@/ui/_icons";
+import { AddCircleIcon } from "@/ui/_icons";
 
 import { getInitials } from "@/lib/string";
 import { useUser } from "@/client/users";
@@ -51,33 +51,33 @@ export function Header() {
                 <AddCircleIcon />
               </Button>
             </Tooltip>
-            <Tooltip message="Notificações" position="bottom">
+            {/* <Tooltip message="Notificações" position="bottom">
               <Button icon variant="transparent">
                 <NotificationIcon />
               </Button>
-            </Tooltip>
-            <Link href="/profile">
-              <S.UserContainer>
-                {user && (
-                  <Avatar
-                    progressBar
-                    alt={user?.fullName}
-                    fallback={getInitials(user.fullName)}
-                  />
-                )}
-                <S.UserInfo>
-                  <Typography.Text color="primary" weight="medium">
-                    Colm Tuite
+            </Tooltip> */}
+            {/* <Link href="/profile"> */}
+            <S.UserContainer>
+              {user && (
+                <Avatar
+                  progressBar
+                  alt={user?.fullName}
+                  fallback={getInitials(user.fullName)}
+                />
+              )}
+              <S.UserInfo>
+                <Typography.Text color="primary" weight="medium">
+                  Colm Tuite
+                </Typography.Text>
+                {user?.nickname && (
+                  <Typography.Text size="body3" color="secondary">
+                    {user?.nickname}
                   </Typography.Text>
-                  {user?.nickname && (
-                    <Typography.Text size="body3" color="secondary">
-                      {user?.nickname}
-                    </Typography.Text>
-                  )}
-                  {/* <Tag variant="pink">Nível 56</Tag> */}
-                </S.UserInfo>
-              </S.UserContainer>
-            </Link>
+                )}
+                {/* <Tag variant="pink">Nível 56</Tag> */}
+              </S.UserInfo>
+            </S.UserContainer>
+            {/* </Link> */}
           </S.Actions>
         </S.Content>
       </S.Container>
