@@ -1,6 +1,7 @@
 import {
   ComponentProps,
   ForwardRefRenderFunction,
+  ReactNode,
   SyntheticEvent,
   forwardRef,
   useImperativeHandle,
@@ -30,12 +31,14 @@ type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
   ComponentProps<typeof S.Container>;
 
 export type TextAreaProps<T extends FieldValues> = {
+  children?: ReactNode;
   defaultValue?: RawDraftContentState;
   emojiSelectPosition?: "top" | "bottom";
 } & Omit<ExternalProps<T>, "defaultValue">;
 
 export type TextAreaRefProps = {
   clearInput: () => void;
+  focus: () => void;
 };
 
 const ForwardTextArea: ForwardRefRenderFunction<
@@ -43,6 +46,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
   TextAreaProps<any>
 > = (
   {
+    children,
     name,
     control,
     rules,
@@ -76,6 +80,10 @@ const ForwardTextArea: ForwardRefRenderFunction<
       clearInput: () => {
         setEditorState(EditorState.createEmpty());
         field.onChange("");
+      },
+      focus: () => {
+        setIsFocused(true);
+        editorRef?.current?.focus();
       },
     };
   });
@@ -120,7 +128,10 @@ const ForwardTextArea: ForwardRefRenderFunction<
         onBlur={handleBlur}
         plugins={plugins}
       />
-      <EmojiSelect />
+      <S.Actions>
+        {children}
+        <EmojiSelect />
+      </S.Actions>
       <EmojiSuggestions />
     </S.Container>
   );

@@ -240,3 +240,9 @@ export const EmojiSelectPopoverGroupsStyles = css({
   height: "150px",
   width: "100%",
 }).toString();
+
+export const Actions = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$2",
+});

@@ -1,10 +1,10 @@
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
-import { Avatar, TextArea, TextAreaRefProps } from "@/ui";
+import { Avatar, TextArea } from "@/ui";
+import { CloseIcon } from "@/ui/_icons";
 import {
   CreateCommentDecoder,
   CreateCommentParams,
@@ -18,9 +18,7 @@ type Props = {
 };
 
 export function PostCommentField({ post }: Props) {
-  const { replyTo } = useCommentContext();
-
-  const fieldRef = useRef<TextAreaRefProps>(null);
+  const { fieldRef, replyTo, setReplyTo } = useCommentContext();
 
   const { createComment } = useCreateComment();
 
@@ -39,6 +37,7 @@ export function PostCommentField({ post }: Props) {
       },
       {
         onSuccess: () => {
+          setReplyTo(null);
           fieldRef.current?.clearInput();
         },
         onError: () => {
@@ -50,6 +49,11 @@ export function PostCommentField({ post }: Props) {
     );
 
     return "handled" as "handled";
+  }
+
+  function handleClearReplyTo() {
+    setReplyTo(null);
+    fieldRef.current?.clearInput();
   }
 
   return (
@@ -65,14 +69,26 @@ export function PostCommentField({ post }: Props) {
         ref={fieldRef}
         name="content"
         control={control}
-        placeholder="Deixe sua opinião..."
+        placeholder={
+          replyTo
+            ? `Respondendo ${replyTo.author.fullName}`
+            : "Deixe sua opinião..."
+        }
         handleReturn={handleSendComment}
         css={{
           ".public-DraftEditor-content": {
             maxHeight: "50px",
           },
         }}
-      />
+      >
+        {replyTo && (
+          <>
+            <S.Action type="button" onClick={handleClearReplyTo}>
+              <CloseIcon strokeWidth="1.8" />
+            </S.Action>
+          </>
+        )}
+      </TextArea>
     </S.Form>
   );
 }

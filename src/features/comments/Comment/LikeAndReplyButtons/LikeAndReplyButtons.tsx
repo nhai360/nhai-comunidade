@@ -10,10 +10,11 @@ type Props = {
 };
 
 export function LikeAndReplyButtons({ comment }: Props) {
-  const { setReplyTo } = useCommentContext();
+  const { setReplyTo, fieldRef } = useCommentContext();
 
   function handleReply() {
     setReplyTo(comment);
+    fieldRef?.current?.focus();
   }
 
   return (
