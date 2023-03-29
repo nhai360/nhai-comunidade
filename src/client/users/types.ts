@@ -45,5 +45,5 @@ export const CreateSessionDecoder = t.object({
 export type CreateSessionParams = t.TypeOf<typeof CreateSessionDecoder>;
 
 export type GetParams = {
-  id: string;
+  id?: string;
 };
