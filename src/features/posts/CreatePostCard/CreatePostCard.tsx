@@ -1,22 +1,32 @@
 import { useState } from "react";
 
 import { Avatar, Card, Input } from "@/ui";
+import { useUser } from "@/client/users";
+import { useAuthContext } from "@/contexts";
 
 import { CreatePostDialog } from "./CreatePostDialog";
 import * as S from "./CreatePostCard.styles";
+import { getInitials } from "@/lib/string";
 
 export function CreatePostCard() {
+  const { session } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
 
   return (
     <Card>
       <S.Content>
-        <Avatar.Square
-          src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-          alt="Colm Tuite"
-          fallback="CT"
-        />
+        {user && (
+          <Avatar.Square
+            alt={user?.fullName}
+            fallback={getInitials(user?.fullName)}
+          />
+        )}
         <Input
           placeholder="Começar nova publicação"
           onFocus={() => setIsCreatePostDialogVisible(true)}

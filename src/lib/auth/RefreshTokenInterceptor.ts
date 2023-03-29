@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
-import Router from "next/router";
 
 import { api, authenticatedAPI } from "@/client";
 
 import { getSession } from "./getSession";
+import { logout } from "./logout";
 
 export async function refreshTokenInterceptor(error: AxiosError) {
   if (error?.response?.status !== 401) {
@@ -39,12 +39,15 @@ export async function refreshTokenInterceptor(error: AxiosError) {
       },
     };
 
-    return axios(config).then((retrySuccess) => retrySuccess);
-  } catch {
-    localStorage.removeItem("@nhai-comunidade:session");
-    authenticatedAPI.defaults.headers.common.Authorization = undefined;
+    return axios(config)
+      .then((retrySuccess) => retrySuccess)
+      .catch(() => {
+        logout();
 
-    Router.push("/auth/login");
+        return Promise.reject(error);
+      });
+  } catch {
+    logout();
 
     return Promise.reject(error);
   }

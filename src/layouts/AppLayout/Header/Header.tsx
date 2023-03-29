@@ -1,17 +1,26 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { Avatar, Button, Logo, Tag, Tooltip, Typography } from "@/ui";
+import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon, NotificationIcon } from "@/ui/_icons";
 
-import { useFeedContext } from "@/contexts";
+import { getInitials } from "@/lib/string";
+import { useUser } from "@/client/users";
+
+import { useAuthContext, useFeedContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 
 import * as S from "./Header.styles";
 
 export function Header() {
   const { searchTerm, setSearchTerm, handleSearch } = useFeedContext();
+
+  const { session } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
@@ -49,17 +58,23 @@ export function Header() {
             </Tooltip>
             <Link href="/profile">
               <S.UserContainer>
-                <Avatar
-                  progressBar
-                  src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-                  alt="Colm Tuite"
-                  fallback="CT"
-                />
+                {user && (
+                  <Avatar
+                    progressBar
+                    alt={user?.fullName}
+                    fallback={getInitials(user.fullName)}
+                  />
+                )}
                 <S.UserInfo>
                   <Typography.Text color="primary" weight="medium">
                     Colm Tuite
                   </Typography.Text>
-                  <Tag variant="pink">Nível 56</Tag>
+                  {user?.nickname && (
+                    <Typography.Text size="body3" color="secondary">
+                      {user?.nickname}
+                    </Typography.Text>
+                  )}
+                  {/* <Tag variant="pink">Nível 56</Tag> */}
                 </S.UserInfo>
               </S.UserContainer>
             </Link>
