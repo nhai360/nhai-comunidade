@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCommentContext } from "@/contexts";
+import { useAuthContext, useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
 import { Avatar, TextArea } from "@/ui";
 import { CloseIcon } from "@/ui/_icons";
@@ -11,6 +11,9 @@ import {
   useCreateComment,
 } from "@/client/comments";
 
+import { useUser } from "@/client/users";
+import { getInitials } from "@/lib/string";
+
 import * as S from "./PostCommentField.styles";
 
 type Props = {
@@ -18,9 +21,14 @@ type Props = {
 };
 
 export function PostCommentField({ post }: Props) {
+  const { session } = useAuthContext();
   const { fieldRef, replyTo, setReplyTo } = useCommentContext();
 
   const { createComment } = useCreateComment();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   const { control, getValues, setError } = useForm<CreateCommentParams>({
     resolver: zodResolver(CreateCommentDecoder),
@@ -58,13 +66,13 @@ export function PostCommentField({ post }: Props) {
 
   return (
     <S.Form>
-      <Avatar.Square
-        level="56"
-        size="small"
-        src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-        alt="Colm Tuite"
-        fallback="CT"
-      />
+      {user && (
+        <Avatar.Square
+          size="small"
+          alt={user.fullName}
+          fallback={getInitials(user.fullName)}
+        />
+      )}
       <TextArea
         ref={fieldRef}
         name="content"

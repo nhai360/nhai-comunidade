@@ -22,7 +22,7 @@ export function Avatar({
       <S.Root>
         <CircularProgressBar value={75}>
           <S.Image css={css} size={size} {...rest} />
-          <S.Fallback css={css} size={size} delayMs={600}>
+          <S.Fallback css={css} size={size} delayMs={0}>
             {fallback}
           </S.Fallback>
         </CircularProgressBar>
@@ -33,7 +33,7 @@ export function Avatar({
   return (
     <S.Root>
       <S.Image css={css} size={size} {...rest} />
-      <S.Fallback css={css} size={size} delayMs={600}>
+      <S.Fallback css={css} size={size} delayMs={0}>
         {fallback}
       </S.Fallback>
     </S.Root>
