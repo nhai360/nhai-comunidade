@@ -7,8 +7,8 @@ import {
   FeedList,
   Suggestions,
 } from "@/features/feed";
-import { withAuth } from "../middlewares";
 import { FeedProvider } from "@/contexts";
+import { withAuth } from "../middlewares";
 
 function Feed() {
   return (

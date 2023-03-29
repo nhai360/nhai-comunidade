@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Tooltip } from "@/ui";
+import { Popover, Tooltip, Typography } from "@/ui";
 import {
   CameraIcon,
   HomeIcon,
@@ -55,18 +55,26 @@ export function Sidebar() {
         </S.NavigationList>
       </nav>
 
-      <div>
+      <Popover.Root>
         <Tooltip message="Configurações" position="right">
-          <S.NavItem>
-            <SettingsIcon />
-          </S.NavItem>
+          <Popover.Trigger asChild>
+            <S.NavItem>
+              <SettingsIcon />
+            </S.NavItem>
+          </Popover.Trigger>
         </Tooltip>
-        <Tooltip message="Sair" position="right">
-          <S.NavItem onClick={handleLogout}>
-            <SettingsIcon />
-          </S.NavItem>
-        </Tooltip>
-      </div>
+
+        <Popover
+          side="top"
+          sideOffset={16}
+          align="start"
+          css={{ width: "148px" }}
+        >
+          <Popover.Action onClick={handleLogout}>
+            <Typography.Text>Sair</Typography.Text>
+          </Popover.Action>
+        </Popover>
+      </Popover.Root>
     </S.Container>
   );
 }
