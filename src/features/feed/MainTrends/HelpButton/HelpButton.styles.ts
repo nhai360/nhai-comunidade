@@ -15,6 +15,8 @@ export const Tooltip = styled("span", {
   border: "1px solid $neutral300",
   borderRadius: "$medium",
   borderTopRightRadius: 0,
+
+  transition: "all 0.2s",
 });
 
 export const Container = styled("div", {
