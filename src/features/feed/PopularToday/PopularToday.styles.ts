@@ -12,7 +12,10 @@ export const PostList = styled("ul", {
   "&::-webkit-scrollbar": {
     width: 0,
     height: 0,
+    display: "none",
   },
+
+  scrollbarWidth: "none",
 });
 
 export const PostItem = styled("li", {

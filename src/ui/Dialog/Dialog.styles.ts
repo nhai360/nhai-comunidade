@@ -41,6 +41,8 @@ export const Content = styled(Dialog.Content, {
   "::-webkit-scrollbar": {
     display: "none",
   },
+
+  scrollbarWidth: "none",
 });
 
 export const Body = styled("main", {

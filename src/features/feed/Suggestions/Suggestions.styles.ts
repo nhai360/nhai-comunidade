@@ -11,7 +11,10 @@ export const Container = styled("ul", {
   "&::-webkit-scrollbar": {
     width: 0,
     height: 0,
+    display: "none",
   },
+
+  scrollbarWidth: "none",
 });
 
 export const SuggestionItem = styled("li", {
