@@ -59,6 +59,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
     emojiSelect = true,
     emojiSelectPosition = "top",
     reverseActions = false,
+    error = false,
     onFocus,
     onBlur,
     ...rest
@@ -122,6 +123,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
       onClick={handleFocus}
       color={color}
       css={css}
+      error={error}
     >
       <Editor
         {...rest}

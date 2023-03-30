@@ -31,6 +31,12 @@ export const Container = styled("div", {
   },
 
   variants: {
+    error: {
+      true: {
+        borderColor: "$pinkMedium",
+      },
+    },
+
     color: {
       neutral: {
         background: "$neutral200",

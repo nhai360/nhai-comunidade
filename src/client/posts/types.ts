@@ -40,8 +40,8 @@ export const PostDecoder = t.object({
 export type Post = t.TypeOf<typeof PostDecoder>;
 
 export const CreatePostDecoder = t.object({
-  title: t.string(),
-  content: t.string(),
+  title: t.string().min(1, "Título é obrigatório"),
+  content: t.string().min(1, "Conteúdo é obrigatório"),
   image: t.any().optional(),
   color: PostColorDecoder.optional(),
 });
