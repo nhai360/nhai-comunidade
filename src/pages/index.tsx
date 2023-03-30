@@ -1,6 +1,6 @@
 import { AppLayout } from "@/layouts";
 
-import { CreatePostCard } from "@/features/posts";
+import { CreatePostCard, PostFromUrl } from "@/features/posts";
 import {
   PopularToday,
   MainTrends,
@@ -18,6 +18,7 @@ function Feed() {
           <AppLayout.Content css={{ gap: "$6" }}>
             <CreatePostCard />
             <FeedList />
+            <PostFromUrl />
           </AppLayout.Content>
           <AppLayout.Sider>
             <MainTrends />
