@@ -19,14 +19,18 @@ export function CreatePostFields() {
         errorText={errors.title?.message}
         {...register("title")}
       />
-      <TextArea
-        color={selectedColor}
-        control={control}
-        name="content"
-        placeholder="Em que você está pensando?"
-        css={{ minHeight: "362px" }}
-        emojiSelectPosition="bottom"
-      />
+      <Field errorText={errors.content?.message}>
+        <TextArea
+          color={selectedColor}
+          control={control}
+          name="content"
+          placeholder="Em que você está pensando?"
+          css={{ minHeight: "362px" }}
+          emojiSelectPosition="bottom"
+          shouldUnregister
+          error={!!errors.content?.message}
+        />
+      </Field>
     </>
   );
 }

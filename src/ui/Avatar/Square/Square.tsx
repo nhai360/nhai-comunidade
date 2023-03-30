@@ -12,7 +12,7 @@ export function Square({ fallback, size, level, ...rest }: AvatarSquareProps) {
   return (
     <S.Root>
       <S.Image {...rest} size={size} />
-      <S.Fallback delayMs={600} size={size}>
+      <S.Fallback delayMs={0} size={size}>
         {fallback}
       </S.Fallback>
       {level && <S.LevelTag variant="pink">{level}</S.LevelTag>}

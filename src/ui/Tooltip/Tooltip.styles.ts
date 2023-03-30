@@ -1,4 +1,4 @@
-import { styled } from "../../../stitches.config";
+import { styled } from "@/../stitches.config";
 
 export const Container = styled("div", {
   opacity: 0,
@@ -39,9 +39,9 @@ export const Message = styled("span", {
         transform: "translate(calc(100% + 16px), -50%)",
       },
       left: {
-        right: 0,
+        right: "calc(100% + 16px)",
         top: "50%",
-        transform: "translate(calc(-100% - 16px), -50%)",
+        transform: "translateY(-50%)",
       },
     },
   },

@@ -67,7 +67,7 @@ export function Header() {
               )}
               <S.UserInfo>
                 <Typography.Text color="primary" weight="medium">
-                  Colm Tuite
+                  {user?.fullName}
                 </Typography.Text>
                 {user?.nickname && (
                   <Typography.Text size="body3" color="secondary">

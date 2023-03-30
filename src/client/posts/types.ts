@@ -40,13 +40,23 @@ export const PostDecoder = t.object({
 export type Post = t.TypeOf<typeof PostDecoder>;
 
 export const CreatePostDecoder = t.object({
-  title: t.string(),
-  content: t.string(),
+  title: t.string().min(1, "Título é obrigatório"),
+  content: t.string().min(1, "Conteúdo é obrigatório"),
   image: t.any().optional(),
   color: PostColorDecoder.optional(),
 });
 
 export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
+
+export const CreatePostRequestDecoder = CreatePostDecoder.merge(
+  t.object({
+    images: MediaDecoder.array().optional(),
+  }),
+).omit({
+  image: true,
+});
+
+export type CreatePostRequestParams = t.TypeOf<typeof CreatePostRequestDecoder>;
 
 export type GetParams = {
   search?: string;

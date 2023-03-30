@@ -1,11 +1,10 @@
 import { Avatar, Button, Card, Typography } from "@/ui";
-import {
-  FilterCircleIcon,
-  QuestionCircleIcon,
-  ShareSquareIcon,
-} from "@/ui/_icons";
+import { ShareSquareIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
+
+import { FilterButton } from "./FilterButton";
+import { HelpButton } from "./HelpButton";
 
 import * as S from "./MainTrends.styles";
 
@@ -17,12 +16,8 @@ export function MainTrends() {
           Principais trends
         </Typography.Text>
         <S.Actions>
-          <Button icon variant="transparent" size="small">
-            <FilterCircleIcon />
-          </Button>
-          <Button icon variant="transparent" size="small">
-            <QuestionCircleIcon />
-          </Button>
+          <FilterButton />
+          <HelpButton />
         </S.Actions>
       </S.Header>
       <S.TrendList>

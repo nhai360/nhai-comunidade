@@ -31,6 +31,12 @@ export const Container = styled("div", {
   },
 
   variants: {
+    error: {
+      true: {
+        borderColor: "$pinkMedium",
+      },
+    },
+
     color: {
       neutral: {
         background: "$neutral200",
@@ -240,3 +246,9 @@ export const EmojiSelectPopoverGroupsStyles = css({
   height: "150px",
   width: "100%",
 }).toString();
+
+export const Actions = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$2",
+});

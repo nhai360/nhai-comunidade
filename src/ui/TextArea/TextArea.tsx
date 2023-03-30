@@ -1,6 +1,7 @@
 import {
   ComponentProps,
   ForwardRefRenderFunction,
+  ReactNode,
   SyntheticEvent,
   forwardRef,
   useImperativeHandle,
@@ -30,12 +31,16 @@ type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
   ComponentProps<typeof S.Container>;
 
 export type TextAreaProps<T extends FieldValues> = {
+  children?: ReactNode;
   defaultValue?: RawDraftContentState;
+  emojiSelect?: boolean;
   emojiSelectPosition?: "top" | "bottom";
+  reverseActions?: boolean;
 } & Omit<ExternalProps<T>, "defaultValue">;
 
 export type TextAreaRefProps = {
   clearInput: () => void;
+  focus: () => void;
 };
 
 const ForwardTextArea: ForwardRefRenderFunction<
@@ -43,6 +48,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
   TextAreaProps<any>
 > = (
   {
+    children,
     name,
     control,
     rules,
@@ -50,7 +56,10 @@ const ForwardTextArea: ForwardRefRenderFunction<
     color,
     css,
     defaultValue,
+    emojiSelect = true,
     emojiSelectPosition = "top",
+    reverseActions = false,
+    error = false,
     onFocus,
     onBlur,
     ...rest
@@ -76,6 +85,10 @@ const ForwardTextArea: ForwardRefRenderFunction<
       clearInput: () => {
         setEditorState(EditorState.createEmpty());
         field.onChange("");
+      },
+      focus: () => {
+        setIsFocused(true);
+        editorRef?.current?.focus();
       },
     };
   });
@@ -110,6 +123,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
       onClick={handleFocus}
       color={color}
       css={css}
+      error={error}
     >
       <Editor
         {...rest}
@@ -120,7 +134,13 @@ const ForwardTextArea: ForwardRefRenderFunction<
         onBlur={handleBlur}
         plugins={plugins}
       />
-      <EmojiSelect />
+      <S.Actions
+        onClick={(e) => e.stopPropagation()}
+        css={{ flexDirection: reverseActions ? "row-reverse" : "row" }}
+      >
+        {children}
+        {emojiSelect && <EmojiSelect />}
+      </S.Actions>
       <EmojiSuggestions />
     </S.Container>
   );

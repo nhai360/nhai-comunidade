@@ -8,7 +8,7 @@ export function Suggestions() {
         <strong>Novos artigos todos os dias!</strong>
       </S.SuggestionItem>
       <S.SuggestionItem type="camera">
-        <strong>Vídeos de excelênte qualidade</strong>
+        <strong>Vídeos de excelente qualidade</strong>
         <img src="/camera.svg" alt="Camera" width={142} height={108} />
       </S.SuggestionItem>
       <S.SuggestionItem type="coin">

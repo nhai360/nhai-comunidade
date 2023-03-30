@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { authenticatedAPI } from "@/client";
-import { CreatePostParams, invalidatePostsQueries } from "@/client/posts";
+import {
+  CreatePostRequestParams,
+  invalidatePostsQueries,
+} from "@/client/posts";
 
-async function createPostRequest(params: CreatePostParams) {
+async function createPostRequest(params: CreatePostRequestParams) {
   await authenticatedAPI.post("/post", params);
 }
 

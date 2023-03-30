@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useAuthContext } from "@/contexts";
 import { Avatar, Button, Dialog } from "@/ui";
 import {
   CreatePostFields,
@@ -13,11 +14,14 @@ import {
   CreatePostDecoder,
   useCreatePost,
 } from "@/client/posts";
+import { useUpload } from "@/client/media";
+import { getInitials } from "@/lib/string";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
+import { useUser } from "@/client/users";
 
 type Props = {
   onClose: () => void;
@@ -26,18 +30,42 @@ type Props = {
 export type Tabs = "color" | "upload";
 
 export function CreatePostDialog({ onClose }: Props) {
+  const { session } = useAuthContext();
+
   const form = useForm<CreatePostParams>({
     resolver: zodResolver(CreatePostDecoder),
   });
 
   const [selectedTab, setSelectedTab] = useState<Tabs>();
 
-  const { createPost, isSuccess, isLoading } = useCreatePost();
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
+  const { createPost, isSuccess, isLoading: isCreating } = useCreatePost();
+  const { upload, isLoading: isUploading } = useUpload();
 
   const { handleSubmit, control } = form;
   const isUpload = selectedTab === "upload";
 
-  function handleCreatePost(data: CreatePostParams) {
+  const isLoading = isCreating || isUploading;
+
+  async function handleCreatePost(data: CreatePostParams) {
+    if (data.image) {
+      upload(data.image, {
+        onSuccess: (media) => {
+          createPost({
+            title: data.title,
+            content: data.content,
+            color: data.color,
+            images: [media],
+          });
+        },
+      });
+
+      return;
+    }
+
     createPost(data);
   }
 
@@ -60,12 +88,13 @@ export function CreatePostDialog({ onClose }: Props) {
         <Dialog.Header title="Criar novo post" closable />
         <Dialog.Body>
           <S.Container>
-            <Avatar.Square
-              size="large"
-              src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-              alt="Colm Tuite"
-              fallback="CT"
-            />
+            {user && (
+              <Avatar.Square
+                size="large"
+                alt={user.fullName}
+                fallback={getInitials(user.fullName)}
+              />
+            )}
             <S.Form onSubmit={handleSubmit(handleCreatePost)}>
               <FormProvider {...form}>
                 {isUpload ? <CreatePostUpload /> : <CreatePostFields />}

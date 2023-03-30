@@ -1,15 +1,22 @@
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCommentContext } from "@/contexts";
+import { useAuthContext, useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
-import { Avatar, TextArea, TextAreaRefProps } from "@/ui";
+import { Avatar, Popover, TextArea } from "@/ui";
+import { ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
 import {
   CreateCommentDecoder,
   CreateCommentParams,
   useCreateComment,
 } from "@/client/comments";
+import {
+  CreateDiscussionPopover,
+  CreatePollPopover,
+} from "@/features/comments";
+
+import { useUser } from "@/client/users";
+import { getInitials } from "@/lib/string";
 
 import * as S from "./PostCommentField.styles";
 
@@ -18,11 +25,14 @@ type Props = {
 };
 
 export function PostCommentField({ post }: Props) {
-  const { replyTo } = useCommentContext();
-
-  const fieldRef = useRef<TextAreaRefProps>(null);
+  const { session } = useAuthContext();
+  const { fieldRef, replyTo, setReplyTo } = useCommentContext();
 
   const { createComment } = useCreateComment();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   const { control, getValues, setError } = useForm<CreateCommentParams>({
     resolver: zodResolver(CreateCommentDecoder),
@@ -39,6 +49,7 @@ export function PostCommentField({ post }: Props) {
       },
       {
         onSuccess: () => {
+          setReplyTo(null);
           fieldRef.current?.clearInput();
         },
         onError: () => {
@@ -52,27 +63,62 @@ export function PostCommentField({ post }: Props) {
     return "handled" as "handled";
   }
 
+  function handleClearReplyTo() {
+    setReplyTo(null);
+    fieldRef.current?.clearInput();
+  }
+
   return (
     <S.Form>
-      <Avatar.Square
-        level="56"
-        size="small"
-        src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-        alt="Colm Tuite"
-        fallback="CT"
-      />
+      {user && (
+        <Avatar.Square
+          size="small"
+          alt={user.fullName}
+          fallback={getInitials(user.fullName)}
+        />
+      )}
       <TextArea
         ref={fieldRef}
         name="content"
         control={control}
-        placeholder="Deixe sua opinião..."
+        placeholder={
+          replyTo
+            ? `Respondendo ${replyTo.author.fullName}`
+            : "Deixe sua opinião..."
+        }
         handleReturn={handleSendComment}
         css={{
           ".public-DraftEditor-content": {
             maxHeight: "50px",
           },
         }}
-      />
+        reverseActions={!replyTo}
+      >
+        {replyTo ? (
+          <S.Action type="button" onClick={handleClearReplyTo}>
+            <CloseIcon strokeWidth="1.8" />
+          </S.Action>
+        ) : (
+          <>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <S.Action type="button">
+                  <PollIcon size={28} strokeWidth="1.5" />
+                </S.Action>
+              </Popover.Trigger>
+              <CreatePollPopover />
+            </Popover.Root>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <S.Action type="button">
+                  <ChatIcon size={28} strokeWidth="1.5" />
+                </S.Action>
+              </Popover.Trigger>
+              <CreateDiscussionPopover />
+            </Popover.Root>
+          </>
+        )}
+      </TextArea>
     </S.Form>
   );
 }

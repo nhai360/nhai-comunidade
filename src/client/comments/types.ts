@@ -7,7 +7,6 @@ export type Comment = {
   title?: string | null;
   content?: string;
   author: User;
-  authorId: string;
   createdAt: string;
   updatedAt: string;
   replies?: Comment[];
@@ -20,7 +19,6 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     title: t.string().nullish(),
     content: t.string().optional(),
     author: UserDecoder,
-    authorId: t.string(),
     createdAt: t.string().datetime(),
     updatedAt: t.string().datetime(),
     replies: CommentDecoder.array().optional(),

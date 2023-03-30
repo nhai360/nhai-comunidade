@@ -18,6 +18,8 @@ export function PostContent({ post }: Props) {
     createEditorStateWithText(post.content),
   );
 
+  const postImageUrl = post.images ? post.images.at(0)?.url : null;
+
   if (post.color) {
     return (
       <S.ColoredContainer color={post.color}>
@@ -53,7 +55,7 @@ export function PostContent({ post }: Props) {
           onChange={setContent}
         />
       )}
-      {/* {hasImage && <S.Image src={post.images?[0].sourceUrl} />} */}
+      {postImageUrl && <S.Image src={postImageUrl} />}
     </S.DefaultContainer>
   );
 }

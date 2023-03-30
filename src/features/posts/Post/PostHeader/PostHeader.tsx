@@ -1,5 +1,5 @@
-import { Avatar, Button, Tag, Typography } from "@/ui";
-import { HorizontalDotsIcon, LinkIcon } from "@/ui/_icons";
+import { Avatar, Button, Tag, Tooltip, Typography } from "@/ui";
+import { LinkIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 
@@ -20,7 +20,6 @@ export function PostHeader({ post }: Props) {
     <S.Container>
       <S.User>
         <Avatar.Square
-          src=""
           alt={post.author.fullName}
           fallback={getInitials(post.author.fullName)}
         />
@@ -39,12 +38,11 @@ export function PostHeader({ post }: Props) {
         </S.Info>
       </S.User>
       <S.Actions>
-        <Button icon variant="transparent">
-          <HorizontalDotsIcon color={theme.colors.textSecondary.value} />
-        </Button>
-        <Button icon variant="transparent">
-          <LinkIcon color={theme.colors.textSecondary.value} />
-        </Button>
+        <Tooltip message="Copiar link">
+          <Button icon variant="transparent">
+            <LinkIcon color={theme.colors.textSecondary.value} />
+          </Button>
+        </Tooltip>
       </S.Actions>
     </S.Container>
   );
