@@ -21,7 +21,11 @@ export function withAuth<T extends { children?: ReactNode }>(
   Component: ComponentType<T>,
 ) {
   const AuthenticatedComponent = (props: T) => {
-    const { isAuthenticated } = useAuthContext();
+    const { isAuthenticated, isLoading } = useAuthContext();
+
+    if (isLoading) {
+      return <></>;
+    }
 
     if (isAuthenticated) {
       return <Component {...props} />;

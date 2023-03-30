@@ -20,6 +20,7 @@ type LoginParams = {
 type AuthContextParams = {
   session: Session | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (params: LoginParams) => void;
   logout: () => void;
 };
@@ -27,6 +28,7 @@ type AuthContextParams = {
 const AuthContext = createContext({} as AuthContextParams);
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [isLoading, setIsLoading] = useState(true);
   const [session, setSession] = useState<Session | null>(null);
 
   const isAuthenticated = session !== null;
@@ -40,6 +42,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (sessionFromStorage) {
         setSession(JSON.parse(sessionFromStorage));
       }
+
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
     }
   }, [session]);
 
@@ -57,7 +63,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ session, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ session, isAuthenticated, isLoading, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
