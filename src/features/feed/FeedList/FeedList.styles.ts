@@ -13,4 +13,6 @@ export const List = styled("ul", {
   display: "flex",
   flexDirection: "column",
   gap: "$6",
+
+  paddingBottom: "$8",
 });
