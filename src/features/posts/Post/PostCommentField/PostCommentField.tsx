@@ -10,7 +10,10 @@ import {
   CreateCommentParams,
   useCreateComment,
 } from "@/client/comments";
-import { CreatePollPopover } from "@/features/comments";
+import {
+  CreateDiscussionPopover,
+  CreatePollPopover,
+} from "@/features/comments";
 
 import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
@@ -111,7 +114,7 @@ export function PostCommentField({ post }: Props) {
                   <ChatIcon size={28} strokeWidth="1.5" />
                 </S.Action>
               </Popover.Trigger>
-              <CreatePollPopover />
+              <CreateDiscussionPopover />
             </Popover.Root>
           </>
         )}

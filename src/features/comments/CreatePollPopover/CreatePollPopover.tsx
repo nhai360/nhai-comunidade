@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Reorder } from "framer-motion";
 
 import { Button, Field, Popover, Typography } from "@/ui";
-
-import * as S from "./CreatePollPopover.styles";
-import { OptionItem } from "./OptionItem";
 import { ArrowNarrowRightIcon } from "@/ui/_icons";
+
+import { OptionItem } from "./OptionItem";
+import * as S from "./CreatePollPopover.styles";
 
 export function CreatePollPopover() {
   const [items, setItems] = useState(["1", "2"]);
@@ -27,7 +27,7 @@ export function CreatePollPopover() {
             ))}
           </Reorder.Group>
         </Field>
-        <Button fullWidth>
+        <Button type="submit" fullWidth>
           Criar enquete <ArrowNarrowRightIcon />
         </Button>
       </S.Form>
