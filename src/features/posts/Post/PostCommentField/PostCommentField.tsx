@@ -3,13 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useAuthContext, useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
-import { Avatar, TextArea } from "@/ui";
-import { CloseIcon } from "@/ui/_icons";
+import { Avatar, Popover, TextArea } from "@/ui";
+import { ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
 import {
   CreateCommentDecoder,
   CreateCommentParams,
   useCreateComment,
 } from "@/client/comments";
+import { CreatePollPopover } from "@/features/comments";
 
 import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
@@ -88,12 +89,30 @@ export function PostCommentField({ post }: Props) {
             maxHeight: "50px",
           },
         }}
+        reverseActions={!replyTo}
       >
-        {replyTo && (
+        {replyTo ? (
+          <S.Action type="button" onClick={handleClearReplyTo}>
+            <CloseIcon strokeWidth="1.8" />
+          </S.Action>
+        ) : (
           <>
-            <S.Action type="button" onClick={handleClearReplyTo}>
-              <CloseIcon strokeWidth="1.8" />
-            </S.Action>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <S.Action type="button">
+                  <PollIcon size={28} strokeWidth="1.5" />
+                </S.Action>
+              </Popover.Trigger>
+              <CreatePollPopover />
+            </Popover.Root>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <S.Action type="button">
+                  <ChatIcon size={28} strokeWidth="1.5" />
+                </S.Action>
+              </Popover.Trigger>
+              <CreatePollPopover />
+            </Popover.Root>
           </>
         )}
       </TextArea>

@@ -16,6 +16,10 @@ export const Content = styled(Popover.Content, {
         padding: "$2",
         borderRadius: "$medium",
       },
+      medium: {
+        padding: "$6",
+        borderRadius: "$large",
+      },
     },
   },
 

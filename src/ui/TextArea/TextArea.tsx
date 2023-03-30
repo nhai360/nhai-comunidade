@@ -34,6 +34,7 @@ export type TextAreaProps<T extends FieldValues> = {
   children?: ReactNode;
   defaultValue?: RawDraftContentState;
   emojiSelectPosition?: "top" | "bottom";
+  reverseActions?: boolean;
 } & Omit<ExternalProps<T>, "defaultValue">;
 
 export type TextAreaRefProps = {
@@ -55,6 +56,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
     css,
     defaultValue,
     emojiSelectPosition = "top",
+    reverseActions = false,
     onFocus,
     onBlur,
     ...rest
@@ -128,7 +130,10 @@ const ForwardTextArea: ForwardRefRenderFunction<
         onBlur={handleBlur}
         plugins={plugins}
       />
-      <S.Actions>
+      <S.Actions
+        onClick={(e) => e.stopPropagation()}
+        css={{ flexDirection: reverseActions ? "row-reverse" : "row" }}
+      >
         {children}
         <EmojiSelect />
       </S.Actions>
