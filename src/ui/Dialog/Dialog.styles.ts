@@ -42,6 +42,7 @@ export const Content = styled(Dialog.Content, {
     display: "none",
   },
 
+  "-ms-overflow-style": "none",
   scrollbarWidth: "none",
 });
 

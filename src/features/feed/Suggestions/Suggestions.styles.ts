@@ -14,6 +14,7 @@ export const Container = styled("ul", {
     display: "none",
   },
 
+  "-ms-overflow-style": "none",
   scrollbarWidth: "none",
 });
 

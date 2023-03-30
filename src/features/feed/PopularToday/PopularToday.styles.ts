@@ -15,6 +15,7 @@ export const PostList = styled("ul", {
     display: "none",
   },
 
+  "-ms-overflow-style": "none",
   scrollbarWidth: "none",
 });
 
