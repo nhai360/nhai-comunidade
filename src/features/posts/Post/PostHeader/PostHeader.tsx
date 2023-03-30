@@ -20,7 +20,6 @@ export function PostHeader({ post }: Props) {
     <S.Container>
       <S.User>
         <Avatar.Square
-          src=""
           alt={post.author.fullName}
           fallback={getInitials(post.author.fullName)}
         />

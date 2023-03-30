@@ -40,7 +40,6 @@ export function Reply({ reply, parentId }: Props) {
       <Wrapper>
         <Avatar.Square
           size="small"
-          src=""
           alt={reply.author.fullName}
           fallback={getInitials(reply.author.fullName)}
         />

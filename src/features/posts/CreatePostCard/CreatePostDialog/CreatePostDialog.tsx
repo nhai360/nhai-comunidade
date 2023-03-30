@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useAuthContext } from "@/contexts";
 import { Avatar, Button, Dialog } from "@/ui";
 import {
   CreatePostFields,
@@ -14,11 +15,13 @@ import {
   useCreatePost,
 } from "@/client/posts";
 import { useUpload } from "@/client/media";
+import { getInitials } from "@/lib/string";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
+import { useUser } from "@/client/users";
 
 type Props = {
   onClose: () => void;
@@ -27,11 +30,17 @@ type Props = {
 export type Tabs = "color" | "upload";
 
 export function CreatePostDialog({ onClose }: Props) {
+  const { session } = useAuthContext();
+
   const form = useForm<CreatePostParams>({
     resolver: zodResolver(CreatePostDecoder),
   });
 
   const [selectedTab, setSelectedTab] = useState<Tabs>();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   const { createPost, isSuccess, isLoading: isCreating } = useCreatePost();
   const { upload, isLoading: isUploading } = useUpload();
@@ -79,12 +88,13 @@ export function CreatePostDialog({ onClose }: Props) {
         <Dialog.Header title="Criar novo post" closable />
         <Dialog.Body>
           <S.Container>
-            <Avatar.Square
-              size="large"
-              src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-              alt="Colm Tuite"
-              fallback="CT"
-            />
+            {user && (
+              <Avatar.Square
+                size="large"
+                alt={user.fullName}
+                fallback={getInitials(user.fullName)}
+              />
+            )}
             <S.Form onSubmit={handleSubmit(handleCreatePost)}>
               <FormProvider {...form}>
                 {isUpload ? <CreatePostUpload /> : <CreatePostFields />}

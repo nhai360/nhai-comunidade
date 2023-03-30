@@ -29,7 +29,6 @@ export function Comment({ post, comment, maxReplies }: Props) {
   return (
     <S.Wrapper>
       <Avatar.Square
-        src=""
         alt={comment.author.fullName}
         fallback={getInitials(comment.author.fullName)}
       />

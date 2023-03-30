@@ -9,8 +9,8 @@ export const MediaDecoder = t.object({
   language: t.string().nullish(),
   mimeType: t.string().nullish(),
   caption: t.string().nullish(),
-  sizeInBytes: t.bigint().nullish(),
-  duration: t.string().datetime().nullish(),
+  sizeInBytes: t.string().nullish(),
+  durationInSeconds: t.string().nullish(),
   category: MediaCategoryDecoder,
 });
 
