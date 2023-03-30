@@ -11,7 +11,7 @@ export function CreateDiscussionPopover() {
   return (
     <Popover css={{ width: "328px" }} side="top" sideOffset={16} size="medium">
       <Typography.Text size="body1" weight="bold" color="title">
-        Criar uma discução
+        Criar uma discussão
       </Typography.Text>
       <S.Form>
         <Field.Input
@@ -19,7 +19,7 @@ export function CreateDiscussionPopover() {
           placeholder="Digite o assunto da discussão"
           {...register("title")}
         />
-        <Field label="Discução">
+        <Field label="Discussão">
           <TextArea
             control={control}
             name="content"
@@ -33,7 +33,7 @@ export function CreateDiscussionPopover() {
           />
         </Field>
         <Button type="submit" fullWidth>
-          Criar discução <ArrowNarrowRightIcon />
+          Criar discussão <ArrowNarrowRightIcon />
         </Button>
       </S.Form>
     </Popover>
