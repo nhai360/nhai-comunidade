@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 import { Avatar, Button, Tag, Tooltip, Typography } from "@/ui";
-import { LinkIcon } from "@/ui/_icons";
+import { CheckIcon, LinkIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 
@@ -14,7 +16,21 @@ type Props = {
 };
 
 export function PostHeader({ post }: Props) {
+  const [isCopied, setIsCopied] = useState(false);
+
   const createdAtFormatted = formatDistanceToNow(new Date(post.createdAt));
+
+  function handleCopyPostUrl() {
+    navigator.clipboard.writeText(
+      `${window.location.origin}?postId=${post.id}`,
+    );
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  }
 
   return (
     <S.Container>
@@ -38,9 +54,13 @@ export function PostHeader({ post }: Props) {
         </S.Info>
       </S.User>
       <S.Actions>
-        <Tooltip message="Copiar link">
-          <Button icon variant="transparent">
-            <LinkIcon color={theme.colors.textSecondary.value} />
+        <Tooltip message={isCopied ? "Copiado" : "Copiar link"}>
+          <Button icon variant="transparent" onClick={handleCopyPostUrl}>
+            {isCopied ? (
+              <CheckIcon size={20} color={theme.colors.textSecondary.value} />
+            ) : (
+              <LinkIcon color={theme.colors.textSecondary.value} />
+            )}
           </Button>
         </Tooltip>
       </S.Actions>
