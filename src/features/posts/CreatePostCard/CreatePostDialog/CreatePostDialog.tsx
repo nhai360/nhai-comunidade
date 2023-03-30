@@ -13,6 +13,7 @@ import {
   CreatePostDecoder,
   useCreatePost,
 } from "@/client/posts";
+import { useUpload } from "@/client/media";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
@@ -32,12 +33,30 @@ export function CreatePostDialog({ onClose }: Props) {
 
   const [selectedTab, setSelectedTab] = useState<Tabs>();
 
-  const { createPost, isSuccess, isLoading } = useCreatePost();
+  const { createPost, isSuccess, isLoading: isCreating } = useCreatePost();
+  const { upload, isLoading: isUploading } = useUpload();
 
   const { handleSubmit, control } = form;
   const isUpload = selectedTab === "upload";
 
-  function handleCreatePost(data: CreatePostParams) {
+  const isLoading = isCreating || isUploading;
+
+  async function handleCreatePost(data: CreatePostParams) {
+    if (data.image) {
+      upload(data.image, {
+        onSuccess: (media) => {
+          createPost({
+            title: data.title,
+            content: data.content,
+            color: data.color,
+            images: [media],
+          });
+        },
+      });
+
+      return;
+    }
+
     createPost(data);
   }
 

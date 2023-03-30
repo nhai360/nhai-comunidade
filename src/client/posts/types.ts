@@ -48,6 +48,16 @@ export const CreatePostDecoder = t.object({
 
 export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
 
+export const CreatePostRequestDecoder = CreatePostDecoder.merge(
+  t.object({
+    images: MediaDecoder.array().optional(),
+  }),
+).omit({
+  image: true,
+});
+
+export type CreatePostRequestParams = t.TypeOf<typeof CreatePostRequestDecoder>;
+
 export type GetParams = {
   search?: string;
   orderBy?: keyof Post;
