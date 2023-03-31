@@ -19,9 +19,10 @@ import * as S from "./Reply.styles";
 type Props = {
   reply: Comment;
   parentId?: string;
+  showReplyButton?: boolean;
 };
 
-export function Reply({ reply, parentId }: Props) {
+export function Reply({ reply, parentId, showReplyButton = true }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [content, setContent] = useState(
@@ -57,12 +58,16 @@ export function Reply({ reply, parentId }: Props) {
             </S.Content>
           )}
 
-          <LikeAndReplyButtons comment={reply} />
+          <LikeAndReplyButtons
+            comment={reply}
+            showReplyButton={showReplyButton}
+          />
 
           <RepliesList
             replies={replies}
             parentId={reply.id}
             css={{ marginTop: "$4" }}
+            showReplyButton={false}
           />
         </Container>
       </Wrapper>

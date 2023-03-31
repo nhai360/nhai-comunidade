@@ -16,6 +16,7 @@ type Props = {
   divider?: boolean;
   parentId?: string;
   maxReplies?: number;
+  showReplyButton?: boolean;
 } & Partial<ComponentProps<typeof S.Container>>;
 
 export function RepliesList({
@@ -24,6 +25,7 @@ export function RepliesList({
   divider,
   parentId,
   maxReplies,
+  showReplyButton = true,
   ...rest
 }: Props) {
   const [isPostDialogVisible, setIsPostDialogVisible] = useState(false);
@@ -48,7 +50,12 @@ export function RepliesList({
       {divider && <Divider />}
       <S.Container {...rest}>
         {limitedReplies.map((reply) => (
-          <Reply key={reply.id} reply={reply} parentId={parentId} />
+          <Reply
+            key={reply.id}
+            reply={reply}
+            parentId={parentId}
+            showReplyButton={showReplyButton}
+          />
         ))}
         {remainingRepliesCount > 0 && (
           <Button

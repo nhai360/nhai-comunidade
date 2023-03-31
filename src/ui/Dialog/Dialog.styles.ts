@@ -22,7 +22,7 @@ export const Overlay = styled(Dialog.Overlay, {
   inset: 0,
   background: "rgba(0, 0, 0, 0.25)",
   animation: `${overlayFadeIn} 1s`,
-  zIndex: "$alwaysOnTop",
+  zIndex: "$fixed",
 });
 
 export const Content = styled(Dialog.Content, {
