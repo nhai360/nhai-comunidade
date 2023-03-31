@@ -44,6 +44,12 @@ export const Content = styled(Dialog.Content, {
 
   "-ms-overflow-style": "none",
   scrollbarWidth: "none",
+
+  "@tablet": {
+    minWidth: 0,
+    maxWidth: "90vw",
+    width: "100%",
+  },
 });
 
 export const Body = styled("main", {

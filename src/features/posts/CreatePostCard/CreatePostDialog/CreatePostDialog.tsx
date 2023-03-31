@@ -93,6 +93,11 @@ export function CreatePostDialog({ onClose }: Props) {
                 size="large"
                 alt={user.fullName}
                 fallback={getInitials(user.fullName)}
+                css={{
+                  "@mobile": {
+                    display: "none",
+                  },
+                }}
               />
             )}
             <S.Form onSubmit={handleSubmit(handleCreatePost)}>

@@ -28,4 +28,8 @@ export const FullName = styled(Typography.Text, {
 export const Actions = styled("div", {
   display: "flex",
   gap: "$2",
+
+  "@mobile": {
+    display: "none",
+  },
 });

@@ -24,7 +24,11 @@ export function PostContent({ post }: Props) {
     return (
       <S.ColoredContainer color={post.color}>
         {post.title && (
-          <Typography.Title size="h1" weight="black">
+          <Typography.Title
+            size="h1"
+            weight="black"
+            css={{ "@mobile": { fontSize: "$h4" } }}
+          >
             {post.title}
           </Typography.Title>
         )}
@@ -43,7 +47,11 @@ export function PostContent({ post }: Props) {
   return (
     <S.DefaultContainer>
       {post.title && (
-        <Typography.Title size="h3" weight="medium">
+        <Typography.Title
+          size="h3"
+          weight="medium"
+          css={{ "@mobile": { fontSize: "$h4" } }}
+        >
           {post.title}
         </Typography.Title>
       )}

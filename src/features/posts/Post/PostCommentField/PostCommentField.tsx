@@ -75,6 +75,11 @@ export function PostCommentField({ post }: Props) {
           size="small"
           alt={user.fullName}
           fallback={getInitials(user.fullName)}
+          css={{
+            "@mobile": {
+              display: "none",
+            },
+          }}
         />
       )}
       <TextArea

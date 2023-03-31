@@ -43,6 +43,14 @@ export function Reply({ reply, parentId, showReplyButton = true }: Props) {
           size="small"
           alt={reply.author.fullName}
           fallback={getInitials(reply.author.fullName)}
+          css={{
+            "@mobile": {
+              width: "24px",
+              height: "24px",
+              borderRadius: "4px",
+              fontSize: "10px",
+            },
+          }}
         />
         <Container>
           <CommentHeader comment={reply} />

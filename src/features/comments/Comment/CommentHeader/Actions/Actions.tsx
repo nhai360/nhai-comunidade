@@ -1,7 +1,7 @@
 import { theme } from "@/../stitches.config";
 
 import { Button, Typography } from "@/ui";
-import { DeleteIcon, EditIcon, ReplyIcon } from "@/ui/_icons";
+import { DeleteIcon, EditIcon } from "@/ui/_icons";
 
 import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
@@ -26,10 +26,19 @@ export function Actions({ comment }: Props) {
 
   return (
     <S.Container>
-      <Typography.Text size="caption" color="secondary" weight="medium">
+      <Typography.Text
+        size="caption"
+        color="secondary"
+        weight="medium"
+        css={{ "@mobile": { display: "none" } }}
+      >
         173 Gostaram
       </Typography.Text>
-      <Typography.Text size="caption" color="title">
+      <Typography.Text
+        size="caption"
+        color="title"
+        css={{ "@mobile": { display: "none" } }}
+      >
         {createdAtFormatted}
       </Typography.Text>
       {isUserIdFromSessionIsEqualAuthorId && (
@@ -39,9 +48,6 @@ export function Actions({ comment }: Props) {
           </Button>
           <Button ghost icon variant="transparent" size="small">
             <DeleteIcon color={theme.colors.textSecondary.value} />
-          </Button>
-          <Button ghost icon variant="transparent" size="small">
-            <ReplyIcon color={theme.colors.textSecondary.value} />
           </Button>
         </S.Box>
       )}

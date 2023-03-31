@@ -4,6 +4,10 @@ export const Container = styled("div", {
   display: "flex",
   alignItems: "center",
   gap: "$4",
+
+  "@mobile": {
+    display: "none",
+  },
 });
 
 export const AvatarGroup = styled("div", {

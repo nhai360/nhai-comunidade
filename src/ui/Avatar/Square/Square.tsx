@@ -8,11 +8,17 @@ export type AvatarSquareProps = {
 } & ImgHTMLAttributes<HTMLImageElement> &
   ComponentProps<typeof S.Image>;
 
-export function Square({ fallback, size, level, ...rest }: AvatarSquareProps) {
+export function Square({
+  fallback,
+  size,
+  level,
+  css,
+  ...rest
+}: AvatarSquareProps) {
   return (
-    <S.Root>
-      <S.Image {...rest} size={size} />
-      <S.Fallback delayMs={0} size={size}>
+    <S.Root css={css}>
+      <S.Image css={css} {...rest} size={size} />
+      <S.Fallback css={css} delayMs={0} size={size}>
         {fallback}
       </S.Fallback>
       {level && <S.LevelTag variant="pink">{level}</S.LevelTag>}
