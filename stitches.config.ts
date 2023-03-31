@@ -114,6 +114,9 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
         fixed: 3,
       },
     },
+    media: {
+      tablet: "(min-width: 768px)",
+    },
   });
 
 export const globalStyles = globalCss({
