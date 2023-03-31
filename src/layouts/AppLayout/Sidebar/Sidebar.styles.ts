@@ -13,6 +13,10 @@ export const Container = styled("aside", {
 
   paddingBlock: "$20 $8",
   zIndex: "$alwaysOnTop",
+
+  "@tablet": {
+    display: "none",
+  },
 });
 
 export const NavigationList = styled("ul", {
