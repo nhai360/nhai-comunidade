@@ -5,4 +5,8 @@ export const Button = styled(BaseButton, {
   position: "absolute",
   left: 42,
   top: 74,
+
+  "@mobile": {
+    left: "$4",
+  },
 });
