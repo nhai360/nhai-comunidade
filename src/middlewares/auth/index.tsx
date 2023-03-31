@@ -31,7 +31,7 @@ export function withAuth<T extends { children?: ReactNode }>(
       return <Component {...props} />;
     }
 
-    return <Navigate href="/auth/login" />;
+    return <Navigate href="/auth/register" />;
   };
 
   return AuthenticatedComponent;
