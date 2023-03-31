@@ -12,7 +12,15 @@ export const FormContainer = styled("form", {
   maxHeight: "85vh",
 
   overflowY: "auto",
-  padding: "$4",
+
+  "&::-webkit-scrollbar": {
+    width: 0,
+    height: 0,
+    display: "none",
+  },
+
+  "-ms-overflow-style": "none",
+  scrollbarWidth: "none",
 });
 
 export const FieldContainer = styled("div", {

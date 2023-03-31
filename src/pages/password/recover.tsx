@@ -14,12 +14,10 @@ function RecoverPassword() {
   if (isSendedEmail) {
     return (
       <PasswordLayout>
-        <Typography.Title size="h1" weight="black" color="title">
-          Verifique seu e-mail
-        </Typography.Title>
-        <Typography.Text size="body2" color="secondary" align="center">
+        <PasswordLayout.Title>Verifique seu e-mail</PasswordLayout.Title>
+        <PasswordLayout.Description>
           Nós te enviamos um link para resetar sua senha para o e-mail:
-        </Typography.Text>
+        </PasswordLayout.Description>
         <Typography.Text size="body2" weight="bold">
           {sendedEmail}
         </Typography.Text>
@@ -40,12 +38,10 @@ function RecoverPassword() {
 
   return (
     <PasswordLayout>
-      <Typography.Title size="h1" weight="black" color="title">
-        Esqueceu sua senha?
-      </Typography.Title>
-      <Typography.Text size="body2" color="secondary" align="center">
+      <PasswordLayout.Title>Esqueceu sua senha?</PasswordLayout.Title>
+      <PasswordLayout.Description>
         Não se preocupe, vamos te ajudar a resetar sua senha, ok?
-      </Typography.Text>
+      </PasswordLayout.Description>
 
       <RecoverPasswordForm onSendEmail={setSendedEmail} />
     </PasswordLayout>

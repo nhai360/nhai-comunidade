@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { Typography } from "@/ui";
 import { PasswordLayout } from "@/layouts";
 import { withoutAuth } from "@/middlewares";
 import { CreateSessionParams } from "@/client/users";
@@ -20,12 +19,10 @@ function ResetPassword() {
 
   return (
     <PasswordLayout>
-      <Typography.Title size="h1" weight="black" color="title">
-        Crie sua nova senha
-      </Typography.Title>
-      <Typography.Text size="body2" color="secondary" align="center">
+      <PasswordLayout.Title>Crie sua nova senha</PasswordLayout.Title>
+      <PasswordLayout.Description>
         Sua nova senha precisa ser diferente da sua senha anterior
-      </Typography.Text>
+      </PasswordLayout.Description>
 
       <ResetPasswordForm onResetPassword={handleResetPassword} />
     </PasswordLayout>

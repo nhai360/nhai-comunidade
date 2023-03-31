@@ -28,3 +28,39 @@ export function PasswordLayout({ children }: Props) {
     </S.Container>
   );
 }
+
+PasswordLayout.Title = function Title({ children }: Props) {
+  return (
+    <Typography.Title
+      size="h1"
+      weight="black"
+      color="title"
+      css={{
+        "@mobile": {
+          textAlign: "center",
+          lineHeight: "120%",
+          fontSize: "$h3",
+        },
+      }}
+    >
+      {children}
+    </Typography.Title>
+  );
+};
+
+PasswordLayout.Description = function Description({ children }: Props) {
+  return (
+    <Typography.Text
+      size="body2"
+      color="secondary"
+      align="center"
+      css={{
+        "@mobile": {
+          textAlign: "center",
+        },
+      }}
+    >
+      {children}
+    </Typography.Text>
+  );
+};

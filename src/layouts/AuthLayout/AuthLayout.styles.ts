@@ -10,6 +10,14 @@ export const Container = styled("main", {
   gridTemplateColumns: "repeat(2, 1fr)",
 
   overflow: "hidden",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
+
+  "@mobile": {
+    paddingBlock: "$3",
+  },
 });
 
 export const Content = styled("section", {
@@ -23,6 +31,17 @@ export const Content = styled("section", {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+
+  paddingInline: "$4",
+
+  "@tablet": {
+    borderRadius: "$large",
+    marginInline: "$8",
+  },
+
+  "@mobile": {
+    marginInline: "$3",
+  },
 });
 
 export const TitleContainer = styled("section", {
@@ -34,5 +53,9 @@ export const TitleContainer = styled("section", {
   h1: {
     maxWidth: "492px",
     textAlign: "center",
+  },
+
+  "@tablet": {
+    display: "none",
   },
 });

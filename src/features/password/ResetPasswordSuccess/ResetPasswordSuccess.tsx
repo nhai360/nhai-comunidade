@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Button, Typography } from "@/ui";
+import { Button } from "@/ui";
 import { PasswordLayout } from "@/layouts";
 import { useAuthContext } from "@/contexts";
 import { authenticatedAPI } from "@/client";
@@ -38,14 +38,12 @@ export function ResetPasswordSuccess({ email, password }: Props) {
 
   return (
     <PasswordLayout>
-      <Typography.Title size="h1" weight="black" color="title">
-        Sua senha foi resetada
-      </Typography.Title>
-      <Typography.Text size="body2" color="secondary" align="center">
+      <PasswordLayout.Title>Sua senha foi resetada</PasswordLayout.Title>
+      <PasswordLayout.Description>
         Sua senha foi resetada com sucesso. Clique no botão a baixo
         <br />
         para fazer login magicamente!
-      </Typography.Text>
+      </PasswordLayout.Description>
 
       <Button
         fullWidth

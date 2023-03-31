@@ -114,6 +114,10 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
         fixed: 3,
       },
     },
+    media: {
+      mobile: "(max-width: 425px)",
+      tablet: "(max-width: 768px)",
+    },
   });
 
 export const globalStyles = globalCss({
