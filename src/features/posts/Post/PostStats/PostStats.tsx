@@ -55,7 +55,7 @@ export function PostStats({ post, expanded = false }: Props) {
           onClick={handleLikePost}
         >
           <HeartIcon fill={alreadyLikedPost ? "currentColor" : "none"} />
-          Curtir
+          <span>Curtir</span>
         </Button>
       </S.Actions>
 

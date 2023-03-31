@@ -31,6 +31,13 @@ export function Comment({ post, comment, maxReplies }: Props) {
       <Avatar.Square
         alt={comment.author.fullName}
         fallback={getInitials(comment.author.fullName)}
+        css={{
+          "@mobile": {
+            width: "42px",
+            height: "42px",
+            borderRadius: "8px",
+          },
+        }}
       />
       <S.Container>
         <CommentHeader comment={comment} />

@@ -7,9 +7,13 @@ import * as S from "./LikeAndReplyButtons.styles";
 
 type Props = {
   comment: Comment;
+  showReplyButton?: boolean;
 };
 
-export function LikeAndReplyButtons({ comment }: Props) {
+export function LikeAndReplyButtons({
+  comment,
+  showReplyButton = true,
+}: Props) {
   const { setReplyTo, fieldRef } = useCommentContext();
 
   function handleReply() {
@@ -22,9 +26,11 @@ export function LikeAndReplyButtons({ comment }: Props) {
       <Button ghost variant="text">
         <Typography.Text size="caption">Curtir</Typography.Text>
       </Button>
-      <Button ghost variant="text" onClick={handleReply}>
-        <Typography.Text size="caption">Responder</Typography.Text>
-      </Button>
+      {showReplyButton && (
+        <Button ghost variant="text" onClick={handleReply}>
+          <Typography.Text size="caption">Responder</Typography.Text>
+        </Button>
+      )}
     </S.Container>
   );
 }

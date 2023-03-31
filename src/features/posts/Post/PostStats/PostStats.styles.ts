@@ -10,4 +10,10 @@ export const Actions = styled("div", {
   alignItems: "center",
   gap: "$2",
   marginLeft: "auto",
+
+  "@mobile": {
+    "button > span": {
+      display: "none",
+    },
+  },
 });

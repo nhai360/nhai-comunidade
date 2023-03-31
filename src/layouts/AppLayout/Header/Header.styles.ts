@@ -30,6 +30,10 @@ export const Actions = styled("div", {
   display: "flex",
   alignItems: "center",
   gap: "$6",
+
+  "@mobile": {
+    display: "none",
+  },
 });
 
 export const UserContainer = styled("div", {

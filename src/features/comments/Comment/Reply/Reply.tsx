@@ -19,9 +19,10 @@ import * as S from "./Reply.styles";
 type Props = {
   reply: Comment;
   parentId?: string;
+  showReplyButton?: boolean;
 };
 
-export function Reply({ reply, parentId }: Props) {
+export function Reply({ reply, parentId, showReplyButton = true }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [content, setContent] = useState(
@@ -42,6 +43,14 @@ export function Reply({ reply, parentId }: Props) {
           size="small"
           alt={reply.author.fullName}
           fallback={getInitials(reply.author.fullName)}
+          css={{
+            "@mobile": {
+              width: "24px",
+              height: "24px",
+              borderRadius: "4px",
+              fontSize: "10px",
+            },
+          }}
         />
         <Container>
           <CommentHeader comment={reply} />
@@ -57,12 +66,16 @@ export function Reply({ reply, parentId }: Props) {
             </S.Content>
           )}
 
-          <LikeAndReplyButtons comment={reply} />
+          <LikeAndReplyButtons
+            comment={reply}
+            showReplyButton={showReplyButton}
+          />
 
           <RepliesList
             replies={replies}
             parentId={reply.id}
             css={{ marginTop: "$4" }}
+            showReplyButton={false}
           />
         </Container>
       </Wrapper>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Avatar, Button, Tag, Tooltip, Typography } from "@/ui";
+import { Avatar, Button, Tooltip, Typography } from "@/ui";
 import { CheckIcon, LinkIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
@@ -43,7 +43,6 @@ export function PostHeader({ post }: Props) {
         <S.Info>
           <S.FullName>
             {post.author.fullName}
-            <Tag variant="blue">ADMIN</Tag>
             <Typography.Text color="secondary" size="caption">
               {createdAtFormatted} atrás
             </Typography.Text>
