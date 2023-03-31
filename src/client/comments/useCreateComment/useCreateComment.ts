@@ -1,5 +1,8 @@
 import { authenticatedAPI } from "@/client";
-import { CreateCommentParams } from "@/client/comments";
+import {
+  CreateCommentParams,
+  invalidateCommentsQueries,
+} from "@/client/comments";
 import { invalidatePostsQueries } from "@/client/posts";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -28,6 +31,7 @@ export function useCreateComment() {
     mutationFn: createCommentRequest,
     onSuccess: () => {
       invalidatePostsQueries(queryClient);
+      invalidateCommentsQueries(queryClient);
     },
   });
 

@@ -1,0 +1,27 @@
+import { authenticatedAPI, decodeResponse } from "@/client";
+
+import { CommentDecoder, Comment, GetParams } from "@/client/comments";
+import { UseQueryOptions, useQuery } from "react-query";
+
+async function getComments({ postId }: GetParams) {
+  const response = await authenticatedAPI.get(`/post/${postId}/comments`);
+
+  return decodeResponse<Comment[]>(response, CommentDecoder.array());
+}
+
+export function useComments(
+  params: GetParams,
+  options?: UseQueryOptions<Comment[]>,
+) {
+  const { data: comments, ...rest } = useQuery({
+    enabled: !!params.postId,
+    queryKey: ["comments"],
+    queryFn: () => getComments(params),
+    ...options,
+  });
+
+  return {
+    comments,
+    ...rest,
+  };
+}
