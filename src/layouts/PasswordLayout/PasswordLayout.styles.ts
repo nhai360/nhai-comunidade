@@ -7,7 +7,7 @@ export const Container = styled("div", {
   alignItems: "center",
   justifyContent: "space-between",
   height: "100vh",
-  paddingBlock: "$16",
+  padding: "$16 $4",
   background: "$neutral100",
 });
 
