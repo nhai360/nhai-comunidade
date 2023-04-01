@@ -4,7 +4,7 @@ import { CommentDecoder, Comment, GetParams } from "@/client/comments";
 import { UseQueryOptions, useQuery } from "react-query";
 
 async function getComments({ postId }: GetParams) {
-  const response = await authenticatedAPI.get(`/post/${postId}/comments`);
+  const response = await authenticatedAPI.get(`/posts/${postId}/comments`);
 
   return decodeResponse<Comment[]>(response, CommentDecoder.array());
 }

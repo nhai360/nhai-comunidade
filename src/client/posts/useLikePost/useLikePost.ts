@@ -5,11 +5,11 @@ import { LikePostParams, invalidatePostsQueries } from "@/client/posts";
 
 async function likePostRequest({ postId, alreadyLiked }: LikePostParams) {
   if (alreadyLiked) {
-    await authenticatedAPI.post(`/post/${postId}/unlike`);
+    await authenticatedAPI.post(`/posts/${postId}/unlike`);
     return;
   }
 
-  await authenticatedAPI.post(`/post/${postId}/like`);
+  await authenticatedAPI.post(`/posts/${postId}/like`);
 }
 
 export function useLikePost() {

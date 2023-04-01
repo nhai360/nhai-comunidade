@@ -8,7 +8,7 @@ export async function getPosts({
   orderDirection = "desc",
   search,
 }: GetParams) {
-  const response = await authenticatedAPI.get("/post", {
+  const response = await authenticatedAPI.get("/posts", {
     params: {
       orderBy: `${orderBy}:${orderDirection}`,
       search,

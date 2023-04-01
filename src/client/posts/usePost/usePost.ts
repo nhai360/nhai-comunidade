@@ -3,7 +3,7 @@ import { GetPostParams, Post, PostDecoder } from "@/client/posts";
 import { authenticatedAPI, decodeResponse } from "@/client";
 
 async function getPost({ postId }: GetPostParams) {
-  const response = await authenticatedAPI.get(`/post/${postId}`);
+  const response = await authenticatedAPI.get(`/posts/${postId}`);
 
   return decodeResponse<Post>(response, PostDecoder);
 }
