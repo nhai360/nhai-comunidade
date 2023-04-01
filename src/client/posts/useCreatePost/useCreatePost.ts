@@ -7,7 +7,7 @@ import {
 } from "@/client/posts";
 
 async function createPostRequest(params: CreatePostRequestParams) {
-  await authenticatedAPI.post("/post", params);
+  await authenticatedAPI.post("/posts", params);
 }
 
 export function useCreatePost() {

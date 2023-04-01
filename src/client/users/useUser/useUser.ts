@@ -3,7 +3,7 @@ import { GetParams, User, UserDecoder } from "@/client/users";
 import { useQuery } from "react-query";
 
 async function getUser({ id }: GetParams) {
-  const response = await authenticatedAPI.get(`/user/${id}`);
+  const response = await authenticatedAPI.get(`/users/${id}`);
 
   return decodeResponse<User>(response, UserDecoder);
 }
