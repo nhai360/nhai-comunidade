@@ -12,14 +12,14 @@ async function createCommentRequest({
   replyId,
 }: CreateCommentParams) {
   if (replyId) {
-    await authenticatedAPI.post(`/posts/${postId}/comment/${replyId}`, {
+    await authenticatedAPI.post(`/posts/${postId}/comments/${replyId}`, {
       content,
     });
 
     return;
   }
 
-  await authenticatedAPI.post(`/posts/${postId}/comment`, {
+  await authenticatedAPI.post(`/posts/${postId}/comments`, {
     content,
   });
 }
