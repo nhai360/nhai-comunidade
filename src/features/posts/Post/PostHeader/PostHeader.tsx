@@ -48,7 +48,7 @@ export function PostHeader({ post }: Props) {
             </Typography.Text>
           </S.FullName>
           <Typography.Text color="secondary" size="caption">
-            {post.author.nickname}
+            @{post.author.nickname}
           </Typography.Text>
         </S.Info>
       </S.User>

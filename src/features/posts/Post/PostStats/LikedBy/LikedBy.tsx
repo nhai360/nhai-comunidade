@@ -1,7 +1,7 @@
 import { Avatar, Typography } from "@/ui";
 
 import { Post } from "@/client/posts";
-import { getInitials } from "@/lib/string";
+import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
 import * as S from "./LikedBy.styles";
 
@@ -19,7 +19,7 @@ export function LikedBy({ post }: Props) {
   const firstUserLiked = usersLiked.at(0);
 
   const firstUserLikedAndLikesCount = [
-    `Curtido por ${firstUserLiked?.nickname}`,
+    `Curtido por ${getFirstNameAndLastName(firstUserLiked?.fullName)}`,
     hasMoreLikes ? `e mais ${likesCount - 1} pessoas` : "",
   ].join(" ");
 

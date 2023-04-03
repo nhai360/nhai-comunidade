@@ -71,7 +71,7 @@ export function Header() {
                 </Typography.Text>
                 {user?.nickname && (
                   <Typography.Text size="body3" color="secondary">
-                    {user?.nickname}
+                    @{user?.nickname}
                   </Typography.Text>
                 )}
                 {/* <Tag variant="pink">Nível 56</Tag> */}
