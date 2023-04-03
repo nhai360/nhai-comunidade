@@ -51,11 +51,11 @@ export function PostStats({ post, expanded = false }: Props) {
         <Button
           size="medium"
           loading={isLoading}
-          variant={alreadyLikedPost ? "primary" : "light"}
+          variant="primary"
           onClick={handleLikePost}
         >
           <HeartIcon fill={alreadyLikedPost ? "currentColor" : "none"} />
-          <span>Curtir</span>
+          <span>{alreadyLikedPost ? "Curtido" : "Curtir"}</span>
         </Button>
       </S.Actions>
 
