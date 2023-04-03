@@ -6,6 +6,7 @@ export const FeatureDecoder = t.enum([
   "PROFILE",
   "LIKES_COMMENTS",
   "ARTICLES_SECTION",
+  "ACTIONS_COMMENTS",
 ]);
 
 export type Feature = t.TypeOf<typeof FeatureDecoder>;
@@ -19,6 +20,7 @@ const openFlags: OpenFlags = {
   PROFILE: true,
   LIKES_COMMENTS: true,
   ARTICLES_SECTION: true,
+  ACTIONS_COMMENTS: true,
 };
 
 const featureFlags: Record<string, OpenFlags> = {

@@ -21,6 +21,10 @@ export function Actions({ comment }: Props) {
     FeatureDecoder.Values.LIKES_COMMENTS,
   );
 
+  const { isEnabled: isEnabledActionsComments } = useFeatureFlag(
+    FeatureDecoder.Values.ACTIONS_COMMENTS,
+  );
+
   const isUserIdFromSessionIsEqualAuthorId =
     comment.author.id === session?.userId;
 
@@ -48,7 +52,7 @@ export function Actions({ comment }: Props) {
       >
         {createdAtFormatted}
       </Typography.Text>
-      {isUserIdFromSessionIsEqualAuthorId && (
+      {isUserIdFromSessionIsEqualAuthorId && isEnabledActionsComments && (
         <S.Box>
           <Button ghost icon variant="transparent" size="small">
             <EditIcon color={theme.colors.textSecondary.value} />
