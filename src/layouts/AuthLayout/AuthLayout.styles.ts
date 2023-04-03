@@ -11,7 +11,7 @@ export const Container = styled("main", {
 
   overflow: "hidden",
 
-  "@tablet": {
+  "@laptop": {
     gridTemplateColumns: "1fr",
   },
 
@@ -34,7 +34,7 @@ export const Content = styled("section", {
 
   paddingInline: "$4",
 
-  "@tablet": {
+  "@laptop": {
     borderRadius: "$large",
     marginInline: "$8",
   },
@@ -55,7 +55,7 @@ export const TitleContainer = styled("section", {
     textAlign: "center",
   },
 
-  "@tablet": {
+  "@laptop": {
     display: "none",
   },
 });

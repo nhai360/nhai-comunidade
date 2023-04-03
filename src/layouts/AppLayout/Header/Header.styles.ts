@@ -31,7 +31,7 @@ export const Actions = styled("div", {
   alignItems: "center",
   gap: "$6",
 
-  "@mobile": {
+  "@tablet": {
     display: "none",
   },
 });

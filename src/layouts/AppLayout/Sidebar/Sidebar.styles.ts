@@ -14,7 +14,7 @@ export const Container = styled("aside", {
   paddingBlock: "$20 $8",
   zIndex: "$alwaysOnTop",
 
-  "@tablet": {
+  "@laptop": {
     display: "none",
   },
 });

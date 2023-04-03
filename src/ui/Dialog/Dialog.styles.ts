@@ -45,7 +45,7 @@ export const Content = styled(Dialog.Content, {
   "-ms-overflow-style": "none",
   scrollbarWidth: "none",
 
-  "@tablet": {
+  "@laptop": {
     minWidth: 0,
     maxWidth: "90vw",
     width: "100%",

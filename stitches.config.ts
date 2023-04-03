@@ -115,8 +115,9 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
       },
     },
     media: {
-      mobile: "(max-width: 425px)",
-      tablet: "(max-width: 768px)",
+      mobile: "(max-width: 635px)",
+      tablet: "(max-width: 720px)",
+      laptop: "(max-width: 1024px)",
     },
   });
 
