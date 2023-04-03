@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { theme } from "@/../stitches.config";
 import { useAuthContext, useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
 import { Avatar, Button, Popover, TextArea } from "@/ui";
@@ -60,6 +62,8 @@ export function PostCommentField({ post }: Props) {
         onSuccess: () => {
           setReplyTo(null);
           fieldRef.current?.clearInput();
+
+          toast("Comentário publicado!");
         },
         onError: () => {
           setError("content", {
@@ -114,7 +118,7 @@ export function PostCommentField({ post }: Props) {
             type="submit"
             css={{ width: "24px", borderRadius: "4px" }}
           >
-            <ArrowRightIcon size={18} />
+            <ArrowRightIcon size={18} color={theme.colors.neutral100.value} />
           </Button>
         )}
         {replyTo ? (
