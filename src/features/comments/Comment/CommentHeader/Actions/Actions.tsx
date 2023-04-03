@@ -8,6 +8,7 @@ import { Comment } from "@/client/comments/types";
 import { format } from "@/lib/date-fns";
 
 import * as S from "./Actions.styles";
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 type Props = {
   comment: Comment;
@@ -15,6 +16,10 @@ type Props = {
 
 export function Actions({ comment }: Props) {
   const { session } = useAuthContext();
+
+  const { isEnabled: isEnabledLikesComments } = useFeatureFlag(
+    FeatureDecoder.Values.LIKES_COMMENTS,
+  );
 
   const isUserIdFromSessionIsEqualAuthorId =
     comment.author.id === session?.userId;
@@ -26,14 +31,16 @@ export function Actions({ comment }: Props) {
 
   return (
     <S.Container>
-      <Typography.Text
-        size="caption"
-        color="secondary"
-        weight="medium"
-        css={{ "@mobile": { display: "none" } }}
-      >
-        173 Gostaram
-      </Typography.Text>
+      {isEnabledLikesComments && (
+        <Typography.Text
+          size="caption"
+          color="secondary"
+          weight="medium"
+          css={{ "@mobile": { display: "none" } }}
+        >
+          173 Gostaram
+        </Typography.Text>
+      )}
       <Typography.Text
         size="caption"
         color="title"
