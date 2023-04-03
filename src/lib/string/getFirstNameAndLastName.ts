@@ -1,4 +1,4 @@
-export function getFullName(fullName = "") {
+export function getFirstNameAndLastName(fullName = "") {
   if (!fullName.includes(" ")) {
     return fullName;
   }

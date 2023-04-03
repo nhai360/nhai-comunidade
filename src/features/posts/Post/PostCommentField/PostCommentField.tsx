@@ -16,7 +16,7 @@ import {
 } from "@/features/comments";
 
 import { useUser } from "@/client/users";
-import { getFullName, getInitials } from "@/lib/string";
+import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./PostCommentField.styles";
@@ -97,7 +97,7 @@ export function PostCommentField({ post }: Props) {
         control={control}
         placeholder={
           replyTo
-            ? `Respondendo ${getFullName(replyTo.author.fullName)}`
+            ? `Respondendo ${getFirstNameAndLastName(replyTo.author.fullName)}`
             : "Deixe sua opinião..."
         }
         handleReturn={handleSendComment}

@@ -3,7 +3,7 @@ import { Dialog, Divider } from "@/ui";
 import { Post } from "@/features/posts";
 import { usePost } from "@/client/posts";
 import { CommentProvider } from "@/contexts";
-import { getFullName } from "@/lib/string";
+import { getFirstNameAndLastName } from "@/lib/string";
 
 type Props = {
   postId: string;
@@ -23,7 +23,9 @@ export function PostDialog({ postId, onClose }: Props) {
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>
         <Dialog.Header
-          title={`Publicação de ${getFullName(post.author.fullName)}`}
+          title={`Publicação de ${getFirstNameAndLastName(
+            post.author.fullName,
+          )}`}
           closable
         />
         <CommentProvider>

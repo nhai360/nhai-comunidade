@@ -5,7 +5,7 @@ import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
-import { getFullName, getInitials } from "@/lib/string";
+import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { useUser } from "@/client/users";
 
 import { useAuthContext, useFeedContext } from "@/contexts";
@@ -67,7 +67,7 @@ export function Header() {
               )}
               <S.UserInfo>
                 <Typography.Text color="primary" weight="medium">
-                  {getFullName(user?.fullName)}
+                  {getFirstNameAndLastName(user?.fullName)}
                 </Typography.Text>
                 {user?.nickname && (
                   <Typography.Text size="body3" color="secondary">
