@@ -17,6 +17,7 @@ import {
 
 import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./PostCommentField.styles";
 
@@ -37,6 +38,13 @@ export function PostCommentField({ post }: Props) {
   const { control, getValues, setError } = useForm<CreateCommentParams>({
     resolver: zodResolver(CreateCommentDecoder),
   });
+
+  const { isEnabled: isEnabledCreatePoll } = useFeatureFlag(
+    FeatureDecoder.Values.CREATE_POLL,
+  );
+  const { isEnabled: isEnabledCreateDiscussion } = useFeatureFlag(
+    FeatureDecoder.Values.CREATE_DISCUSSION,
+  );
 
   function handleSendComment() {
     const content = getValues("content");
@@ -105,22 +113,26 @@ export function PostCommentField({ post }: Props) {
           </S.Action>
         ) : (
           <>
-            <Popover.Root>
-              <Popover.Trigger asChild>
-                <S.Action type="button">
-                  <PollIcon size={28} strokeWidth="1.5" />
-                </S.Action>
-              </Popover.Trigger>
-              <CreatePollPopover />
-            </Popover.Root>
-            <Popover.Root>
-              <Popover.Trigger asChild>
-                <S.Action type="button">
-                  <ChatIcon size={28} strokeWidth="1.5" />
-                </S.Action>
-              </Popover.Trigger>
-              <CreateDiscussionPopover />
-            </Popover.Root>
+            {isEnabledCreatePoll && (
+              <Popover.Root>
+                <Popover.Trigger asChild>
+                  <S.Action type="button">
+                    <PollIcon size={28} strokeWidth="1.5" />
+                  </S.Action>
+                </Popover.Trigger>
+                <CreatePollPopover />
+              </Popover.Root>
+            )}
+            {isEnabledCreateDiscussion && (
+              <Popover.Root>
+                <Popover.Trigger asChild>
+                  <S.Action type="button">
+                    <ChatIcon size={28} strokeWidth="1.5" />
+                  </S.Action>
+                </Popover.Trigger>
+                <CreateDiscussionPopover />
+              </Popover.Root>
+            )}
           </>
         )}
       </TextArea>
