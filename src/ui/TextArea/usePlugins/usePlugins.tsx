@@ -19,6 +19,8 @@ import {
   TextBlueStyles,
 } from "../TextArea.styles";
 import { useMemo } from "react";
+import { Button } from "@/ui/Button";
+import { SmileysIcon } from "@/ui/_icons";
 
 const linkifyPlugin = createLinkifyPlugin({
   theme: {
@@ -66,6 +68,11 @@ export function usePlugins({ emojiSelectPosition }: Props) {
         emojiSelectPopoverNavEntryActive:
           EmojiSelectPopoverNavEntryActiveStyles,
       },
+      selectButtonContent: (
+        <Button icon ghost variant="transparent">
+          <SmileysIcon />
+        </Button>
+      ),
     });
 
     const { EmojiSelect, EmojiSuggestions } = emojiPlugin;

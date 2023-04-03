@@ -3,8 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useAuthContext, useCommentContext } from "@/contexts";
 import { Post } from "@/client/posts";
-import { Avatar, Popover, TextArea } from "@/ui";
-import { ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
+import { Avatar, Button, Popover, TextArea } from "@/ui";
+import { ArrowRightIcon, ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
 import {
   CreateCommentDecoder,
   CreateCommentParams,
@@ -35,9 +35,12 @@ export function PostCommentField({ post }: Props) {
     id: session?.userId,
   });
 
-  const { control, getValues, setError } = useForm<CreateCommentParams>({
-    resolver: zodResolver(CreateCommentDecoder),
-  });
+  const { control, watch, setError, handleSubmit } =
+    useForm<CreateCommentParams>({
+      resolver: zodResolver(CreateCommentDecoder),
+    });
+
+  const content = watch("content");
 
   const { isEnabled: isEnabledCreatePoll } = useFeatureFlag(
     FeatureDecoder.Values.CREATE_POLL,
@@ -47,8 +50,6 @@ export function PostCommentField({ post }: Props) {
   );
 
   function handleSendComment() {
-    const content = getValues("content");
-
     createComment(
       {
         postId: post.id,
@@ -77,7 +78,7 @@ export function PostCommentField({ post }: Props) {
   }
 
   return (
-    <S.Form>
+    <S.Form onSubmit={handleSubmit(handleSendComment)}>
       {user && (
         <Avatar.Square
           size="small"
@@ -107,27 +108,36 @@ export function PostCommentField({ post }: Props) {
         }}
         reverseActions={!replyTo}
       >
+        {content?.length > 0 && (
+          <Button
+            icon
+            type="submit"
+            css={{ width: "24px", borderRadius: "4px" }}
+          >
+            <ArrowRightIcon size={18} />
+          </Button>
+        )}
         {replyTo ? (
           <S.Action type="button" onClick={handleClearReplyTo}>
             <CloseIcon strokeWidth="1.8" />
           </S.Action>
         ) : (
           <>
-            {isEnabledCreatePoll && (
+            {isEnabledCreatePoll && content?.length === 0 && (
               <Popover.Root>
                 <Popover.Trigger asChild>
                   <S.Action type="button">
-                    <PollIcon size={28} strokeWidth="1.5" />
+                    <PollIcon size={24} strokeWidth="1.5" />
                   </S.Action>
                 </Popover.Trigger>
                 <CreatePollPopover />
               </Popover.Root>
             )}
-            {isEnabledCreateDiscussion && (
+            {isEnabledCreateDiscussion && content?.length === 0 && (
               <Popover.Root>
                 <Popover.Trigger asChild>
                   <S.Action type="button">
-                    <ChatIcon size={28} strokeWidth="1.5" />
+                    <ChatIcon size={24} strokeWidth="1.5" />
                   </S.Action>
                 </Popover.Trigger>
                 <CreateDiscussionPopover />

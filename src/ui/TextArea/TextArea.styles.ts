@@ -123,6 +123,7 @@ export const TextBlueStyles = css({ color: "$blueMedium" }).toString();
 
 export const EmojiStyles = css({
   position: "relative",
+  height: "24px !important",
 }).toString();
 
 export const EmojiSuggestionsEntryStyles = css({
@@ -251,4 +252,8 @@ export const Actions = styled("div", {
   display: "flex",
   alignItems: "center",
   gap: "$2",
+
+  button: {
+    height: "24px !important",
+  },
 });
