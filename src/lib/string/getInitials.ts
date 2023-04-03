@@ -1,6 +1,6 @@
 export function getInitials(baseString = "") {
   if (!baseString.includes(" ")) {
-    return baseString;
+    return baseString.charAt(0).toUpperCase();
   }
 
   const [firstName] = baseString.split(" ");
