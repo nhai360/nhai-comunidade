@@ -1,7 +1,12 @@
 import get from "lodash/get";
 import * as t from "zod";
 
-export const FeatureDecoder = t.enum(["EXAMPLE", "PROFILE", "LIKES_COMMENTS"]);
+export const FeatureDecoder = t.enum([
+  "EXAMPLE",
+  "PROFILE",
+  "LIKES_COMMENTS",
+  "ARTICLES_SECTION",
+]);
 
 export type Feature = t.TypeOf<typeof FeatureDecoder>;
 
@@ -13,6 +18,7 @@ const openFlags: OpenFlags = {
   EXAMPLE: true,
   PROFILE: true,
   LIKES_COMMENTS: true,
+  ARTICLES_SECTION: true,
 };
 
 const featureFlags: Record<string, OpenFlags> = {

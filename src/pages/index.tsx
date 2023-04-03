@@ -11,8 +11,13 @@ import {
 } from "@/features/feed";
 import { FeedProvider } from "@/contexts";
 import { withAuth } from "../middlewares";
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 function Feed() {
+  const { isEnabled: isEnabledArticlesSection } = useFeatureFlag(
+    FeatureDecoder.Values.ARTICLES_SECTION,
+  );
+
   return (
     <>
       <Head>
@@ -29,8 +34,12 @@ function Feed() {
             </AppLayout.Content>
             <AppLayout.Sider>
               <MainTrends />
-              <PopularToday />
-              <Suggestions />
+              {isEnabledArticlesSection && (
+                <>
+                  <PopularToday />
+                  <Suggestions />
+                </>
+              )}
             </AppLayout.Sider>
           </AppLayout.GridWithSider>
         </AppLayout>
