@@ -6,7 +6,7 @@ import { CheckIcon, LinkIcon } from "@/ui/_icons";
 import { theme } from "@/../stitches.config";
 
 import { Post } from "@/client/posts";
-import { getInitials } from "@/lib/string";
+import { getFullName, getInitials } from "@/lib/string";
 import { formatDistanceToNow } from "@/lib/date-fns";
 
 import * as S from "./PostHeader.styles";
@@ -42,7 +42,7 @@ export function PostHeader({ post }: Props) {
 
         <S.Info>
           <S.FullName>
-            {post.author.fullName}
+            {getFullName(post.author.fullName)}
             <Typography.Text color="secondary" size="caption">
               {createdAtFormatted} atrás
             </Typography.Text>
