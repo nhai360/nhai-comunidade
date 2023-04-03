@@ -22,7 +22,7 @@ export function FeedList() {
   }
 
   return (
-    <S.Container ref={parentRef} css={{ height: totalSize }}>
+    <S.Container ref={parentRef} css={{ height: `${totalSize}vh` }}>
       <S.List
         css={{
           transform: `translateY(${virtualItems[0].start}px)`,

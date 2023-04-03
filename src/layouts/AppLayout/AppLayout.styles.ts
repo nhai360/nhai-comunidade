@@ -12,9 +12,14 @@ export const Wrapper = styled("div", {
 export const Content = styled("main", {
   display: "flex",
   flexDirection: "column",
+  height: "100%",
 });
 
-export const Sider = styled("aside", {
+export const Sider = styled("div", {
+  position: "sticky",
+  // top: -40,
+  top: 100,
+
   display: "flex",
   flexDirection: "column",
   gap: "$6",
@@ -39,6 +44,7 @@ export const GridWithSider = styled("div", {
 
   display: "grid",
   gridTemplateColumns: "auto 416px",
+  alignItems: "flex-start",
   gap: "$6",
 
   "@laptop": {
