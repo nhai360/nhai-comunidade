@@ -15,7 +15,14 @@ export type User = t.TypeOf<typeof UserDecoder>;
 
 export const CreateUserDecoder = t.object({
   fullName: t.string().min(1, "Nome é obrigatório"),
-  nickname: t.string(),
+  nickname: t
+    .string()
+    .min(1, "Apelido é obrigatório")
+    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'O apelido só pode conter letras maiúsculas e minúsculas, números e caracteres understore (Ex: "_")',
+    ),
   email: t
     .string()
     .email({ message: "O formato de e-mail é inválido" })
