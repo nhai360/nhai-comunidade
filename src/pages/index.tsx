@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import { AppLayout } from "@/layouts";
 
 import { CreatePostCard, PostFromUrl } from "@/features/posts";
@@ -19,32 +17,26 @@ function Feed() {
   );
 
   return (
-    <>
-      <Head>
-        <title>Nhaí Comunidade</title>
-      </Head>
-
-      <FeedProvider>
-        <AppLayout>
-          <AppLayout.GridWithSider>
-            <AppLayout.Content css={{ gap: "$6" }}>
-              <CreatePostCard />
-              <FeedList />
-              <PostFromUrl />
-            </AppLayout.Content>
-            <AppLayout.Sider>
-              <MainTrends />
-              {isEnabledArticlesSection && (
-                <>
-                  <PopularToday />
-                  <Suggestions />
-                </>
-              )}
-            </AppLayout.Sider>
-          </AppLayout.GridWithSider>
-        </AppLayout>
-      </FeedProvider>
-    </>
+    <FeedProvider>
+      <AppLayout>
+        <AppLayout.GridWithSider>
+          <AppLayout.Content css={{ gap: "$6" }}>
+            <CreatePostCard />
+            <FeedList />
+            <PostFromUrl />
+          </AppLayout.Content>
+          <AppLayout.Sider>
+            <MainTrends />
+            {isEnabledArticlesSection && (
+              <>
+                <PopularToday />
+                <Suggestions />
+              </>
+            )}
+          </AppLayout.Sider>
+        </AppLayout.GridWithSider>
+      </AppLayout>
+    </FeedProvider>
   );
 }
 

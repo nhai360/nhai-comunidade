@@ -15,6 +15,8 @@ export default function Document() {
           rel="stylesheet"
         />
 
+        <link rel="shortcut icon" href="/contai_logo.svg" type="image/x-icon" />
+
         <style
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}
