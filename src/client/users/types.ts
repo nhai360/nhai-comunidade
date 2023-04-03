@@ -20,8 +20,8 @@ export const CreateUserDecoder = t.object({
     .min(1, "Apelido é obrigatório")
     .max(20, "O apelido deve ter no máximo 20 caracteres")
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      'O apelido só pode conter letras maiúsculas e minúsculas, números e caracteres understore (Ex: "_")',
+      /^[a-z-0-9_]+$/,
+      'O apelido só pode conter letras maiúsculas, números e caracteres understore (Ex: "_")',
     ),
   email: t
     .string()
