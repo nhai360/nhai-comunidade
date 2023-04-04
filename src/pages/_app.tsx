@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <AuthProvider>
           <Component {...pageProps} />
         </AuthProvider>
-        <ToastContainer position="bottom-left" />
+        <ToastContainer />
       </QueryClientProvider>
     </>
   );

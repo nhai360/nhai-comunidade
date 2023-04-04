@@ -37,10 +37,9 @@ export function PostCommentField({ post }: Props) {
     id: session?.userId,
   });
 
-  const { control, watch, setError, handleSubmit } =
-    useForm<CreateCommentParams>({
-      resolver: zodResolver(CreateCommentDecoder),
-    });
+  const { control, watch, handleSubmit } = useForm<CreateCommentParams>({
+    resolver: zodResolver(CreateCommentDecoder),
+  });
 
   const content = watch("content");
 
@@ -63,12 +62,12 @@ export function PostCommentField({ post }: Props) {
           setReplyTo(null);
           fieldRef.current?.clearInput();
 
-          toast("Comentário publicado!");
+          toast.success("Comentário publicado!");
         },
         onError: () => {
-          setError("content", {
-            message: "Não foi possível enviar seu comentário. Tente novamente.",
-          });
+          toast.error(
+            "Não foi possível enviar seu comentário. Tente novamente.",
+          );
         },
       },
     );

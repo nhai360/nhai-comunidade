@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Dropzone, Field, TextArea } from "@/ui";
@@ -9,28 +8,15 @@ export function CreatePostUpload() {
 
   const { errors } = formState;
 
-  const errorText = useMemo(() => {
-    const hasTitleError = !!errors.title?.message;
-    const hasContentError = !!errors.content?.message;
-
-    if (hasTitleError && hasContentError) {
-      return "Título e conteúdo são obrigatórios";
-    }
-
-    if (hasTitleError) {
-      return errors.title?.message;
-    }
-
-    if (hasContentError) {
-      return errors.content?.message;
-    }
-
-    return undefined;
-  }, [errors]);
-
   return (
     <>
-      <Field errorText={errorText}>
+      <Field.Input
+        autoFocus
+        placeholder="Qual o título da sua publicação"
+        errorText={errors.title?.message}
+        {...register("title")}
+      />
+      <Field errorText={errors.content?.message}>
         <TextArea
           control={control}
           name="content"

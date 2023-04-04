@@ -22,6 +22,7 @@ import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
 import { useUser } from "@/client/users";
+import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -54,19 +55,35 @@ export function CreatePostDialog({ onClose }: Props) {
     if (data.image) {
       upload(data.image, {
         onSuccess: (media) => {
-          createPost({
-            title: data.title,
-            content: data.content,
-            color: data.color,
-            images: [media],
-          });
+          createPost(
+            {
+              title: data.title,
+              content: data.content,
+              color: data.color,
+              images: [media],
+            },
+            {
+              onError: () => {
+                toast.error(
+                  "Não foi possível enviar sua publicação. Tente novamente.",
+                );
+              },
+            },
+          );
+        },
+        onError: () => {
+          toast.error("Não foi possível enviar sua imagem. Tente novamente.");
         },
       });
 
       return;
     }
 
-    createPost(data);
+    createPost(data, {
+      onError: () => {
+        toast.error("Não foi possível enviar sua publicação. Tente novamente.");
+      },
+    });
   }
 
   if (isSuccess) {
