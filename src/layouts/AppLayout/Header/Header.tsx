@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 
 import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
@@ -14,6 +14,7 @@ import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDial
 import * as S from "./Header.styles";
 
 export function Header() {
+  const timerId = useRef(0);
   const { searchTerm, setSearchTerm, handleSearch } = useFeedContext();
 
   const { session } = useAuthContext();
@@ -24,6 +25,18 @@ export function Header() {
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
+
+  function handleSearchAfterTyping() {
+    if (timerId.current !== 0) {
+      clearTimeout(timerId.current);
+    }
+
+    const timer = setTimeout(() => {
+      handleSearch();
+    }, 800);
+
+    timerId.current = Number(timer);
+  }
 
   return (
     <>
@@ -39,7 +52,10 @@ export function Header() {
           <S.Actions>
             <InputSearch
               value={searchTerm}
-              onChange={(event) => setSearchTerm(event.currentTarget.value)}
+              onChange={(event) => {
+                setSearchTerm(event.currentTarget.value);
+                handleSearchAfterTyping();
+              }}
               onSearch={handleSearch}
             />
             <Tooltip message="Novo post" position="bottom">
