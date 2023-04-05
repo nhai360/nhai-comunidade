@@ -69,7 +69,7 @@ export function usePlugins({ emojiSelectPosition }: Props) {
           EmojiSelectPopoverNavEntryActiveStyles,
       },
       selectButtonContent: (
-        <Button icon ghost variant="transparent">
+        <Button type="button" icon ghost variant="transparent">
           <SmileysIcon />
         </Button>
       ),
