@@ -72,3 +72,7 @@ export type LikePostParams = {
   postId: string;
   alreadyLiked: boolean;
 };
+
+export type DeletePostParams = {
+  postId: string;
+};

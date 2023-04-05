@@ -1,24 +1,32 @@
 import { useState } from "react";
+import { useAuthContext } from "@/contexts";
 
 import { Avatar, Button, Tooltip, Typography } from "@/ui";
-import { CheckIcon, LinkIcon } from "@/ui/_icons";
+import { CheckIcon, LinkIcon, TrashIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 
-import { Post } from "@/client/posts";
+import { Post, useDeletePost } from "@/client/posts";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { formatDistanceToNow } from "@/lib/date-fns";
 
 import * as S from "./PostHeader.styles";
+import { toast } from "react-toastify";
 
 type Props = {
   post: Post;
 };
 
 export function PostHeader({ post }: Props) {
+  const { session } = useAuthContext();
+
   const [isCopied, setIsCopied] = useState(false);
 
+  const { deletePost, isLoading } = useDeletePost();
+
   const createdAtFormatted = formatDistanceToNow(new Date(post.createdAt));
+
+  const isAuthorFromPost = post.author.id === session?.userId;
 
   function handleCopyPostUrl() {
     navigator.clipboard.writeText(
@@ -30,6 +38,24 @@ export function PostHeader({ post }: Props) {
     setTimeout(() => {
       setIsCopied(false);
     }, 3000);
+  }
+
+  function handleDeletePost() {
+    deletePost(
+      {
+        postId: post.id,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Publicação excluída!");
+        },
+        onError: () => {
+          toast.error(
+            "Não foi possível excluir sua publicação. Tente novamente.",
+          );
+        },
+      },
+    );
   }
 
   return (
@@ -53,6 +79,18 @@ export function PostHeader({ post }: Props) {
         </S.Info>
       </S.User>
       <S.Actions>
+        {isAuthorFromPost && (
+          <Tooltip message="Excluir">
+            <Button
+              icon
+              variant="transparent"
+              loading={isLoading}
+              onClick={handleDeletePost}
+            >
+              <TrashIcon color={theme.colors.textSecondary.value} />
+            </Button>
+          </Tooltip>
+        )}
         <Tooltip message={isCopied ? "Copiado" : "Copiar link"}>
           <Button icon variant="transparent" onClick={handleCopyPostUrl}>
             {isCopied ? (
