@@ -56,7 +56,7 @@ export function RegisterForm() {
         />
 
         <Field.Input
-          label="Apelido (@exemplo)"
+          label="Apelido"
           placeholder="Digite seu apelido"
           errorText={errors.nickname?.message}
           maxLength={20}
