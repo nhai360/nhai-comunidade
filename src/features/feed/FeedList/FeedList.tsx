@@ -11,7 +11,7 @@ export function FeedList() {
 
   const { posts } = useFeedContext();
 
-  const { totalSize, virtualItems, measure } = useVirtual({
+  const { virtualItems, measure } = useVirtual({
     size: posts.length,
     parentRef,
     keyExtractor: (index) => posts[index].id,
@@ -22,7 +22,10 @@ export function FeedList() {
   }
 
   return (
-    <S.Container ref={parentRef} css={{ height: `${totalSize}vh` }}>
+    <S.Container
+      ref={parentRef}
+      css={{ height: `${virtualItems.length * 785}px` }}
+    >
       <S.List
         css={{
           transform: `translateY(${virtualItems[0].start}px)`,
