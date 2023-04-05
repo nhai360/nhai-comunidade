@@ -39,17 +39,15 @@ export const Container = styled("div", {
 
 export const Preview = styled("div", {
   position: "relative",
-
-  maxWidth: "720px",
-  maxHeight: "363px",
   minHeight: "100px",
-
   borderRadius: "$medium",
 });
 
 export const ThumbnailImage = styled("img", {
   objectFit: "cover",
-  maxHeight: "363px",
+  maxWidth: "400px",
+  maxHeight: "300px",
+  borderRadius: "$medium",
 });
 
 export const PreviewRemoveButton = styled(Button, {
