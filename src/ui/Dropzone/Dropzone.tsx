@@ -7,6 +7,9 @@ import { TrashIcon } from "@/ui/_icons";
 
 import { UploadIcon } from "./UploadIcon";
 import * as S from "./Dropzone.styles";
+import { toast } from "react-toastify";
+
+const MAX_SIZE = 1024 * 1024; // 1mb
 
 const DropzoneComponent: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -24,6 +27,10 @@ const DropzoneComponent: ForwardRefRenderFunction<
 
   function handleDropAccepted(acceptedFiles: File[]) {
     field.onChange(acceptedFiles[0]);
+  }
+
+  function handleDropRejected() {
+    toast.error("Imagem não suportada. Use apenas imagens com até 1MB");
   }
 
   function handleRemoveFile() {
@@ -49,7 +56,9 @@ const DropzoneComponent: ForwardRefRenderFunction<
   return (
     <ReactDropzone
       accept={{ "image/*": [] }}
+      onDropRejected={handleDropRejected}
       onDropAccepted={handleDropAccepted}
+      maxSize={MAX_SIZE}
     >
       {({ getRootProps, getInputProps }) => (
         <S.Container {...getRootProps()}>
