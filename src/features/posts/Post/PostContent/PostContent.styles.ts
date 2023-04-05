@@ -39,10 +39,10 @@ export const ColoredContainer = styled("article", {
 
 export const Image = styled("img", {
   objectFit: "cover",
-  maxHeight: "400px",
+  maxHeight: "900px",
   borderRadius: "$large",
 
   "@tablet": {
-    maxHeight: "245px",
+    maxHeight: "600px",
   },
 });
