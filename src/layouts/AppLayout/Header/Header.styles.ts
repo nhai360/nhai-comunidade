@@ -24,6 +24,10 @@ export const Content = styled("div", {
 
   marginInline: "auto",
   paddingInline: "$6",
+
+  "@tablet": {
+    justifyContent: "center",
+  },
 });
 
 export const Actions = styled("div", {
