@@ -1,9 +1,12 @@
+import Link from "next/link";
+
 import { Avatar, Button, Card, Typography } from "@/ui";
 import { ShareSquareIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
-import { useTrendPosts } from "@/client/posts";
+import { useTrending } from "@/client/posts";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import { FilterButton } from "./FilterButton";
 import { HelpButton } from "./HelpButton";
@@ -11,7 +14,11 @@ import { HelpButton } from "./HelpButton";
 import * as S from "./MainTrends.styles";
 
 export function MainTrends() {
-  const { trendPosts } = useTrendPosts();
+  const { posts } = useTrending();
+
+  const { isEnabled: isEnabledFilter } = useFeatureFlag(
+    FeatureDecoder.Values.FILTER_TRENDING,
+  );
 
   return (
     <Card>
@@ -20,29 +27,42 @@ export function MainTrends() {
           Principais trends
         </Typography.Text>
         <S.Actions>
-          <FilterButton />
+          {isEnabledFilter && <FilterButton />}
           <HelpButton />
         </S.Actions>
       </S.Header>
       <S.TrendList>
-        {trendPosts.map((post) => (
+        {posts.map((post) => (
           <S.TrendItem key={post.id}>
             <Avatar.Square
               alt={post.author.fullName}
               fallback={getInitials(post.author.fullName)}
             />
             <S.TrendItemContent>
-              <S.TagFromStatus>Opinião</S.TagFromStatus>
-              <Typography.Text size="body3" color="title" weight="bold">
-                Como construir uma empresa...
+              {isEnabledFilter && <S.TagFromStatus>Opinião</S.TagFromStatus>}
+              <Typography.Text
+                size="body3"
+                color="title"
+                weight="bold"
+                title={post.title}
+                css={{
+                  textOverflow: "ellipsis",
+                  maxWidth: "200px",
+                  overflowX: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {post.title}
               </Typography.Text>
               <Typography.Text size="caption" color="secondary">
                 {getFirstNameAndLastName(post.author.fullName)}
               </Typography.Text>
             </S.TrendItemContent>
-            <Button icon size="small" variant="transparent">
-              <ShareSquareIcon color={theme.colors.textSecondary.value} />
-            </Button>
+            <Link href={`?postId=${post.id}`}>
+              <Button icon size="small" variant="transparent">
+                <ShareSquareIcon color={theme.colors.textSecondary.value} />
+              </Button>
+            </Link>
           </S.TrendItem>
         ))}
       </S.TrendList>
