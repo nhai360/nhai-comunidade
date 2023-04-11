@@ -39,6 +39,17 @@ export const PostDecoder = t.object({
 
 export type Post = t.TypeOf<typeof PostDecoder>;
 
+export const TrendPostDecoder = PostDecoder.pick({
+  id: true,
+  title: true,
+  content: true,
+  createdAt: true,
+  updatedAt: true,
+  author: true,
+});
+
+export type TrendPost = t.TypeOf<typeof TrendPostDecoder>;
+
 export const CreatePostDecoder = t.object({
   title: t.string().min(1, "Título é obrigatório"),
   content: t.string().min(1, "Conteúdo é obrigatório"),

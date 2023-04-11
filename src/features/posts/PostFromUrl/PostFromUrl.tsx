@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { PostDialog } from "@/features/posts";
@@ -9,6 +9,10 @@ export function PostFromUrl() {
   const [alreadyIsClosed, setAlreadyIsClosed] = useState(false);
 
   const { postId } = router.query;
+
+  useEffect(() => {
+    setAlreadyIsClosed(false);
+  }, [postId]);
 
   if (!postId) {
     return null;
