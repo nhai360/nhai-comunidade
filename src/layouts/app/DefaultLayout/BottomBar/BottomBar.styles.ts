@@ -1,7 +1,7 @@
 import { styled } from "@/../stitches.config";
 
 export const Container = styled("footer", {
-  position: "fixed",
+  position: "sticky",
 
   display: "flex",
   alignItems: "center",
