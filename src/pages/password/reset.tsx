@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { PasswordLayout } from "@/layouts";
+import { PasswordLayout } from "@/layouts/desktop";
 import { withoutAuth } from "@/middlewares";
 import { CreateSessionParams } from "@/client/users";
 import { ResetPasswordForm, ResetPasswordSuccess } from "@/features/password";

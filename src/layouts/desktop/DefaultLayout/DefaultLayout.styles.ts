@@ -4,6 +4,10 @@ export const Wrapper = styled("div", {
   maxWidth: "1880px",
   marginInline: "auto",
 
+  "@tablet": {
+    display: "none",
+  },
+
   "@laptop": {
     maxWidth: "100vw",
   },

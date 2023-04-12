@@ -3,13 +3,13 @@ import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 
-import * as S from "./AppLayout.styles";
+import * as S from "./DefaultLayout.styles";
 
 type Props = {
   children: ReactNode;
 };
 
-export function AppLayout({ children }: Props) {
+export function DefaultLayout({ children }: Props) {
   return (
     <S.Wrapper>
       <Header />
@@ -19,7 +19,7 @@ export function AppLayout({ children }: Props) {
   );
 }
 
-AppLayout.Content = S.Content;
-AppLayout.Sider = S.Sider;
-AppLayout.SimpleGrid = S.SimpleGrid;
-AppLayout.GridWithSider = S.GridWithSider;
+DefaultLayout.Content = S.Content;
+DefaultLayout.Sider = S.Sider;
+DefaultLayout.SimpleGrid = S.SimpleGrid;
+DefaultLayout.GridWithSider = S.GridWithSider;

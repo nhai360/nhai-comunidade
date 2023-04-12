@@ -1,21 +1,21 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
+import { useSearch } from "@/lib/search";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { useUser } from "@/client/users";
 
-import { useAuthContext, useFeedContext } from "@/contexts";
+import { useAuthContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 
 import * as S from "./Header.styles";
 
 export function Header() {
-  const timerId = useRef(0);
-  const { searchTerm, setSearchTerm, handleSearch } = useFeedContext();
+  const { searchTerm, handleChange, handleSearch } = useSearch();
 
   const { session } = useAuthContext();
 
@@ -25,18 +25,6 @@ export function Header() {
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
-
-  function handleSearchAfterTyping() {
-    if (timerId.current !== 0) {
-      clearTimeout(timerId.current);
-    }
-
-    const timer = setTimeout(() => {
-      handleSearch();
-    }, 800);
-
-    timerId.current = Number(timer);
-  }
 
   return (
     <>
@@ -52,10 +40,7 @@ export function Header() {
           <S.Actions>
             <InputSearch
               value={searchTerm}
-              onChange={(event) => {
-                setSearchTerm(event.currentTarget.value);
-                handleSearchAfterTyping();
-              }}
+              onChange={handleChange}
               onSearch={handleSearch}
             />
             <Tooltip message="Novo post" position="bottom">

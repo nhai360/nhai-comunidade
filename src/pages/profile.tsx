@@ -1,4 +1,4 @@
-import { AppLayout } from "@/layouts";
+import { DefaultLayout } from "@/layouts/desktop";
 
 import { UserProfileBanner, UserProfileInformation } from "@/features/profile";
 import { withAuth } from "@/middlewares";
@@ -12,12 +12,12 @@ function Profile() {
   }
 
   return (
-    <AppLayout>
-      <AppLayout.SimpleGrid>
+    <DefaultLayout>
+      <DefaultLayout.SimpleGrid>
         <UserProfileBanner />
         <UserProfileInformation />
-      </AppLayout.SimpleGrid>
-    </AppLayout>
+      </DefaultLayout.SimpleGrid>
+    </DefaultLayout>
   );
 }
 

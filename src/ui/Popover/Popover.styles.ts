@@ -8,7 +8,7 @@ export const Content = styled(Popover.Content, {
   border: "1px solid $neutral300",
   boxShadow: "-5px 9px 16px rgba(40, 69, 96, 0.08)",
 
-  zIndex: "$alwaysOnTop",
+  zIndex: "$fixed",
 
   variants: {
     size: {

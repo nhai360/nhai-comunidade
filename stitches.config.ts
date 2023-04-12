@@ -118,6 +118,8 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
       mobile: "(max-width: 635px)",
       tablet: "(max-width: 720px)",
       laptop: "(max-width: 1024px)",
+
+      minLaptop: "(min-width: 1024px)",
     },
   });
 

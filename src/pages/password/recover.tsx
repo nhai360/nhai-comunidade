@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { Button, Typography } from "@/ui";
-import { PasswordLayout } from "@/layouts";
+import { PasswordLayout } from "@/layouts/desktop";
 import { RecoverPasswordForm } from "@/features/password";
 import { withoutAuth } from "@/middlewares";
 

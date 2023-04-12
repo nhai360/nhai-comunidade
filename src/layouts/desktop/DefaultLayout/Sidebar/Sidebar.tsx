@@ -1,13 +1,13 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Popover, Tooltip, Typography } from "@/ui";
+import { NavigationItem, Popover, Tooltip, Typography } from "@/ui";
 import {
   CameraIcon,
   HomeIcon,
   ListLineParagraphSquareIcon,
   SettingsIcon,
 } from "@/ui/_icons";
+import { NavItem } from "@/ui/NavigationItem/NavigationItem.styles";
 
 import { authenticatedAPI } from "@/client";
 import { useAuthContext } from "@/contexts";
@@ -31,36 +31,24 @@ export function Sidebar() {
     <S.Container>
       <nav>
         <S.NavigationList>
-          <Link href="/">
-            <Tooltip message="Feed" position="right">
-              <S.NavItem active>
-                <HomeIcon />
-              </S.NavItem>
-            </Tooltip>
-          </Link>
-          <Link href="/">
-            <Tooltip message="Em breve" position="right">
-              <S.NavItem disabled>
-                <CameraIcon />
-              </S.NavItem>
-            </Tooltip>
-          </Link>
-          <Link href="/">
-            <Tooltip message="Em breve" position="right">
-              <S.NavItem disabled>
-                <ListLineParagraphSquareIcon />
-              </S.NavItem>
-            </Tooltip>
-          </Link>
+          <NavigationItem active tooltip="Feed">
+            <HomeIcon />
+          </NavigationItem>
+          <NavigationItem tooltip="Em breve" disabled>
+            <CameraIcon />
+          </NavigationItem>
+          <NavigationItem tooltip="Em breve" disabled>
+            <ListLineParagraphSquareIcon />
+          </NavigationItem>
         </S.NavigationList>
       </nav>
 
       <Popover.Root>
         <Tooltip message="Configurações" position="right">
           <Popover.Trigger asChild>
-            <S.NavItem>
+            <NavItem>
               <SettingsIcon />
-            </S.NavItem>
+            </NavItem>
           </Popover.Trigger>
         </Tooltip>
 
