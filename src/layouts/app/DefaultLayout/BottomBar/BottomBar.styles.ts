@@ -12,4 +12,6 @@ export const Container = styled("footer", {
 
   bottom: 0,
   paddingInline: "$6",
+
+  background: "$neutral100",
 });
