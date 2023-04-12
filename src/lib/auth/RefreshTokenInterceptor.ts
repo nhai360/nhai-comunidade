@@ -6,7 +6,7 @@ import { getSession } from "./getSession";
 import { logout } from "./logout";
 
 export async function refreshTokenInterceptor(error: AxiosError) {
-  console.log("error", error.response);
+  console.log("error", error);
 
   if (error?.response?.status !== 401) {
     return Promise.reject(error);
