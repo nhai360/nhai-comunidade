@@ -6,11 +6,15 @@ import { getSession } from "./getSession";
 import { logout } from "./logout";
 
 export async function refreshTokenInterceptor(error: AxiosError) {
+  console.log(error?.response?.status);
+
   if (error?.response?.status !== 401) {
     return Promise.reject(error);
   }
 
   const session = getSession();
+
+  console.log(session);
 
   if (!session) {
     authenticatedAPI.defaults.headers.common.Authorization = undefined;
