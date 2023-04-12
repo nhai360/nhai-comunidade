@@ -27,6 +27,7 @@ export function SearchDialog({ onClose }: Props) {
         <Dialog.Body>
           <S.Form onSubmit={handleSubmit}>
             <Input
+              autoFocus
               value={searchTerm}
               placeholder="Buscar"
               onChange={handleChange}
