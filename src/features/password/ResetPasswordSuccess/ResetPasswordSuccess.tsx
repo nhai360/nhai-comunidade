@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import { Button } from "@/ui";
-import { PasswordLayout } from "@/layouts";
+import { PasswordLayout } from "@/layouts/desktop";
 import { useAuthContext } from "@/contexts";
 import { authenticatedAPI } from "@/client";
 import { useCreateSession } from "@/client/users";

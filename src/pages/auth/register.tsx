@@ -1,4 +1,4 @@
-import { AuthLayout } from "@/layouts";
+import { AuthLayout } from "@/layouts/desktop";
 import { RegisterForm } from "@/features/auth";
 import { withoutAuth } from "@/middlewares";
 
