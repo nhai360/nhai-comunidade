@@ -21,15 +21,17 @@ export function AppPostCardFooter({ post }: Props) {
     <S.Container>
       <LikeButton post={post} />
       <S.Action>
-        <Button
-          variant="text"
-          size="small"
-          ghost
-          css={{ color: "$blueDark", fontSize: "$body3", fontWeight: 500 }}
-          onClick={() => setIsPostDialogVisible(true)}
-        >
-          {`${post.stats.comments} comentários`}
-        </Button>
+        {post.stats.comments > 0 && (
+          <Button
+            variant="text"
+            size="small"
+            ghost
+            css={{ color: "$blueDark", fontSize: "$body3", fontWeight: 500 }}
+            onClick={() => setIsPostDialogVisible(true)}
+          >
+            {`${post.stats.comments} comentários`}
+          </Button>
+        )}
         <CopyPostUrlButton post={post} />
       </S.Action>
 
