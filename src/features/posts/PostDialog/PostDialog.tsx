@@ -5,6 +5,9 @@ import { usePost } from "@/client/posts";
 import { CommentProvider } from "@/contexts";
 import { getFirstNameAndLastName } from "@/lib/string";
 
+import { DesktopPostDialogStats } from "./DesktopPostDialogStats";
+import { AppPostDialogStats } from "./AppPostDialogStats";
+
 type Props = {
   postId: string;
   onClose: () => void;
@@ -23,17 +26,18 @@ export function PostDialog({ postId, onClose }: Props) {
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>
         <Dialog.Header
+          closable
           title={`Publicação de ${getFirstNameAndLastName(
             post.author.fullName,
           )}`}
-          closable
         />
         <CommentProvider>
           <Dialog.Body css={{ maxHeight: "53vh" }}>
             <Post.Header post={post} />
             <Post.Content post={post} />
             <Divider css={{ marginBlock: "$6" }} />
-            <Post.Stats post={post} expanded />
+            <DesktopPostDialogStats post={post} />
+            <AppPostDialogStats post={post} />
 
             <Post.CommentList post={post} expanded />
           </Dialog.Body>

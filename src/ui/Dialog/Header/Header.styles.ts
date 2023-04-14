@@ -16,6 +16,10 @@ export const Title = styled(Dialog.Title, {
   fontFamily: "$heading",
   lineHeight: "$h3",
   marginInline: "auto",
+
+  "@mobile": {
+    fontSize: "$body3",
+  },
 });
 
 export const Close = styled(Dialog.Close, {

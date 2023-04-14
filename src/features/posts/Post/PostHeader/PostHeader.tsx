@@ -29,6 +29,8 @@ export function PostHeader({ post }: Props) {
   const isAuthorFromPost = post.author.id === session?.userId;
 
   function handleCopyPostUrl() {
+    if (isCopied) return;
+
     navigator.clipboard.writeText(
       `${window.location.origin}?postId=${post.id}`,
     );

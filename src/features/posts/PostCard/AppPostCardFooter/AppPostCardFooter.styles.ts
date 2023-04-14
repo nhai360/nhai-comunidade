@@ -3,11 +3,13 @@ import { styled } from "@/../stitches.config";
 export const Container = styled("div", {
   display: "flex",
   alignItems: "center",
+  justifyContent: "space-between",
+
+  padding: "$4",
 });
 
-export const Actions = styled("div", {
+export const Action = styled("div", {
   display: "flex",
   alignItems: "center",
-  gap: "$2",
-  marginLeft: "auto",
+  gap: "$6",
 });
