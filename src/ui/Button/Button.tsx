@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 
-import { LoadingIcon } from "@/ui/_icons/";
+import { Loading } from "@/ui";
 
 import * as S from "./Button.styles";
 
@@ -16,13 +16,7 @@ export function Button({
 }: Props) {
   return (
     <S.Container disabled={disabled || loading} {...props}>
-      {loading ? (
-        <S.Loading>
-          <LoadingIcon size={20} />
-        </S.Loading>
-      ) : (
-        children
-      )}
+      {loading ? <Loading /> : children}
     </S.Container>
   );
 }

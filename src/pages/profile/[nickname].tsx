@@ -1,11 +1,17 @@
+// import { useRouter } from "next/router";
+
 import { DefaultLayout } from "@/layouts/desktop";
 
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 import { UserProfileBanner, UserProfileInformation } from "@/features/profile";
 import { withAuth } from "@/middlewares";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 function Profile() {
+  // const router = useRouter();
+
   const isEnabled = useFeatureFlag(FeatureDecoder.Values.PROFILE);
+
+  // const { nickname } = router.query;
 
   if (!isEnabled) {
     return null;

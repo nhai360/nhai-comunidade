@@ -1,28 +1,24 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 import { useAuthContext } from "@/contexts";
-import { Avatar, Button, Dialog } from "@/ui";
-import {
-  CreatePostFields,
-  CreatePostSuccess,
-  CreatePostUpload,
-} from "@/features/posts";
+import { Avatar, Button, Dialog, Success } from "@/ui";
+import { CreatePostFields, CreatePostUpload } from "@/features/posts";
 import {
   CreatePostParams,
   CreatePostDecoder,
   useCreatePost,
 } from "@/client/posts";
 import { useUpload } from "@/client/media";
+import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
 
 import * as S from "./CreatePostDialog.styles";
-import { useUser } from "@/client/users";
-import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -92,7 +88,12 @@ export function CreatePostDialog({ onClose }: Props) {
         <Dialog.Content>
           <Dialog.Header closable={false} />
           <Dialog.Body>
-            <CreatePostSuccess onClose={onClose} />
+            <Success
+              title="Seu post foi publicado com sucesso!"
+              description="Agora que compartilhou seus pensamentos com sua comunidade, só aguardar
+        para ver as discussões interessantes que podem surgir."
+              onClose={onClose}
+            />
           </Dialog.Body>
         </Dialog.Content>
       </Dialog>

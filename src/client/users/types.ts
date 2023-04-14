@@ -33,6 +33,25 @@ export const CreateUserDecoder = t.object({
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
 
+export const UpdateUserDecoder = t.object({
+  fullName: t.string().min(1, "Nome é obrigatório"),
+  nickname: t
+    .string()
+    .min(1, "Apelido é obrigatório")
+    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .regex(
+      /^[a-zA-Z0-9_@]+$/,
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")',
+    )
+    .transform((arg) => arg.toLowerCase().replace("@", "")),
+  bio: t
+    .string()
+    .min(1, "Bio é obrigatório")
+    .max(255, "A bio deve ter no máximo 255 caracteres"),
+});
+
+export type UpdateUserParams = t.TypeOf<typeof UpdateUserDecoder>;
+
 export const SessionDecoder = t.object({
   access_token: t.string(),
   refresh_token: t.string(),
@@ -55,3 +74,7 @@ export type CreateSessionParams = t.TypeOf<typeof CreateSessionDecoder>;
 export type GetParams = {
   id?: string;
 };
+
+export type PatchParams = {
+  userId: string;
+} & UpdateUserParams;

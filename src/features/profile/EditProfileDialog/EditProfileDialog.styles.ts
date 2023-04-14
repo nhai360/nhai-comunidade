@@ -9,6 +9,10 @@ export const Form = styled("form", {
 
 export const DialogBody = styled(Dialog.Body, {
   padding: "$8 $16",
+
+  "@mobile": {
+    padding: 0,
+  },
 });
 
 export const DialogFooter = styled(Dialog.Footer, {
