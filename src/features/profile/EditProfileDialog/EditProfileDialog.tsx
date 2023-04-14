@@ -13,6 +13,7 @@ import {
 } from "@/client/users";
 
 import * as S from "./EditProfileDialog.styles";
+import { UploadAvatar } from "./UploadAvatar";
 
 type Props = {
   onClose: () => void;
@@ -96,6 +97,7 @@ export function EditProfileDialog({ onClose }: Props) {
         <S.DialogBody>
           <FormProvider {...form}>
             <S.Form ref={formRef} onSubmit={handleSubmit(handleUpdateUser)}>
+              <UploadAvatar />
               <Field label="Nome">
                 <Input
                   placeholder="Digite seu nome"
