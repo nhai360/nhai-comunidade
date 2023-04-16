@@ -1,4 +1,5 @@
 import * as t from "zod";
+import { Media, MediaDecoder } from "@/client/media";
 
 export const UserDecoder = t.object({
   id: t.string(),
@@ -9,6 +10,7 @@ export const UserDecoder = t.object({
   birthDate: t.string().datetime().nullable(),
   userGenderId: t.string().nullish(),
   updatedAt: t.string(),
+  profilePicture: MediaDecoder.nullish(),
 });
 
 export type User = t.TypeOf<typeof UserDecoder>;
@@ -48,6 +50,7 @@ export const UpdateUserDecoder = t.object({
     .string()
     .min(1, "Bio é obrigatório")
     .max(255, "A bio deve ter no máximo 255 caracteres"),
+  avatar: t.any().optional(),
 });
 
 export type UpdateUserParams = t.TypeOf<typeof UpdateUserDecoder>;
@@ -77,4 +80,5 @@ export type GetParams = {
 
 export type PatchParams = {
   userId: string;
+  media?: Media;
 } & UpdateUserParams;

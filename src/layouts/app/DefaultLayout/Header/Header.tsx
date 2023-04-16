@@ -34,6 +34,7 @@ export function Header() {
           size="small"
           progressBar
           alt={user?.fullName}
+          src={user.profilePicture?.url}
           fallback={getInitials(user.fullName)}
         />
       )}

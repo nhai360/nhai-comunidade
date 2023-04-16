@@ -110,6 +110,7 @@ export function CreatePostDialog({ onClose }: Props) {
               <Avatar.Square
                 size="large"
                 alt={user.fullName}
+                src={user.profilePicture?.url}
                 fallback={getInitials(user.fullName)}
                 css={{
                   "@mobile": {

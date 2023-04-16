@@ -20,6 +20,7 @@ export function UserProfileInformation() {
       <Avatar
         size="xlarge"
         alt={user?.fullName}
+        src={user?.profilePicture?.url}
         fallback={getInitials(user?.fullName)}
         css={{ border: "8px solid $neutral100" }}
       />

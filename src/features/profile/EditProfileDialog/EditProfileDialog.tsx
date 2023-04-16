@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Dialog, Field, Input, Loading, Success } from "@/ui";
+import { Dialog, Field, Input, Loading, Success, TextArea } from "@/ui";
 import { useAuthContext } from "@/contexts";
 import {
   UpdateUserDecoder,
@@ -12,8 +12,10 @@ import {
   useUser,
 } from "@/client/users";
 
-import * as S from "./EditProfileDialog.styles";
 import { UploadAvatar } from "./UploadAvatar";
+import * as S from "./EditProfileDialog.styles";
+import { useUpload } from "@/client/media";
+import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -37,12 +39,44 @@ export function EditProfileDialog({ onClose }: Props) {
     resolver: zodResolver(UpdateUserDecoder),
   });
 
-  const { updateUser, isSuccess, isLoading } = useUpdateUser();
+  const { updateUser, isSuccess, isLoading: isUpdating } = useUpdateUser();
+  const { upload, isLoading: isUploading } = useUpload();
 
-  const { register, handleSubmit } = form;
+  const isLoading = isUpdating || isUploading;
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = form;
 
   function handleUpdateUser(params: UpdateUserParams) {
     if (!user) return;
+
+    if (params.avatar) {
+      upload(params.avatar, {
+        onSuccess: (media) => {
+          updateUser(
+            {
+              userId: user.id,
+              media,
+              ...params,
+            },
+            {
+              onError: () => {
+                toast.error(
+                  "Não foi possível atualizar seu perfil. Tente novamente.",
+                );
+              },
+            },
+          );
+        },
+        onError: () => {
+          toast.error("Não foi possível enviar sua imagem. Tente novamente.");
+        },
+      });
+    }
 
     updateUser({
       userId: user.id,
@@ -116,10 +150,19 @@ export function EditProfileDialog({ onClose }: Props) {
                   // {...register("location")}
                 />
               </Field>
-              <Field label="Bio">
-                <Input
+              <Field label="Bio" errorText={errors.bio?.message}>
+                <TextArea
+                  control={control}
+                  name="content"
                   placeholder="Conte um pouco sobre você"
-                  {...register("bio")}
+                  emojiSelectPosition="top"
+                  shouldUnregister
+                  error={!!errors.bio?.message}
+                  css={{
+                    ".public-DraftEditor-content": {
+                      maxHeight: "135px",
+                    },
+                  }}
                 />
               </Field>
             </S.Form>

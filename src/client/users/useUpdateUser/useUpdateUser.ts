@@ -5,8 +5,11 @@ import { PatchParams } from "@/client/users/types";
 
 import { invalidateUserQueries } from "..";
 
-async function updateUserRequest({ userId, ...params }: PatchParams) {
-  await authenticatedAPI.patch(`/users/${userId}`, params);
+async function updateUserRequest({ userId, media, ...params }: PatchParams) {
+  await authenticatedAPI.patch(`/users/${userId}`, {
+    ...params,
+    profilePicture: media,
+  });
 }
 
 export function useUpdateUser() {

@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import ReactDropzone from "react-dropzone";
 import { toast } from "react-toastify";
+import { useFormContext } from "react-hook-form";
 
 import { Avatar } from "@/ui";
 import { useUser } from "@/client/users";
@@ -19,12 +21,24 @@ export function UploadAvatar() {
     id: session?.userId,
   });
 
+  const { setValue, watch } = useFormContext();
+
+  const avatarAttached = watch("avatar");
+
+  const previewUrl = useMemo(() => {
+    if (avatarAttached) {
+      return URL.createObjectURL(avatarAttached);
+    }
+
+    return user?.profilePicture?.url;
+  }, [avatarAttached, user]);
+
   function handleDropRejected() {
     toast.error("Imagem não suportada. Use apenas imagens com até 1MB");
   }
 
   function handleDropAccepted(acceptedFiles: File[]) {
-    // field.onChange(acceptedFiles[0]);
+    setValue("avatar", acceptedFiles[0]);
   }
 
   return (
@@ -39,6 +53,7 @@ export function UploadAvatar() {
           <input {...getInputProps()} />
           <Avatar.Square
             size="large"
+            src={previewUrl}
             fallback={getInitials(user?.fullName)}
             alt={user?.fullName}
           />
