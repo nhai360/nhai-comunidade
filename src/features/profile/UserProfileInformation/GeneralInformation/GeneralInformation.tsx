@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Typography } from "@/ui";
-import { ArticlesIcon, ClockIcon, WatchedVideosIcon } from "@/ui/_icons";
+import { ClockIcon } from "@/ui/_icons";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { useAuthContext } from "@/contexts";
@@ -89,7 +89,7 @@ export function GeneralInformation() {
           <ClockIcon />
           <Typography.Text size="body3">{createdAtFormatted}</Typography.Text>
         </S.InformationField>
-        <Typography.Text size="body3" className="bullet">
+        {/* <Typography.Text size="body3" className="bullet">
           •
         </Typography.Text>
         <S.InformationField>
@@ -104,7 +104,7 @@ export function GeneralInformation() {
         <S.InformationField>
           <ArticlesIcon />
           <Typography.Text size="body3">27 artigos lidos</Typography.Text>
-        </S.InformationField>
+        </S.InformationField> */}
       </S.InformationField>
       {bio && (
         <Editor
