@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 
+import { useRouter } from "next/router";
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
 
 import { Typography } from "@/ui";
 import { ArticlesIcon, ClockIcon, WatchedVideosIcon } from "@/ui/_icons";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
-import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
+import { useUserFromNickname } from "@/client/users";
 
 import { format } from "@/lib/date-fns";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
@@ -23,15 +24,18 @@ export function GeneralInformation() {
 
   const [bio, setBio] = useState(createEditorStateWithText(""));
 
+  const router = useRouter();
   const { session } = useAuthContext();
 
-  const { user } = useUser(
+  const { nickname } = router.query;
+
+  const { user } = useUserFromNickname(
     {
-      id: session?.userId,
+      nickname: nickname as string,
     },
     {
       onSuccess: ({ bio }) => {
-        setBio(createEditorStateWithText(bio ?? ""));
+        setBio(createEditorStateWithText(bio ?? "Nenhuma biografia informada"));
       },
     },
   );
@@ -46,7 +50,7 @@ export function GeneralInformation() {
     <S.Container>
       <S.InformationField>
         <Typography.Text size="h3">{user?.fullName}</Typography.Text>
-        <EditProfileButton />
+        {user?.id === session?.userId && <EditProfileButton />}
       </S.InformationField>
       {isEnabledProfileLocation && (
         <S.InformationField>

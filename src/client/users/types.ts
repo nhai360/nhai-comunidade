@@ -77,6 +77,7 @@ export type CreateSessionParams = t.TypeOf<typeof CreateSessionDecoder>;
 
 export type GetParams = {
   id?: string;
+  nickname?: string;
 };
 
 export type PatchParams = {

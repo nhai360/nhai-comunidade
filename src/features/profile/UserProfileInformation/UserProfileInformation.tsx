@@ -1,7 +1,8 @@
-import { useAuthContext } from "@/contexts";
+import { useRouter } from "next/router";
+
 import { Avatar, Divider, Typography } from "@/ui";
 
-import { useUser } from "@/client/users";
+import { useUserFromNickname } from "@/client/users";
 
 import { getInitials } from "@/lib/string";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
@@ -15,10 +16,12 @@ export function UserProfileInformation() {
     FeatureDecoder.Values.PROFILE_LOCATION,
   );
 
-  const { session } = useAuthContext();
+  const router = useRouter();
 
-  const { user } = useUser({
-    id: session?.userId,
+  const { nickname } = router.query;
+
+  const { user } = useUserFromNickname({
+    nickname: nickname as string,
   });
 
   return (
