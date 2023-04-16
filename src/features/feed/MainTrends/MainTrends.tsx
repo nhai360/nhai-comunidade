@@ -5,7 +5,11 @@ import { ShareSquareIcon } from "@/ui/_icons";
 
 import { theme } from "@/../stitches.config";
 import { useTrending } from "@/client/posts";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import {
+  getFirstNameAndLastName,
+  getInitials,
+  getProfileUrl,
+} from "@/lib/string";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import { FilterButton } from "./FilterButton";
@@ -38,6 +42,7 @@ export function MainTrends() {
               alt={post.author.fullName}
               src={post.author.profilePicture?.url}
               fallback={getInitials(post.author.fullName)}
+              profileUrl={getProfileUrl(post.author.nickname)}
             />
             <S.TrendItemContent>
               {isEnabledFilter && <S.TagFromStatus>Opinião</S.TagFromStatus>}

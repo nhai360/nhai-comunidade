@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Avatar, Card, Input } from "@/ui";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
+import { getInitials, getProfileUrl } from "@/lib/string";
 
 import { CreatePostDialog } from "./CreatePostDialog";
 import * as S from "./CreatePostCard.styles";
-import { getInitials } from "@/lib/string";
 
 export function CreatePostCard() {
   const { session } = useAuthContext();
@@ -26,6 +26,7 @@ export function CreatePostCard() {
             alt={user?.fullName}
             src={user.profilePicture?.url}
             fallback={getInitials(user?.fullName)}
+            profileUrl={getProfileUrl(user.nickname)}
           />
         )}
         <Input

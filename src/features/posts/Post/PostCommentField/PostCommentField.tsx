@@ -18,7 +18,11 @@ import {
 } from "@/features/comments";
 
 import { useUser } from "@/client/users";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import {
+  getFirstNameAndLastName,
+  getInitials,
+  getProfileUrl,
+} from "@/lib/string";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./PostCommentField.styles";
@@ -88,6 +92,7 @@ export function PostCommentField({ post }: Props) {
           alt={user.fullName}
           src={user.profilePicture?.url}
           fallback={getInitials(user.fullName)}
+          profileUrl={getProfileUrl(user.nickname)}
           css={{
             "@mobile": {
               display: "none",

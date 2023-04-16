@@ -13,7 +13,7 @@ import {
 } from "@/client/posts";
 import { useUpload } from "@/client/media";
 import { useUser } from "@/client/users";
-import { getInitials } from "@/lib/string";
+import { getInitials, getProfileUrl } from "@/lib/string";
 
 import { ColorSelect } from "./ColorSelect";
 import { UploadButton } from "./UploadButton";
@@ -112,6 +112,7 @@ export function CreatePostDialog({ onClose }: Props) {
                 alt={user.fullName}
                 src={user.profilePicture?.url}
                 fallback={getInitials(user.fullName)}
+                profileUrl={getProfileUrl(user.nickname)}
                 css={{
                   "@mobile": {
                     display: "none",

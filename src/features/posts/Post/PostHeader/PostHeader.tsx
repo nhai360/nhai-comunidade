@@ -7,7 +7,11 @@ import { CheckIcon, LinkIcon, TrashIcon } from "@/ui/_icons";
 import { theme } from "@/../stitches.config";
 
 import { Post, useDeletePost } from "@/client/posts";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import {
+  getFirstNameAndLastName,
+  getInitials,
+  getProfileUrl,
+} from "@/lib/string";
 import { formatDistanceToNow } from "@/lib/date-fns";
 
 import * as S from "./PostHeader.styles";
@@ -67,6 +71,7 @@ export function PostHeader({ post }: Props) {
           src={post.author.profilePicture?.url}
           alt={post.author.fullName}
           fallback={getInitials(post.author.fullName)}
+          profileUrl={getProfileUrl(post.author.nickname)}
         />
 
         <S.Info>

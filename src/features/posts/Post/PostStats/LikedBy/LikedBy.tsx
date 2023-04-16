@@ -1,7 +1,11 @@
 import { Avatar, Typography } from "@/ui";
 
 import { Post } from "@/client/posts";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import {
+  getFirstNameAndLastName,
+  getInitials,
+  getProfileUrl,
+} from "@/lib/string";
 
 import * as S from "./LikedBy.styles";
 
@@ -38,6 +42,7 @@ export function LikedBy({ post }: Props) {
               alt={user.fullName}
               src={user.profilePicture?.url}
               fallback={getInitials(user.fullName)}
+              profileUrl={getProfileUrl(user.nickname)}
             />
           ))}
         </S.AvatarGroup>
