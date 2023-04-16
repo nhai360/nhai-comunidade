@@ -5,6 +5,14 @@ import { Tag } from "@/ui/Tag";
 
 export const Root = styled(Avatar.Root, {
   position: "relative",
+
+  variants: {
+    profileUrl: {
+      true: {
+        cursor: "pointer",
+      },
+    },
+  },
 });
 
 export const Image = styled(Avatar.Image, {

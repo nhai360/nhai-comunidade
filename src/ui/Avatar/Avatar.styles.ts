@@ -5,6 +5,14 @@ import { styled } from "@/../stitches.config";
 export const Root = styled(Avatar.Root, {
   width: "56px",
   height: "56px",
+
+  variants: {
+    profileUrl: {
+      true: {
+        cursor: "pointer",
+      },
+    },
+  },
 });
 
 export const Image = styled(Avatar.Image, {

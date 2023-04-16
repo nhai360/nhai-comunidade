@@ -6,7 +6,11 @@ import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
 import { useSearch } from "@/lib/search";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import {
+  getFirstNameAndLastName,
+  getInitials,
+  getProfileUrl,
+} from "@/lib/string";
 import { useUser } from "@/client/users";
 
 import { useAuthContext } from "@/contexts";
@@ -57,29 +61,29 @@ export function Header() {
                 <NotificationIcon />
               </Button>
             </Tooltip> */}
-            {/* <Link href="/profile"> */}
-            <S.UserContainer>
-              {user && (
-                <Avatar
-                  progressBar
-                  alt={user?.fullName}
-                  src={user.profilePicture?.url}
-                  fallback={getInitials(user.fullName)}
-                />
-              )}
-              <S.UserInfo>
-                <Typography.Text color="primary" weight="medium">
-                  {getFirstNameAndLastName(user?.fullName)}
-                </Typography.Text>
-                {user?.nickname && (
-                  <Typography.Text size="body3" color="secondary">
-                    @{user?.nickname}
-                  </Typography.Text>
+            <Link href={getProfileUrl(user?.nickname)}>
+              <S.UserContainer>
+                {user && (
+                  <Avatar
+                    progressBar
+                    alt={user?.fullName}
+                    src={user.profilePicture?.url}
+                    fallback={getInitials(user.fullName)}
+                  />
                 )}
-                {/* <Tag variant="pink">Nível 56</Tag> */}
-              </S.UserInfo>
-            </S.UserContainer>
-            {/* </Link> */}
+                <S.UserInfo>
+                  <Typography.Text color="primary" weight="medium">
+                    {getFirstNameAndLastName(user?.fullName)}
+                  </Typography.Text>
+                  {user?.nickname && (
+                    <Typography.Text size="body3" color="secondary">
+                      @{user?.nickname}
+                    </Typography.Text>
+                  )}
+                  {/* <Tag variant="pink">Nível 56</Tag> */}
+                </S.UserInfo>
+              </S.UserContainer>
+            </Link>
           </S.Actions>
         </S.Content>
       </S.Container>

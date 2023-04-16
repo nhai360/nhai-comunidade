@@ -6,7 +6,7 @@ import { Avatar, Typography } from "@/ui";
 import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Post } from "@/client/posts";
-import { getInitials } from "@/lib/string";
+import { getInitials, getProfileUrl } from "@/lib/string";
 import { Comment as CommentType } from "@/client/comments";
 
 import { CommentHeader } from "./CommentHeader";
@@ -32,6 +32,7 @@ export function Comment({ post, comment, maxReplies }: Props) {
         alt={comment.author.fullName}
         src={comment.author.profilePicture?.url}
         fallback={getInitials(comment.author.fullName)}
+        profileUrl={getProfileUrl(comment.author.nickname)}
         css={{
           "@mobile": {
             width: "42px",

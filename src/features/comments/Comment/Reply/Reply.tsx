@@ -12,7 +12,7 @@ import { LikeAndReplyButtons } from "@/features/comments/Comment/LikeAndReplyBut
 import { CommentHeader } from "@/features/comments/Comment/CommentHeader";
 import { RepliesList } from "@/features/comments/Comment/RepliesList";
 
-import { getInitials } from "@/lib/string";
+import { getInitials, getProfileUrl } from "@/lib/string";
 
 import * as S from "./Reply.styles";
 
@@ -44,6 +44,7 @@ export function Reply({ reply, parentId, showReplyButton = true }: Props) {
           alt={reply.author.fullName}
           src={reply.author.profilePicture?.url}
           fallback={getInitials(reply.author.fullName)}
+          profileUrl={getProfileUrl(reply.author.nickname)}
           css={{
             "@mobile": {
               width: "24px",

@@ -1,5 +1,7 @@
 import { ComponentProps } from "react";
 
+import { useRouter } from "next/router";
+
 import { CircularProgressBar } from "@/ui";
 
 import { Square } from "./Square";
@@ -9,6 +11,7 @@ type Props = {
   fallback: string;
   progressBar?: boolean;
   src?: string | null;
+  profileUrl?: string;
 } & Omit<ComponentProps<typeof S.Image>, "src">;
 
 export function Avatar({
@@ -17,11 +20,20 @@ export function Avatar({
   size = "medium",
   css,
   src,
+  profileUrl,
   ...rest
 }: Props) {
+  const router = useRouter();
+
+  function handleNavigate() {
+    if (!profileUrl) return;
+
+    router.push(profileUrl);
+  }
+
   if (progressBar) {
     return (
-      <S.Root>
+      <S.Root onClick={handleNavigate} profileUrl={!!profileUrl}>
         <CircularProgressBar value={75}>
           <S.Image css={css} src={src || undefined} size={size} {...rest} />
           <S.Fallback css={css} size={size} delayMs={0}>
@@ -33,7 +45,7 @@ export function Avatar({
   }
 
   return (
-    <S.Root>
+    <S.Root onClick={handleNavigate} profileUrl={!!profileUrl}>
       <S.Image css={css} src={src || undefined} size={size} {...rest} />
       <S.Fallback css={css} size={size} delayMs={0}>
         {fallback}

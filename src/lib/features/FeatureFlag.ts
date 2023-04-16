@@ -3,7 +3,6 @@ import * as t from "zod";
 
 export const FeatureDecoder = t.enum([
   "EXAMPLE",
-  "PROFILE",
   "LIKES_COMMENTS",
   "ARTICLES_SECTION",
   "ACTIONS_COMMENTS",
@@ -23,7 +22,6 @@ const environment = process.env.NEXT_PUBLIC_ENVIRONMENT ?? "prod";
 
 const openFlags: OpenFlags = {
   EXAMPLE: true,
-  PROFILE: true,
   LIKES_COMMENTS: true,
   ARTICLES_SECTION: true,
   ACTIONS_COMMENTS: true,

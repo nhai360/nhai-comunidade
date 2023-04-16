@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { ImgHTMLAttributes, ComponentProps } from "react";
 
 import * as S from "./Square.styles";
@@ -9,6 +11,7 @@ export type AvatarSquareProps = {
   fallback: string;
   level?: string;
   src?: string | null;
+  profileUrl?: string;
 } & Omit<Props, "src">;
 
 export function Square({
@@ -17,10 +20,19 @@ export function Square({
   level,
   css,
   src,
+  profileUrl,
   ...rest
 }: AvatarSquareProps) {
+  const router = useRouter();
+
+  function handleNavigate() {
+    if (!profileUrl) return;
+
+    router.push(profileUrl);
+  }
+
   return (
-    <S.Root css={css}>
+    <S.Root css={css} onClick={handleNavigate} profileUrl={!!profileUrl}>
       <S.Image css={css} src={src || undefined} {...rest} size={size} />
       <S.Fallback css={css} delayMs={0} size={size}>
         {fallback}

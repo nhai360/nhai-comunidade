@@ -5,7 +5,7 @@ export const UserDecoder = t.object({
   id: t.string(),
   fullName: t.string(),
   email: t.string(),
-  nickname: t.string().nullable(),
+  nickname: t.string(),
   bio: t.string().nullable(),
   birthDate: t.string().datetime().nullable(),
   userGenderId: t.string().nullish(),
