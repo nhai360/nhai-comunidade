@@ -1,14 +1,20 @@
 import { useAuthContext } from "@/contexts";
 import { Avatar, Divider, Typography } from "@/ui";
 
-import { getInitials } from "@/lib/string";
 import { useUser } from "@/client/users";
+
+import { getInitials } from "@/lib/string";
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import { Statistics } from "./Statistics";
 import { GeneralInformation } from "./GeneralInformation";
 import * as S from "./UserProfileInformation.styles";
 
 export function UserProfileInformation() {
+  const { isEnabled: isEnabledProfileStatistics } = useFeatureFlag(
+    FeatureDecoder.Values.PROFILE_LOCATION,
+  );
+
   const { session } = useAuthContext();
 
   const { user } = useUser({
@@ -25,11 +31,15 @@ export function UserProfileInformation() {
         css={{ border: "8px solid $neutral100" }}
       />
       <GeneralInformation />
-      <Divider css={{ marginBlock: "$6", borderTopWidth: "2px" }} />
-      <Typography.Title size="subHeadline" weight="bold">
-        Estatísticas
-      </Typography.Title>
-      <Statistics />
+      {isEnabledProfileStatistics && (
+        <>
+          <Divider css={{ marginBlock: "$6", borderTopWidth: "2px" }} />
+          <Typography.Title size="subHeadline" weight="bold">
+            Estatísticas
+          </Typography.Title>
+          <Statistics />
+        </>
+      )}
     </S.Container>
   );
 }
