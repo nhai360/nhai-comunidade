@@ -4,7 +4,12 @@ import { FeedList } from "../FeedList";
 export function AppLayout() {
   return (
     <DefaultLayout>
-      <FeedList />
+      <DefaultLayout.Header />
+      <DefaultLayout.Content>
+        <FeedList />
+      </DefaultLayout.Content>
+      <DefaultLayout.CreatePostButton />
+      <DefaultLayout.BottomBar />
     </DefaultLayout>
   );
 }

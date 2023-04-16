@@ -1,16 +1,7 @@
 import { DefaultLayout } from "@/layouts/desktop";
-
 import { UserProfileBanner, UserProfileInformation } from "@/features/profile";
-import { withAuth } from "@/middlewares";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
-function Profile() {
-  const isEnabled = useFeatureFlag(FeatureDecoder.Values.PROFILE);
-
-  if (!isEnabled) {
-    return null;
-  }
-
+export function DesktopLayout() {
   return (
     <DefaultLayout>
       <DefaultLayout.SimpleGrid>
@@ -20,5 +11,3 @@ function Profile() {
     </DefaultLayout>
   );
 }
-
-export default withAuth(Profile);

@@ -8,20 +8,22 @@ import * as S from "./Avatar.styles";
 type Props = {
   fallback: string;
   progressBar?: boolean;
-} & ComponentProps<typeof S.Image>;
+  src?: string | null;
+} & Omit<ComponentProps<typeof S.Image>, "src">;
 
 export function Avatar({
   fallback,
   progressBar = false,
   size = "medium",
   css,
+  src,
   ...rest
 }: Props) {
   if (progressBar) {
     return (
       <S.Root>
         <CircularProgressBar value={75}>
-          <S.Image css={css} size={size} {...rest} />
+          <S.Image css={css} src={src || undefined} size={size} {...rest} />
           <S.Fallback css={css} size={size} delayMs={0}>
             {fallback}
           </S.Fallback>
@@ -32,7 +34,7 @@ export function Avatar({
 
   return (
     <S.Root>
-      <S.Image css={css} size={size} {...rest} />
+      <S.Image css={css} src={src || undefined} size={size} {...rest} />
       <S.Fallback css={css} size={size} delayMs={0}>
         {fallback}
       </S.Fallback>

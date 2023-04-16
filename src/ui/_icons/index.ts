@@ -24,6 +24,7 @@ export * from "./ListLineParagraphSquareIcon";
 export * from "./LoadingIcon";
 export * from "./PollIcon";
 export * from "./NotificationIcon";
+export * from "./PhotoCameraIcon";
 export * from "./QuestionCircleIcon";
 export * from "./ReorderIcon";
 export * from "./ReplyIcon";

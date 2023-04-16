@@ -86,6 +86,7 @@ export function PostCommentField({ post }: Props) {
         <Avatar.Square
           size="small"
           alt={user.fullName}
+          src={user.profilePicture?.url}
           fallback={getInitials(user.fullName)}
           css={{
             "@mobile": {

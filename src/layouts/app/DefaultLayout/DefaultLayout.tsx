@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ComponentProps } from "react";
 
 import * as S from "./DefaultLayout.styles";
 
@@ -6,17 +6,14 @@ import { Header } from "./Header";
 import { BottomBar } from "./BottomBar";
 import { CreatePostButton } from "./CreatePostButton";
 
-type Props = {
-  children: ReactNode;
-};
-
-export function DefaultLayout({ children }: Props) {
-  return (
-    <S.Wrapper>
-      <Header />
-      <S.Content>{children}</S.Content>
-      <CreatePostButton />
-      <BottomBar />
-    </S.Wrapper>
-  );
+export function DefaultLayout({
+  children,
+  ...rest
+}: ComponentProps<typeof S.Wrapper>) {
+  return <S.Wrapper {...rest}>{children}</S.Wrapper>;
 }
+
+DefaultLayout.Header = Header;
+DefaultLayout.BottomBar = BottomBar;
+DefaultLayout.Content = S.Content;
+DefaultLayout.CreatePostButton = CreatePostButton;

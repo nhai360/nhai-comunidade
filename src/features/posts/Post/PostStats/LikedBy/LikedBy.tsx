@@ -36,6 +36,7 @@ export function LikedBy({ post }: Props) {
               key={user.id}
               size="small"
               alt={user.fullName}
+              src={user.profilePicture?.url}
               fallback={getInitials(user.fullName)}
             />
           ))}

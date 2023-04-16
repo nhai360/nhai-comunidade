@@ -24,6 +24,7 @@ export function CreatePostCard() {
         {user && (
           <Avatar.Square
             alt={user?.fullName}
+            src={user.profilePicture?.url}
             fallback={getInitials(user?.fullName)}
           />
         )}

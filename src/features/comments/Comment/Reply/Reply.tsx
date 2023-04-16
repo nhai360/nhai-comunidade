@@ -42,6 +42,7 @@ export function Reply({ reply, parentId, showReplyButton = true }: Props) {
         <Avatar.Square
           size="small"
           alt={reply.author.fullName}
+          src={reply.author.profilePicture?.url}
           fallback={getInitials(reply.author.fullName)}
           css={{
             "@mobile": {

@@ -63,6 +63,7 @@ export function Header() {
                 <Avatar
                   progressBar
                   alt={user?.fullName}
+                  src={user.profilePicture?.url}
                   fallback={getInitials(user.fullName)}
                 />
               )}

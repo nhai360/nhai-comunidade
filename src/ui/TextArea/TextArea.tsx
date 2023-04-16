@@ -12,14 +12,12 @@ import {
 import {
   FieldPath,
   FieldValues,
-  Path,
-  PathValue,
   UseControllerProps,
   useController,
 } from "react-hook-form";
 
 import Editor, { createEditorStateWithText } from "@draft-js-plugins/editor";
-import { EditorProps, EditorState, RawDraftContentState } from "draft-js";
+import { EditorProps, EditorState } from "draft-js";
 
 import { convertToText } from "@/lib/draftjs";
 
@@ -32,11 +30,10 @@ type ExternalProps<T extends FieldValues> = Partial<EditorProps> &
 
 export type TextAreaProps<T extends FieldValues> = {
   children?: ReactNode;
-  defaultValue?: RawDraftContentState;
   emojiSelect?: boolean;
   emojiSelectPosition?: "top" | "bottom";
   reverseActions?: boolean;
-} & Omit<ExternalProps<T>, "defaultValue">;
+} & ExternalProps<T>;
 
 export type TextAreaRefProps = {
   clearInput: () => void;
@@ -77,7 +74,7 @@ const ForwardTextArea: ForwardRefRenderFunction<
     control,
     rules,
     shouldUnregister,
-    defaultValue: defaultValue as PathValue<any, Path<any>>,
+    defaultValue,
   });
 
   useImperativeHandle(ref, () => {

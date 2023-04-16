@@ -36,6 +36,7 @@ export function MainTrends() {
           <S.TrendItem key={post.id}>
             <Avatar.Square
               alt={post.author.fullName}
+              src={post.author.profilePicture?.url}
               fallback={getInitials(post.author.fullName)}
             />
             <S.TrendItemContent>

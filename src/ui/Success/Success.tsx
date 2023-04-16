@@ -1,14 +1,17 @@
+import { useEffect } from "react";
+
 import { Typography } from "@/ui";
 
 import { SuccessIcon } from "./SuccessIcon";
-import * as S from "./CreatePostSuccess.styles";
-import { useEffect } from "react";
+import * as S from "./Success.styles";
 
 type Props = {
+  title: string;
+  description: string;
   onClose: () => void;
 };
 
-export function CreatePostSuccess({ onClose }: Props) {
+export function Success({ title, description, onClose }: Props) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       onClose();
@@ -23,7 +26,7 @@ export function CreatePostSuccess({ onClose }: Props) {
     <S.Container>
       <SuccessIcon />
       <Typography.Title size="h3" align="center" weight="bold">
-        Seu post foi publicado com sucesso!
+        {title}
       </Typography.Title>
       <Typography.Text
         size="body2"
@@ -31,8 +34,7 @@ export function CreatePostSuccess({ onClose }: Props) {
         align="center"
         weight="regular"
       >
-        Agora que compartilhou seus pensamentos com sua comunidade, só aguardar
-        para ver as discussões interessantes que podem surgir.
+        {description}
       </Typography.Text>
     </S.Container>
   );

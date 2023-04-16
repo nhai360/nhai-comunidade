@@ -64,6 +64,7 @@ export function PostHeader({ post }: Props) {
     <S.Container>
       <S.User>
         <Avatar.Square
+          src={post.author.profilePicture?.url}
           alt={post.author.fullName}
           fallback={getInitials(post.author.fullName)}
         />

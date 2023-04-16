@@ -30,6 +30,7 @@ export function Comment({ post, comment, maxReplies }: Props) {
     <S.Wrapper>
       <Avatar.Square
         alt={comment.author.fullName}
+        src={comment.author.profilePicture?.url}
         fallback={getInitials(comment.author.fullName)}
         css={{
           "@mobile": {
