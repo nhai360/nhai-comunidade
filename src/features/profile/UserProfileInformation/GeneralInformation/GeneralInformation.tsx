@@ -50,25 +50,57 @@ export function GeneralInformation() {
       </S.InformationField>
       {isEnabledProfileLocation && (
         <S.InformationField>
-          <img src="/flags/brasil.svg" />
-          <Typography.Text color="secondary" size="body3">
-            Brasil, São Paulo
-          </Typography.Text>
+          <S.InformationField css={{ "@minLaptop": { display: "none" } }}>
+            <Typography.Text size="body3">@{user?.nickname}</Typography.Text>
+            <Typography.Text size="body3">•</Typography.Text>
+          </S.InformationField>
+          <S.InformationField>
+            <img src="/flags/brasil.svg" />
+            <Typography.Text color="secondary" size="body3">
+              Brasil, São Paulo
+            </Typography.Text>
+          </S.InformationField>
         </S.InformationField>
       )}
-      <S.InformationField css={{ marginBlock: "$4" }}>
-        <Typography.Text size="body3">@{user?.nickname}</Typography.Text>
-        <Typography.Text size="body3">•</Typography.Text>
-        <ClockIcon />
-        <Typography.Text size="body3">{createdAtFormatted}</Typography.Text>
-        <Typography.Text size="body3">•</Typography.Text>
-        <WatchedVideosIcon />
-        <Typography.Text size="body3">
-          36 mil minutos de vídeo assistido
+      <S.InformationField
+        css={{
+          marginBlock: "$4",
+
+          "@laptop": {
+            flexDirection: "column",
+            alignItems: "flex-start",
+            color: "$textSecondary",
+
+            ".bullet": { display: "none" },
+          },
+        }}
+      >
+        <Typography.Text size="body3" css={{ "@laptop": { display: "none" } }}>
+          @{user?.nickname}
         </Typography.Text>
-        <Typography.Text size="body3">•</Typography.Text>
-        <ArticlesIcon />
-        <Typography.Text size="body3">27 artigos lidos</Typography.Text>
+        <Typography.Text size="body3" className="bullet">
+          •
+        </Typography.Text>
+        <S.InformationField>
+          <ClockIcon />
+          <Typography.Text size="body3">{createdAtFormatted}</Typography.Text>
+        </S.InformationField>
+        <Typography.Text size="body3" className="bullet">
+          •
+        </Typography.Text>
+        <S.InformationField>
+          <WatchedVideosIcon />
+          <Typography.Text size="body3">
+            36 mil minutos de vídeo assistido
+          </Typography.Text>
+        </S.InformationField>
+        <Typography.Text size="body3" className="bullet">
+          •
+        </Typography.Text>
+        <S.InformationField>
+          <ArticlesIcon />
+          <Typography.Text size="body3">27 artigos lidos</Typography.Text>
+        </S.InformationField>
       </S.InformationField>
       {bio && (
         <Editor

@@ -7,6 +7,11 @@ export const Container = styled("div", {
 
   maxWidth: "545px",
   marginTop: "$4",
+
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+    gap: "$2",
+  },
 });
 
 export const StatisticCard = styled("div", {

@@ -19,10 +19,18 @@ export const Placeholder = styled("div", {
   borderTopRightRadius: "$large",
 
   background: "linear-gradient(270.22deg, #F8E1AB 15.22%, #F2CFCB 99.86%)",
+
+  "@laptop": {
+    borderRadius: 0,
+  },
 });
 
 export const EditButton = styled(Button, {
   position: "absolute",
   right: "12px",
-  top: "12px",
+  bottom: "12px",
+
+  "@minLaptop": {
+    top: "12px",
+  },
 });

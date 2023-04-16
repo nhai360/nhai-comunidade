@@ -4,11 +4,11 @@ export const Wrapper = styled("div", {
   maxWidth: "1880px",
   marginInline: "auto",
 
-  "@tablet": {
-    display: "none",
-  },
+  display: "none",
 
-  "@laptop": {
+  "@minLaptop": {
+    display: "flex",
+    flexDirection: "column",
     maxWidth: "100vw",
   },
 });

@@ -1,12 +1,10 @@
 // import { useRouter } from "next/router";
 
-import { DefaultLayout } from "@/layouts/desktop";
-
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
-import { UserProfileBanner, UserProfileInformation } from "@/features/profile";
+import { Profile } from "@/features/profile";
 import { withAuth } from "@/middlewares";
 
-function Profile() {
+function ProfilePage() {
   // const router = useRouter();
 
   const isEnabled = useFeatureFlag(FeatureDecoder.Values.PROFILE);
@@ -18,13 +16,11 @@ function Profile() {
   }
 
   return (
-    <DefaultLayout>
-      <DefaultLayout.SimpleGrid>
-        <UserProfileBanner />
-        <UserProfileInformation />
-      </DefaultLayout.SimpleGrid>
-    </DefaultLayout>
+    <>
+      <Profile.AppLayout />
+      <Profile.DesktopLayout />
+    </>
   );
 }
 
-export default withAuth(Profile);
+export default withAuth(ProfilePage);

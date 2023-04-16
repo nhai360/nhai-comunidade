@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { useAuthContext } from "@/contexts";
 import { Avatar, Button, Logo, Popover, Typography } from "@/ui";
-import { SettingsIcon } from "@/ui/_icons";
+import { ChevronLeftIcon, SettingsIcon } from "@/ui/_icons";
 
 import { useUser } from "@/client/users";
 import { authenticatedAPI } from "@/client";
@@ -11,7 +11,11 @@ import { getInitials } from "@/lib/string";
 
 import * as S from "./Header.styles";
 
-export function Header() {
+type Props = {
+  backUrl?: string;
+};
+
+export function Header({ backUrl }: Props) {
   const router = useRouter();
   const { session, logout } = useAuthContext();
 
@@ -29,13 +33,19 @@ export function Header() {
 
   return (
     <S.Container>
-      {user && (
+      {backUrl ? (
+        <Link href={backUrl}>
+          <Button icon variant="transparent">
+            <ChevronLeftIcon />
+          </Button>
+        </Link>
+      ) : (
         <Avatar
           size="small"
           progressBar
           alt={user?.fullName}
-          src={user.profilePicture?.url}
-          fallback={getInitials(user.fullName)}
+          src={user?.profilePicture?.url}
+          fallback={getInitials(user?.fullName)}
         />
       )}
 
