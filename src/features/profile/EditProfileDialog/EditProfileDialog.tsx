@@ -1,5 +1,6 @@
 import { useRef } from "react";
 
+import { toast } from "react-toastify";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -11,11 +12,12 @@ import {
   useUpdateUser,
   useUser,
 } from "@/client/users";
+import { useUpload } from "@/client/media";
+
+import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import { UploadAvatar } from "./UploadAvatar";
 import * as S from "./EditProfileDialog.styles";
-import { useUpload } from "@/client/media";
-import { toast } from "react-toastify";
 
 type Props = {
   onClose: () => void;
@@ -29,6 +31,10 @@ export function EditProfileDialog({ onClose }: Props) {
   const { user, isLoading: isLoadingUser } = useUser({
     id: session?.userId,
   });
+
+  const { isEnabled: isEnabledProfileLocation } = useFeatureFlag(
+    FeatureDecoder.Values.PROFILE_LOCATION,
+  );
 
   const form = useForm<UpdateUserParams>({
     defaultValues: {
@@ -144,16 +150,15 @@ export function EditProfileDialog({ onClose }: Props) {
                   {...register("nickname")}
                 />
               </Field>
-              <Field label="Localização">
-                <Input
-                  placeholder="Digite sua localização"
-                  // {...register("location")}
-                />
-              </Field>
+              {isEnabledProfileLocation && (
+                <Field label="Localização">
+                  <Input placeholder="Digite sua localização" />
+                </Field>
+              )}
               <Field label="Bio" errorText={errors.bio?.message}>
                 <TextArea
                   control={control}
-                  name="content"
+                  name="bio"
                   placeholder="Conte um pouco sobre você"
                   emojiSelectPosition="top"
                   shouldUnregister

@@ -9,8 +9,9 @@ export const UserDecoder = t.object({
   bio: t.string().nullable(),
   birthDate: t.string().datetime().nullable(),
   userGenderId: t.string().nullish(),
-  updatedAt: t.string(),
+  updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
+  createAt: t.string().datetime(),
 });
 
 export type User = t.TypeOf<typeof UserDecoder>;
