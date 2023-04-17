@@ -9,7 +9,6 @@ import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
 import { useDeleteComment } from "@/client/comments";
 import { format } from "@/lib/date-fns";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./Actions.styles";
 
@@ -19,10 +18,6 @@ type Props = {
 
 export function Actions({ comment }: Props) {
   const { session } = useAuthContext();
-
-  const { isEnabled: isEnabledActionsComments } = useFeatureFlag(
-    FeatureDecoder.Values.ACTIONS_COMMENTS,
-  );
 
   const { deleteComment, isLoading: isDeleting } = useDeleteComment();
 
@@ -69,7 +64,7 @@ export function Actions({ comment }: Props) {
       >
         {createdAtFormatted}
       </Typography.Text>
-      {isUserIdFromSessionIsEqualAuthorId && isEnabledActionsComments && (
+      {isUserIdFromSessionIsEqualAuthorId && (
         <S.Box>
           <Button ghost icon variant="transparent" size="small">
             <EditIcon color={theme.colors.textSecondary.value} />
