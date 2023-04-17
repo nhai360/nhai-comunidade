@@ -2,6 +2,14 @@ import * as t from "zod";
 
 import { UserDecoder, User } from "@/client/users";
 
+export const CommentLikeDecoder = t.object({
+  id: t.string(),
+  authorId: t.string(),
+  commentId: t.string(),
+});
+
+export type CommentLike = t.TypeOf<typeof CommentLikeDecoder>;
+
 export type Comment = {
   id: string;
   title?: string | null;
@@ -11,6 +19,7 @@ export type Comment = {
   updatedAt: string;
   replies?: Comment[];
   replyToId?: string | null;
+  likes: CommentLike[];
 };
 
 export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
@@ -23,6 +32,7 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     updatedAt: t.string().datetime(),
     replies: CommentDecoder.array().optional(),
     replyToId: t.string().nullish(),
+    likes: CommentLikeDecoder.array(),
   }),
 );
 
@@ -42,4 +52,9 @@ export type GetParams = {
 
 export type DeleteParams = {
   commentId: string;
+};
+
+export type LikeCommentParams = {
+  commentId: string;
+  alreadyLiked: boolean;
 };

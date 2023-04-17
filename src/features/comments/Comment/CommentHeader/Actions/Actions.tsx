@@ -9,7 +9,6 @@ import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
 import { useDeleteComment } from "@/client/comments";
 import { format } from "@/lib/date-fns";
-
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./Actions.styles";
@@ -66,7 +65,7 @@ export function Actions({ comment }: Props) {
           weight="medium"
           css={{ "@mobile": { display: "none" } }}
         >
-          173 Gostaram
+          {comment.likes.length} Gostaram
         </Typography.Text>
       )}
       <Typography.Text
