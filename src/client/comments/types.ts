@@ -39,3 +39,7 @@ export type CreateCommentParams = {
 export type GetParams = {
   postId: string;
 };
+
+export type DeleteParams = {
+  commentId: string;
+};
