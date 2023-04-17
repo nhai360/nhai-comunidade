@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import { theme } from "@/../stitches.config";
 
 import { Button, Typography } from "@/ui";
@@ -5,10 +7,12 @@ import { DeleteIcon, EditIcon } from "@/ui/_icons";
 
 import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
+import { useDeleteComment } from "@/client/comments";
 import { format } from "@/lib/date-fns";
 
-import * as S from "./Actions.styles";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
+
+import * as S from "./Actions.styles";
 
 type Props = {
   comment: Comment;
@@ -24,6 +28,26 @@ export function Actions({ comment }: Props) {
   const { isEnabled: isEnabledActionsComments } = useFeatureFlag(
     FeatureDecoder.Values.ACTIONS_COMMENTS,
   );
+
+  const { deleteComment, isLoading: isDeleting } = useDeleteComment();
+
+  function handleDeleteComment() {
+    deleteComment(
+      {
+        commentId: comment.id,
+      },
+      {
+        onSuccess: () => {
+          toast.success("O seu comentário foi deletado com sucesso!");
+        },
+        onError: () => {
+          toast.error(
+            "Ocorreu um erro ao deletar seu comentário. Tente novamente",
+          );
+        },
+      },
+    );
+  }
 
   const isUserIdFromSessionIsEqualAuthorId =
     comment.author.id === session?.userId;
@@ -57,7 +81,14 @@ export function Actions({ comment }: Props) {
           <Button ghost icon variant="transparent" size="small">
             <EditIcon color={theme.colors.textSecondary.value} />
           </Button>
-          <Button ghost icon variant="transparent" size="small">
+          <Button
+            ghost
+            icon
+            variant="transparent"
+            size="small"
+            onClick={handleDeleteComment}
+            loading={isDeleting}
+          >
             <DeleteIcon color={theme.colors.textSecondary.value} />
           </Button>
         </S.Box>
