@@ -2,7 +2,6 @@ import { Button, Typography } from "@/ui";
 import { useAuthContext, useCommentContext } from "@/contexts";
 
 import { Comment, useLikeComment } from "@/client/comments";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./LikeAndReplyButtons.styles";
 
@@ -21,12 +20,8 @@ export function LikeAndReplyButtons({
 
   const { likeComment } = useLikeComment();
 
-  const { isEnabled: isEnabledLikesComments } = useFeatureFlag(
-    FeatureDecoder.Values.LIKES_COMMENTS,
-  );
-
   const alreadyLikedComment = Boolean(
-    comment.likes.find((like) => like.authorId === session?.userId),
+    comment.likes.find((like) => like.author.id === session?.userId),
   );
 
   function handleReply() {
@@ -43,16 +38,14 @@ export function LikeAndReplyButtons({
 
   return (
     <S.Container>
-      {isEnabledLikesComments && (
-        <Button ghost variant="text" onClick={handleLike}>
-          <Typography.Text
-            size="caption"
-            color={alreadyLikedComment ? "blue" : "primary"}
-          >
-            {alreadyLikedComment ? "Curtido" : "Curtir"}
-          </Typography.Text>
-        </Button>
-      )}
+      <Button ghost variant="text" onClick={handleLike}>
+        <Typography.Text
+          size="caption"
+          color={alreadyLikedComment ? "blue" : "primary"}
+        >
+          {alreadyLikedComment ? "Curtido" : "Curtir"}
+        </Typography.Text>
+      </Button>
       {showReplyButton && (
         <Button ghost variant="text" onClick={handleReply}>
           <Typography.Text size="caption">Responder</Typography.Text>

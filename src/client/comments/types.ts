@@ -3,9 +3,7 @@ import * as t from "zod";
 import { UserDecoder, User } from "@/client/users";
 
 export const CommentLikeDecoder = t.object({
-  id: t.string(),
-  authorId: t.string(),
-  commentId: t.string(),
+  author: UserDecoder,
 });
 
 export type CommentLike = t.TypeOf<typeof CommentLikeDecoder>;
