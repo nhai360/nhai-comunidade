@@ -65,7 +65,7 @@ export function Actions({ comment }: Props) {
           weight="medium"
           css={{ "@mobile": { display: "none" } }}
         >
-          {comment.likes.length} Gostaram
+          {comment.stats.likes} Gostaram
         </Typography.Text>
       )}
       <Typography.Text

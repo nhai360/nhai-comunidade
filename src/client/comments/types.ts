@@ -10,6 +10,13 @@ export const CommentLikeDecoder = t.object({
 
 export type CommentLike = t.TypeOf<typeof CommentLikeDecoder>;
 
+export const CommentStatsDecoder = t.object({
+  likes: t.number(),
+  replies: t.number(),
+});
+
+export type CommentStats = t.TypeOf<typeof CommentStatsDecoder>;
+
 export type Comment = {
   id: string;
   title?: string | null;
@@ -19,6 +26,7 @@ export type Comment = {
   updatedAt: string;
   replies?: Comment[];
   replyToId?: string | null;
+  stats: CommentStats;
   likes: CommentLike[];
 };
 
@@ -32,6 +40,7 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     updatedAt: t.string().datetime(),
     replies: CommentDecoder.array().optional(),
     replyToId: t.string().nullish(),
+    stats: CommentStatsDecoder,
     likes: CommentLikeDecoder.array(),
   }),
 );
