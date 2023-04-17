@@ -7,7 +7,7 @@ import { ChevronLeftIcon, SettingsIcon } from "@/ui/_icons";
 
 import { useUser } from "@/client/users";
 import { authenticatedAPI } from "@/client";
-import { getInitials } from "@/lib/string";
+import { getInitials, getProfileUrl } from "@/lib/string";
 
 import * as S from "./Header.styles";
 
@@ -40,13 +40,15 @@ export function Header({ backUrl }: Props) {
           </Button>
         </Link>
       ) : (
-        <Avatar
-          size="small"
-          progressBar
-          alt={user?.fullName}
-          src={user?.profilePicture?.url}
-          fallback={getInitials(user?.fullName)}
-        />
+        <Link href={getProfileUrl(user?.nickname)}>
+          <Avatar
+            size="small"
+            progressBar
+            alt={user?.fullName}
+            src={user?.profilePicture?.url}
+            fallback={getInitials(user?.fullName)}
+          />
+        </Link>
       )}
 
       <Link href="/">
