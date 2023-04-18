@@ -9,7 +9,6 @@ import { useAuthContext } from "@/contexts";
 import { Comment } from "@/client/comments/types";
 import { useDeleteComment } from "@/client/comments";
 import { format } from "@/lib/date-fns";
-
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./Actions.styles";
@@ -20,10 +19,6 @@ type Props = {
 
 export function Actions({ comment }: Props) {
   const { session } = useAuthContext();
-
-  const { isEnabled: isEnabledLikesComments } = useFeatureFlag(
-    FeatureDecoder.Values.LIKES_COMMENTS,
-  );
 
   const { isEnabled: isEnabledActionsComments } = useFeatureFlag(
     FeatureDecoder.Values.ACTIONS_COMMENTS,
@@ -59,16 +54,14 @@ export function Actions({ comment }: Props) {
 
   return (
     <S.Container>
-      {isEnabledLikesComments && (
-        <Typography.Text
-          size="caption"
-          color="secondary"
-          weight="medium"
-          css={{ "@mobile": { display: "none" } }}
-        >
-          173 Gostaram
-        </Typography.Text>
-      )}
+      <Typography.Text
+        size="caption"
+        color="secondary"
+        weight="medium"
+        css={{ "@mobile": { display: "none" } }}
+      >
+        {comment.stats.likes} Gostaram
+      </Typography.Text>
       <Typography.Text
         size="caption"
         color="title"

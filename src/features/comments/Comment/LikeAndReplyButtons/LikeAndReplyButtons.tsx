@@ -1,10 +1,9 @@
 import { Button, Typography } from "@/ui";
-import { useCommentContext } from "@/contexts";
+import { useAuthContext, useCommentContext } from "@/contexts";
 
-import { Comment } from "@/client/comments";
+import { Comment, useLikeComment } from "@/client/comments";
 
 import * as S from "./LikeAndReplyButtons.styles";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 type Props = {
   comment: Comment;
@@ -15,10 +14,14 @@ export function LikeAndReplyButtons({
   comment,
   showReplyButton = true,
 }: Props) {
+  const { session } = useAuthContext();
+
   const { setReplyTo, fieldRef } = useCommentContext();
 
-  const { isEnabled: isEnabledLikesComments } = useFeatureFlag(
-    FeatureDecoder.Values.LIKES_COMMENTS,
+  const { likeComment } = useLikeComment();
+
+  const alreadyLikedComment = Boolean(
+    comment.likes.find((like) => like.author.id === session?.userId),
   );
 
   function handleReply() {
@@ -26,13 +29,23 @@ export function LikeAndReplyButtons({
     fieldRef?.current?.focus();
   }
 
+  function handleLike() {
+    likeComment({
+      commentId: comment.id,
+      alreadyLiked: alreadyLikedComment,
+    });
+  }
+
   return (
     <S.Container>
-      {isEnabledLikesComments && (
-        <Button ghost variant="text">
-          <Typography.Text size="caption">Curtir</Typography.Text>
-        </Button>
-      )}
+      <Button ghost variant="text" onClick={handleLike}>
+        <Typography.Text
+          size="caption"
+          color={alreadyLikedComment ? "blue" : "primary"}
+        >
+          {alreadyLikedComment ? "Curtido" : "Curtir"}
+        </Typography.Text>
+      </Button>
       {showReplyButton && (
         <Button ghost variant="text" onClick={handleReply}>
           <Typography.Text size="caption">Responder</Typography.Text>
