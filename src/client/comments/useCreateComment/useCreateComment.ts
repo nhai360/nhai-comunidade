@@ -1,11 +1,10 @@
-import { useMutation, useQueryClient } from "react-query";
-
 import { authenticatedAPI } from "@/client";
 import {
   CreateCommentParams,
   invalidateCommentsQueries,
 } from "@/client/comments";
 import { invalidatePostsQueries } from "@/client/posts";
+import { useMutation, useQueryClient } from "react-query";
 
 async function createCommentRequest({
   postId,
