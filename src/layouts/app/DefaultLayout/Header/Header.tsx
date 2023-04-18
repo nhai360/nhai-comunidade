@@ -40,7 +40,7 @@ export function Header({ backUrl }: Props) {
           </Button>
         </Link>
       ) : (
-        <Link href={getProfileUrl(user?.nickname)}>
+        <Link href={getProfileUrl(user?.nickname)} className="avatarLink">
           <Avatar
             size="small"
             progressBar

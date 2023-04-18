@@ -14,4 +14,9 @@ export const Container = styled("header", {
   zIndex: "$fixed",
 
   padding: "$4 $6",
+
+  ".avatarLink": {
+    width: "52px",
+    height: "52px",
+  },
 });
