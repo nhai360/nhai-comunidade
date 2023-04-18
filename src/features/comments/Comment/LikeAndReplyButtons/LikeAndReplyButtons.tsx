@@ -1,4 +1,4 @@
-import { Button, Typography } from "@/ui";
+import { Button, Loading, Typography } from "@/ui";
 import { useAuthContext, useCommentContext } from "@/contexts";
 
 import { Comment, useLikeComment } from "@/client/comments";
@@ -18,7 +18,7 @@ export function LikeAndReplyButtons({
 
   const { setReplyTo, fieldRef } = useCommentContext();
 
-  const { likeComment } = useLikeComment();
+  const { likeComment, isLoading } = useLikeComment();
 
   const alreadyLikedComment = Boolean(
     comment.likes.find((like) => like.author.id === session?.userId),
@@ -38,7 +38,8 @@ export function LikeAndReplyButtons({
 
   return (
     <S.Container>
-      <Button ghost variant="text" onClick={handleLike}>
+      <Button ghost variant="text" onClick={handleLike} disabled={isLoading}>
+        {isLoading && <Loading size={14} />}
         <Typography.Text
           size="caption"
           color={alreadyLikedComment ? "blue" : "primary"}

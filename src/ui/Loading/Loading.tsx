@@ -2,10 +2,14 @@ import { LoadingIcon } from "@/ui/_icons";
 
 import * as S from "./Loading.styles";
 
-export function Loading() {
+type Props = {
+  size?: number;
+};
+
+export function Loading({ size = 20 }: Props) {
   return (
     <S.Container>
-      <LoadingIcon size={20} />
+      <LoadingIcon size={size} />
     </S.Container>
   );
 }
