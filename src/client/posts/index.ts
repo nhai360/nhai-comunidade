@@ -1,6 +1,7 @@
 import { QueryClient } from "react-query";
 
 export function invalidatePostsQueries(queryClient: QueryClient) {
+  queryClient.invalidateQueries("post");
   queryClient.invalidateQueries("posts");
   queryClient.invalidateQueries("trending");
 }
