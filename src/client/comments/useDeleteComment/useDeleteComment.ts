@@ -1,6 +1,8 @@
+import { useMutation, useQueryClient } from "react-query";
 import { authenticatedAPI } from "@/client";
 import { DeleteParams } from "@/client/comments/types";
-import { useMutation, useQueryClient } from "react-query";
+import { invalidatePostsQueries } from "@/client/posts";
+
 import { invalidateCommentsQueries } from "..";
 
 async function deleteCommentRequest({ commentId }: DeleteParams) {
@@ -13,6 +15,7 @@ export function useDeleteComment() {
   const { mutate: deleteComment, ...rest } = useMutation({
     mutationFn: deleteCommentRequest,
     onSuccess: () => {
+      invalidatePostsQueries(queryClient);
       invalidateCommentsQueries(queryClient);
     },
   });
