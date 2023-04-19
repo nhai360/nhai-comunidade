@@ -15,7 +15,7 @@ export function useComments(
 ) {
   const { data: comments, ...rest } = useQuery({
     enabled: !!params.postId,
-    queryKey: ["comments"],
+    queryKey: ["comments", params],
     queryFn: () => getComments(params),
     ...options,
   });
