@@ -8,6 +8,7 @@ import { Post } from "@/client/posts";
 import { Avatar, Button, Popover, TextArea } from "@/ui";
 import { ArrowRightIcon, ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
 import {
+  CommentType,
   CreateCommentDecoder,
   CreateCommentParams,
   useCreateComment,
@@ -60,6 +61,7 @@ export function PostCommentField({ post }: Props) {
         postId: post.id,
         replyId: replyTo?.id,
         content,
+        type: CommentType.COMMENT,
       },
       {
         onSuccess: () => {
@@ -139,7 +141,7 @@ export function PostCommentField({ post }: Props) {
                     <PollIcon size={24} strokeWidth="1.5" />
                   </S.Action>
                 </Popover.Trigger>
-                <CreatePollPopover />
+                <CreatePollPopover postId={post.id} />
               </Popover.Root>
             )}
             {isEnabledCreateDiscussion && content?.length === 0 && (

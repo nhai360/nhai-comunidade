@@ -2,6 +2,7 @@
   "extends": "@oigabrielteodoro/eslint-config/next",
   "rules": {
     "jsx-a11y/alt-text": 0,
-    "@next/next/no-img-element": 0
+    "@next/next/no-img-element": 0,
+    "no-unused-vars": 0
   }
 }

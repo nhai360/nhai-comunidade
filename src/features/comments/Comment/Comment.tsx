@@ -7,21 +7,27 @@ import { defaultPlugins } from "@/ui/TextArea/usePlugins";
 
 import { Post } from "@/client/posts";
 import { getInitials, getProfileUrl } from "@/lib/string";
-import { Comment as CommentType } from "@/client/comments";
+import { CommentType, Comment } from "@/client/comments";
 
 import { CommentHeader } from "./CommentHeader";
 import { RepliesList } from "./RepliesList";
 import { LikeAndReplyButtons } from "./LikeAndReplyButtons";
 
+import { Poll } from "./Poll";
 import * as S from "./Comment.styles";
 
 type Props = {
   post: Post;
-  comment: CommentType;
+  comment: Comment;
   maxReplies?: number;
 };
 
-export function Comment({ post, comment, maxReplies }: Props) {
+const COLORS: Record<CommentType, "pink" | "yellow"> = {
+  [CommentType.POLL]: "yellow",
+  [CommentType.COMMENT]: "pink",
+};
+
+export function CommentComponent({ post, comment, maxReplies }: Props) {
   const [content, setContent] = useState(
     comment.content ? createEditorStateWithText(comment.content) : null,
   );
@@ -43,7 +49,7 @@ export function Comment({ post, comment, maxReplies }: Props) {
       />
       <S.Container>
         <CommentHeader comment={comment} />
-        <S.Content color="pink">
+        <S.Content color={COLORS[comment.type]}>
           {comment.title && (
             <Typography.Text size="body2" weight="bold">
               {comment.title}
@@ -59,7 +65,9 @@ export function Comment({ post, comment, maxReplies }: Props) {
             />
           )}
 
-          {/* POLL: {comment.options && <Poll options={comment.options} />} */}
+          {comment.type === CommentType.POLL && comment.options && (
+            <Poll commentId={comment.id} options={comment.options} />
+          )}
 
           <RepliesList
             post={post}
