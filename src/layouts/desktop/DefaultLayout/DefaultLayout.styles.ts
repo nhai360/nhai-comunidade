@@ -17,6 +17,7 @@ export const Content = styled("main", {
   display: "flex",
   flexDirection: "column",
   height: "100%",
+  zIndex: "$middle",
 });
 
 export const Sider = styled("div", {

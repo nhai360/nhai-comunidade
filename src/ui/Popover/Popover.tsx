@@ -7,11 +7,7 @@ type Props = {
 } & ComponentProps<typeof S.Content>;
 
 export function Popover({ children, ...rest }: Props) {
-  return (
-    <S.Portal>
-      <S.Content {...rest}>{children}</S.Content>
-    </S.Portal>
-  );
+  return <S.Content {...rest}>{children}</S.Content>;
 }
 
 Popover.Root = S.Root;

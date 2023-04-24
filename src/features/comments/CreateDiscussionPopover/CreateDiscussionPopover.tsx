@@ -32,7 +32,7 @@ export function CreateDiscussionPopover() {
             emojiSelect={false}
           />
         </Field>
-        <Button type="submit" fullWidth>
+        <Button type="button" fullWidth css={{ minHeight: "56px" }}>
           Criar discussão <ArrowNarrowRightIcon />
         </Button>
       </S.Form>

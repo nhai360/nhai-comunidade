@@ -23,15 +23,13 @@ type Props = {
 export function CreatePollPopover({ postId }: Props) {
   const form = useForm<CreateCommentParams>();
 
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, reset } = form;
 
   const { createComment } = useCreateComment();
 
   const [orderedOptions, setOrderedOptions] = useState(["1", "2"]);
 
   function handleCreatePoll({ content, options = [] }: CreateCommentParams) {
-    console.log(options);
-
     const orderedOptionsWithValue = orderedOptions.map((optionId) => {
       const option = compact(options).find(({ id }) => optionId === id);
 
@@ -51,6 +49,8 @@ export function CreatePollPopover({ postId }: Props) {
       },
       {
         onSuccess: () => {
+          reset();
+
           toast.success("Enquete criada com sucesso!");
         },
       },
@@ -80,7 +80,12 @@ export function CreatePollPopover({ postId }: Props) {
               ))}
             </Reorder.Group>
           </Field>
-          <Button type="submit" fullWidth>
+          <Button
+            type="button"
+            fullWidth
+            css={{ minHeight: "56px" }}
+            onClick={handleSubmit(handleCreatePoll)}
+          >
             Criar enquete <ArrowNarrowRightIcon />
           </Button>
         </S.Form>
