@@ -4,7 +4,6 @@ import * as t from "zod";
 export const FeatureDecoder = t.enum([
   "EXAMPLE",
   "ARTICLES_SECTION",
-  "CREATE_POLL",
   "CREATE_DISCUSSION",
   "FILTER_TRENDING",
   "PROFILE_LOCATION",
@@ -21,7 +20,6 @@ const environment = process.env.NEXT_PUBLIC_ENVIRONMENT ?? "prod";
 const openFlags: OpenFlags = {
   EXAMPLE: true,
   ARTICLES_SECTION: true,
-  CREATE_POLL: true,
   CREATE_DISCUSSION: true,
   FILTER_TRENDING: true,
   PROFILE_LOCATION: true,
