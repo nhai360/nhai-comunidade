@@ -1,1 +1,1 @@
-export * from "./Comment";
+export { CommentComponent as Comment } from "./Comment";

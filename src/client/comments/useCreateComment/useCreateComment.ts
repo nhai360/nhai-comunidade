@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { authenticatedAPI } from "@/client";
 import {
+  CommentType,
   CreateCommentParams,
   invalidateCommentsQueries,
 } from "@/client/comments";
@@ -11,6 +12,8 @@ async function createCommentRequest({
   postId,
   content,
   replyId,
+  options,
+  type = CommentType.COMMENT,
 }: CreateCommentParams) {
   if (replyId) {
     await authenticatedAPI.post(`/posts/${postId}/comments/${replyId}`, {
@@ -22,6 +25,8 @@ async function createCommentRequest({
 
   await authenticatedAPI.post(`/posts/${postId}/comments`, {
     content,
+    options,
+    type,
   });
 }
 

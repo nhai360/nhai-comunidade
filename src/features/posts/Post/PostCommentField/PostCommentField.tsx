@@ -8,6 +8,7 @@ import { Post } from "@/client/posts";
 import { Avatar, Button, Popover, TextArea } from "@/ui";
 import { ArrowRightIcon, ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
 import {
+  CommentType,
   CreateCommentDecoder,
   CreateCommentParams,
   useCreateComment,
@@ -47,9 +48,6 @@ export function PostCommentField({ post }: Props) {
 
   const content = watch("content");
 
-  const { isEnabled: isEnabledCreatePoll } = useFeatureFlag(
-    FeatureDecoder.Values.CREATE_POLL,
-  );
   const { isEnabled: isEnabledCreateDiscussion } = useFeatureFlag(
     FeatureDecoder.Values.CREATE_DISCUSSION,
   );
@@ -60,6 +58,7 @@ export function PostCommentField({ post }: Props) {
         postId: post.id,
         replyId: replyTo?.id,
         content,
+        type: CommentType.COMMENT,
       },
       {
         onSuccess: () => {
@@ -132,14 +131,14 @@ export function PostCommentField({ post }: Props) {
           </S.Action>
         ) : (
           <>
-            {isEnabledCreatePoll && content?.length === 0 && (
+            {content?.length === 0 && (
               <Popover.Root>
                 <Popover.Trigger asChild>
                   <S.Action type="button">
                     <PollIcon size={24} strokeWidth="1.5" />
                   </S.Action>
                 </Popover.Trigger>
-                <CreatePollPopover />
+                <CreatePollPopover postId={post.id} />
               </Popover.Root>
             )}
             {isEnabledCreateDiscussion && content?.length === 0 && (

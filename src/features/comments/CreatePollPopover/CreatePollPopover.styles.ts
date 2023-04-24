@@ -7,3 +7,8 @@ export const Form = styled("form", {
   marginTop: "$4",
   gap: "$3",
 });
+
+export const Actions = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
+});

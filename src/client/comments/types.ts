@@ -2,6 +2,11 @@ import * as t from "zod";
 
 import { UserDecoder, User } from "@/client/users";
 
+export enum CommentType {
+  COMMENT = "COMMENT",
+  POLL = "POLL",
+}
+
 export const CommentLikeDecoder = t.object({
   author: UserDecoder,
 });
@@ -15,6 +20,22 @@ export const CommentStatsDecoder = t.object({
 
 export type CommentStats = t.TypeOf<typeof CommentStatsDecoder>;
 
+export const CommentOptionVotedByDecoder = t.object({
+  id: t.string(),
+  authorId: t.string(),
+  optionId: t.string(),
+});
+
+export const CommentOptionDecoder = t.object({
+  id: t.string(),
+  name: t.string(),
+  commentId: t.string(),
+  totalVotes: t.number(),
+  votedBy: CommentOptionVotedByDecoder.array(),
+});
+
+export type CommentOption = t.TypeOf<typeof CommentOptionDecoder>;
+
 export type Comment = {
   id: string;
   title?: string | null;
@@ -26,6 +47,8 @@ export type Comment = {
   replyToId?: string | null;
   stats: CommentStats;
   likes: CommentLike[];
+  type: CommentType;
+  options?: CommentOption[];
 };
 
 export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
@@ -40,6 +63,8 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     replyToId: t.string().nullish(),
     stats: CommentStatsDecoder,
     likes: CommentLikeDecoder.array(),
+    type: t.nativeEnum(CommentType),
+    options: CommentOptionDecoder.array().optional(),
   }),
 );
 
@@ -51,6 +76,8 @@ export type CreateCommentParams = {
   postId: string;
   replyId?: string;
   content: string;
+  type: CommentType;
+  options?: Partial<CommentOption>[];
 };
 
 export type GetParams = {
@@ -64,4 +91,10 @@ export type DeleteParams = {
 export type LikeCommentParams = {
   commentId: string;
   alreadyLiked: boolean;
+};
+
+export type VoteCommentParams = {
+  commentId: string;
+  optionId: string;
+  alreadyVoted: boolean;
 };
