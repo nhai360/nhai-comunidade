@@ -1,5 +1,6 @@
 import * as t from "zod";
 import { Media, MediaDecoder } from "@/client/media";
+import { ScoreDecoder } from "@/client/score/types";
 
 export const UserDecoder = t.object({
   id: t.string(),
@@ -13,6 +14,7 @@ export const UserDecoder = t.object({
   profilePicture: MediaDecoder.nullish(),
   banner: MediaDecoder.nullish(),
   createAt: t.string().datetime(),
+  score: ScoreDecoder.optional(),
 });
 
 export type User = t.TypeOf<typeof UserDecoder>;
