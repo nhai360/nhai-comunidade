@@ -62,11 +62,11 @@ export function EditProfileDialog({ onClose }: Props) {
 
     if (params.avatar) {
       upload(params.avatar, {
-        onSuccess: (media) => {
+        onSuccess: (avatar) => {
           updateUser(
             {
               userId: user.id,
-              media,
+              avatar,
               ...params,
             },
             {
