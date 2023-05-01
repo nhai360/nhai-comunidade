@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 
-import { useUser } from "@/client/users";
+import { useRouter } from "next/router";
+
+import { useUserFromNickname } from "@/client/users";
 
 import { Typography } from "@/ui";
-import { useAuthContext } from "@/contexts";
 import {
   FireIcon,
   JoystickIcon,
@@ -83,10 +84,12 @@ const ICON: Record<Division, ReactNode> = {
 };
 
 export function Score() {
-  const { session } = useAuthContext();
+  const router = useRouter();
 
-  const { user } = useUser({
-    id: session?.userId,
+  const { nickname } = router.query;
+
+  const { user } = useUserFromNickname({
+    nickname: nickname as string,
   });
 
   if (!user?.score) {
@@ -96,13 +99,19 @@ export function Score() {
   const division = DIVISIONS[user.score.division];
   const icon = ICON[user.score.division];
 
+  const hasConsecutiveDays =
+    user.stats?.consecutiveDays && user.stats?.consecutiveDays > 0;
+
   return (
     <S.Container>
       <S.StatisticCard>
-        <FireIcon />
+        <FireIcon
+          fill={hasConsecutiveDays ? "#FFC800" : "#E7E7E7"}
+          stroke={hasConsecutiveDays ? "#FF9600" : "#DADADA"}
+        />
         <S.StatisticInformation>
           <Typography.Text size="body2" weight="bold" color="secondary">
-            0
+            {user.stats?.consecutiveDays ?? 0}
           </Typography.Text>
           <Typography.Text size="body2" color="secondary">
             Dias seguidos

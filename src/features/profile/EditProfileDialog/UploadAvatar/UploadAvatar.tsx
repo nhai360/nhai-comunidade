@@ -56,6 +56,7 @@ export function UploadAvatar() {
             src={previewUrl}
             fallback={getInitials(user?.fullName)}
             alt={user?.fullName}
+            level={user?.score?.level}
           />
           <button type="button" title="Upload avatar">
             <AddPhotoIcon />

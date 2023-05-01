@@ -45,6 +45,7 @@ export function Reply({ reply, parentId, showReplyButton = true }: Props) {
           src={reply.author.profilePicture?.url}
           fallback={getInitials(reply.author.fullName)}
           profileUrl={getProfileUrl(reply.author.nickname)}
+          level={reply.author.score?.level}
           css={{
             "@mobile": {
               width: "24px",

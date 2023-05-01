@@ -39,6 +39,7 @@ export function CommentComponent({ post, comment, maxReplies }: Props) {
         src={comment.author.profilePicture?.url}
         fallback={getInitials(comment.author.fullName)}
         profileUrl={getProfileUrl(comment.author.nickname)}
+        level={comment.author.score?.level}
         css={{
           "@mobile": {
             width: "42px",

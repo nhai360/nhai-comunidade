@@ -12,26 +12,33 @@ type ScoreProviderProps = {
   children: ReactNode;
 };
 
+function saveClaim() {
+  const date = parseISO(format(new Date(), "yyyy-MM-dd"));
+
+  localStorage.setItem(
+    "@nhai-comunidade:claimedXp",
+    JSON.stringify({
+      maxDate: addDays(date, 2),
+      minDate: addDays(date, 1),
+    }),
+  );
+}
+
 function claimXp(userId?: string, queryClient?: QueryClient) {
-  authenticatedAPI.get(`/users/${userId}/xp`).then(() => {
-    toast.success(
-      "Parabéns! Você ganhou +10 pontos por entrar mais um dia consecutivo!",
-    );
+  authenticatedAPI
+    .get(`/users/${userId}/xp`)
+    .then(() => {
+      toast(
+        "Parabéns! Você ganhou +10 pontos por entrar mais um dia consecutivo!",
+      );
 
-    const date = parseISO(format(new Date(), "yyyy-MM-dd"));
+      saveClaim();
 
-    localStorage.setItem(
-      "@nhai-comunidade:claimedXp",
-      JSON.stringify({
-        maxDate: addDays(date, 2),
-        minDate: addDays(date, 1),
-      }),
-    );
-
-    if (queryClient) {
-      invalidateUserQueries(queryClient);
-    }
-  });
+      if (queryClient) {
+        invalidateUserQueries(queryClient);
+      }
+    })
+    .catch(() => {});
 }
 
 export function ScoreProvider({ children }: ScoreProviderProps) {
@@ -40,6 +47,10 @@ export function ScoreProvider({ children }: ScoreProviderProps) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+
     const claimedFromStorage = localStorage.getItem(
       "@nhai-comunidade:claimedXp",
     );

@@ -92,6 +92,7 @@ export function PostCommentField({ post }: Props) {
           src={user.profilePicture?.url}
           fallback={getInitials(user.fullName)}
           profileUrl={getProfileUrl(user.nickname)}
+          level={user.score?.level}
           css={{
             "@mobile": {
               display: "none",

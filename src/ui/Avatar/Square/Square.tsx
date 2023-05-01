@@ -9,7 +9,7 @@ type Props = ImgHTMLAttributes<HTMLImageElement> &
 
 export type AvatarSquareProps = {
   fallback: string;
-  level?: string;
+  level?: number;
   src?: string | null;
   profileUrl?: string;
 } & Omit<Props, "src">;
