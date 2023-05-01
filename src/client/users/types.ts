@@ -11,6 +11,7 @@ export const UserDecoder = t.object({
   userGenderId: t.string().nullish(),
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
+  banner: MediaDecoder.nullish(),
   createAt: t.string().datetime(),
 });
 
@@ -82,5 +83,6 @@ export type GetParams = {
 
 export type PatchParams = {
   userId: string;
-  media?: Media;
-} & UpdateUserParams;
+  avatar?: Media;
+  banner?: Media;
+} & Partial<UpdateUserParams>;
