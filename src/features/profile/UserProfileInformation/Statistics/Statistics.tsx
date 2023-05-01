@@ -1,5 +1,10 @@
 import { Typography } from "@/ui";
-import { FireIcon, JoystickIcon, RewardIcon, StarIcon } from "@/ui/_icons";
+import {
+  FireIcon,
+  JoystickIcon,
+  TierTwoRewardIcon,
+  StarIcon,
+} from "@/ui/_icons";
 
 import * as S from "./Statistics.styles";
 
@@ -29,7 +34,11 @@ export function Statistics() {
         </S.StatisticInformation>
       </S.StatisticCard>
       <S.StatisticCard>
-        <RewardIcon />
+        <TierTwoRewardIcon
+          primaryColor="#FB8E00"
+          tertiaryColor="#FFAF47"
+          secondaryColor="#FDEA67"
+        />
         <S.StatisticInformation>
           <Typography.Text size="body2" weight="bold">
             Ouro
