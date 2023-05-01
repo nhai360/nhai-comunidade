@@ -7,7 +7,7 @@ import { useUserFromNickname } from "@/client/users";
 import { getInitials } from "@/lib/string";
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
-import { Statistics } from "./Statistics";
+import { Score } from "./Score";
 import { GeneralInformation } from "./GeneralInformation";
 import * as S from "./UserProfileInformation.styles";
 
@@ -40,7 +40,7 @@ export function UserProfileInformation() {
           <Typography.Title size="subHeadline" weight="bold">
             Estatísticas
           </Typography.Title>
-          <Statistics />
+          <Score />
         </>
       )}
     </S.Container>
