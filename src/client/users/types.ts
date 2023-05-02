@@ -3,7 +3,6 @@ import { Media, MediaDecoder } from "@/client/media";
 import { ScoreDecoder } from "@/client/score/types";
 
 export const UserStatsDecoder = t.object({
-  id: t.string(),
   consecutiveDays: t.number(),
   totalArticlesRead: t.number(),
   totalMinutesWatched: t.number(),
