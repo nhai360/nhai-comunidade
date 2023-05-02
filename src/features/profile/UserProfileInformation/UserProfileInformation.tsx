@@ -5,17 +5,12 @@ import { Avatar, Divider, Typography } from "@/ui";
 import { useUserFromNickname } from "@/client/users";
 
 import { getInitials } from "@/lib/string";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import { Score } from "./Score";
 import { GeneralInformation } from "./GeneralInformation";
 import * as S from "./UserProfileInformation.styles";
 
 export function UserProfileInformation() {
-  const { isEnabled: isEnabledProfileStatistics } = useFeatureFlag(
-    FeatureDecoder.Values.PROFILE_LOCATION,
-  );
-
   const router = useRouter();
 
   const { nickname } = router.query;
@@ -34,15 +29,11 @@ export function UserProfileInformation() {
         css={{ border: "8px solid $neutral100" }}
       />
       <GeneralInformation />
-      {isEnabledProfileStatistics && (
-        <>
-          <Divider css={{ marginBlock: "$6", borderTopWidth: "2px" }} />
-          <Typography.Title size="subHeadline" weight="bold">
-            Estatísticas
-          </Typography.Title>
-          <Score />
-        </>
-      )}
+      <Divider css={{ marginBlock: "$6", borderTopWidth: "2px" }} />
+      <Typography.Title size="subHeadline" weight="bold">
+        Estatísticas
+      </Typography.Title>
+      <Score />
     </S.Container>
   );
 }
