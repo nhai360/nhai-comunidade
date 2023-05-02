@@ -43,6 +43,7 @@ export function LikedBy({ post }: Props) {
               src={user.profilePicture?.url}
               fallback={getInitials(user.fullName)}
               profileUrl={getProfileUrl(user.nickname)}
+              level={user.score?.level}
             />
           ))}
         </S.AvatarGroup>

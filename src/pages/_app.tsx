@@ -5,7 +5,7 @@ import Head from "next/head";
 
 import { globalStyles } from "@/../stitches.config";
 
-import { AuthProvider } from "@/contexts";
+import { AuthProvider, ScoreProvider } from "@/contexts";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,7 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Component {...pageProps} />
+          <ScoreProvider>
+            <Component {...pageProps} />
+          </ScoreProvider>
         </AuthProvider>
         <ToastContainer />
       </QueryClientProvider>

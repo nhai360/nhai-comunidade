@@ -27,6 +27,7 @@ export function CreatePostCard() {
             src={user.profilePicture?.url}
             fallback={getInitials(user?.fullName)}
             profileUrl={getProfileUrl(user.nickname)}
+            level={user.score?.level}
           />
         )}
         <Input

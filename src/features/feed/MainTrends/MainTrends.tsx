@@ -43,6 +43,7 @@ export function MainTrends() {
               src={post.author.profilePicture?.url}
               fallback={getInitials(post.author.fullName)}
               profileUrl={getProfileUrl(post.author.nickname)}
+              level={post.author.score?.level}
             />
             <S.TrendItemContent>
               {isEnabledFilter && <S.TagFromStatus>Opinião</S.TagFromStatus>}

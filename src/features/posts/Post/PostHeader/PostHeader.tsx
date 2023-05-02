@@ -72,6 +72,7 @@ export function PostHeader({ post }: Props) {
           alt={post.author.fullName}
           fallback={getInitials(post.author.fullName)}
           profileUrl={getProfileUrl(post.author.nickname)}
+          level={post.author.score?.level}
         />
 
         <S.Info>
