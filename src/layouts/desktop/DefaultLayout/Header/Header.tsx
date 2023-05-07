@@ -80,9 +80,6 @@ export function Header() {
                       @{user?.nickname}
                     </Typography.Text>
                   )}
-                  {user?.score && (
-                    <Tag variant="pink">Nível {user?.score?.level}</Tag>
-                  )}
                 </S.UserInfo>
               </S.UserContainer>
             </Link>
