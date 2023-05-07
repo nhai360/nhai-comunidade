@@ -1,11 +1,8 @@
+import { Videos } from "@/features/videos";
 import { withAuth } from "@/middlewares";
 
 function VideosPage() {
-  return (
-    <>
-      <h1>Hello</h1>
-    </>
-  );
+  return <Videos.DesktopLayout />;
 }
 
 export default withAuth(VideosPage);
