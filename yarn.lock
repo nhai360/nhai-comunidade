@@ -141,6 +141,22 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@mux/mux-video-react@^0.7.10":
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/@mux/mux-video-react/-/mux-video-react-0.7.10.tgz#e3c6b1767dad5d4e7cab2cb70035e6374c77e8e4"
+  integrity sha512-+BvYHMEzX9ahsyZ75Z52+o63VYZjBDV2qlmPTqkdcDY2ocfONtyg5LI39nsKvoRsr6agPwrSuQePL4pYzsLFUQ==
+  dependencies:
+    "@mux/playback-core" "0.18.0"
+    prop-types "^15.7.2"
+
+"@mux/playback-core@0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@mux/playback-core/-/playback-core-0.18.0.tgz#48e84b8f7285d0d75b86b81b89c7da20cf880a19"
+  integrity sha512-mZ49xDtH3/BG39V+RMDzZ0D9gUybBuKD1yhpO8auovoOz6dfDuPkOFQz+BavS2E/VnF/VnCi2dP9P4aU7GU/rA==
+  dependencies:
+    hls.js "1.4.0"
+    mux-embed "^4.24.0"
+
 "@next/env@13.2.3":
   version "13.2.3"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.2.3.tgz#77ca49edb3c1d7c5263bb8f2ebe686080e98279e"
@@ -1905,6 +1921,11 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hls.js@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.4.0.tgz#e73af3e7c8d4310a2bcc92d5ade362dfb781fef7"
+  integrity sha512-VEjg7Rx5FlE9TB3MIn0HPgq3J+vR7EoQnjaqMCk/ISEaCOSZlAFh4g867f1QkSxZiq9kHeUZo+iH16X7VS3jKA==
+
 ignore@^5.1.1, ignore@^5.2.0:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
@@ -2304,6 +2325,11 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
+mux-embed@^4.24.0:
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-4.25.0.tgz#c220c56b42e1146b907a98eae97fdf9a40224199"
+  integrity sha512-All8AX518RikaOW8VYLne77WQN0UVNSgBQ8E9JKBulhnHAotSWDmMnERKG+jKkm+g0UjTJFcg0lRgg9ecaPsvA==
+
 nano-time@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/nano-time/-/nano-time-1.0.0.tgz#b0554f69ad89e22d0907f7a12b0993a5d96137ef"
@@ -2558,7 +2584,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.8.1:
+prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
