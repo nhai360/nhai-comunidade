@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { Avatar, Button, Logo, Tooltip, Typography } from "@/ui";
+import { Avatar, Button, Logo, Tag, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
@@ -80,7 +80,9 @@ export function Header() {
                       @{user?.nickname}
                     </Typography.Text>
                   )}
-                  {/* <Tag variant="pink">Nível 56</Tag> */}
+                  {user?.score && (
+                    <Tag variant="pink">Nível {user?.score?.level}</Tag>
+                  )}
                 </S.UserInfo>
               </S.UserContainer>
             </Link>
