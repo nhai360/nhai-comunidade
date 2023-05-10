@@ -1,11 +1,10 @@
-import { authenticatedAPI, decodeResponse } from "@/client";
-import { Media, MediaCategoryDecoder, MediaDecoder } from "@/client/media";
 import { useMutation } from "react-query";
 
-async function uploadRequest(file: File) {
-  const response = await authenticatedAPI.post("/media", {
-    category: MediaCategoryDecoder.Values.IMAGE,
-  });
+import { authenticatedAPI, decodeResponse } from "@/client";
+import { Media, MediaDecoder, PostParams } from "@/client/media";
+
+async function uploadRequest({ file, ...params }: PostParams) {
+  const response = await authenticatedAPI.post("/media", params);
 
   const media = decodeResponse<Media>(response, MediaDecoder);
 

@@ -12,7 +12,7 @@ import {
   useUpdateUser,
   useUser,
 } from "@/client/users";
-import { useUpload } from "@/client/media";
+import { MediaCategory, useUpload } from "@/client/media";
 
 import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
@@ -61,27 +61,33 @@ export function EditProfileDialog({ onClose }: Props) {
     if (!user) return;
 
     if (params.avatar) {
-      upload(params.avatar, {
-        onSuccess: (avatar) => {
-          updateUser(
-            {
-              userId: user.id,
-              avatar,
-              ...params,
-            },
-            {
-              onError: () => {
-                toast.error(
-                  "Não foi possível atualizar seu perfil. Tente novamente.",
-                );
+      upload(
+        {
+          file: params.avatar,
+          category: MediaCategory.IMAGE,
+        },
+        {
+          onSuccess: (media) => {
+            updateUser(
+              {
+                userId: user.id,
+                profilePicture: media,
+                ...params,
               },
-            },
-          );
+              {
+                onError: () => {
+                  toast.error(
+                    "Não foi possível atualizar seu perfil. Tente novamente.",
+                  );
+                },
+              },
+            );
+          },
+          onError: () => {
+            toast.error("Não foi possível enviar sua imagem. Tente novamente.");
+          },
         },
-        onError: () => {
-          toast.error("Não foi possível enviar sua imagem. Tente novamente.");
-        },
-      });
+      );
     }
 
     updateUser({

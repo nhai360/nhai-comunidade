@@ -6,6 +6,7 @@ export * from "./ArrowRightIcon";
 export * from "./ArticlesIcon";
 export * from "./CameraIcon";
 export * from "./ChatIcon";
+export * from "./CheckCircleIcon";
 export * from "./CheckIcon";
 export * from "./ChevronLeftIcon";
 export * from "./ClockIcon";
