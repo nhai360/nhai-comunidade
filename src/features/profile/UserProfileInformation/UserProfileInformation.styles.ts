@@ -9,3 +9,9 @@ export const Container = styled("section", {
     paddingInline: "$6",
   },
 });
+
+export const TabsContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$3",
+});

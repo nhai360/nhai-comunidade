@@ -12,6 +12,24 @@ export const Root = styled(Avatar.Root, {
         cursor: "pointer",
       },
     },
+    size: {
+      xlarge: {
+        width: "128px",
+        height: "128px",
+      },
+      large: {
+        width: "72px",
+        height: "72px",
+      },
+      medium: {
+        width: "46px",
+        height: "46px",
+      },
+      small: {
+        width: "42px",
+        height: "42px",
+      },
+    },
   },
 });
 

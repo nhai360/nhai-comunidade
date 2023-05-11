@@ -1,12 +1,9 @@
 import { styled } from "@/../stitches.config";
 
 export const Container = styled("ul", {
-  display: "flex",
-  alignItems: "center",
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 306px)",
   gap: "$6",
 
-  marginTop: "$3",
-
-  width: "300px",
-  overflowX: "auto",
+  marginTop: "$6",
 });

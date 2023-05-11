@@ -33,7 +33,7 @@ export function Avatar({
 
   if (progressBar) {
     return (
-      <S.Root onClick={handleNavigate} profileUrl={!!profileUrl}>
+      <S.Root onClick={handleNavigate} profileUrl={!!profileUrl} size={size}>
         <CircularProgressBar value={75}>
           <S.Image css={css} src={src || undefined} size={size} {...rest} />
           <S.Fallback css={css} size={size} delayMs={0}>
@@ -45,7 +45,7 @@ export function Avatar({
   }
 
   return (
-    <S.Root onClick={handleNavigate} profileUrl={!!profileUrl}>
+    <S.Root onClick={handleNavigate} profileUrl={!!profileUrl} size={size}>
       <S.Image css={css} src={src || undefined} size={size} {...rest} />
       <S.Fallback css={css} size={size} delayMs={0}>
         {fallback}

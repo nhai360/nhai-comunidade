@@ -1,8 +1,8 @@
 import { DesktopLayout } from "./DesktopLayout";
 
 export * from "./FeaturedVideoCard";
-export * from "./KeepWatchingCard";
 export * from "./UploadVideoDialog";
+export * from "./VideoCard";
 
 export const Videos = {
   DesktopLayout,
