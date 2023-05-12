@@ -1,6 +1,11 @@
 import * as t from "zod";
 
-export const MediaCategoryDecoder = t.enum(["IMAGE", "GIF", "AUDIO", "VIDEO"]);
+export enum MediaCategory {
+  IMAGE = "IMAGE",
+  GIF = "GIF",
+  AUDIO = "AUDIO",
+  VIDEO = "VIDEO",
+}
 
 export const MediaDecoder = t.object({
   id: t.string(),
@@ -11,7 +16,13 @@ export const MediaDecoder = t.object({
   caption: t.string().nullish(),
   sizeInBytes: t.string().nullish(),
   durationInSeconds: t.string().nullish(),
-  category: MediaCategoryDecoder,
+  category: t.nativeEnum(MediaCategory),
 });
 
 export type Media = t.TypeOf<typeof MediaDecoder>;
+
+export type PostParams = {
+  file: File;
+  category: MediaCategory;
+  mimeType?: string;
+};

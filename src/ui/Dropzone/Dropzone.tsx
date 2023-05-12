@@ -1,21 +1,52 @@
-import { ForwardRefRenderFunction, forwardRef, useMemo } from "react";
-import ReactDropzone from "react-dropzone";
+import {
+  ForwardRefRenderFunction,
+  ReactNode,
+  forwardRef,
+  useMemo,
+} from "react";
+import ReactDropzone, {
+  DropEvent,
+  DropzoneProps,
+  FileRejection,
+} from "react-dropzone";
 import { FieldPath, UseControllerProps, useController } from "react-hook-form";
+import { toast } from "react-toastify";
 
 import { Typography } from "@/ui";
 import { TrashIcon } from "@/ui/_icons";
 
 import { UploadIcon } from "./UploadIcon";
 import * as S from "./Dropzone.styles";
-import { toast } from "react-toastify";
 
 const MAX_SIZE = 1024 * 1024; // 1mb
 
-const DropzoneComponent: ForwardRefRenderFunction<
-  HTMLInputElement,
-  UseControllerProps<any, FieldPath<any>>
-> = (props, ref) => {
-  const { field } = useController(props);
+type Props = {
+  children?: ReactNode;
+} & UseControllerProps<any, FieldPath<any>> &
+  Omit<DropzoneProps, "children">;
+
+const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
+  {
+    children = "Selecione imagens para compartilhar",
+    name,
+    control,
+    defaultValue,
+    rules,
+    shouldUnregister,
+    maxSize = MAX_SIZE,
+    onDropAccepted,
+    onDropRejected,
+    ...props
+  },
+  ref,
+) => {
+  const { field } = useController({
+    name,
+    control,
+    defaultValue,
+    rules,
+    shouldUnregister,
+  });
 
   const previewUrl = useMemo(() => {
     if (field.value) {
@@ -25,12 +56,19 @@ const DropzoneComponent: ForwardRefRenderFunction<
     return null;
   }, [field]);
 
-  function handleDropAccepted(acceptedFiles: File[]) {
+  function handleDropAccepted(acceptedFiles: File[], event: DropEvent) {
     field.onChange(acceptedFiles[0]);
+
+    onDropAccepted && onDropAccepted(acceptedFiles, event);
   }
 
-  function handleDropRejected() {
+  function handleDropRejected(
+    fileRejections: FileRejection[],
+    event: DropEvent,
+  ) {
     toast.error("Imagem não suportada. Use apenas imagens com até 1MB");
+
+    onDropRejected && onDropRejected(fileRejections, event);
   }
 
   function handleRemoveFile() {
@@ -58,14 +96,15 @@ const DropzoneComponent: ForwardRefRenderFunction<
       accept={{ "image/*": [] }}
       onDropRejected={handleDropRejected}
       onDropAccepted={handleDropAccepted}
-      maxSize={MAX_SIZE}
+      maxSize={maxSize}
+      {...props}
     >
       {({ getRootProps, getInputProps }) => (
         <S.Container {...getRootProps()}>
           <input ref={ref} {...getInputProps()} />
           <UploadIcon />
           <Typography.Text size="body1" color="blue" weight="bold">
-            Selecione imagens para compartilhar
+            {children}
           </Typography.Text>
         </S.Container>
       )}

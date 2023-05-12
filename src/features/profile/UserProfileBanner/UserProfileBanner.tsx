@@ -8,7 +8,7 @@ import { theme } from "@/../stitches.config";
 
 import { useAuthContext } from "@/contexts";
 
-import { useUpload } from "@/client/media";
+import { MediaCategory, useUpload } from "@/client/media";
 import { useUpdateUser, useUserFromNickname } from "@/client/users";
 
 import { EditIcon } from "@/ui/_icons";
@@ -38,23 +38,29 @@ export function UserProfileBanner() {
   function handleDropAccepted(acceptedFiles: File[]) {
     if (!session) return;
 
-    upload(acceptedFiles[0], {
-      onSuccess: (banner) => {
-        updateUser(
-          {
-            userId: session.userId,
-            banner,
-          },
-          {
-            onError: () => {
-              toast.error(
-                "Não foi possível atualizar seu perfil. Tente novamente.",
-              );
-            },
-          },
-        );
+    upload(
+      {
+        file: acceptedFiles[0],
+        category: MediaCategory.IMAGE,
       },
-    });
+      {
+        onSuccess: (banner) => {
+          updateUser(
+            {
+              userId: session.userId,
+              banner,
+            },
+            {
+              onError: () => {
+                toast.error(
+                  "Não foi possível atualizar seu perfil. Tente novamente.",
+                );
+              },
+            },
+          );
+        },
+      },
+    );
   }
 
   const isLoading = isUpdating || isUploading;

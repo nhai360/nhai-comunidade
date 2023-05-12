@@ -92,6 +92,6 @@ export type GetParams = {
 
 export type PatchParams = {
   userId: string;
-  avatar?: Media;
+  profilePicture?: Media;
   banner?: Media;
 } & Partial<UpdateUserParams>;

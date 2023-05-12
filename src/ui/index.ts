@@ -11,6 +11,7 @@ export * from "./Input";
 export * from "./Label";
 export * from "./Loading";
 export * from "./Logo";
+export * from "./MuxVideo";
 export * from "./NavigationItem";
 export * from "./Popover";
 export * from "./ProgressBar";

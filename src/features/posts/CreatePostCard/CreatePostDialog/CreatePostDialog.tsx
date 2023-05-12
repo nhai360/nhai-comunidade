@@ -11,7 +11,7 @@ import {
   CreatePostDecoder,
   useCreatePost,
 } from "@/client/posts";
-import { useUpload } from "@/client/media";
+import { MediaCategory, useUpload } from "@/client/media";
 import { useUser } from "@/client/users";
 import { getInitials, getProfileUrl } from "@/lib/string";
 
@@ -49,28 +49,34 @@ export function CreatePostDialog({ onClose }: Props) {
 
   async function handleCreatePost(data: CreatePostParams) {
     if (data.image) {
-      upload(data.image, {
-        onSuccess: (media) => {
-          createPost(
-            {
-              title: data.title,
-              content: data.content,
-              color: data.color,
-              images: [media],
-            },
-            {
-              onError: () => {
-                toast.error(
-                  "Não foi possível enviar sua publicação. Tente novamente.",
-                );
+      upload(
+        {
+          file: data.image,
+          category: MediaCategory.VIDEO,
+        },
+        {
+          onSuccess: (media) => {
+            createPost(
+              {
+                title: data.title,
+                content: data.content,
+                color: data.color,
+                images: [media],
               },
-            },
-          );
+              {
+                onError: () => {
+                  toast.error(
+                    "Não foi possível enviar sua publicação. Tente novamente.",
+                  );
+                },
+              },
+            );
+          },
+          onError: () => {
+            toast.error("Não foi possível enviar sua imagem. Tente novamente.");
+          },
         },
-        onError: () => {
-          toast.error("Não foi possível enviar sua imagem. Tente novamente.");
-        },
-      });
+      );
 
       return;
     }

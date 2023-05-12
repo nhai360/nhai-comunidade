@@ -52,6 +52,8 @@ export const GridWithSider = styled("div", {
   alignItems: "flex-start",
   gap: "$6",
 
+  maxWidth: "100vw",
+
   "@laptop": {
     marginLeft: 0,
     gridTemplateColumns: "1fr",
