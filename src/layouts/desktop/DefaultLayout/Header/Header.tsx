@@ -28,6 +28,10 @@ export function Header() {
     id: session?.userId,
   });
 
+  const isEnabled =
+    user?.email.endsWith("@nhai360.com") ||
+    user?.email.endsWith("@catency.com");
+
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
 
@@ -74,11 +78,13 @@ export function Header() {
                 >
                   <Typography.Text>Publicação</Typography.Text>
                 </Popover.Action>
-                <Popover.Action
-                  onClick={() => setIsUploadVideoDialogVisible(true)}
-                >
-                  <Typography.Text>Vídeo</Typography.Text>
-                </Popover.Action>
+                {isEnabled && (
+                  <Popover.Action
+                    onClick={() => setIsUploadVideoDialogVisible(true)}
+                  >
+                    <Typography.Text>Vídeo</Typography.Text>
+                  </Popover.Action>
+                )}
               </Popover>
             </Popover.Root>
             {/* <Tooltip message="Novo post" position="bottom">
