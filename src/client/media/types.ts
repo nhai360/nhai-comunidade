@@ -24,4 +24,5 @@ export type Media = t.TypeOf<typeof MediaDecoder>;
 export type PostParams = {
   file: File;
   category: MediaCategory;
+  mimeType?: string;
 };

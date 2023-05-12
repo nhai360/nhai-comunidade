@@ -47,6 +47,7 @@ export function UploadVideoDialog({ onClose }: Props) {
       {
         file: files[0],
         category: MediaCategory.IMAGE,
+        mimeType: "video",
       },
       {
         onSuccess: () => {
@@ -146,6 +147,7 @@ export function UploadVideoDialog({ onClose }: Props) {
               control={control}
               onDropAccepted={handleUpload}
               accept={{ "video/*": [] }}
+              maxSize={1024 * 1024 * 10}
             >
               Selecione arquivos de vídeo para fazer o envio
             </Dropzone>

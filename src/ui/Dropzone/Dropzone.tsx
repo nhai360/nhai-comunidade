@@ -33,6 +33,7 @@ const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     defaultValue,
     rules,
     shouldUnregister,
+    maxSize = MAX_SIZE,
     onDropAccepted,
     onDropRejected,
     ...props
@@ -95,7 +96,7 @@ const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
       accept={{ "image/*": [] }}
       onDropRejected={handleDropRejected}
       onDropAccepted={handleDropAccepted}
-      maxSize={MAX_SIZE}
+      maxSize={maxSize}
       {...props}
     >
       {({ getRootProps, getInputProps }) => (
