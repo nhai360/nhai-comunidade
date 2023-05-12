@@ -12,9 +12,6 @@ export const VideoTagDecoder = t.object({
 export type VideoTag = t.TypeOf<typeof VideoTagDecoder>;
 
 export const VideoLikeDecoder = t.object({
-  id: t.string(),
-  authorId: t.string(),
-  videoId: t.string(),
   author: UserDecoder,
 });
 
