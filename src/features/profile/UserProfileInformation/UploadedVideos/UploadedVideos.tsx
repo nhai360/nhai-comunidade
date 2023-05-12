@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { useAuthContext } from "@/contexts";
 import { useVideosFromUser } from "@/client/videos";
 
@@ -6,10 +8,12 @@ import { VideoCard } from "@/features/videos";
 import * as S from "./UploadedVideos.styles";
 
 export function UploadedVideos() {
-  const { session } = useAuthContext();
+  const router = useRouter();
+
+  const { nickname } = router.query;
 
   const { videos } = useVideosFromUser({
-    userId: session?.userId,
+    nickname: nickname as string,
   });
 
   return (

@@ -42,11 +42,13 @@ export function UploadVideoDialog({ onClose }: Props) {
   const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
   const { createVideo, isLoading, isSuccess } = useCreateVideo();
 
+  const { upload: uploadThumbnail, data: thumbnail } = useUpload();
+
   function handleUpload(files: File[]) {
     upload(
       {
         file: files[0],
-        category: MediaCategory.IMAGE,
+        category: MediaCategory.VIDEO,
         mimeType: "video",
       },
       {
@@ -62,9 +64,26 @@ export function UploadVideoDialog({ onClose }: Props) {
     );
   }
 
-  function handleCreateVideo({ title, description, tags }: CreateVideoParams) {
-    console.log(source);
+  function handleUploadThumbnail(files: File[]) {
+    uploadThumbnail(
+      {
+        file: files[0],
+        category: MediaCategory.IMAGE,
+      },
+      {
+        onSuccess: () => {
+          toast.success("O upload da sua thumbnail foi concluído!");
+        },
+        onError: () => {
+          toast.error(
+            "Não foi possível completar o upload da sua thumbnail. Tente novamente",
+          );
+        },
+      },
+    );
+  }
 
+  function handleCreateVideo({ title, description, tags }: CreateVideoParams) {
     if (!source) {
       return toast.error(
         "Você precisa fazer um novo upload de vídeo, o anterior falhou!",
@@ -78,6 +97,7 @@ export function UploadVideoDialog({ onClose }: Props) {
         title,
         description,
         source,
+        thumbnail,
         tags: tagsInArray,
       },
       {
@@ -140,6 +160,13 @@ export function UploadVideoDialog({ onClose }: Props) {
                   }}
                 />
               </Field>
+              <Dropzone
+                {...register("thumbnail", { shouldUnregister: true })}
+                control={control}
+                onDropAccepted={handleUploadThumbnail}
+              >
+                Selecione imagens para fazer o envio
+              </Dropzone>
             </S.FormContainer>
           ) : (
             <Dropzone

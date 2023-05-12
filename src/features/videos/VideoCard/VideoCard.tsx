@@ -15,12 +15,6 @@ type Props = {
 };
 
 export function VideoCard({ video }: Props) {
-  const { session } = useAuthContext();
-
-  const { user } = useUser({
-    id: session?.userId,
-  });
-
   const createdAtFormatted = format(new Date(video.createAt), "dd MMM");
 
   return (
@@ -35,7 +29,9 @@ export function VideoCard({ video }: Props) {
           },
         }}
       >
-        <S.ThumbnailImage src="/video-thumb.png" />
+        {video.thumbnail?.url && (
+          <S.ThumbnailImage src={video?.thumbnail?.url} />
+        )}
         <Typography.Text
           css={{ display: "block", marginTop: "$3", color: "$textTitle" }}
         >
@@ -44,15 +40,15 @@ export function VideoCard({ video }: Props) {
         <S.UserContainer>
           <Avatar
             size="medium"
-            src={user?.profilePicture?.url}
-            fallback={getInitials(user?.fullName)}
+            src={video.author?.profilePicture?.url}
+            fallback={getInitials(video.author?.fullName)}
           />
           <S.UserInformationContainer>
             <Typography.Text css={{ color: "$textTitle" }}>
-              {getFirstNameAndLastName(user?.fullName)}
+              {getFirstNameAndLastName(video.author?.fullName)}
             </Typography.Text>
             <Typography.Text size="body3" color="secondary">
-              @{user?.nickname}
+              @{video.author?.nickname}
             </Typography.Text>
           </S.UserInformationContainer>
           <S.TimeLabel>{createdAtFormatted}</S.TimeLabel>

@@ -1,7 +1,7 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { authenticatedAPI } from "@/client";
-import { PostParams } from "@/client/videos";
+import { PostParams, invalidateVideosQueries } from "@/client/videos";
 
 async function createVideoRequest(params: PostParams) {
   const response = await authenticatedAPI.post("/videos", params);
@@ -10,8 +10,13 @@ async function createVideoRequest(params: PostParams) {
 }
 
 export function useCreateVideo() {
+  const queryClient = useQueryClient();
+
   const { mutate: createVideo, ...rest } = useMutation({
     mutationFn: createVideoRequest,
+    onSuccess: () => {
+      invalidateVideosQueries(queryClient);
+    },
   });
 
   return {
