@@ -21,6 +21,7 @@ import { CheckCircleIcon } from "@/ui/_icons";
 import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
 
 import * as S from "./UploadVideoDialog.styles";
+import { UploadThumbnail } from "./UploadThumbnail";
 
 type Props = {
   onClose: () => void;
@@ -40,9 +41,17 @@ export function UploadVideoDialog({ onClose }: Props) {
   const file = watch("file");
 
   const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
-  const { createVideo, isLoading, isSuccess } = useCreateVideo();
 
-  const { upload: uploadThumbnail, data: thumbnail } = useUpload();
+  const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
+    useUpload();
+
+  const {
+    createVideo,
+    isLoading: isCreatingVideo,
+    isSuccess,
+  } = useCreateVideo();
+
+  const isLoading = isUploadingThumbnail || isCreatingVideo;
 
   function handleUpload(files: File[]) {
     upload(
@@ -64,26 +73,12 @@ export function UploadVideoDialog({ onClose }: Props) {
     );
   }
 
-  function handleUploadThumbnail(files: File[]) {
-    uploadThumbnail(
-      {
-        file: files[0],
-        category: MediaCategory.IMAGE,
-      },
-      {
-        onSuccess: () => {
-          toast.success("O upload da sua thumbnail foi concluído!");
-        },
-        onError: () => {
-          toast.error(
-            "Não foi possível completar o upload da sua thumbnail. Tente novamente",
-          );
-        },
-      },
-    );
-  }
-
-  function handleCreateVideo({ title, description, tags }: CreateVideoParams) {
+  function handleCreateVideo({
+    title,
+    description,
+    thumbnail,
+    tags,
+  }: CreateVideoParams) {
     if (!source) {
       return toast.error(
         "Você precisa fazer um novo upload de vídeo, o anterior falhou!",
@@ -92,17 +87,34 @@ export function UploadVideoDialog({ onClose }: Props) {
 
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
 
-    createVideo(
+    uploadThumbnail(
       {
-        title,
-        description,
-        source,
-        thumbnail,
-        tags: tagsInArray,
+        file: thumbnail,
+        category: MediaCategory.IMAGE,
       },
       {
+        onSuccess: (media) => {
+          createVideo(
+            {
+              title,
+              description,
+              source,
+              thumbnail: media,
+              tags: tagsInArray,
+            },
+            {
+              onError: () => {
+                toast.error(
+                  "Não foi possível postar o seu vídeo. Tente novamente",
+                );
+              },
+            },
+          );
+        },
         onError: () => {
-          toast.error("Não foi possível postar o seu vídeo. Tente novamente");
+          toast.error(
+            "Não foi possível completar o upload da sua thumbnail. Tente novamente",
+          );
         },
       },
     );
@@ -142,6 +154,7 @@ export function UploadVideoDialog({ onClose }: Props) {
                 label="Tags"
                 placeholder="Adicionar tags"
                 errorText={errors.tags?.message}
+                helperText="Use a ',' para separar as tags do seu vídeo. Exemplo: tag 1, tag 2"
                 {...register("tags")}
               />
               <Field label="Descrição" required={false}>
@@ -152,7 +165,7 @@ export function UploadVideoDialog({ onClose }: Props) {
                   emojiSelectPosition="bottom"
                   shouldUnregister
                   css={{
-                    minHeight: "160px",
+                    minHeight: "120px",
 
                     ".public-DraftEditor-content": {
                       maxHeight: "200px",
@@ -160,13 +173,18 @@ export function UploadVideoDialog({ onClose }: Props) {
                   }}
                 />
               </Field>
-              <Dropzone
-                {...register("thumbnail", { shouldUnregister: true })}
-                control={control}
-                onDropAccepted={handleUploadThumbnail}
+              <Field
+                label="Foto de capa"
+                helperText="A foto de capa deve ser 306 x 161"
+                errorText={errors.thumbnail?.message as string}
               >
-                Selecione imagens para fazer o envio
-              </Dropzone>
+                <UploadThumbnail
+                  {...register("thumbnail", { shouldUnregister: true })}
+                  control={control}
+                >
+                  Selecione a foto de capa
+                </UploadThumbnail>
+              </Field>
             </S.FormContainer>
           ) : (
             <Dropzone
@@ -174,7 +192,7 @@ export function UploadVideoDialog({ onClose }: Props) {
               control={control}
               onDropAccepted={handleUpload}
               accept={{ "video/*": [] }}
-              maxSize={1024 * 1024 * 10}
+              maxSize={1024 * 1024 * 60}
             >
               Selecione arquivos de vídeo para fazer o envio
             </Dropzone>

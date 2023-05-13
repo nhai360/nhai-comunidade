@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import BaseVideo, { Props as BaseVideoProps } from "@mux/mux-video-react";
 import {
@@ -6,9 +6,10 @@ import {
   PauseCircle,
   SkipForward,
   SpeakerSimpleHigh,
+  SpeakerSimpleX,
 } from "@phosphor-icons/react";
 
-import { Button, ProgressBar, Typography } from "@/ui";
+import { Button, ProgressBar, Slider, Tooltip, Typography } from "@/ui";
 import { EditIcon, LinkIcon, PlayIcon } from "@/ui/_icons";
 import { addSeconds, format, startOfDay } from "@/lib/date-fns";
 
@@ -39,7 +40,15 @@ export function MuxVideo({
   const [durationTime, setDurationTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
+  const [volume, setVolume] = useState(50);
+
   const isFinished = currentTime === durationTime;
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.5;
+    }
+  }, []);
 
   function togglePlayState() {
     if (!videoRef.current) return;
@@ -63,11 +72,26 @@ export function MuxVideo({
     return videoRef.current?.pause();
   }
 
+  function toggleVolumeState() {
+    if (volume === 0) {
+      return setVolume(30);
+    }
+
+    setVolume(0);
+  }
+
   function skipForward() {
     if (videoRef?.current) {
       setCurrentTime((prevState) => prevState + 2);
       videoRef.current.currentTime += 2;
     }
+  }
+
+  function changeVolume(newVolume: number) {
+    if (!videoRef.current) return;
+
+    videoRef.current.volume = newVolume / 100;
+    setVolume(newVolume);
   }
 
   function openFullScreen() {
@@ -109,6 +133,7 @@ export function MuxVideo({
         }
         onClick={togglePlayState}
         className="mux-video"
+        envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
         {...rest}
       />
       <S.ControlsContainer>
@@ -128,9 +153,23 @@ export function MuxVideo({
             <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
               <SkipForward size={20} />
             </Button>
-            <Button {...ICON_BUTTON_PROPS}>
-              <SpeakerSimpleHigh size={20} />
-            </Button>
+            <S.VolumeContainer>
+              <Tooltip message={`${volume}%`}>
+                <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
+                  {volume === 0 ? (
+                    <SpeakerSimpleX size={20} />
+                  ) : (
+                    <SpeakerSimpleHigh size={20} />
+                  )}
+                </Button>
+              </Tooltip>
+              <Slider
+                max={100}
+                min={0}
+                value={[volume]}
+                onValueChange={([volume]) => changeVolume(volume)}
+              />
+            </S.VolumeContainer>
             <Typography.Text color="neutral">
               {currentTimeFormatted} / {durationFormatted}
             </Typography.Text>

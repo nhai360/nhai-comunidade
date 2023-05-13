@@ -26,16 +26,18 @@ export function VideoPlayerCard() {
     videoId: videoId as string,
   });
 
-  if (!video) {
+  if (!video || !video.playbackId) {
     return null;
   }
 
   return (
     <Card css={{ display: "flex", flexDirection: "column", gap: "$4" }}>
       <MuxVideo
-        playbackId="enuT7USShHEGQ1alVQgOsLPfFOM02x01KAqJGn9tQjsW8"
+        playbackId={video.playbackId}
         streamType="on-demand"
         metadata={{
+          video_id: video.playbackId,
+          video_title: video.title,
           viewer_user_id: session?.userId,
         }}
       />
