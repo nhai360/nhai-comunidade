@@ -133,6 +133,7 @@ export function MuxVideo({
         }
         onClick={togglePlayState}
         className="mux-video"
+        envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
         {...rest}
       />
       <S.ControlsContainer>

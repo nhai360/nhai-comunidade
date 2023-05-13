@@ -35,7 +35,6 @@ export function VideoPlayerCard() {
       <MuxVideo
         playbackId={video.playbackId}
         streamType="on-demand"
-        envKey="bua0bfe03e8818lbkjb5g2g0j"
         metadata={{
           video_id: video.playbackId,
           video_title: video.title,
