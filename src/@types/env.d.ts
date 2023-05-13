@@ -4,6 +4,7 @@ declare global {
     interface ProcessEnv {
       NEXT_PUBLIC_BASE_API_URL: string;
       NEXT_PUBLIC_ENVIRONMENT: string;
+      NEXT_PUBLIC_MUX_ENV_KEY: string;
     }
   }
 }
