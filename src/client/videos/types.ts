@@ -37,7 +37,7 @@ export const CreateVideoResolver = t.object({
   description: t.string().nullish(),
   tags: t.string().min(1, "Tags é obrigatório"),
   file: t.any().optional(),
-  thumbnail: t.any().optional(),
+  thumbnail: t.any().refine((file) => file, "Foto de capa é obrigatório"),
 });
 
 export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
@@ -45,7 +45,8 @@ export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
 export type PostParams = {
   tags: string[];
   source: Media;
-} & Omit<CreateVideoParams, "file" | "tags">;
+  thumbnail: Media;
+} & Omit<CreateVideoParams, "file" | "tags" | "thumbnail">;
 
 export type GetParams = {
   nickname?: string;
