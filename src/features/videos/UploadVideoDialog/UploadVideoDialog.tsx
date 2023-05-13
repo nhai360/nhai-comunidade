@@ -192,7 +192,7 @@ export function UploadVideoDialog({ onClose }: Props) {
               control={control}
               onDropAccepted={handleUpload}
               accept={{ "video/*": [] }}
-              maxSize={1024 * 1024 * 10}
+              maxSize={1024 * 1024 * 60}
             >
               Selecione arquivos de vídeo para fazer o envio
             </Dropzone>
