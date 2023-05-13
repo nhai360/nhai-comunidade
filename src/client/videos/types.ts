@@ -26,6 +26,7 @@ export const VideoDecoder = t.object({
   author: UserDecoder.nullish(),
   createAt: t.string(),
   updatedAt: t.string(),
+  playbackId: t.string().nullish(),
   tags: VideoTagDecoder.array().nullish(),
   likes: VideoLikeDecoder.array().nullish(),
 });

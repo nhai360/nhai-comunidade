@@ -46,3 +46,55 @@ export const ControlsRow = styled("div", {
   gap: "$2",
   marginTop: "$3",
 });
+
+export const VolumeContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$3",
+
+  input: {
+    "-webkit-appearance": "none",
+
+    width: "80px",
+    height: "4px",
+
+    background: "$neutral400",
+    borderRadius: "$xsmall",
+  },
+
+  "input::-webkit-slider-thumb": {
+    "-webkit-appearance": "none",
+
+    background: "$pinkMedium",
+
+    height: "12px",
+    width: "12px",
+
+    borderRadius: "50%",
+    cursor: "ew-resize",
+  },
+
+  "input::-moz-range-thumb": {
+    "-webkit-appearance": "none",
+
+    background: "$pinkMedium",
+
+    height: "12px",
+    width: "12px",
+
+    borderRadius: "50%",
+    cursor: "ew-resize",
+  },
+
+  "input::-ms-thumb": {
+    "-webkit-appearance": "none",
+
+    background: "$pinkMedium",
+
+    height: "12px",
+    width: "12px",
+
+    borderRadius: "50%",
+    cursor: "ew-resize",
+  },
+});
