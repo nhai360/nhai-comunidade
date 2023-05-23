@@ -66,10 +66,10 @@ export function UploadVideoDialog({ onClose }: Props) {
         },
         onError: () => {
           toast.error(
-            "Não foi possível completar o upload do seu vídeo. Tente novamente",
+            "Não foi possível completar o upload do seu vídeo. Tente novamente"
           );
         },
-      },
+      }
     );
   }
 
@@ -81,7 +81,7 @@ export function UploadVideoDialog({ onClose }: Props) {
   }: CreateVideoParams) {
     if (!source) {
       return toast.error(
-        "Você precisa fazer um novo upload de vídeo, o anterior falhou!",
+        "Você precisa fazer um novo upload de vídeo, o anterior falhou!"
       );
     }
 
@@ -105,18 +105,18 @@ export function UploadVideoDialog({ onClose }: Props) {
             {
               onError: () => {
                 toast.error(
-                  "Não foi possível postar o seu vídeo. Tente novamente",
+                  "Não foi possível postar o seu vídeo. Tente novamente"
                 );
               },
-            },
+            }
           );
         },
         onError: () => {
           toast.error(
-            "Não foi possível completar o upload da sua thumbnail. Tente novamente",
+            "Não foi possível completar o upload da sua thumbnail. Tente novamente"
           );
         },
-      },
+      }
     );
   }
 
@@ -192,7 +192,7 @@ export function UploadVideoDialog({ onClose }: Props) {
               control={control}
               onDropAccepted={handleUpload}
               accept={{ "video/*": [] }}
-              maxSize={1024 * 1024 * 60}
+              maxSize={1024 * 1024 * 1024}
             >
               Selecione arquivos de vídeo para fazer o envio
             </Dropzone>
