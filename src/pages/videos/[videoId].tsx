@@ -1,8 +1,8 @@
-import { withAuth } from '@/middlewares';
+import { withAuth } from "@/middlewares";
 
-import { VideoPlayer } from '@/features/video-player';
-import { useAuthContext } from '@/contexts';
-import { useUser } from '@/client/users';
+import { VideoPlayer } from "@/features/video-player";
+import { useAuthContext } from "@/contexts";
+import { useUser } from "@/client/users";
 
 function VideoPage() {
   const { session } = useAuthContext();
@@ -11,7 +11,7 @@ function VideoPage() {
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === 'ADMIN';
+  const isAdmin = user?.role?.name === "ADMIN";
 
   if (!isAdmin) {
     return null;

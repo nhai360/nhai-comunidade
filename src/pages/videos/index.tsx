@@ -1,8 +1,8 @@
-import { useUser } from '@/client/users';
-import { useAuthContext } from '@/contexts';
-import { Videos } from '@/features/videos';
-import { withAuth } from '@/middlewares';
-import { useEffect } from 'react';
+import { useUser } from "@/client/users";
+import { useAuthContext } from "@/contexts";
+import { Videos } from "@/features/videos";
+import { withAuth } from "@/middlewares";
+import { useEffect } from "react";
 
 function VideosPage() {
   const { session } = useAuthContext();
@@ -11,7 +11,7 @@ function VideosPage() {
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === 'ADMIN';
+  const isAdmin = user?.role?.name === "ADMIN";
 
   if (!isAdmin) {
     return null;

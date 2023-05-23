@@ -1,23 +1,23 @@
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from "react";
+import Link from "next/link";
 
-import { Avatar, Button, Logo, Popover, Tag, Tooltip, Typography } from '@/ui';
-import { InputSearch } from '@/ui/Input/Search';
-import { AddCircleIcon } from '@/ui/_icons';
+import { Avatar, Button, Logo, Popover, Tag, Tooltip, Typography } from "@/ui";
+import { InputSearch } from "@/ui/Input/Search";
+import { AddCircleIcon } from "@/ui/_icons";
 
-import { useSearch } from '@/lib/search';
+import { useSearch } from "@/lib/search";
 import {
   getFirstNameAndLastName,
   getInitials,
   getProfileUrl,
-} from '@/lib/string';
-import { useUser } from '@/client/users';
+} from "@/lib/string";
+import { useUser } from "@/client/users";
 
-import { useAuthContext } from '@/contexts';
-import { CreatePostDialog } from '@/features/posts/CreatePostCard/CreatePostDialog';
-import { UploadVideoDialog } from '@/features/videos';
+import { useAuthContext } from "@/contexts";
+import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
+import { UploadVideoDialog } from "@/features/videos";
 
-import * as S from './Header.styles';
+import * as S from "./Header.styles";
 
 export function Header() {
   const { searchTerm, handleChange, handleSearch } = useSearch();
@@ -28,7 +28,7 @@ export function Header() {
     id: session?.userId,
   });
 
-  const isEnabled = user?.role?.name === 'ADMIN';
+  const isEnabled = user?.role?.name === "ADMIN";
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);

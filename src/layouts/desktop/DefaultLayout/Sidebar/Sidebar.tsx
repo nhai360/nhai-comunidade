@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import { NavigationItem, Popover, Tooltip, Typography } from '@/ui';
+import { NavigationItem, Popover, Tooltip, Typography } from "@/ui";
 import {
   CameraIcon,
   HomeIcon,
   ListLineParagraphSquareIcon,
   SettingsIcon,
-} from '@/ui/_icons';
-import { NavItem } from '@/ui/NavigationItem/NavigationItem.styles';
+} from "@/ui/_icons";
+import { NavItem } from "@/ui/NavigationItem/NavigationItem.styles";
 
-import { authenticatedAPI } from '@/client';
-import { useAuthContext } from '@/contexts';
+import { authenticatedAPI } from "@/client";
+import { useAuthContext } from "@/contexts";
 
-import * as S from './Sidebar.styles';
+import * as S from "./Sidebar.styles";
 
 export function Sidebar() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export function Sidebar() {
 
     authenticatedAPI.defaults.headers.Authorization = null;
 
-    router.push('/auth/login');
+    router.push("/auth/login");
   }
 
   return (
@@ -56,7 +56,7 @@ export function Sidebar() {
           side="top"
           sideOffset={16}
           align="start"
-          css={{ width: '148px' }}
+          css={{ width: "148px" }}
         >
           <Popover.Action onClick={handleLogout}>
             <Typography.Text>Sair</Typography.Text>
