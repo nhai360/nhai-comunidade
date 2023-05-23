@@ -1,26 +1,32 @@
-import { ReactNode } from "react";
-import Link from "next/link";
+import { ReactNode } from 'react';
+import Link from 'next/link';
 
-import { Tooltip } from "@/ui";
+import { Tooltip } from '@/ui';
 
-import * as S from "./NavigationItem.styles";
+import * as S from './NavigationItem.styles';
+import { useRouter } from 'next/router';
 
 type Props = {
   children: ReactNode;
   tooltip?: string;
-  active?: boolean;
   disabled?: boolean;
+  href?: string;
 };
 
 export function NavigationItem({
   children,
   tooltip,
-  active = false,
   disabled = false,
+  href = '/',
 }: Props) {
+  const router = useRouter();
+  const path = router?.pathname?.split('/')[1];
+
+  const active = !disabled && `/${path}` === href;
+
   if (tooltip) {
     return (
-      <Link href="/">
+      <Link href={href}>
         <Tooltip message={tooltip} position="right">
           <S.NavItem active={active} disabled={disabled}>
             {children}
@@ -31,7 +37,7 @@ export function NavigationItem({
   }
 
   return (
-    <Link href="/">
+    <Link href={href}>
       <S.NavItem active={active} disabled={disabled}>
         {children}
       </S.NavItem>

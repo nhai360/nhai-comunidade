@@ -1,6 +1,6 @@
-import * as t from "zod";
-import { Media, MediaDecoder } from "@/client/media";
-import { ScoreDecoder } from "@/client/score/types";
+import * as t from 'zod';
+import { Media, MediaDecoder } from '@/client/media';
+import { ScoreDecoder } from '@/client/score/types';
 
 export const UserStatsDecoder = t.object({
   consecutiveDays: t.number(),
@@ -8,8 +8,15 @@ export const UserStatsDecoder = t.object({
   totalMinutesWatched: t.number(),
 });
 
+export const UserRoleDecoder = t.object({
+  name: t.string(),
+  updatedAt: t.string().datetime(),
+  createAt: t.string().datetime(),
+});
+
 export const UserDecoder = t.object({
   id: t.string(),
+  role: UserRoleDecoder.nullish(),
   fullName: t.string(),
   email: t.string(),
   nickname: t.string(),
@@ -27,40 +34,40 @@ export const UserDecoder = t.object({
 export type User = t.TypeOf<typeof UserDecoder>;
 
 export const CreateUserDecoder = t.object({
-  fullName: t.string().min(1, "Nome é obrigatório"),
+  fullName: t.string().min(1, 'Nome é obrigatório'),
   nickname: t
     .string()
-    .min(1, "Apelido é obrigatório")
-    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .min(1, 'Apelido é obrigatório')
+    .max(20, 'O apelido deve ter no máximo 20 caracteres')
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")',
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
     )
-    .transform((arg) => arg.toLowerCase().replace("@", "")),
+    .transform((arg) => arg.toLowerCase().replace('@', '')),
   email: t
     .string()
-    .email({ message: "O formato de e-mail é inválido" })
-    .min(1, "E-mail é obrigatório"),
-  password: t.string().min(1, "Senha é obrigatória"),
+    .email({ message: 'O formato de e-mail é inválido' })
+    .min(1, 'E-mail é obrigatório'),
+  password: t.string().min(1, 'Senha é obrigatória'),
 });
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
 
 export const UpdateUserDecoder = t.object({
-  fullName: t.string().min(1, "Nome é obrigatório"),
+  fullName: t.string().min(1, 'Nome é obrigatório'),
   nickname: t
     .string()
-    .min(1, "Apelido é obrigatório")
-    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .min(1, 'Apelido é obrigatório')
+    .max(20, 'O apelido deve ter no máximo 20 caracteres')
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")',
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
     )
-    .transform((arg) => arg.toLowerCase().replace("@", "")),
+    .transform((arg) => arg.toLowerCase().replace('@', '')),
   bio: t
     .string()
-    .min(1, "Bio é obrigatório")
-    .max(255, "A bio deve ter no máximo 255 caracteres"),
+    .min(1, 'Bio é obrigatório')
+    .max(255, 'A bio deve ter no máximo 255 caracteres'),
   avatar: t.any().optional(),
 });
 
@@ -77,9 +84,9 @@ export type Session = t.TypeOf<typeof SessionDecoder>;
 export const CreateSessionDecoder = t.object({
   email: t
     .string()
-    .email({ message: "O formato de e-mail é inválido" })
-    .min(1, "E-mail é obrigatório"),
-  password: t.string().min(1, "Senha é obrigatória"),
+    .email({ message: 'O formato de e-mail é inválido' })
+    .min(1, 'E-mail é obrigatório'),
+  password: t.string().min(1, 'Senha é obrigatória'),
   remember: t.boolean(),
 });
 
