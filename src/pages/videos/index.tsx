@@ -17,7 +17,12 @@ function VideosPage() {
     return null;
   }
 
-  return <Videos.DesktopLayout />;
+  return (
+    <>
+      <Videos.DesktopLayout />
+      <Videos.AppLayout />
+    </>
+  );
 }
 
 export default withAuth(VideosPage);

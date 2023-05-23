@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { Avatar, Button, Logo, Popover, Tag, Tooltip, Typography } from "@/ui";
+import { Avatar, Button, Logo, Popover, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
@@ -16,6 +16,7 @@ import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 import { UploadVideoDialog } from "@/features/videos";
+import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 
 import * as S from "./Header.styles";
 
@@ -36,6 +37,9 @@ export function Header() {
   const [isUploadVideoDialogVisible, setIsUploadVideoDialogVisible] =
     useState(false);
 
+  const [isCreateBroadcastDialogVisible, setIsCreateBroadcastDialogVisible] =
+    useState(false);
+
   return (
     <>
       {isCreatePostDialogVisible && (
@@ -45,6 +49,12 @@ export function Header() {
       {isUploadVideoDialogVisible && (
         <UploadVideoDialog
           onClose={() => setIsUploadVideoDialogVisible(false)}
+        />
+      )}
+
+      {isCreateBroadcastDialogVisible && (
+        <CreateBroadcastDialog
+          onClose={() => setIsCreateBroadcastDialogVisible(false)}
         />
       )}
 
@@ -81,6 +91,13 @@ export function Header() {
                     onClick={() => setIsUploadVideoDialogVisible(true)}
                   >
                     <Typography.Text>Vídeo</Typography.Text>
+                  </Popover.Action>
+                )}
+                {isEnabled && (
+                  <Popover.Action
+                    onClick={() => setIsCreateBroadcastDialogVisible(true)}
+                  >
+                    <Typography.Text>Iniciar Transmissão</Typography.Text>
                   </Popover.Action>
                 )}
               </Popover>

@@ -21,6 +21,7 @@ export const ControlsContainer = styled("div", {
 export const Container = styled("div", {
   position: "relative",
   borderRadius: "$large",
+  maxHeight: "720px",
 
   cursor: "pointer",
 
@@ -30,6 +31,7 @@ export const Container = styled("div", {
 
   ".mux-video": {
     width: "100%",
+    maxHeight: "500px",
     borderRadius: "$large",
   },
 });

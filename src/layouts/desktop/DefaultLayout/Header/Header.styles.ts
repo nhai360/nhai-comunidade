@@ -19,7 +19,7 @@ export const Content = styled("div", {
   alignItems: "center",
   justifyContent: "space-between",
 
-  maxWidth: "1376px",
+  maxWidth: "1920px",
   width: "100%",
 
   marginInline: "auto",
