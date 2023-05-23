@@ -29,7 +29,8 @@ export function Header() {
     id: session?.userId,
   });
 
-  const isEnabled = user?.role?.name === "ADMIN";
+  const isAdmin = user?.role?.name === "ADMIN";
+  const isEnabled = isAdmin;
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
@@ -125,7 +126,10 @@ export function Header() {
                     {getFirstNameAndLastName(user?.fullName)}
                   </Typography.Text>
                   {user?.nickname && (
-                    <Typography.Text size="body3" color="secondary">
+                    <Typography.Text
+                      size="body3"
+                      color={isAdmin ? "pink" : "secondary"}
+                    >
                       @{user?.nickname}
                     </Typography.Text>
                   )}
