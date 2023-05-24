@@ -37,7 +37,7 @@ export function Sidebar() {
           <NavigationItem href="/videos" tooltip="Vídeos">
             <CameraIcon />
           </NavigationItem>
-          <NavigationItem tooltip="Em breve" disabled>
+          <NavigationItem href="/articles" tooltip="Materiais Didáticos">
             <ListLineParagraphSquareIcon />
           </NavigationItem>
         </S.NavigationList>

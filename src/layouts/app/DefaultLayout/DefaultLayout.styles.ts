@@ -16,5 +16,5 @@ export const Content = styled("main", {
   overflowY: "scroll",
 
   minHeight: "100vh",
-  padding: "$6",
+  padding: "$2",
 });

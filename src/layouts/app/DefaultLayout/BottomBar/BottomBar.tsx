@@ -22,7 +22,7 @@ export function BottomBar() {
       <NavigationItem href="/videos">
         <CameraIcon />
       </NavigationItem>
-      <NavigationItem disabled>
+      <NavigationItem href="/articles">
         <ListLineParagraphSquareIcon />
       </NavigationItem>
       <Button
