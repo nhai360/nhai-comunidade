@@ -10,10 +10,11 @@ import {
 } from "@phosphor-icons/react";
 
 import { Button, ProgressBar, Slider, Tooltip, Typography } from "@/ui";
-import { EditIcon, LinkIcon, PlayIcon } from "@/ui/_icons";
+import { CheckIcon, EditIcon, LinkIcon, PlayIcon } from "@/ui/_icons";
 import { addSeconds, format, startOfDay } from "@/lib/date-fns";
 
 import * as S from "./MuxVideo.styles";
+import { useRouter } from "next/router";
 
 const ONE_HOUR_IN_SECONDS = 60 * 60;
 
@@ -31,11 +32,15 @@ const ICON_BUTTON_PROPS = {
 
 export function MuxVideo({
   controls = false,
+  isCreator = false,
   ...rest
-}: Partial<Omit<BaseVideoProps, "ref">>) {
+}: any) {
+  const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { videoId } = router.query;
 
   const [isPaused, setIsPaused] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
 
   const [durationTime, setDurationTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -49,6 +54,20 @@ export function MuxVideo({
       videoRef.current.volume = 0.5;
     }
   }, []);
+
+  function handleCopyVideoUrl() {
+    if (isCopied) return;
+
+    navigator.clipboard.writeText(
+      `${window.location.origin}/videos/${videoId}`
+    );
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  }
 
   function togglePlayState() {
     if (!videoRef.current) return;
@@ -105,7 +124,7 @@ export function MuxVideo({
 
   const durationFormatted = format(
     durationTimeInSeconds,
-    durationIsMoreThanHour ? "hh:mm:ss" : "mm:ss",
+    durationIsMoreThanHour ? "hh:mm:ss" : "mm:ss"
   );
 
   const currentTimeInMinutes = addSeconds(baseDate, currentTime);
@@ -113,7 +132,7 @@ export function MuxVideo({
 
   const currentTimeFormatted = format(
     currentTimeInMinutes,
-    currentTimeIsMoreThanHour ? "hh:mm:ss" : "mm:ss",
+    currentTimeIsMoreThanHour ? "hh:mm:ss" : "mm:ss"
   );
 
   const currentPercentProgress = useMemo(() => {
@@ -175,11 +194,13 @@ export function MuxVideo({
             </Typography.Text>
           </S.ControlsRow>
           <S.ControlsRow>
-            <Button {...ICON_BUTTON_PROPS}>
-              <EditIcon size={24} />
-            </Button>
-            <Button {...ICON_BUTTON_PROPS}>
-              <LinkIcon size={24} />
+            {isCreator && (
+              <Button {...ICON_BUTTON_PROPS}>
+                <EditIcon size={24} />
+              </Button>
+            )}
+            <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
+              {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
             </Button>
             <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
               <FrameCorners size={24} weight="light" />

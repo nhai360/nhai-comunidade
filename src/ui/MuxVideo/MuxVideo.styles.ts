@@ -33,6 +33,7 @@ export const Container = styled("div", {
     width: "100%",
     maxHeight: "500px",
     borderRadius: "$large",
+    backgroundColor: "black",
   },
 });
 

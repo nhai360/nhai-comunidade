@@ -131,6 +131,23 @@ export const globalStyles = globalCss({
     boxSizing: "border-box",
   },
 
+  // Altera a cor de fundo da barra de rolagem
+  "::-webkit-scrollbar": {
+    backgroundColor: "$background",
+    width: 10,
+  },
+
+  // Altera a cor da barra de rolagem
+  "::-webkit-scrollbar-thumb": {
+    backgroundColor: "$neutral500",
+    borderRadius: 24,
+  },
+
+  // Altera a cor do indicador de rolagem quando clicado
+  "::-webkit-scrollbar-thumb:active": {
+    backgroundColor: "$neutral400",
+  },
+
   body: {
     background: "$background",
     color: "$textPrimary",

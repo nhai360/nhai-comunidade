@@ -33,7 +33,7 @@ export function FeaturedVideoCard() {
     >
       <S.Content>
         <Typography.Title size="h2" weight="bold" color="title">
-          +Digital: A diversidade como potência
+          Semana +Digital: A diversidade como potência
         </Typography.Title>
         <Typography.Text>
           Nesta primeira semana do mês do Orgulho, acontecerá na nossa

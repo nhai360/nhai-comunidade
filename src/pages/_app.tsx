@@ -11,6 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 
+import { setDefaultOptions } from "date-fns";
+import { pt } from "date-fns/locale";
+
+// Definindo a localização padrão para português
+setDefaultOptions({ locale: pt });
+
 export default function App({ Component, pageProps }: AppProps) {
   globalStyles();
 
