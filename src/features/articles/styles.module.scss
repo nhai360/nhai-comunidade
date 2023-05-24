@@ -3,6 +3,8 @@
   height: auto;
   overflow: auto;
   padding: 32px 32px 80px 116px;
+  max-width: 1920px;
+  align-self: center;
 
   .infoHeader {
     width: 100%;
@@ -23,15 +25,14 @@
     margin-bottom: 1rem;
   }
 
-  .gridArticlesContainer {
-    background-color: red;
+  .gridArticlesContainer {  
     display: grid;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 
     @media screen and (min-width: 1200px) {
-      gap: 36px;
+      gap: 24px;
     }
   }
 }
