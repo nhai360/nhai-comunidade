@@ -6,6 +6,7 @@ import { Avatar, Button, Typography } from "@/ui";
 import { Article } from "@/client/articles";
 import { format } from "date-fns";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
+import Link from "next/link";
 
 type Props = {
   article: Article;
@@ -46,9 +47,11 @@ const CardArticle = ({ article }: Props) => {
         <h3>{`${article?.title}`}</h3>
         <p>{`${article?.content?.substring(0, 60)}`}</p>
 
-        <Button className={styles.articleButton}>
-          <h3>Ler artigo completo</h3>
-        </Button>
+        <Link href={`articles/${123123}`}>
+          <Button className={styles.articleButton}>
+            <h3>Ler artigo completo</h3>
+          </Button>
+        </Link>
       </div>
     </>
   );
