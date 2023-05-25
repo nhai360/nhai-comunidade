@@ -2,6 +2,7 @@ import * as t from "zod";
 
 import { Media, MediaDecoder } from "@/client/media";
 import { UserDecoder } from "@/client/users";
+import { VideoCommentDecoder } from "../videoscomments";
 
 export const VideoTagDecoder = t.object({
   id: t.string(),
@@ -29,12 +30,14 @@ export const VideoDecoder = t.object({
   playbackId: t.string().nullish(),
   tags: VideoTagDecoder.array().nullish(),
   likes: VideoLikeDecoder.array().nullish(),
+  comments: VideoCommentDecoder.array().nullish(),
 });
 
 export type Video = t.TypeOf<typeof VideoDecoder>;
 
 export const CreateVideoResolver = t.object({
   title: t.string().min(1, "Título é obrigatório"),
+  playlist: t.string().nullish(),
   description: t.string().nullish(),
   tags: t.string().min(1, "Tags é obrigatório"),
   file: t.any().optional(),
@@ -43,11 +46,21 @@ export const CreateVideoResolver = t.object({
 
 export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
 
+export const CreatePlaylistResolver = t.object({
+  title: t.string().min(1, "Título é obrigatório"),
+});
+
+export type CreatePlaylistParams = t.TypeOf<typeof CreatePlaylistResolver>;
+
 export type PostParams = {
   tags: string[];
   source: Media;
   thumbnail: Media;
 } & Omit<CreateVideoParams, "file" | "tags" | "thumbnail">;
+
+export type PostPlaylistParams = {
+  title: string;
+};
 
 export type GetParams = {
   nickname?: string;
