@@ -3,15 +3,9 @@ import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { theme } from "@/../stitches.config";
-import { useAuthContext, useCommentContext } from "@/contexts";
+import { useAuthContext, useVideoCommentContext } from "@/contexts";
 import { Avatar, Button, Popover, TextArea } from "@/ui";
 import { ArrowRightIcon, ChatIcon, CloseIcon, PollIcon } from "@/ui/_icons";
-import {
-  CommentType,
-  CreateCommentDecoder,
-  CreateCommentParams,
-  useCreateComment,
-} from "@/client/comments";
 import {
   CreateDiscussionPopover,
   CreatePollPopover,
@@ -27,6 +21,12 @@ import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 
 import * as S from "./VideoCommentField.styles";
 import { Video } from "@/client/videos";
+import {
+  useCreateVideoComment,
+  VideoCommentType,
+  CreateVideoCommentDecoder,
+  CreateVideoCommentParams,
+} from "@/client/videoscomments";
 
 type Props = {
   video: Video;
@@ -34,16 +34,16 @@ type Props = {
 
 export function VideoCommentField({ video }: Props) {
   const { session } = useAuthContext();
-  const { fieldRef, replyTo, setReplyTo } = useCommentContext();
+  const { fieldRef, replyTo, setReplyTo } = useVideoCommentContext();
 
-  const { createComment } = useCreateComment();
+  const { createVideoComment } = useCreateVideoComment();
 
   const { user } = useUser({
     id: session?.userId,
   });
 
-  const { control, watch, handleSubmit } = useForm<CreateCommentParams>({
-    resolver: zodResolver(CreateCommentDecoder),
+  const { control, watch, handleSubmit } = useForm<CreateVideoCommentParams>({
+    resolver: zodResolver(CreateVideoCommentDecoder),
   });
 
   const content = watch("content");
@@ -53,12 +53,12 @@ export function VideoCommentField({ video }: Props) {
   );
 
   function handleSendComment() {
-    createComment(
+    createVideoComment(
       {
-        postId: video.id,
+        videoId: video.id,
         replyId: replyTo?.id,
         content,
-        type: CommentType.COMMENT,
+        type: VideoCommentType.COMMENT,
       },
       {
         onSuccess: () => {
@@ -67,7 +67,8 @@ export function VideoCommentField({ video }: Props) {
 
           toast.success("Comentário publicado!");
         },
-        onError: () => {
+        onError: (err) => {
+          console.log(err);
           toast.error(
             "Não foi possível enviar seu comentário. Tente novamente."
           );

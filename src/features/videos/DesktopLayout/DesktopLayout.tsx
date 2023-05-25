@@ -9,12 +9,14 @@ export function DesktopLayout() {
       <DefaultLayout.GridWithSider>
         <DefaultLayout.Content css={{ gap: "$6" }}>
           <FeaturedVideoCard />
-          <VideosList />
         </DefaultLayout.Content>
         <DefaultLayout.Sider>
           <MainTrends />
         </DefaultLayout.Sider>
       </DefaultLayout.GridWithSider>
+      <DefaultLayout.SimpleGrid>
+        <VideosList />
+      </DefaultLayout.SimpleGrid>
     </DefaultLayout>
   );
 }

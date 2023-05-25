@@ -11,7 +11,7 @@ async function getComments({ postId }: GetParams) {
 
 export function useComments(
   params: GetParams,
-  options?: UseQueryOptions<Comment[]>,
+  options?: UseQueryOptions<Comment[]>
 ) {
   const { data: comments, ...rest } = useQuery({
     enabled: !!params.postId,

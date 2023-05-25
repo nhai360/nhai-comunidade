@@ -22,6 +22,8 @@ import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
 
 import * as S from "./UploadVideoDialog.styles";
 import { UploadThumbnail } from "./UploadThumbnail";
+import { useState } from "react";
+import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 
 type Props = {
   onClose: () => void;
@@ -39,6 +41,8 @@ export function UploadVideoDialog({ onClose }: Props) {
   });
 
   const file = watch("file");
+  const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
+    useState(false);
 
   const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
 
@@ -78,6 +82,7 @@ export function UploadVideoDialog({ onClose }: Props) {
     description,
     thumbnail,
     tags,
+    playlist,
   }: CreateVideoParams) {
     if (!source) {
       return toast.error(
@@ -138,105 +143,122 @@ export function UploadVideoDialog({ onClose }: Props) {
   }
 
   return (
-    <Dialog open onOpenChange={onClose}>
-      <Dialog.Content>
-        <Dialog.Header title={file ? file.name : "Enviar vídeo"} closable />
-        <Dialog.Body>
-          {file ? (
-            <S.FormContainer onSubmit={handleSubmit(handleCreateVideo)}>
-              <Field.Input
-                label="Título do vídeo"
-                placeholder="Escreva o título do seu vídeo"
-                errorText={errors.title?.message}
-                {...register("title")}
-              />
-              <Field.Input
-                label="Tags"
-                placeholder="Adicionar tags"
-                errorText={errors.tags?.message}
-                helperText="Use a ',' para separar as tags do seu vídeo. Exemplo: tag 1, tag 2"
-                {...register("tags")}
-              />
-              <Field label="Descrição" required={false}>
-                <TextArea
-                  control={control}
-                  name="description"
-                  placeholder="Escreva a descrição do seu vídeo"
-                  emojiSelectPosition="bottom"
-                  shouldUnregister
-                  css={{
-                    minHeight: "120px",
-
-                    ".public-DraftEditor-content": {
-                      maxHeight: "200px",
-                    },
-                  }}
+    <>
+      <Dialog open onOpenChange={onClose}>
+        <Dialog.Content>
+          <Dialog.Header title={file ? file.name : "Enviar vídeo"} closable />
+          <Dialog.Body>
+            {file ? (
+              <S.FormContainer onSubmit={handleSubmit(handleCreateVideo)}>
+                <Field.Input
+                  label="Título do vídeo"
+                  placeholder="Escreva o título do seu vídeo"
+                  errorText={errors.title?.message}
+                  {...register("title")}
                 />
-              </Field>
-              <Field
-                label="Foto de capa"
-                helperText="A foto de capa deve ser 306 x 161"
-                errorText={errors.thumbnail?.message as string}
-              >
-                <UploadThumbnail
-                  {...register("thumbnail", { shouldUnregister: true })}
-                  control={control}
+                <Field.Input
+                  label="Tags"
+                  placeholder="Adicionar tags"
+                  errorText={errors.tags?.message}
+                  helperText="Use a ',' para separar as tags do seu vídeo. Exemplo: tag 1, tag 2"
+                  {...register("tags")}
+                />
+                <Field.Input
+                  label="Playlist"
+                  placeholder="Selecione a playlist do vídeo"
+                  {...register("playlist")}
+                  onClick={() => setIsCreatePlaylistDialogVisible(true)}
+                />
+                <Field label="Descrição" required={false}>
+                  <TextArea
+                    control={control}
+                    name="description"
+                    placeholder="Escreva a descrição do seu vídeo"
+                    emojiSelectPosition="bottom"
+                    shouldUnregister
+                    css={{
+                      minHeight: "120px",
+
+                      ".public-DraftEditor-content": {
+                        maxHeight: "200px",
+                      },
+                    }}
+                  />
+                </Field>
+                <Field
+                  label="Foto de capa"
+                  helperText="A foto de capa deve ser 306 x 161"
+                  errorText={errors.thumbnail?.message as string}
                 >
-                  Selecione a foto de capa
-                </UploadThumbnail>
-              </Field>
-            </S.FormContainer>
-          ) : (
-            <Dropzone
-              {...register("file", { shouldUnregister: true })}
-              control={control}
-              onDropAccepted={handleUpload}
-              accept={{ "video/*": [] }}
-              maxSize={1024 * 1024 * 1024}
+                  <UploadThumbnail
+                    {...register("thumbnail", { shouldUnregister: true })}
+                    control={control}
+                  >
+                    Selecione a foto de capa
+                  </UploadThumbnail>
+                </Field>
+              </S.FormContainer>
+            ) : (
+              <Dropzone
+                {...register("file", { shouldUnregister: true })}
+                control={control}
+                onDropAccepted={handleUpload}
+                accept={{ "video/*": [] }}
+                maxSize={1024 * 1024 * 1024}
+              >
+                Selecione arquivos de vídeo para fazer o envio
+              </Dropzone>
+            )}
+          </Dialog.Body>
+          <Divider />
+          {file && (
+            <Dialog.Footer
+              css={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "$4",
+              }}
             >
-              Selecione arquivos de vídeo para fazer o envio
-            </Dropzone>
+              <Typography.Text
+                size="body3"
+                color="secondary"
+                weight="bold"
+                css={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "$3",
+                }}
+              >
+                {isSuccessUpload ? (
+                  <>
+                    <CheckCircleIcon />
+                    Vídeo carregado e pronto para ser postado
+                  </>
+                ) : (
+                  <>
+                    <Loading />
+                    Enviando vídeo
+                  </>
+                )}
+              </Typography.Text>
+              <Button
+                type="submit"
+                loading={isLoading}
+                disabled={!isSuccessUpload}
+                onClick={() => handleSubmit(handleCreateVideo)()}
+              >
+                Postar vídeo
+              </Button>
+            </Dialog.Footer>
           )}
-        </Dialog.Body>
-        <Divider />
-        {file && (
-          <Dialog.Footer
-            css={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "$4",
-            }}
-          >
-            <Typography.Text
-              size="body3"
-              color="secondary"
-              weight="bold"
-              css={{ display: "inline-flex", alignItems: "center", gap: "$3" }}
-            >
-              {isSuccessUpload ? (
-                <>
-                  <CheckCircleIcon />
-                  Vídeo carregado e pronto para ser postado
-                </>
-              ) : (
-                <>
-                  <Loading />
-                  Enviando vídeo
-                </>
-              )}
-            </Typography.Text>
-            <Button
-              type="submit"
-              loading={isLoading}
-              disabled={!isSuccessUpload}
-              onClick={() => handleSubmit(handleCreateVideo)()}
-            >
-              Postar vídeo
-            </Button>
-          </Dialog.Footer>
-        )}
-      </Dialog.Content>
-    </Dialog>
+        </Dialog.Content>
+      </Dialog>
+      {isCreatePlaylistDialogVisible && (
+        <CreatePlaylistDialog
+          onClose={() => setIsCreatePlaylistDialogVisible(false)}
+        />
+      )}
+    </>
   );
 }
