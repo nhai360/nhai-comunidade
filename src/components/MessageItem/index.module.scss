@@ -1,0 +1,16 @@
+.messageItem{
+    display:flex;
+    flex-direction: column;
+    row-gap:5px;
+
+
+    .name{
+        font-weight:700;
+        font-size:1rem;
+        
+    }
+    .message{
+        font-weight:600;
+        font-size:0.8rem
+    }
+}

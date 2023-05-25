@@ -39,7 +39,7 @@ export function useVideoCommentContext() {
   const context = useContext(VideoCommentContext);
 
   if (!context) {
-    throw new Error("CommentProvider is required to use this hook");
+    throw new Error("VideoCommentProvider is required to use this hook");
   }
 
   return context;

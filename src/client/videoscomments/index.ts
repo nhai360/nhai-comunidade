@@ -6,5 +6,4 @@ export function invalidateVideoCommentsQueries(queryClient: QueryClient) {
 
 export * from "./useVideoComments";
 export * from "./useCreateVideoComment";
-export * from "./useDeleteVideoComment";
 export * from "./types";

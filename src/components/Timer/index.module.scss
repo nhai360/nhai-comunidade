@@ -1,0 +1,22 @@
+.display {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #383838;
+  padding: 0.5em;
+  top: 12px;
+  left: 12px;
+  font-size: 1.5em;
+  font-variant-numeric: tabular-nums;
+  color: white;
+  user-select: none;
+  border-radius: 3px;
+  z-index: 200;
+
+  &.urgent {
+    #countdown {
+      color: red;
+    }
+  }
+}
