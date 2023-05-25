@@ -3,8 +3,16 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { Button } from "@/ui";
+import Link from "next/link";
 
-const CardArticle = () => {
+interface ICardArticle {
+  sourceCoverURL: string;
+  sourceOwnerURL: string;
+  ownerName: string;
+  ownerRole: string;
+}
+
+const CardArticle = ({}: ICardArticle) => {
   return (
     <>
       <div className={styles.cardArticle}>
@@ -50,9 +58,11 @@ const CardArticle = () => {
           histórias e ideias inovadoras enquanto faz parte de nossa comunidade.
         </p>
 
-        <Button className={styles.articleButton}>
-          <h3>Ler artigo completo</h3>
-        </Button>
+        <Link href={`articles/${123123}`}>
+          <Button className={styles.articleButton}>
+            <h3>Ler artigo completo</h3>
+          </Button>
+        </Link>
       </div>
     </>
   );
