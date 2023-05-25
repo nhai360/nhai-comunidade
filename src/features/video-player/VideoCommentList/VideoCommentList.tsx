@@ -20,7 +20,7 @@ export function VideoCommentList({ video, expanded = false }: Props) {
     }
   );
 
-  const commentsToShow = expanded ? comments : comments.slice(0, 1);
+  // const commentsToShow = expanded ? comments : comments.slice(0, 1);
   const maxReplies = expanded ? undefined : 2;
 
   return (

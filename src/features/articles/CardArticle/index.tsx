@@ -2,9 +2,17 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { Button } from "@/ui";
+import { Avatar, Button, Typography } from "@/ui";
+import { Article } from "@/client/articles";
+import { format } from "date-fns";
+import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
-const CardArticle = () => {
+type Props = {
+  article: Article;
+};
+
+const CardArticle = ({ article }: Props) => {
+  const createdAt = format(new Date(article?.createdAt as any), "dd MMM");
   return (
     <>
       <div className={styles.cardArticle}>
@@ -18,37 +26,25 @@ const CardArticle = () => {
         />
 
         <div className={styles.articleOwnerContainer}>
-          <Image
-            src="https://images.unsplash.com/photo-1682686578456-69ae00b0ecbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            className={styles.articleOwner}
+          <Avatar.Square
+            size="medium"
+            src={article?.author?.profilePicture?.url}
+            fallback={getInitials(article?.author?.fullName)}
           />
 
           <div className={styles.articleOwnerInfo}>
-            <h4>
-              Raquel Virgínia{" "}
-              <span
-                className={styles.userRole}
-                style={{ backgroundColor: "#D9F2FF", color: "#01A1FF" }}
-              >
-                ADMIN
-              </span>{" "}
-              <span>23 Jan</span>
-            </h4>
-            <span>Nhaí</span>
+            <Typography.Text css={{ color: "$textTitle" }}>
+              {getFirstNameAndLastName(article?.author?.fullName)}
+              <span className={styles?.createTime}>{`${createdAt}`}</span>
+            </Typography.Text>
+            <Typography.Text size="body3" color="secondary">
+              @{article?.author?.nickname}
+            </Typography.Text>
           </div>
         </div>
 
-        <h3>
-          Explorando o potencial da colaboração em uma comunidade diversificada
-        </h3>
-        <p>
-          Experimente o poder da colaboração entre indivíduos de diferentes
-          histórias e ideias inovadoras enquanto faz parte de nossa comunidade.
-        </p>
+        <h3>{`${article?.title}`}</h3>
+        <p>{`${article?.content?.substring(0, 60)}`}</p>
 
         <Button className={styles.articleButton}>
           <h3>Ler artigo completo</h3>
