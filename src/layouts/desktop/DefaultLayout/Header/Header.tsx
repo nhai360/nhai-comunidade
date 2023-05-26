@@ -19,6 +19,12 @@ import { UploadVideoDialog } from "@/features/videos";
 import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 
 import * as S from "./Header.styles";
+import dynamic from "next/dynamic";
+
+const CreateArticleDialog = dynamic(
+  () => import("../../../../features/articles/CreateArticleDialog"),
+  { ssr: false }
+);
 
 export function Header() {
   const { searchTerm, handleChange, handleSearch } = useSearch();
@@ -41,6 +47,8 @@ export function Header() {
   const [isCreateBroadcastDialogVisible, setIsCreateBroadcastDialogVisible] =
     useState(false);
 
+  const [isCreateArticleVisible, setIsCreateArticleVisible] = useState(false);
+
   return (
     <>
       {isCreatePostDialogVisible && (
@@ -57,6 +65,10 @@ export function Header() {
         <CreateBroadcastDialog
           onClose={() => setIsCreateBroadcastDialogVisible(false)}
         />
+      )}
+
+      {isCreateArticleVisible && (
+        <CreateArticleDialog onClose={() => setIsCreateArticleVisible(false)} />
       )}
 
       <S.Container>
@@ -96,9 +108,16 @@ export function Header() {
                 )}
                 {isEnabled && (
                   <Popover.Action
+                    onClick={() => setIsCreateArticleVisible(true)}
+                  >
+                    <Typography.Text>Artigo</Typography.Text>
+                  </Popover.Action>
+                )}
+                {isEnabled && (
+                  <Popover.Action
                     onClick={() => setIsCreateBroadcastDialogVisible(true)}
                   >
-                    <Typography.Text>Iniciar Transmissão</Typography.Text>
+                    <Typography.Text>Transmissão</Typography.Text>
                   </Popover.Action>
                 )}
               </Popover>

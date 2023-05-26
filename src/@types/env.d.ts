@@ -7,8 +7,8 @@ declare global {
       NEXT_PUBLIC_MUX_ENV_KEY: string;
     }
   }
+  declare module "@editorjs/image";
 }
-
 // If this file has no import/export statements (i.e. is a script)
 // convert it into a module by adding an empty export statement.
 export {};
