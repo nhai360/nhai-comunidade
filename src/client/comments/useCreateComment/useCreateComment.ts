@@ -9,21 +9,25 @@ import {
 import { invalidatePostsQueries } from "@/client/posts";
 
 async function createCommentRequest({
-  postId,
+  originId,
   content,
   replyId,
   options,
   type = CommentType.COMMENT,
+  originType = "posts",
 }: CreateCommentParams) {
   if (replyId) {
-    await authenticatedAPI.post(`/posts/${postId}/comments/${replyId}`, {
-      content,
-    });
+    await authenticatedAPI.post(
+      `/${originType}/${originId}/comments/${replyId}`,
+      {
+        content,
+      }
+    );
 
     return;
   }
 
-  await authenticatedAPI.post(`/posts/${postId}/comments`, {
+  await authenticatedAPI.post(`/${originType}/${originId}/comments`, {
     content,
     options,
     type,

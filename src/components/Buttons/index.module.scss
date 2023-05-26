@@ -1,0 +1,205 @@
+.buttonWrapper {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60px;
+    height: 60px;
+    outline: none;
+    border: 1px solid #b6b6b6;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+
+    @media (max-width:1024px) {
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+    }
+
+    .tooltip {
+        position: absolute;
+        display: none;
+        opacity: 0;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 10px 10px;
+        width: max-content;
+        white-space: nowrap;
+        border-radius: 10px;
+        font-size: 'Outfit';
+        background-color: #606060;
+        color: #fff;
+        z-index: 100;
+        transition: 0.3s all ease-in-out;
+
+    }
+
+    @media (min-width:1024px) {
+        &:hover {
+            .tooltip {
+                display: flex;
+                opacity: 1;
+
+                transition: 0.3s all ease-in-out;
+                animation: tooltipUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform: translateY(-55px);
+                user-select: none;
+            }
+        }
+    }
+}
+
+.buttonWrapper:hover {
+    background-color: #f1f1f1;
+    border: 1px solid #606060;
+    transition: 0.2s all ease-in-out;
+}
+
+
+.buttonBroadcast {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 230px;
+    height: 60px;
+    outline: none;
+    border: 1px solid #b6b6b6;
+    border-radius: 15px;
+    cursor: pointer;
+    
+
+    .tooltip {
+        position: absolute;
+        display: none;
+        opacity: 0;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 10px 10px;
+        width: max-content;
+        white-space: nowrap;
+        border-radius: 10px;
+        font-size: 'Outfit';
+        background-color: #606060;
+        color: #fff;
+        transition: 0.3s all ease-in-out;
+        user-select: none;
+    }
+
+    @media (min-width:1024px) {
+        &:hover {
+            .tooltip {
+                display: flex;
+                opacity: 1;
+                transition: 0.3s all ease-in-out;
+                animation: tooltipUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform: translateY(-55px);
+            }
+        }
+    }
+
+    .broadcastButtonText {
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 10px;
+
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: 'Outfit';
+
+        @media (max-width:375px) {
+            display: none;
+        }
+    }
+
+
+
+    @media (max-width:1024px) {
+        .broadcastButtonText {
+            font-size: 0.8rem;
+        }
+
+        width:180px;
+        height: 40px;
+    }
+    @media (max-width:375px) {
+        width:125px;
+        height: 40px;
+    }
+    
+    .cancelDot {
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            content: '';
+            background-color: #F97D7D;
+            transform: rotate(45deg);
+        }
+    }
+    .broadcastButtonTextMobile{
+        display: none;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 3px;
+
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: 'Outfit';
+        @media (max-width:1024px){
+            font-size:0.8rem;
+        }
+        @media (max-width:375px){
+            display: flex;
+          }
+    }
+
+}
+
+
+#buttonCancel {
+    &:hover {
+        background-color: #F97D7D !important;
+        transition: 0.2s all ease-in-out;
+
+    }
+}
+
+.buttonBroadcast:hover {
+    background-color: #f1f1f1;
+    border: 1px solid #606060;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+
+
+
+@keyframes tooltipUp {
+    from {
+        transform: translateY(0px);
+        opacity: 0
+    }
+
+    to {
+        transform: translateY(-55px);
+        opacity: 1
+    }
+
+
+}

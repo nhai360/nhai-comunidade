@@ -6,7 +6,7 @@ import { PostPlaylistParams, invalidateVideosQueries } from "@/client/videos";
 async function createPlaylistRequest(params: PostPlaylistParams) {
   const response = await authenticatedAPI.post("/playlists", params);
 
-  console.log(response.data);
+  return response?.data;
 }
 
 export function useCreatePlaylist() {

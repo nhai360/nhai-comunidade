@@ -1,0 +1,40 @@
+.broadcastIndicator{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: 1px solid #b6b6b6;
+    border-radius:10px;
+    padding:10px 10px;
+    color:#202020;
+    font-weight:600;
+    font-size:1rem;
+    background-color: #fff;
+
+}
+
+.onlineDot{
+    color: #EE0014;
+    background-color: #EE0014;
+    display: block;
+    width:10px;
+    height:10px;
+    border-radius:20px;
+    content: '';
+    position: relative;
+    left:0;
+    margin-right:10px;
+}
+
+.offlineDot{
+    color: #b6b6b6;
+    background-color: #b6b6b6;
+    display: block;
+    width:10px;
+    height:10px;
+    border-radius:20px;
+    content: '';
+    position: relative;
+    left:0;
+    margin-right:10px;
+}

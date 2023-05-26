@@ -2,7 +2,7 @@ import * as t from "zod";
 
 import { Media, MediaDecoder } from "@/client/media";
 import { UserDecoder } from "@/client/users";
-import { VideoCommentDecoder } from "../videoscomments";
+import { CommentDecoder } from "../comments";
 
 export const VideoTagDecoder = t.object({
   id: t.string(),
@@ -30,7 +30,7 @@ export const VideoDecoder = t.object({
   playbackId: t.string().nullish(),
   tags: VideoTagDecoder.array().nullish(),
   likes: VideoLikeDecoder.array().nullish(),
-  comments: VideoCommentDecoder.array().nullish(),
+  comments: CommentDecoder.array().nullish(),
 });
 
 export type Video = t.TypeOf<typeof VideoDecoder>;

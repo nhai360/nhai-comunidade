@@ -11,7 +11,7 @@ import { Reply } from "../Reply";
 import * as S from "./RepliesList.styles";
 
 type Props = {
-  post?: Post;
+  origin?: Post;
   replies?: Comment[];
   divider?: boolean;
   parentId?: string;
@@ -20,7 +20,7 @@ type Props = {
 } & Partial<ComponentProps<typeof S.Container>>;
 
 export function RepliesList({
-  post,
+  origin,
   replies = [],
   divider,
   parentId,
@@ -40,9 +40,9 @@ export function RepliesList({
 
   return (
     <>
-      {isPostDialogVisible && post && (
+      {isPostDialogVisible && origin && (
         <PostDialog
-          postId={post.id}
+          postId={origin.id}
           onClose={() => setIsPostDialogVisible(false)}
         />
       )}

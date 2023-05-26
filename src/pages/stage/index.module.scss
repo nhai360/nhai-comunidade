@@ -1,0 +1,49 @@
+.header {
+  padding: 0px 30px;
+  // min-width: 100vw;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.liveWrapper {
+  display: flex;
+  flex: 1;
+  padding: 20px 30px;
+  height: 80vh;
+
+  column-gap: 20px;
+}
+
+.toolbarWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 10vh;
+  padding: 0px 30px;
+
+  .mainTools {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    @media (max-width: 345px) {
+      column-gap: 5px;
+    }
+  }
+}
+
+.indicatorDot {
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.indicatorTop {
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: flex;
+  }
+}
