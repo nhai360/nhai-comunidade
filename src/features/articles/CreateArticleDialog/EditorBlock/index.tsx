@@ -7,6 +7,8 @@ import { getToken } from "@/lib/auth";
 import Header from "@editorjs/header";
 import ImageTool from "@editorjs/image";
 
+import styles from "./styles.module.scss";
+
 //props
 type Props = {
   data?: OutputData;
@@ -73,7 +75,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
       const editor = new EditorJS({
         holder: holder,
 
-        placeholder: "Comece seu artigo...",
+        placeholder: "Comece seu artigo aqui...",
         tools: {
           header: Header,
           image: {
@@ -123,7 +125,112 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
         data,
         async onChange(api, event) {
           const data = await api.saver.save();
+          console.log(data);
           onChange(data);
+        },
+        /**
+         * Internationalzation config
+         */
+        i18n: {
+          /**
+           * @type {I18nDictionary}
+           */
+          messages: {
+            /**
+             * Other below: translation of different UI components of the editor.js core
+             */
+            ui: {
+              blockTunes: {
+                toggler: {
+                  "Click to tune": "Clique para ajustar",
+                  "or drag to move": "ou arraste para mover",
+                },
+              },
+              inlineToolbar: {
+                converter: {
+                  "Convert to": "Converter para",
+                },
+              },
+              toolbar: {
+                toolbox: {
+                  Add: "Adicionar",
+                },
+              },
+            },
+
+            /**
+             * Section for translation Tool Names: both block and inline tools
+             */
+
+            toolNames: {
+              Text: "Texto",
+              Heading: "Título",
+              List: "Lista",
+              Image: "Imagem",
+              Warning: "Aviso",
+              Checklist: "Lista de verificação",
+              Quote: "Citação",
+              Code: "Código",
+              Delimiter: "Delimitador",
+              "Raw HTML": "HTML bruto",
+              Table: "Tabela",
+              Link: "Link",
+              Marker: "Marcador",
+              Bold: "Negrito",
+              Italic: "Itálico",
+              InlineCode: "Código em linha",
+            },
+
+            /**
+             * Section for passing translations to the external tools classes
+             */
+            tools: {
+              /**
+               * Each subsection is the i18n dictionary that will be passed to the corresponded plugin
+               * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
+               */
+              warning: {
+                // <-- 'Warning' tool will accept this dictionary section
+                Title: "Título",
+                Message: "Mensagem",
+              },
+
+              /**
+               * Link is the internal Inline Tool
+               */
+              link: {
+                "Add a link": "Adicionar Link",
+              },
+              /**
+               * The "stub" is an internal block tool, used to fit blocks that does not have the corresponded plugin
+               */
+              stub: {
+                "The block can not be displayed correctly.":
+                  "Não foi possível mostrar o bloco corretamente",
+              },
+            },
+
+            /**
+             * Section allows to translate Block Tunes
+             */
+            blockTunes: {
+              /**
+               * Each subsection is the i18n dictionary that will be passed to the corresponded Block Tune plugin
+               * The name of a plugin should be equal the name you specify in the 'tunes' section for that plugin
+               *
+               * Also, there are few internal block tunes: "delete", "moveUp" and "moveDown"
+               */
+              delete: {
+                Delete: "Deletar",
+              },
+              moveUp: {
+                "Move up": "Mover para cima",
+              },
+              moveDown: {
+                "Move down": "Mover para baixo",
+              },
+            },
+          },
         },
       });
       ref.current = editor;
@@ -137,7 +244,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     };
   }, []);
 
-  return <div id={holder} />;
+  return <div id={holder} className={styles.editorJScontent} />;
 };
 
 export default memo(EditorBlock);

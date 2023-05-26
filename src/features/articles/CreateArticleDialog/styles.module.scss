@@ -1,21 +1,36 @@
 .container {
   width: 100%;
-  height: 900px;
+  height: 80vh;
   background-color: white;
   border-radius: 32px;
   overflow-y: auto;
 
   .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px 0 24px;
     width: 100%;
-    height: 132px;
-    background-color: red;
-    margin-bottom: 2rem;
+    height: 100px;
+    margin-bottom: 0.875rem;
+    border-bottom: 1px solid #eaeaea;
+
+    .titleContainer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @media screen and (min-width: 768px) {
+      margin-bottom: 2rem;
+    }
   }
 
-
-}
-
-
-#editorjs {
-    background-color: red;
+  .articleButton {
+    width: 100px;
+    h3 {
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
 }

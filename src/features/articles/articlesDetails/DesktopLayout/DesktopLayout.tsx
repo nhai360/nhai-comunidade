@@ -4,6 +4,42 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/ui";
 import BtnGoBack from "@/ui/BtnGoBack";
+import EditorJsRenderer from "../../CreateArticleDialog/EditorJSRenderer";
+
+const data = {
+  time: 685078475609,
+  blocks: [
+    {
+      id: "FOczC1j-dn",
+      type: "header",
+      data: {
+        text: "Testinho",
+        level: 1,
+      },
+    },
+    {
+      id: "c3IDSK42Vm",
+      type: "paragraph",
+      data: {
+        text: "adasdas",
+      },
+    },
+    {
+      id: "NWile-HyKZ",
+      type: "image",
+      data: {
+        file: {
+          url: "https://contai-media.nyc3.cdn.digitaloceanspaces.com/contaiapp_2023_05_26_41fa02d988217773.jpg",
+        },
+        caption: "sdsds",
+        withBorder: false,
+        stretched: true,
+        withBackground: true,
+      },
+    },
+  ],
+  version: "2.27.0",
+};
 
 export function DesktopLayout() {
   return (
@@ -36,15 +72,7 @@ export function DesktopLayout() {
                 <span>Nhaí</span>
               </div>
             </div>
-            <h2>
-              Explorando o potencial da colaboração em uma comunidade
-              diversificada
-            </h2>
-            <h3>
-              Experimente o poder da colaboração entre indivíduos de diferentes
-              histórias e ideias inovadoras enquanto faz parte de nossa
-              comunidade.
-            </h3>
+            {data && <EditorJsRenderer data={data} />}
           </article>
           <aside className={styles.asideContainer}>
             <div className={styles.asideBox}>

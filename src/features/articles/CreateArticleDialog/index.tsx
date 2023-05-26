@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { Dialog } from "@/ui";
+import { Avatar, Button, Dialog } from "@/ui";
 import { useEffect, useRef, useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
 
@@ -8,9 +8,10 @@ import ImageTool from "@editorjs/image";
 import axios from "axios";
 import { getToken } from "@/lib/auth";
 import dynamic from "next/dynamic";
+import { useAuthContext } from "@/contexts";
+import { useUser } from "@/client/users";
+import { getInitials } from "@/lib/string";
 
-// important that we use dynamic loading here
-// editorjs should only be rendered on the client side.
 const EditorBlock = dynamic(() => import("./EditorBlock"), {
   ssr: false,
 });
@@ -20,7 +21,11 @@ type Props = {
 };
 
 const CreateArticleDialog = ({ onClose }: Props) => {
-  // const [articleData, setArticleData] = useState<any>({});
+  const { session } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   const [data, setData] = useState<OutputData>();
 
@@ -109,15 +114,27 @@ const CreateArticleDialog = ({ onClose }: Props) => {
       <Dialog open onOpenChange={onClose}>
         <Dialog.Content>
           <div className={styles.container}>
-            <div className={styles.header}></div>
+            <div className={styles.header}>
+              <div className={styles.titleContainer}>
+                <Avatar
+                  progressBar
+                  alt={user?.fullName}
+                  src={user?.profilePicture?.url}
+                  fallback={getInitials(user?.fullName)}
+                />
+                <h2>Criar Artigo</h2>
+              </div>
+
+              <Button className={styles.articleButton} onClick={createArticle}>
+                <h3>Publicar</h3>
+              </Button>
+            </div>
 
             <EditorBlock
               data={data}
               onChange={setData}
               holder="editorjs-container"
             />
-
-            <button onClick={createArticle}>Enviar</button>
           </div>
         </Dialog.Content>
       </Dialog>
