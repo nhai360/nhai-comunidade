@@ -50,7 +50,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
       formData.append("file", file);
 
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}media/${mediaId}/upload`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/media/${mediaId}/upload`,
         formData,
         {
           headers: {
