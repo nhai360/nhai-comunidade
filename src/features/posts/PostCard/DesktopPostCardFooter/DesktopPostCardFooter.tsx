@@ -22,8 +22,8 @@ export function DesktopPostCardFooter({ post }: Props) {
       <Post.Stats post={post} />
 
       <CommentProvider>
-        <Post.CommentList post={post} />
-        <Post.CommentField post={post} />
+        <Post.CommentList origin={post} originType="posts" />
+        <Post.CommentField origin={post} originType="posts" />
       </CommentProvider>
     </S.Wrapper>
   );

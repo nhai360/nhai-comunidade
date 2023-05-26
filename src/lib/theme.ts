@@ -1,9 +1,4 @@
-import localFont from "@next/font/local";
 import { extendTheme, defineStyle } from "@chakra-ui/react";
-
-const akkuratFont = localFont({
-  src: "./Akkurat-Regular.woff2",
-});
 
 const baseMuxButtonStyles = {
   height: "40px",

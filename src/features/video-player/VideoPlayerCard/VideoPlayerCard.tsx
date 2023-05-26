@@ -2,19 +2,16 @@ import { useRouter } from "next/router";
 
 import { Avatar, Card, MuxVideo, Typography } from "@/ui";
 
-import { VideoCommentProvider, useAuthContext } from "@/contexts";
+import { CommentProvider, useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { useVideo } from "@/client/videos";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
-import {
-  LikeButton,
-  VideoCommentField,
-  VideoCommentList,
-} from "@/features/video-player";
+import { LikeButton } from "@/features/video-player";
 
 import * as S from "./VideoPlayerCard.styles";
 import { format } from "date-fns";
+import { Post } from "@/features/posts";
 
 export function VideoPlayerCard() {
   const router = useRouter();
@@ -78,10 +75,10 @@ export function VideoPlayerCard() {
       <Typography.Text size="caption" color="secondary">
         {video?.description}
       </Typography.Text>
-      <VideoCommentProvider>
-        <VideoCommentField video={video} />
-        <VideoCommentList video={video} expanded />
-      </VideoCommentProvider>
+      <CommentProvider>
+        <Post.CommentField originType={"videos"} origin={video} />
+        <Post.CommentList origin={video} originType="videos" expanded />
+      </CommentProvider>
     </Card>
   );
 }

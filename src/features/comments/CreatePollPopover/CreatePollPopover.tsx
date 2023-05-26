@@ -17,10 +17,11 @@ import { OptionItem } from "./OptionItem";
 import * as S from "./CreatePollPopover.styles";
 
 type Props = {
-  postId: string;
+  originId: string;
+  originType: "posts" | "videos";
 };
 
-export function CreatePollPopover({ postId }: Props) {
+export function CreatePollPopover({ originId, originType }: Props) {
   const form = useForm<CreateCommentParams>();
 
   const { register, handleSubmit, reset } = form;
@@ -42,10 +43,11 @@ export function CreatePollPopover({ postId }: Props) {
 
     createComment(
       {
-        postId,
+        originId,
         content,
         type: CommentType.POLL,
         options: compact(orderedOptionsWithValue),
+        originType,
       },
       {
         onSuccess: () => {
@@ -53,7 +55,7 @@ export function CreatePollPopover({ postId }: Props) {
 
           toast.success("Enquete criada com sucesso!");
         },
-      },
+      }
     );
   }
 

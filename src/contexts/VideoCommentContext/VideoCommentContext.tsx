@@ -8,8 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { VideoComment } from "@/client/videoscomments";
 import { TextAreaRefProps } from "@/ui";
+import { Comment } from "@/client/comments";
 
 type CommentProviderProps = {
   children: ReactNode;
@@ -17,8 +17,8 @@ type CommentProviderProps = {
 
 type VideoCommentContextParams = {
   fieldRef: RefObject<TextAreaRefProps>;
-  replyTo: VideoComment | null;
-  setReplyTo: Dispatch<SetStateAction<VideoComment | null>>;
+  replyTo: Comment | null;
+  setReplyTo: Dispatch<SetStateAction<Comment | null>>;
 };
 
 const VideoCommentContext = createContext({} as VideoCommentContextParams);
@@ -26,7 +26,7 @@ const VideoCommentContext = createContext({} as VideoCommentContextParams);
 export function VideoCommentProvider({ children }: CommentProviderProps) {
   const fieldRef = useRef<TextAreaRefProps>(null);
 
-  const [replyTo, setReplyTo] = useState<VideoComment | null>(null);
+  const [replyTo, setReplyTo] = useState<Comment | null>(null);
 
   return (
     <VideoCommentContext.Provider value={{ fieldRef, replyTo, setReplyTo }}>

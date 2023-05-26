@@ -29,10 +29,11 @@ import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
 import * as S from "./PostCommentField.styles";
 
 type Props = {
-  post: Post;
+  origin: any;
+  originType: "posts" | "videos";
 };
 
-export function PostCommentField({ post }: Props) {
+export function PostCommentField({ origin, originType }: Props) {
   const { session } = useAuthContext();
   const { fieldRef, replyTo, setReplyTo } = useCommentContext();
 
@@ -49,16 +50,17 @@ export function PostCommentField({ post }: Props) {
   const content = watch("content");
 
   const { isEnabled: isEnabledCreateDiscussion } = useFeatureFlag(
-    FeatureDecoder.Values.CREATE_DISCUSSION,
+    FeatureDecoder.Values.CREATE_DISCUSSION
   );
 
   function handleSendComment() {
     createComment(
       {
-        postId: post.id,
+        originId: origin.id,
         replyId: replyTo?.id,
         content,
         type: CommentType.COMMENT,
+        originType: originType,
       },
       {
         onSuccess: () => {
@@ -69,10 +71,10 @@ export function PostCommentField({ post }: Props) {
         },
         onError: () => {
           toast.error(
-            "Não foi possível enviar seu comentário. Tente novamente.",
+            "Não foi possível enviar seu comentário. Tente novamente."
           );
         },
-      },
+      }
     );
 
     return "handled" as "handled";
@@ -139,7 +141,10 @@ export function PostCommentField({ post }: Props) {
                     <PollIcon size={24} strokeWidth="1.5" />
                   </S.Action>
                 </Popover.Trigger>
-                <CreatePollPopover postId={post.id} />
+                <CreatePollPopover
+                  originId={origin.id}
+                  originType={originType}
+                />
               </Popover.Root>
             )}
             {isEnabledCreateDiscussion && content?.length === 0 && (
