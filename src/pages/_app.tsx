@@ -6,7 +6,7 @@ import Head from "next/head";
 import { globalStyles } from "@/../stitches.config";
 
 import { AuthProvider, ScoreProvider } from "@/contexts";
-
+import "swiper/css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { setDefaultOptions } from "date-fns";

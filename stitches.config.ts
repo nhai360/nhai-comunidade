@@ -61,7 +61,7 @@ export const { styled, getCssText, globalCss, keyframes, css, theme } =
         blueMedium: "#01a1ff",
         blueLight: "#bfe7ff",
 
-        background: "#f8f1f4",
+        background: "#fafafa",
       },
       space: {
         px: "1px",
