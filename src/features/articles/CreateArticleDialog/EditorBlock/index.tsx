@@ -20,7 +20,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
 
   async function createMedia() {
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}media/`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/media/`;
 
       const requestBody = {
         category: "IMAGE",

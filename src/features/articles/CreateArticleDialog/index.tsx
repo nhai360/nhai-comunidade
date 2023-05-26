@@ -84,7 +84,7 @@ const CreateArticleDialog = ({ onClose }: Props) => {
       }
       const title = hasHeader?.data?.text;
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}article/`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/article/`;
 
       const requestBody = {
         title,
