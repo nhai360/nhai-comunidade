@@ -1,10 +1,3 @@
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
-
 import EditorJS from "@editorjs/editorjs";
 
 import styles from "./styles.module.scss";
@@ -197,16 +190,12 @@ const CreateArticleDialog = ({ onClose }: Props) => {
         (block: any) => block.type === "header"
       );
       if (!hasHeader) {
-        console.log("SEU VIADO, NÃO SABE ESCREVER ARTIGO NÃO... VIADINHO...");
         return;
       }
       const hasImage = articleData?.blocks.find(
         (block: any) => block.type === "image"
       );
       if (!hasImage) {
-        console.log(
-          "SEU VIADO, NÃO SABE QUE UM ARTIGO TEM QUE TER FOTO... VIADINHO..."
-        );
         return;
       }
       const title = hasHeader?.data?.text;

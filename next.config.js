@@ -6,6 +6,9 @@ const nextConfig = {
       {
         hostname: "images.unsplash.com",
       },
+      {
+        hostname: "contai-media.nyc3.cdn.digitaloceanspaces.com",
+      },
     ],
   },
 };

@@ -9,11 +9,10 @@ import { AuthProvider, ScoreProvider } from "@/contexts";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const queryClient = new QueryClient();
-
 import { setDefaultOptions } from "date-fns";
 import { pt } from "date-fns/locale";
 
+const queryClient = new QueryClient();
 // Definindo a localização padrão para português
 setDefaultOptions({ locale: pt });
 

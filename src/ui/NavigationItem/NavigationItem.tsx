@@ -24,9 +24,11 @@ export function NavigationItem({
 
   const active = !disabled && `/${path}` === href;
 
+  const link = disabled ? `/` : href;
+
   if (tooltip) {
     return (
-      <Link href={href}>
+      <Link href={link}>
         <Tooltip message={tooltip} position="right">
           <S.NavItem active={active} disabled={disabled}>
             {children}
@@ -37,7 +39,7 @@ export function NavigationItem({
   }
 
   return (
-    <Link href={href}>
+    <Link href={link}>
       <S.NavItem active={active} disabled={disabled}>
         {children}
       </S.NavItem>

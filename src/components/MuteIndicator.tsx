@@ -6,10 +6,7 @@ interface Props {
   parentHeight: number;
 }
 
-const MuteIndicator = ({
-  isMuted,
-  parentHeight,
-}: Props): JSX.Element => {
+const MuteIndicator = ({ isMuted, parentHeight }: Props): JSX.Element => {
   let left = "2px";
   let bottom = "15%";
   let marginLeft = "3";
@@ -54,12 +51,14 @@ const MuteIndicator = ({
       }}
     >
       {isMuted && (
-        <div style={{ display: "flex", alignItems: "center", color: "#FFFFFF" }}>
+        <div
+          style={{ display: "flex", alignItems: "center", color: "#FFFFFF" }}
+        >
           <IoMicOffOutline width={iconWidth} height={iconHeight} />
         </div>
       )}
     </div>
   );
-}
+};
 
 export default MuteIndicator;

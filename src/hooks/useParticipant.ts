@@ -9,7 +9,6 @@ import {
   LocalParticipant,
   LocalTrack,
   ParticipantEvent,
-  RemoteParticipant,
   Track,
   TrackSource,
 } from "@mux/spaces-web";
@@ -37,7 +36,7 @@ export function useParticipant(connectionId: string): Participant {
   //DESCOMENTAR E APAGAR O PARTICIPANT DE BAIXO
   // let participant: LocalParticipant | RemoteParticipant | undefined =
   //   remoteParticipants.find((p) => p.connectionId === connectionId);
-  let participant: any = undefined;
+  let participant: any;
 
   if (
     !participant &&

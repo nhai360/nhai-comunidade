@@ -98,10 +98,6 @@ const muxDestructive = defineStyle({
 });
 
 export const theme = extendTheme({
-  fonts: {
-    heading: `${akkuratFont.style.fontFamily}, sans-serif`,
-    body: `${akkuratFont.style.fontFamily}, sans-serif`,
-  },
   styles: {
     global: () => ({
       body: {
