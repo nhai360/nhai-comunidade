@@ -1,5 +1,3 @@
-import EditorJS from "@editorjs/editorjs";
-
 import styles from "./styles.module.scss";
 import { Dialog } from "@/ui";
 import { useEffect, useRef, useState } from "react";
