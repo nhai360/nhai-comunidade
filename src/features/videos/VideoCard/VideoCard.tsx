@@ -23,9 +23,9 @@ export function VideoCard({ video }: Props) {
         css={{
           transition: "all 0.2s",
           cursor: "pointer",
-
+          width: 312,
           "&:hover": {
-            transform: "translateY(-16px)",
+            transform: "translateY(-8px)",
           },
         }}
       >

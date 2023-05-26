@@ -4,7 +4,7 @@ import { authenticatedAPI, decodeResponse } from "@/client";
 import { Article, ArticleDecoder } from "@/client/articles/types";
 
 async function getArticles() {
-  const response = await authenticatedAPI.get(`/article`);
+  const response = await authenticatedAPI.get(`/articles`);
 
   return decodeResponse<Article[]>(response, ArticleDecoder.array());
 }
