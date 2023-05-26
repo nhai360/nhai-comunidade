@@ -1,10 +1,8 @@
 import * as t from "zod";
-
-import { MediaDecoder } from "@/client/media";
 import { UserDecoder } from "@/client/users";
+import { MediaDecoder } from "../media";
 
 export const ArticleStatsDecoder = t.object({
-  id: t.string(),
   likes: t.number(),
   comments: t.number(),
 });
@@ -22,6 +20,7 @@ export const ArticleDecoder = t.object({
   createdAt: t.string().nullish(),
   updatedAt: t.string().nullish(),
   author: UserDecoder.nullish(),
+  images: MediaDecoder.array().optional(),
   likes: ArticleLikeDecoder.array().nullish(),
   stats: ArticleStatsDecoder,
 });
