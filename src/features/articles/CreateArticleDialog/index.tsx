@@ -3,11 +3,19 @@ import EditorJS from "@editorjs/editorjs";
 import styles from "./styles.module.scss";
 import { Dialog } from "@/ui";
 import { useEffect, useRef, useState } from "react";
+import { OutputData } from "@editorjs/editorjs";
 
 import Header from "@editorjs/header";
 import ImageTool from "@editorjs/image";
 import axios from "axios";
 import { getToken } from "@/lib/auth";
+import dynamic from "next/dynamic";
+
+// important that we use dynamic loading here
+// editorjs should only be rendered on the client side.
+const EditorBlock = dynamic(() => import("./EditorBlock"), {
+  ssr: false,
+});
 
 type Props = {
   onClose: () => void;
@@ -16,6 +24,8 @@ type Props = {
 const CreateArticleDialog = ({ onClose }: Props) => {
   const ejInstance: any = useRef();
   const [articleData, setArticleData] = useState<any>({});
+
+  const [data, setData] = useState<OutputData>();
 
   async function createMedia() {
     try {
@@ -92,80 +102,80 @@ const CreateArticleDialog = ({ onClose }: Props) => {
     }
   }
 
-  const initEditor = () => {
-    const editor = new EditorJS({
-      holder: "editorjs",
-      onReady: () => {
-        ejInstance.current = editor;
-      },
-      autofocus: true,
-      onChange: async () => {
-        let content = await editor.save();
+  // const initEditor = () => {
+  //   const editor = new EditorJS({
+  //     holder: "editorjs",
+  //     onReady: () => {
+  //       ejInstance.current = editor;
+  //     },
+  //     autofocus: true,
+  //     onChange: async () => {
+  //       let content = await editor.save();
 
-        console.log(content);
-        setArticleData(content);
-      },
-      // cria objeto POST
-      // atualiza PUT
-      //
-      tools: {
-        header: Header,
-        image: {
-          class: ImageTool,
-          config: {
-            /**
-             * Custom uploader
-             */
-            uploader: {
-              /**x
-               * Upload file to the server and return an uploaded image data
-               * @param {File} file - file selected from the device or pasted by drag-n-drop
-               * @return {Promise.<{success, file: {url}}>}
-               */
-              uploadByFile(file: string) {
-                return uploadFile(file).then((data) => {
-                  return {
-                    success: 1,
-                    file: {
-                      url: data.url,
-                      // any other image data you want to store, such as width, height, color, extension, etc
-                    },
-                  };
-                });
-              },
+  //       console.log(content);
+  //       setArticleData(content);
+  //     },
+  //     // cria objeto POST
+  //     // atualiza PUT
+  //     //
+  //     tools: {
+  //       header: Header,
+  //       image: {
+  //         class: ImageTool,
+  //         config: {
+  //           /**
+  //            * Custom uploader
+  //            */
+  //           uploader: {
+  //             /**x
+  //              * Upload file to the server and return an uploaded image data
+  //              * @param {File} file - file selected from the device or pasted by drag-n-drop
+  //              * @return {Promise.<{success, file: {url}}>}
+  //              */
+  //             uploadByFile(file: string) {
+  //               return uploadFile(file).then((data) => {
+  //                 return {
+  //                   success: 1,
+  //                   file: {
+  //                     url: data.url,
+  //                     // any other image data you want to store, such as width, height, color, extension, etc
+  //                   },
+  //                 };
+  //               });
+  //             },
 
-              // /**
-              //  * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
-              //  * @param {string} url - pasted image URL
-              //  * @return {Promise.<{success, file: {url}}>}
-              //  */
-              // uploadByUrl(url: string) {
-              //   return downloadImage(url).then((image) => {
-              //     return {
-              //       success: 1,
-              //       file: {
-              //         url: image,
-              //         // any other image data you want to store, such as width, height, color, extension, etc
-              //       },
-              //     };
-              //   });
-              // },
-            },
-          },
-        },
-      },
-    });
-  };
+  //             // /**
+  //             //  * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
+  //             //  * @param {string} url - pasted image URL
+  //             //  * @return {Promise.<{success, file: {url}}>}
+  //             //  */
+  //             // uploadByUrl(url: string) {
+  //             //   return downloadImage(url).then((image) => {
+  //             //     return {
+  //             //       success: 1,
+  //             //       file: {
+  //             //         url: image,
+  //             //         // any other image data you want to store, such as width, height, color, extension, etc
+  //             //       },
+  //             //     };
+  //             //   });
+  //             // },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+  // };
 
-  useEffect(() => {
-    if (ejInstance.current === null) {
-      initEditor();
-    }
-    return () => {
-      ejInstance?.current?.destroy();
-      ejInstance.current = null;
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (ejInstance.current === null) {
+  //     initEditor();
+  //   }
+  //   return () => {
+  //     ejInstance?.current?.destroy();
+  //     ejInstance.current = null;
+  //   };
+  // }, []);
 
   //   if (isSuccess) {
   //     return (
@@ -227,7 +237,11 @@ const CreateArticleDialog = ({ onClose }: Props) => {
           <div className={styles.container}>
             <div className={styles.header}></div>
 
-            <div id="editorjs"></div>
+            <EditorBlock
+              data={data}
+              onChange={setData}
+              holder="editorjs-container"
+            />
 
             <button onClick={createArticle}>vai porra!!!</button>
           </div>
