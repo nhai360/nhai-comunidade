@@ -43,7 +43,7 @@ export function GeneralInformation() {
   const createdAtFormatted = useMemo(() => {
     if (!user) return "";
 
-    return format(new Date(user?.createAt), "'Por aqui desde' MMMM 'de' yyyy");
+    return format(new Date(user?.createAt as any), "'Por aqui desde' MMMM 'de' yyyy");
   }, [user]);
 
   return (
