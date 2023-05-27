@@ -1,5 +1,16 @@
 import { styled } from "@/../stitches.config";
 
+export const FlexContainer = styled("div", {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "$6",
+
+  "@media (max-width: 768px)": {
+    flexDirection: "column-reverse",
+    gap: "$2",
+  },
+});
+
 export const Content = styled("div", {
   display: "flex",
   flexDirection: "column",
@@ -10,12 +21,16 @@ export const Actions = styled("div", {
   display: "flex",
   alignItems: "center",
   gap: "$3",
+
+  "@media (max-width: 768px)": {
+    width: "100%",
+    flexDirection: "column-reverse",
+    gap: "$2",
+  },
 });
 
 export const Thumbnail = styled("img", {
-  width: "392px",
-  height: "330px",
-
+  width: "100%",
   objectFit: "cover",
   borderRadius: "24px",
 });
