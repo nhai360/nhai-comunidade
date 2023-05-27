@@ -11,7 +11,7 @@ type IBtnGoBack = {
 const BtnGoBack = ({ url }: IBtnGoBack) => {
   return (
     <>
-      <Link href={url ? url : "http://"}>
+      <Link href={url || "http://"}>
         <div className={styles.btnGoBack}>
           <CaretLeft size={20} />
         </div>
