@@ -1,6 +1,7 @@
 import { Button, Card, Typography } from "@/ui";
 import { ExclamationCircleIcon, PlayIcon } from "@/ui/_icons";
 
+import styles from "./styles.module.scss";
 import * as S from "./FeaturedVideoCard.styles";
 import { useVideos } from "@/client/videos";
 import { useRouter } from "next/router";
@@ -24,37 +25,37 @@ export function FeaturedVideoCard() {
   };
 
   return (
-    <Card
-      css={{
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "$6",
-      }}
-    >
-      <S.Content>
-        <Typography.Title size="h2" weight="bold" color="title">
-          Semana +Digital: A diversidade como potência
-        </Typography.Title>
-        <Typography.Text>
-          Nesta primeira semana do mês do Orgulho, acontecerá na nossa
-          Plataforma Contaí Comunidade o evento Reconstruindo Sistemas - A
-          Diversidade como Potência.
-        </Typography.Text>
-        <S.Actions>
-          <Button onClick={handleWatch}>
-            <PlayIcon />
-            Assistir
-          </Button>
-          <Button variant="transparent" onClick={handleMoreInformation}>
-            <ExclamationCircleIcon />
-            Mais informações
-          </Button>
-        </S.Actions>
-      </S.Content>
+    <Card>
+      <S.FlexContainer>
+        <S.Content>
+          <Typography.Title size="h2" weight="bold" color="title">
+            Semana +Digital: A diversidade como potência
+          </Typography.Title>
+          <Typography.Text>
+            Nesta primeira semana do mês do Orgulho, acontecerá na nossa
+            Plataforma Contaí Comunidade o evento Reconstruindo Sistemas - A
+            Diversidade como Potência.
+          </Typography.Text>
+          <S.Actions>
+            <Button onClick={handleWatch} className={styles.customButton}>
+              <PlayIcon />
+              Assistir
+            </Button>
+            <Button
+              className={styles.customButton}
+              variant="transparent"
+              onClick={handleMoreInformation}
+            >
+              <ExclamationCircleIcon />
+              Mais informações
+            </Button>
+          </S.Actions>
+        </S.Content>
 
-      <S.Thumbnail
-        src={featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"}
-      />
+        <S.Thumbnail
+          src={featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"}
+        />
+      </S.FlexContainer>
     </Card>
   );
 }
