@@ -7,6 +7,30 @@
     height: auto;
     object-fit: cover;
     border-radius: 32px;
-    margin-top: 1rem;
+    margin: 20px 0;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+  h2 {
+    font-size: 36px;
+  }
+  h3 {
+    font-size: 28px;
+  }
+  h4 {
+    font-size: 24px;
+  }
+  h5 {
+    font-size: 20px;
+  }
+  h6 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 18px;
+    margin: 1rem 0;
   }
 }

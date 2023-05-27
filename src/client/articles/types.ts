@@ -1,6 +1,7 @@
 import * as t from "zod";
 import { UserDecoder } from "@/client/users";
 import { MediaDecoder } from "../media";
+import { OutputBlockData } from "@editorjs/editorjs";
 
 export const ArticleStatsDecoder = t.object({
   likes: t.number(),
@@ -16,7 +17,23 @@ export const ArticleLikeDecoder = t.object({
 export const ArticleDecoder = t.object({
   id: t.string(),
   title: t.string(),
-  content: t.string().nullish(),
+  //TODO: Revisar tipagem.
+  content: t.object({
+    time: t.number(),
+    blocks: t.array(
+      t.object({
+        id: t.string(),
+        type: t.union([
+          t.literal("header"),
+          t.literal("paragraph"),
+          t.literal("image"),
+        ]),
+        data: t.record(t.unknown()),
+        tunes: t.record(t.unknown()).optional(),
+      })
+    ),
+    version: t.string(),
+  }),
   createdAt: t.string().nullish(),
   updatedAt: t.string().nullish(),
   author: UserDecoder.nullish(),
@@ -26,3 +43,26 @@ export const ArticleDecoder = t.object({
 });
 
 export type Article = t.TypeOf<typeof ArticleDecoder>;
+
+export type GetArticleParams = {
+  articleId?: string;
+};
+
+export type ContentType = {
+  time: number;
+  blocks: OutputBlockData<
+    "header" | "paragraph" | "image",
+    {
+      text?: string;
+      level?: number;
+      file?: {
+        url: string;
+      };
+      caption?: string;
+      withBorder?: boolean;
+      stretched?: boolean;
+      withBackground?: boolean;
+    }
+  >[];
+  version: string;
+};

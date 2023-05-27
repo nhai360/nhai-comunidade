@@ -6,6 +6,13 @@
   max-width: 1920px;
   align-self: center;
 
+  .btnGoBackHolder {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+  }
+
   .contentHolder {
     display: flex;
     gap: 16px;
@@ -16,31 +23,30 @@
       background-color: white;
       padding: 24px;
       border-radius: 32px;
-      overflow-y: auto;
 
       .articleHeader {
         display: flex;
         gap: 16px;
 
-        .articleOwner {
-          width: 96px;
-          height: 96px;
-          object-fit: cover;
-          border-radius: 20px;
-        }
+        .articleOwnerContainer {
+          margin: 1rem 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 16px;
+          width: 100%;
 
-        .articleOwnerInfo {
-          h4 {
-            font-size: 20px;
-            margin-bottom: 8px;
+          .articleOwnerInfo {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: flex-start;
+            height: 100%;
 
-            span {
-              margin-left: 8px;
+            .createTime {
+              text-transform: capitalize;
               font-size: 14px;
-            }
-            .userRole {
-              padding: 4px;
-              border-radius: 8px;
+              color: #8c8c8c;
             }
           }
         }
@@ -50,7 +56,12 @@
     .asideContainer {
       display: flex;
       width: 30%;
+      min-height: 700px;
       flex-direction: column;
+
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 20px;
 
       .asideBox {
         display: flex;
@@ -58,7 +69,8 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        padding: 64px 24px 32px;
+        height: 324px;
+        padding: 32px 24px 20px;
         border-radius: 32px;
         background-color: white;
 
@@ -79,7 +91,7 @@
           }
           h4 {
             font-weight: 300;
-            color: #8C8C8C;
+            color: #8c8c8c;
           }
         }
 

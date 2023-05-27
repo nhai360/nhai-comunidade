@@ -17,7 +17,6 @@ const CardArticle = ({ article }: Props) => {
 
   const [banner, setBanner] = useState("");
   const [description, setDescription] = useState("");
-  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     try {
@@ -33,17 +32,10 @@ const CardArticle = ({ article }: Props) => {
     <>
       <div className={styles.cardArticle}>
         <div>
-          <Image
-            src={imageError ? "/images/empty.jpg" : banner}
-            alt="Article Image"
-            width={0}
-            height={0}
-            sizes="100vw"
-            onError={(e) => {
-              setImageError(true);
-            }}
+          <div
             className={styles.articleImg}
-          />
+            style={{ backgroundImage: `url(${banner})` }}
+          ></div>
 
           <div className={styles.articleOwnerContainer}>
             <Avatar.Square

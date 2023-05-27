@@ -11,7 +11,8 @@ export const UserStatsDecoder = t.object({
 export const UserRoleDecoder = t.object({
   name: t.string(),
   updatedAt: t.string().datetime(),
-  createAt: t.string().datetime(),
+  //TODO: Revisar se o "nullish()" no "createAt" está correto...
+  createAt: t.string().datetime().nullish(),
 });
 
 export const UserDecoder = t.object({
@@ -26,7 +27,8 @@ export const UserDecoder = t.object({
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
   banner: MediaDecoder.nullish(),
-  createAt: t.string().datetime(),
+  //TODO: Revisar se o "nullish()" no "createAt" está correto...
+  createAt: t.string().datetime().nullish(),
   score: ScoreDecoder.nullish(),
   stats: UserStatsDecoder.nullish(),
 });

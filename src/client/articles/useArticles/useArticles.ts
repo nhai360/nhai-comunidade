@@ -6,7 +6,8 @@ import { Article, ArticleDecoder } from "@/client/articles/types";
 async function getArticles() {
   const response = await authenticatedAPI.get(`/articles`);
 
-  return decodeResponse<Article[]>(response, ArticleDecoder.array());
+  // return decodeResponse<Article[]>(response, ArticleDecoder.array());
+  return response.data;
 }
 
 export function useArticles() {
