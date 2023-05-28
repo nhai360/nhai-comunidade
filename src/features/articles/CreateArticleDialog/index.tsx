@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { Avatar, Button, Dialog } from "@/ui";
+import { Avatar, Button, Dialog, Loading, Success } from "@/ui";
 import { useEffect, useRef, useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
 
@@ -11,6 +11,8 @@ import dynamic from "next/dynamic";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
+import { Warning } from "@phosphor-icons/react";
+import { toast } from "react-toastify";
 
 const EditorBlock = dynamic(() => import("./EditorBlock"), {
   ssr: false,
@@ -22,6 +24,8 @@ type Props = {
 
 const CreateArticleDialog = ({ onClose }: Props) => {
   const { session } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const { user } = useUser({
     id: session?.userId,
@@ -56,35 +60,21 @@ const CreateArticleDialog = ({ onClose }: Props) => {
     }
   }
 
-  //   if (isSuccess) {
-  //     return (
-  //       <Dialog open onOpenChange={onClose}>
-  //         <Dialog.Content>
-  //           <Dialog.Header closable={false} />
-  //           <Dialog.Body>
-  //             <Success
-  //               title="Seu vídeo foi publicado com sucesso!"
-  //               description="Agora que compartilhou seu vídeo com sua comunidade, é só esperar para ver as discussões interessantes que podem surgir."
-  //               onClose={onClose}
-  //             />
-  //           </Dialog.Body>
-  //         </Dialog.Content>
-  //       </Dialog>
-  //     );
-  //   }
-
   async function createArticle() {
     try {
+      setIsLoading(true);
       const hasHeader = data?.blocks.find(
         (block: any) => block.type === "header"
       );
       if (!hasHeader) {
+        setError(true);
         return;
       }
       const hasImage = data?.blocks.find(
         (block: any) => block.type === "image"
       );
       if (!hasImage) {
+        setError(true);
         return;
       }
       const title = hasHeader?.data?.text;
@@ -105,10 +95,16 @@ const CreateArticleDialog = ({ onClose }: Props) => {
       });
 
       console.log(response.data);
+      toast.success("Artigo publicado com sucesso!");
+
+      onClose();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
+
   return (
     <>
       <Dialog open onOpenChange={onClose}>
@@ -124,10 +120,24 @@ const CreateArticleDialog = ({ onClose }: Props) => {
                 />
                 <h2>Criar Artigo</h2>
               </div>
-
-              <Button className={styles.articleButton} onClick={createArticle}>
-                <h3>Publicar</h3>
-              </Button>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                {error && (
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: 4 }}
+                  >
+                    <Warning color="red" size={20} />
+                    <span style={{ color: "red" }}>
+                      Título e Imagem obrigatórios...
+                    </span>
+                  </div>
+                )}
+                <Button
+                  className={styles.articleButton}
+                  onClick={createArticle}
+                >
+                  {!isLoading ? <h3>Publicar</h3> : <Loading />}
+                </Button>
+              </div>
             </div>
 
             <EditorBlock

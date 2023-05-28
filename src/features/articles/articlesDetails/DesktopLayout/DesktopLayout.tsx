@@ -2,22 +2,31 @@ import { DefaultLayout } from "@/layouts/desktop";
 import styles from "../styles.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, Button, Typography } from "@/ui";
+import { Avatar, Button, Tooltip, Typography } from "@/ui";
 import BtnGoBack from "@/ui/BtnGoBack";
 import EditorJsRenderer from "../../CreateArticleDialog/EditorJSRenderer";
 import { useRouter } from "next/router";
 import { useArticle } from "@/client/articles/useArticle";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { format } from "date-fns";
-import { Calendar } from "@phosphor-icons/react";
+import { Calendar, PencilSimpleLine, Trash } from "@phosphor-icons/react";
+import { useAuthContext } from "@/contexts";
+import { useUser } from "@/client/users";
+import { useState } from "react";
+import DeleteArticleDialog from "../../CreateArticleDialog/DeleteArticleDialog";
 
 export function DesktopLayout() {
   const router = useRouter();
-
   const { articleId } = router.query;
+  const { session } = useAuthContext();
+  const [showModalDelete, setShowModalDelete] = useState(false);
 
   const { article } = useArticle({
     articleId: articleId as string,
+  });
+
+  const { user, isLoading: isLoadingUser } = useUser({
+    id: session?.userId,
   });
 
   const createdAt =
@@ -25,6 +34,13 @@ export function DesktopLayout() {
 
   return (
     <DefaultLayout>
+      {showModalDelete ? (
+        <DeleteArticleDialog
+          onClose={() => setShowModalDelete(false)}
+          articleId={article?.id}
+        />
+      ) : null}
+
       <div className={styles.contentContainer}>
         <div className={styles.btnGoBackHolder}>
           <BtnGoBack url={"/articles"} />
@@ -60,6 +76,24 @@ export function DesktopLayout() {
                       >{`${createdAt}`}</span>
                     </div>
                   </div>
+                  {article?.author?.id === user?.id && (
+                    <div style={{ display: "flex", gap: 16 }}>
+                      <Tooltip message="Deletar artigo" position="bottom">
+                        <Button
+                          icon
+                          variant="transparent"
+                          onClick={() => setShowModalDelete(true)}
+                        >
+                          <Trash size={24} />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip message="Deletar artigo" position="bottom">
+                        <Button icon variant="transparent">
+                          <PencilSimpleLine size={24} />
+                        </Button>
+                      </Tooltip>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
