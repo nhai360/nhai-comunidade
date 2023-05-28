@@ -10,11 +10,19 @@ import {
 } from "@phosphor-icons/react";
 
 import { Button, ProgressBar, Slider, Tooltip, Typography } from "@/ui";
-import { CheckIcon, EditIcon, LinkIcon, PlayIcon } from "@/ui/_icons";
+import {
+  CheckIcon,
+  EditIcon,
+  LinkIcon,
+  PlayIcon,
+  TrashIcon,
+} from "@/ui/_icons";
 import { addSeconds, format, startOfDay } from "@/lib/date-fns";
 
 import * as S from "./MuxVideo.styles";
 import { useRouter } from "next/router";
+import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
+import { toast } from "react-toastify";
 
 const ONE_HOUR_IN_SECONDS = 60 * 60;
 
@@ -37,7 +45,9 @@ export function MuxVideo({
 }: any) {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { videoId } = router.query;
+  const { videoId }: any = router.query;
+
+  const { deleteVideo } = useDeleteVideo();
 
   const [isPaused, setIsPaused] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
@@ -139,6 +149,26 @@ export function MuxVideo({
     return (currentTime / durationTime) * 100;
   }, [currentTime, durationTime]);
 
+  const handleEditVideo = () => {};
+
+  const handleDeleteVideo = () => {
+    videoId &&
+      deleteVideo(
+        {
+          videoId: videoId,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Vídeo excluído!");
+            router?.push("/videos");
+          },
+          onError: () => {
+            toast.error("Não foi possível excluir seu vídeo. Tente novamente.");
+          },
+        }
+      );
+  };
+
   return (
     <S.Container>
       <BaseVideo
@@ -195,7 +225,12 @@ export function MuxVideo({
           </S.ControlsRow>
           <S.ControlsRow>
             {isCreator && (
-              <Button {...ICON_BUTTON_PROPS}>
+              <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
+                <TrashIcon size={24} />
+              </Button>
+            )}
+            {isCreator && (
+              <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
                 <EditIcon size={24} />
               </Button>
             )}

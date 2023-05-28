@@ -25,7 +25,7 @@ export const VideoDecoder = t.object({
   sourceId: t.string().nullish(),
   thumbnail: MediaDecoder.nullish(),
   author: UserDecoder.nullish(),
-  createAt: t.string(),
+  createdAt: t.string(),
   updatedAt: t.string(),
   playbackId: t.string().nullish(),
   tags: VideoTagDecoder.array().nullish(),
@@ -73,4 +73,8 @@ export type GetVideoParams = {
 export type LikeVideoParams = {
   videoId: string;
   alreadyLiked: boolean;
+};
+
+export type DeleteVideoParams = {
+  videoId: string;
 };
