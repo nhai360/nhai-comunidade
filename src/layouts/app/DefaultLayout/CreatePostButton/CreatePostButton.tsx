@@ -32,7 +32,7 @@ export function CreatePostButton() {
       )} */}
 
       {show && path === "articles" && (
-        <CreateArticleDialog onClose={() => setShow(false)} />
+        <CreateArticleDialog type="create" onClose={() => setShow(false)} />
       )}
 
       <S.Container onClick={() => setShow(true)}>

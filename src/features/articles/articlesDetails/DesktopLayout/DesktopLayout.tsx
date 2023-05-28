@@ -14,23 +14,27 @@ import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { useState } from "react";
 import DeleteArticleDialog from "../../CreateArticleDialog/DeleteArticleDialog";
+import CreateArticleDialog from "../../CreateArticleDialog";
 
 export function DesktopLayout() {
   const router = useRouter();
   const { articleId } = router.query;
   const { session } = useAuthContext();
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
 
   const { article } = useArticle({
     articleId: articleId as string,
   });
 
-  const { user, isLoading: isLoadingUser } = useUser({
+  const { user } = useUser({
     id: session?.userId,
   });
 
   const createdAt =
     article && format(new Date(article?.createdAt as any), "MMM dd");
+
+  console.log("article ID: ", article?.id);
 
   return (
     <DefaultLayout>
@@ -38,6 +42,14 @@ export function DesktopLayout() {
         <DeleteArticleDialog
           onClose={() => setShowModalDelete(false)}
           articleId={article?.id}
+        />
+      ) : null}
+
+      {showModalEdit ? (
+        <CreateArticleDialog
+          type="edit"
+          editData={article?.content}
+          onClose={() => setShowModalEdit(false)}
         />
       ) : null}
 
@@ -78,7 +90,7 @@ export function DesktopLayout() {
                   </div>
                   {article?.author?.id === user?.id && (
                     <div style={{ display: "flex", gap: 16 }}>
-                      <Tooltip message="Deletar artigo" position="bottom">
+                      <Tooltip message="Deletar Artigo" position="bottom">
                         <Button
                           icon
                           variant="transparent"
@@ -87,8 +99,12 @@ export function DesktopLayout() {
                           <Trash size={24} />
                         </Button>
                       </Tooltip>
-                      <Tooltip message="Deletar artigo" position="bottom">
-                        <Button icon variant="transparent">
+                      <Tooltip message="Editar Artigo" position="bottom">
+                        <Button
+                          icon
+                          variant="transparent"
+                          onClick={() => setShowModalEdit(true)}
+                        >
                           <PencilSimpleLine size={24} />
                         </Button>
                       </Tooltip>

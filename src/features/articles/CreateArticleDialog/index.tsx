@@ -13,6 +13,8 @@ import { useUser } from "@/client/users";
 import { getInitials } from "@/lib/string";
 import { Warning } from "@phosphor-icons/react";
 import { toast } from "react-toastify";
+import { useArticle } from "@/client/articles/useArticle";
+import { useRouter } from "next/router";
 
 const EditorBlock = dynamic(() => import("./EditorBlock"), {
   ssr: false,
@@ -20,47 +22,100 @@ const EditorBlock = dynamic(() => import("./EditorBlock"), {
 
 type Props = {
   onClose: () => void;
+  type: "create" | "edit";
+  editData?: any;
 };
 
-const CreateArticleDialog = ({ onClose }: Props) => {
+const datinha = {
+  time: 1685139549399,
+  blocks: [
+    {
+      id: "8Nig4Ik_bA",
+      type: "header",
+      data: {
+        text: "Por que o Gil do Vigor assaltou o Pão de açúcar?",
+        level: 1,
+      },
+    },
+    {
+      id: "zQEsY3bcHx",
+      type: "paragraph",
+      data: { text: "Desde pequeno ele sempre foi assim...<br>" },
+    },
+    {
+      id: "CrtX4aFYgn",
+      type: "image",
+      data: {
+        file: {
+          url: "https://contai-media.nyc3.cdn.digitaloceanspaces.com/contaiapp_2023_05_26_23309930acc34ddd.jpg",
+        },
+        caption: "AAIAI, EU SOU DOIDO POR IOGURTE!!!",
+        withBorder: false,
+        stretched: false,
+        withBackground: false,
+      },
+    },
+    {
+      id: "OY2V8ElnDy",
+      type: "paragraph",
+      data: {
+        text: 'Gil do Vigor, o querido participante do Big Brother Brasil 21, conquistou o coração do público com sua autenticidade e alegria contagiante. No entanto, recentemente ele se envolveu em uma situação inusitada que acabou ganhando destaque nas redes sociais. Gil foi apelidado de "o assaltante de iogurte do Pão de Açúcar" após ter sido flagrado comendo um iogurte dentro do supermercado sem pagar. O incidente virou motivo de piada, mas também gerou uma reflexão sobre nossas atitudes e o respeito às normas sociais. Apesar do episódio divertido, Gil continua sendo um exemplo de superação e carisma, e sua trajetória inspiradora continua encantando a todos.',
+      },
+    },
+  ],
+  version: "2.27.0",
+};
+
+const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
+  const router = useRouter();
+  const { articleId } = router.query;
   const { session } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/articles/`;
 
   const { user } = useUser({
     id: session?.userId,
   });
 
+  const { article } = useArticle({
+    articleId: articleId as string,
+  });
+
   const [data, setData] = useState<OutputData>();
 
-  // Função para fazer o download da imagem e usar no copy url editorjs
-  async function downloadImage(urlData: string) {
-    try {
-      const response = await axios.get(urlData, {
-        responseType: "blob",
-      });
+  const editorRendererType = type === "create" ? data : JSON.parse(editData);
+  const buttonTitle = type === "create" ? "Publicar" : "Republicar";
 
-      // Criar um URL temporário para a imagem
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+  console.log(editData);
 
-      // Criar um link de download
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "image.jpg");
-      document.body.appendChild(link);
+  const handleCreate = async (requestBody: any) => {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    toast.success("Artigo publicado com sucesso!");
+    onClose();
+    return response;
+  };
 
-      // Clicar no link para iniciar o download
-      link.click();
+  const handleEdit = async (requestBody: any) => {
+    const response = await axios.patch(`${apiUrl + article?.id}`, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
 
-      // Remover o link após o download
-      document.body.removeChild(link);
-    } catch (error) {
-      // Trate os erros caso ocorram
-      console.error(error);
-    }
-  }
+    toast.success("Artigo alterado com sucesso!");
+    onClose();
+    router.push('/articles')
+    return response;
+  };
 
-  async function createArticle() {
+  async function handleArticle() {
     try {
       setIsLoading(true);
       const hasHeader = data?.blocks.find(
@@ -79,25 +134,18 @@ const CreateArticleDialog = ({ onClose }: Props) => {
       }
       const title = hasHeader?.data?.text;
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/articles/`;
-
       const requestBody = {
         title,
         content: JSON.stringify(data),
-        images: [],
       };
 
-      const response = await axios.post(apiUrl, requestBody, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
+      if (type === "create") {
+        handleCreate(requestBody);
+      }
 
-      console.log(response.data);
-      toast.success("Artigo publicado com sucesso!");
-
-      onClose();
+      if (type === "edit") {
+        handleEdit(requestBody);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -118,7 +166,7 @@ const CreateArticleDialog = ({ onClose }: Props) => {
                   src={user?.profilePicture?.url}
                   fallback={getInitials(user?.fullName)}
                 />
-                <h2>Criar Artigo</h2>
+                <h2>{type === "create" ? "Criar" : "Editar"} Artigo</h2>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 {error && (
@@ -133,15 +181,15 @@ const CreateArticleDialog = ({ onClose }: Props) => {
                 )}
                 <Button
                   className={styles.articleButton}
-                  onClick={createArticle}
+                  onClick={handleArticle}
                 >
-                  {!isLoading ? <h3>Publicar</h3> : <Loading />}
+                  {!isLoading ? <h3>{buttonTitle}</h3> : <Loading />}
                 </Button>
               </div>
             </div>
 
             <EditorBlock
-              data={data}
+              data={editorRendererType}
               onChange={setData}
               holder="editorjs-container"
             />

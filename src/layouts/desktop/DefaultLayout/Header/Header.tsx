@@ -68,7 +68,10 @@ export function Header() {
       )}
 
       {isCreateArticleVisible && (
-        <CreateArticleDialog onClose={() => setIsCreateArticleVisible(false)} />
+        <CreateArticleDialog
+          type="create"
+          onClose={() => setIsCreateArticleVisible(false)}
+        />
       )}
 
       <S.Container>
