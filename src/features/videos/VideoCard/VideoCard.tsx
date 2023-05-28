@@ -15,7 +15,7 @@ type Props = {
 };
 
 export function VideoCard({ video }: Props) {
-  const createdAtFormatted = format(new Date(video.createAt), "dd MMM");
+  const createdAtFormatted = format(new Date(video.createdAt), "dd MMM");
 
   return (
     <Link href={`/videos/${video.id}`}>

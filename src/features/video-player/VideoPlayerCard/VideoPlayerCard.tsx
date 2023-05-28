@@ -32,7 +32,7 @@ export function VideoPlayerCard() {
     return null;
   }
 
-  const createdAt = format(new Date(video?.createAt), "dd MMM");
+  const createdAt = format(new Date(video?.createdAt), "dd MMM");
   const isCreator = video?.author?.id === user?.id;
 
   return (
