@@ -44,6 +44,18 @@ export const CreateVideoResolver = t.object({
   thumbnail: t.any().refine((file) => file, "Foto de capa é obrigatório"),
 });
 
+export const UpdateVideoResolver = t.object({
+  title: t.string().min(1, "Título é obrigatório"),
+  playlist: t.string().nullish(),
+  description: t.string().nullish(),
+  tags: t.string().min(1, "Tags é obrigatório"),
+  file: t.any().optional(),
+  thumbnail: t
+    .any()
+    .refine((file) => file, "Foto de capa é obrigatório")
+    .optional(),
+});
+
 export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
 
 export const CreatePlaylistResolver = t.object({
@@ -57,6 +69,13 @@ export type PostParams = {
   source: Media;
   thumbnail: Media;
 } & Omit<CreateVideoParams, "file" | "tags" | "thumbnail">;
+
+export type PatchParams = {
+  videoId: string;
+  tags: string[];
+  title: string;
+  description?: string | null | undefined;
+};
 
 export type PostPlaylistParams = {
   title: string;
