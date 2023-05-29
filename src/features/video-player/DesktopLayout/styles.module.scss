@@ -1,0 +1,16 @@
+.contentContainer {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  max-width: 1920px;
+  align-self: center;
+}
+
+.btnGoBackHolder {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  margin-top: 1rem;
+  margin-left: 100px;
+  margin-bottom: -8px;
+}

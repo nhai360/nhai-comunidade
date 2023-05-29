@@ -41,7 +41,7 @@ export function Sidebar() {
           <NavigationItem tooltip="Feed">
             <HomeIcon />
           </NavigationItem>
-          <NavigationItem href="/videos" tooltip="Vídeos" disabled={!isAdmin}>
+          <NavigationItem href="/videos" tooltip="Vídeos">
             <CameraIcon />
           </NavigationItem>
           <NavigationItem

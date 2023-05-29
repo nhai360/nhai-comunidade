@@ -125,7 +125,7 @@ export function DesktopLayout() {
               />
               <div className={styles.asideInfo}>
                 <h2>{getFirstNameAndLastName(article?.author?.fullName)}</h2>
-                <h4>06 artigos publicados</h4>
+                <h4>Autor</h4>
               </div>
               <div style={{ width: "100%" }}>
                 <Link href={`/profile/${user?.nickname}`}>
