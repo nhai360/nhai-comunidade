@@ -4,7 +4,7 @@ import CardArticle from "../CardArticle";
 import { useArticles } from "@/client/articles";
 
 export function DesktopLayout() {
-  const { articles } = useArticles();
+  // const { articles } = useArticles();
 
   return (
     <DefaultLayout>
@@ -18,9 +18,9 @@ export function DesktopLayout() {
           </p>
         </section>
         <section className={styles.gridArticlesContainer}>
-          {articles?.map((article: any, index: any) => (
+          {/* {articles?.map((article: any, index: any) => (
             <CardArticle article={article} key={index} />
-          ))}
+          ))} */}
         </section>
       </div>
     </DefaultLayout>
