@@ -11,7 +11,7 @@ export function VideosList() {
 
   return (
     <S.Container>
-      <S.PlaylistHighlight>
+      {/* <S.PlaylistHighlight>
         <Typography.Text size="h3" style={{ marginLeft: 24 }}>
           Podcast
         </Typography.Text>
@@ -26,7 +26,7 @@ export function VideosList() {
             </SwiperSlide>
           ))}
         </Swiper>
-      </S.PlaylistHighlight>
+      </S.PlaylistHighlight> */}
       <Typography.Text size="h3">Vídeos sugeridos</Typography.Text>
       <S.VideosGridContainer>
         {videos.map((video) => (

@@ -6,8 +6,14 @@ import { getToken } from "@/lib/auth";
 
 import Header from "@editorjs/header";
 import ImageTool from "@editorjs/image";
+import AttachesTool from "@editorjs/attaches";
 
 import styles from "./styles.module.scss";
+
+type IUploadFile = {
+  file: any;
+  typeFile: "IMAGE" | "DOCUMENT";
+};
 
 //props
 type Props = {
@@ -20,12 +26,12 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
   //add a reference to editor
   const ref = useRef<EditorJS>();
 
-  async function createMedia() {
+  async function createMedia(fileType: "IMAGE" | "DOCUMENT") {
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/media/`;
 
       const requestBody = {
-        category: "IMAGE",
+        category: fileType,
       };
 
       const response = await axios.post(apiUrl, requestBody, {
@@ -41,9 +47,12 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     }
   }
 
-  async function uploadFile(file: any) {
+  async function uploadFile(file: any, fileType: "IMAGE" | "DOCUMENT") {
     try {
-      const mediaId = await createMedia();
+      // if (file.type === "application/pdf") {
+      //   return;
+      // }
+      const mediaId = await createMedia(fileType);
       if (mediaId === "") {
         console.log("media error");
         return;
@@ -91,11 +100,62 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                  * @return {Promise.<{success, file: {url}}>}
                  */
                 uploadByFile(file: string) {
-                  return uploadFile(file).then((data) => {
+                  return uploadFile(file, "IMAGE").then((data) => {
                     return {
                       success: 1,
                       file: {
                         url: data.url,
+                        // any other image data you want to store, such as width, height, color, extension, etc
+                      },
+                    };
+                  });
+                },
+
+                // /**
+                //  * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
+                //  * @param {string} url - pasted image URL
+                //  * @return {Promise.<{success, file: {url}}>}
+                //  */
+                // uploadByUrl(url: string) {
+                //   return downloadImage(url).then((image) => {
+                //     return {
+                //       success: 1,
+                //       file: {
+                //         url: image,
+                //         // any other image data you want to store, such as width, height, color, extension, etc
+                //       },
+                //     };
+                //   });
+                // },
+              },
+            },
+          },
+          attaches: {
+            class: AttachesTool,
+            config: {
+              types: "application/pdf",
+              uploader: {
+                /**x
+                 * Upload file to the server and return an uploaded image data
+                 * @param {File} file - file selected from the device or pasted by drag-n-drop
+                 * @return {Promise.<{success, file: {url}}>}
+                 */
+                uploadByFile(file: string) {
+                  return uploadFile(file, "DOCUMENT").then((data) => {
+                    console.log("XXXXX: ", data);
+
+                    const bytes = data.sizeInBytes;
+                    const megabytes = bytes / (1024 * 1024); // Conversão para megabytes
+
+                    // Arredondando para duas casas decimais
+                    const roundedMegabytes = Math.round(megabytes * 100) / 100;
+
+                    return {
+                      success: 1,
+                      file: {
+                        url: data.url,
+                        name: data.name,
+                        size: roundedMegabytes,
                         // any other image data you want to store, such as width, height, color, extension, etc
                       },
                     };

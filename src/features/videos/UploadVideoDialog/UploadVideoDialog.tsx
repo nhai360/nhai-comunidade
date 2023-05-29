@@ -30,6 +30,9 @@ import { UploadThumbnail } from "./UploadThumbnail";
 import { useEffect, useState } from "react";
 import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
+import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
+import { useAuthContext } from "@/contexts";
+import { useAddVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 
 type Props = {
   onClose: () => void;
@@ -61,10 +64,14 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
 
+  const { session } = useAuthContext();
+  const { userplaylists } = useUserPlaylists({ userId: session?.userId });
   const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
+
+  const { addVideoPlaylist } = useAddVideoPlaylist();
 
   const {
     createVideo,
@@ -131,6 +138,21 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
               tags: tagsInArray,
             },
             {
+              onSuccess: (video) => {
+                // playlist && addVideoPlaylist(
+                //   {
+                //     videoId: video?.id,
+                //     playlistId: playlist,
+                //   },
+                //   {
+                //     onError: () => {
+                //       toast.error(
+                //         "Não foi possível adicionar o vídeo na playlist. Tente novamente"
+                //       );
+                //     },
+                //   }
+                // );
+              },
               onError: () => {
                 toast.error(
                   "Não foi possível postar o seu vídeo. Tente novamente"
@@ -234,12 +256,17 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     {...register("tags")}
                   />
                 )}
-                {/* <Field.Input
+                {/* <Field.Select
                   label="Playlist"
                   placeholder="Selecione a playlist do vídeo"
                   {...register("playlist")}
-                  onClick={() => setIsCreatePlaylistDialogVisible(true)}
-                /> */}
+                  onChange={setValue}
+                  data={
+                    userplaylists?.map((playlist) => {
+                      return { value: playlist?.id, label: playlist?.title };
+                    }) || []
+                  }
+                ></Field.Select> */}
                 <Field label="Descrição" required={false}>
                   <TextArea
                     defaultValue={video?.description}
@@ -278,7 +305,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 control={control}
                 onDropAccepted={handleUpload}
                 accept={{ "video/*": [] }}
-                maxSize={1024 * 1024 * 1024}
+                maxSize={1024 * 1024 * (1024 * 5)}
               >
                 Selecione arquivos de vídeo para fazer o envio
               </Dropzone>

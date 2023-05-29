@@ -16,6 +16,7 @@ export * from "./NavigationItem";
 export * from "./Popover";
 export * from "./ProgressBar";
 export * from "./RadioGroup";
+export * from "./Select";
 export * from "./Slider";
 export * from "./Success";
 export * from "./Tag";

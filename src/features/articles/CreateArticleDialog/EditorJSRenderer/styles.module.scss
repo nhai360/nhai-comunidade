@@ -34,3 +34,62 @@
     margin: 1rem 0;
   }
 }
+
+.uploadFileContainer {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  justify-content: space-between;
+
+  .contentIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #db2f2f;
+    width: 32px;
+    height: 36px;
+    border-radius: 10px;
+
+    span {
+      font-size: 10px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+  }
+
+  .contentInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 8px;
+
+    h6 {
+      margin: 0;
+      font-size: 16px;
+    }
+    p {
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  .contentDownload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+
+    transition: all 1s ease;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #dadada;
+    }
+  }
+}

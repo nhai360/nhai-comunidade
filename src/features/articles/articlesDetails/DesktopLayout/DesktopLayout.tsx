@@ -1,6 +1,5 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import styles from "../styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
 import { Avatar, Button, Tooltip, Typography } from "@/ui";
 import BtnGoBack from "@/ui/BtnGoBack";
@@ -9,7 +8,7 @@ import { useRouter } from "next/router";
 import { useArticle } from "@/client/articles/useArticle";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { format } from "date-fns";
-import { Calendar, PencilSimpleLine, Trash } from "@phosphor-icons/react";
+import { PencilSimpleLine, Trash } from "@phosphor-icons/react";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { useState } from "react";
@@ -126,12 +125,12 @@ export function DesktopLayout() {
               />
               <div className={styles.asideInfo}>
                 <h2>{getFirstNameAndLastName(article?.author?.fullName)}</h2>
-                <h4>06 artigos publicados</h4>
+                <h4>Autor</h4>
               </div>
               <div style={{ width: "100%" }}>
-                <Link href={`/articles`}>
+                <Link href={`/profile/${user?.nickname}`}>
                   <Button className={styles.asideButton}>
-                    <h3>Mais artigos</h3>
+                    <h3>Visitar perfil</h3>
                   </Button>
                 </Link>
               </div>

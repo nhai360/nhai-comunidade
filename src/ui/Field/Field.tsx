@@ -1,8 +1,17 @@
 import { ForwardRefRenderFunction, forwardRef, ReactNode } from "react";
 
-import { Input, InputProps, Label, Typography } from "@/ui";
+import {
+  Input,
+  InputProps,
+  Select,
+  SelectProps,
+  Label,
+  Typography,
+} from "@/ui";
 
 import * as S from "./Field.styles";
+
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 type FieldProps = {
   htmlFor?: string;
@@ -80,4 +89,45 @@ const FieldInput: ForwardRefRenderFunction<
   );
 };
 
+type FieldSelectProps = FieldProps & SelectProps;
+
+const FieldSelect = (
+  {
+    label,
+    helperText,
+    errorText,
+    name,
+    required,
+    data,
+    onChange,
+    ...rest
+  }: any,
+  ref: any
+) => {
+  const hasError = Boolean(errorText);
+
+  return (
+    <Field
+      label={label}
+      helperText={helperText}
+      errorText={errorText}
+      htmlFor={name}
+      required={required}
+    >
+      <AsyncCreatableSelect
+        ref={ref as any}
+        id={name}
+        name={name}
+        error={hasError}
+        {...rest}
+        size="medium"
+        isClearable
+        defaultOptions={data}
+        onChange={(a: any) => onChange("playlist", a?.value)}
+      />
+    </Field>
+  );
+};
+
+Field.Select = forwardRef(FieldSelect);
 Field.Input = forwardRef(FieldInput);

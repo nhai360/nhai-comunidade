@@ -6,7 +6,7 @@ import { PostParams, invalidateVideosQueries } from "@/client/videos";
 async function createVideoRequest(params: PostParams) {
   const response = await authenticatedAPI.post("/videos", params);
 
-  console.log(response.data);
+  return response.data;
 }
 
 export function useCreateVideo() {

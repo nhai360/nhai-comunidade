@@ -35,6 +35,17 @@ export const VideoDecoder = t.object({
 
 export type Video = t.TypeOf<typeof VideoDecoder>;
 
+export const PlaylistDecoder = t.object({
+  id: t.string(),
+  title: t.string(),
+  authorId: t.string(),
+  author: UserDecoder.nullish(),
+  createdAt: t.string(),
+  updatedAt: t.string(),
+  videos: VideoDecoder.array().nullish(),
+});
+export type Playlist = t.TypeOf<typeof PlaylistDecoder>;
+
 export const CreateVideoResolver = t.object({
   title: t.string().min(1, "Título é obrigatório"),
   playlist: t.string().nullish(),
@@ -96,4 +107,8 @@ export type LikeVideoParams = {
 
 export type DeleteVideoParams = {
   videoId: string;
+};
+
+export type GetUserPlaylistsParams = {
+  userId?: string;
 };
