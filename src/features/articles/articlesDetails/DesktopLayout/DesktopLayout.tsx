@@ -34,8 +34,6 @@ export function DesktopLayout() {
   const createdAt =
     article && format(new Date(article?.createdAt as any), "MMM dd");
 
-  console.log("article ID: ", article?.id);
-
   return (
     <DefaultLayout>
       {showModalDelete ? (

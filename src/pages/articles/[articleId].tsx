@@ -6,7 +6,6 @@ import { ArticleDetails } from "@/features/articles/articlesDetails";
 import { useRouter } from "next/router";
 
 function ArticleDetailsPage() {
-  const router = useRouter();
   const { session } = useAuthContext();
 
   const { user } = useUser({
