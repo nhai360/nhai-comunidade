@@ -49,9 +49,9 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
 
   async function uploadFile(file: any, fileType: "IMAGE" | "DOCUMENT") {
     try {
-      if (file.type === "application/pdf") {
-        return;
-      }
+      // if (file.type === "application/pdf") {
+      //   return;
+      // }
       const mediaId = await createMedia(fileType);
       if (mediaId === "") {
         console.log("media error");

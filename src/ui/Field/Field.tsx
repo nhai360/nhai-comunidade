@@ -1,6 +1,13 @@
 import { ForwardRefRenderFunction, forwardRef, ReactNode } from "react";
 
-import { Input, InputProps, Label, Typography } from "@/ui";
+import {
+  Input,
+  InputProps,
+  Select,
+  SelectProps,
+  Label,
+  Typography,
+} from "@/ui";
 
 import * as S from "./Field.styles";
 
@@ -80,4 +87,38 @@ const FieldInput: ForwardRefRenderFunction<
   );
 };
 
+type FieldSelectProps = FieldProps & SelectProps;
+
+const FieldSelect: ForwardRefRenderFunction<
+  HTMLInputElement,
+  FieldSelectProps
+> = (
+  { label, helperText, errorText, name, required, children, ...rest },
+  ref
+) => {
+  const hasError = Boolean(errorText);
+
+  return (
+    <Field
+      label={label}
+      helperText={helperText}
+      errorText={errorText}
+      htmlFor={name}
+      required={required}
+    >
+      <Select
+        ref={ref as any}
+        id={name}
+        name={name}
+        error={hasError}
+        {...rest}
+        size="medium"
+      >
+        {children}
+      </Select>
+    </Field>
+  );
+};
+
+Field.Select = forwardRef(FieldSelect);
 Field.Input = forwardRef(FieldInput);

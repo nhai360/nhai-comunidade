@@ -30,6 +30,8 @@ import { UploadThumbnail } from "./UploadThumbnail";
 import { useEffect, useState } from "react";
 import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
+import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
+import { useAuthContext } from "@/contexts";
 
 type Props = {
   onClose: () => void;
@@ -61,6 +63,8 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
 
+  const { session } = useAuthContext();
+  const { userplaylists } = useUserPlaylists({ userId: session?.userId });
   const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
@@ -129,6 +133,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
               source,
               thumbnail: media,
               tags: tagsInArray,
+              playlist: playlist,
             },
             {
               onError: () => {
@@ -234,12 +239,17 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     {...register("tags")}
                   />
                 )}
-                {/* <Field.Input
+                <Field.Select
                   label="Playlist"
                   placeholder="Selecione a playlist do vídeo"
                   {...register("playlist")}
-                  onClick={() => setIsCreatePlaylistDialogVisible(true)}
-                /> */}
+                >
+                  {userplaylists?.map((playlist) => (
+                    <option key={playlist?.id} value={playlist?.id}>
+                      {playlist?.title}
+                    </option>
+                  ))}
+                </Field.Select>
                 <Field label="Descrição" required={false}>
                   <TextArea
                     defaultValue={video?.description}
@@ -278,7 +288,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 control={control}
                 onDropAccepted={handleUpload}
                 accept={{ "video/*": [] }}
-                maxSize={1024 * 1024 * 1024}
+                maxSize={1024 * 1024 * (1024 * 5)}
               >
                 Selecione arquivos de vídeo para fazer o envio
               </Dropzone>
