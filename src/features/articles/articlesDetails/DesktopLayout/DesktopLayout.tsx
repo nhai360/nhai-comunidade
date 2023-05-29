@@ -1,6 +1,5 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import styles from "../styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
 import { Avatar, Button, Tooltip, Typography } from "@/ui";
 import BtnGoBack from "@/ui/BtnGoBack";
@@ -9,7 +8,7 @@ import { useRouter } from "next/router";
 import { useArticle } from "@/client/articles/useArticle";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { format } from "date-fns";
-import { Calendar, PencilSimpleLine, Trash } from "@phosphor-icons/react";
+import { PencilSimpleLine, Trash } from "@phosphor-icons/react";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { useState } from "react";
