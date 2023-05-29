@@ -31,6 +31,7 @@ export const Actions = styled("div", {
 
 export const Thumbnail = styled("img", {
   width: "100%",
+  height: "100%",
   objectFit: "cover",
   borderRadius: "24px",
 });

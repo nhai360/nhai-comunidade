@@ -45,6 +45,7 @@ export function VideoPlayerCard() {
           video_title: video.title,
           viewer_user_id: session?.userId,
         }}
+        video={video}
         isCreator={isCreator}
       />
       <Typography.Title size="subHeadline" weight="bold">

@@ -47,14 +47,17 @@ export function FeaturedVideoCard() {
               onClick={handleMoreInformation}
             >
               <ExclamationCircleIcon />
-              Mais informações
+              Saiba mais
             </Button>
           </S.Actions>
         </S.Content>
-
-        <S.Thumbnail
-          src={featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"}
-        />
+        <div>
+          <S.Thumbnail
+            src={
+              featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"
+            }
+          />
+        </div>
       </S.FlexContainer>
     </Card>
   );

@@ -23,6 +23,12 @@ import * as S from "./MuxVideo.styles";
 import { useRouter } from "next/router";
 import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
 import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+
+const UploadVideoDialog = dynamic(
+  () => import("../../features/videos/UploadVideoDialog/UploadVideoDialog"),
+  { ssr: false }
+);
 
 const ONE_HOUR_IN_SECONDS = 60 * 60;
 
@@ -41,16 +47,17 @@ const ICON_BUTTON_PROPS = {
 export function MuxVideo({
   controls = false,
   isCreator = false,
+  video,
   ...rest
 }: any) {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { videoId }: any = router.query;
 
   const { deleteVideo } = useDeleteVideo();
 
   const [isPaused, setIsPaused] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const [durationTime, setDurationTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -69,7 +76,7 @@ export function MuxVideo({
     if (isCopied) return;
 
     navigator.clipboard.writeText(
-      `${window.location.origin}/videos/${videoId}`
+      `${window.location.origin}/videos/${video?.id}`
     );
 
     setIsCopied(true);
@@ -149,13 +156,13 @@ export function MuxVideo({
     return (currentTime / durationTime) * 100;
   }, [currentTime, durationTime]);
 
-  const handleEditVideo = () => {};
+  const handleEditVideo = () => setShowEdit(true);
 
   const handleDeleteVideo = () => {
-    videoId &&
+    video?.id &&
       deleteVideo(
         {
-          videoId: videoId,
+          videoId: video?.id,
         },
         {
           onSuccess: () => {
@@ -170,79 +177,87 @@ export function MuxVideo({
   };
 
   return (
-    <S.Container>
-      <BaseVideo
-        ref={videoRef}
-        controls={controls}
-        onTimeUpdate={(event) =>
-          setCurrentTime(event.currentTarget.currentTime)
-        }
-        onDurationChange={(event) =>
-          setDurationTime(event.currentTarget.duration)
-        }
-        onClick={togglePlayState}
-        className="mux-video"
-        envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
-        {...rest}
-      />
-      <S.ControlsContainer>
-        <ProgressBar
-          currentPercent={currentPercentProgress}
-          css={{ background: "$neutral500" }}
+    <>
+      {showEdit && (
+        <UploadVideoDialog
+          video={video as any}
+          onClose={() => setShowEdit(false)}
         />
-        <S.Controls>
-          <S.ControlsRow>
-            <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
-              {isPaused || isFinished ? (
-                <PlayIcon />
-              ) : (
-                <PauseCircle size={24} />
-              )}
-            </Button>
-            <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
-              <SkipForward size={20} />
-            </Button>
-            <S.VolumeContainer>
-              <Tooltip message={`${volume}%`}>
-                <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
-                  {volume === 0 ? (
-                    <SpeakerSimpleX size={20} />
-                  ) : (
-                    <SpeakerSimpleHigh size={20} />
-                  )}
+      )}
+      <S.Container>
+        <BaseVideo
+          ref={videoRef}
+          controls={controls}
+          onTimeUpdate={(event) =>
+            setCurrentTime(event.currentTarget.currentTime)
+          }
+          onDurationChange={(event) =>
+            setDurationTime(event.currentTarget.duration)
+          }
+          onClick={togglePlayState}
+          className="mux-video"
+          envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
+          {...rest}
+        />
+        <S.ControlsContainer>
+          <ProgressBar
+            currentPercent={currentPercentProgress}
+            css={{ background: "$neutral500" }}
+          />
+          <S.Controls>
+            <S.ControlsRow>
+              <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
+                {isPaused || isFinished ? (
+                  <PlayIcon />
+                ) : (
+                  <PauseCircle size={24} />
+                )}
+              </Button>
+              <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
+                <SkipForward size={20} />
+              </Button>
+              <S.VolumeContainer>
+                <Tooltip message={`${volume}%`}>
+                  <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
+                    {volume === 0 ? (
+                      <SpeakerSimpleX size={20} />
+                    ) : (
+                      <SpeakerSimpleHigh size={20} />
+                    )}
+                  </Button>
+                </Tooltip>
+                <Slider
+                  max={100}
+                  min={0}
+                  value={[volume]}
+                  onValueChange={([volume]) => changeVolume(volume)}
+                />
+              </S.VolumeContainer>
+              <Typography.Text color="neutral">
+                {currentTimeFormatted} / {durationFormatted}
+              </Typography.Text>
+            </S.ControlsRow>
+            <S.ControlsRow>
+              {isCreator && (
+                <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
+                  <TrashIcon size={24} />
                 </Button>
-              </Tooltip>
-              <Slider
-                max={100}
-                min={0}
-                value={[volume]}
-                onValueChange={([volume]) => changeVolume(volume)}
-              />
-            </S.VolumeContainer>
-            <Typography.Text color="neutral">
-              {currentTimeFormatted} / {durationFormatted}
-            </Typography.Text>
-          </S.ControlsRow>
-          <S.ControlsRow>
-            {isCreator && (
-              <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
-                <TrashIcon size={24} />
+              )}
+              {isCreator && (
+                <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
+                  <EditIcon size={24} />
+                </Button>
+              )}
+              <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
+                {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
               </Button>
-            )}
-            {isCreator && (
-              <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
-                <EditIcon size={24} />
+              <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
+                <FrameCorners size={24} weight="light" />
               </Button>
-            )}
-            <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
-              {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
-            </Button>
-            <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
-              <FrameCorners size={24} weight="light" />
-            </Button>
-          </S.ControlsRow>
-        </S.Controls>
-      </S.ControlsContainer>
-    </S.Container>
+            </S.ControlsRow>
+          </S.Controls>
+        </S.ControlsContainer>
+      </S.Container>
+    </>
   );
 }
