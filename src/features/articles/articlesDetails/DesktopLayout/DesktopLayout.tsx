@@ -17,22 +17,22 @@ import DeleteArticleDialog from "../../CreateArticleDialog/DeleteArticleDialog";
 import CreateArticleDialog from "../../CreateArticleDialog";
 
 export function DesktopLayout() {
-  const router = useRouter();
-  const { articleId } = router?.query;
-  const { session } = useAuthContext();
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalEdit, setShowModalEdit] = useState(false);
+  // const router = useRouter();
+  // const { articleId } = router?.query;
+  // const { session } = useAuthContext();
+  // const [showModalDelete, setShowModalDelete] = useState(false);
+  // const [showModalEdit, setShowModalEdit] = useState(false);
 
-  const { article } = useArticle({
-    articleId: articleId as string,
-  });
+  // const { article } = useArticle({
+  //   articleId: articleId as string,
+  // });
 
-  const { user } = useUser({
-    id: session?.userId,
-  });
+  // const { user } = useUser({
+  //   id: session?.userId,
+  // });
 
-  const createdAt =
-    article && format(new Date(article?.createdAt as any), "MMM dd");
+  // const createdAt =
+  //   article && format(new Date(article?.createdAt as any), "MMM dd");
 
   return (
     <DefaultLayout>
