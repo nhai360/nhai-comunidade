@@ -18,7 +18,7 @@ import CreateArticleDialog from "../../CreateArticleDialog";
 
 export function DesktopLayout() {
   const router = useRouter();
-  const { articleId } = router.query;
+  const { articleId } = router?.query;
   const { session } = useAuthContext();
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -86,7 +86,7 @@ export function DesktopLayout() {
                       >{`${createdAt}`}</span>
                     </div>
                   </div>
-                  {article?.author?.id === user?.id && (
+                  {article?.author?.id === user?.id ? (
                     <div style={{ display: "flex", gap: 16 }}>
                       <Tooltip message="Deletar Artigo" position="bottom">
                         <Button
@@ -107,13 +107,13 @@ export function DesktopLayout() {
                         </Button>
                       </Tooltip>
                     </div>
-                  )}
+                  ) : null}
                 </div>
               </div>
             </div>
-            {article && (
+            {article ? (
               <EditorJsRenderer data={JSON.parse(article?.content as any)} />
-            )}
+            ) : null}
           </article>
           <aside className={styles.asideContainer}>
             <div className={styles.asideBox}>
