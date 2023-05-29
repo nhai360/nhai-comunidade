@@ -142,12 +142,20 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                  */
                 uploadByFile(file: string) {
                   return uploadFile(file, "DOCUMENT").then((data) => {
+                    console.log("XXXXX: ", data);
+
+                    const bytes = data.sizeInBytes;
+                    const megabytes = bytes / (1024 * 1024); // Conversão para megabytes
+
+                    // Arredondando para duas casas decimais
+                    const roundedMegabytes = Math.round(megabytes * 100) / 100;
+
                     return {
                       success: 1,
                       file: {
                         url: data.url,
                         name: data.name,
-                        size: data.size,
+                        size: roundedMegabytes,
                         // any other image data you want to store, such as width, height, color, extension, etc
                       },
                     };

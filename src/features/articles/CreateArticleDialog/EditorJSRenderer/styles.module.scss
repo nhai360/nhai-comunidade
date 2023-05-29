@@ -48,17 +48,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #dadada;
-    width: 42px;
-    height: 42px;
+    background-color: #db2f2f;
+    width: 32px;
+    height: 36px;
     border-radius: 10px;
+
+    span {
+      font-size: 10px;
+      font-weight: 500;
+      color: #ffffff;
+    }
   }
 
   .contentInfo {
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     padding-left: 8px;
 
     h6 {

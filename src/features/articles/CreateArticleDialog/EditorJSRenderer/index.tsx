@@ -8,7 +8,7 @@ import editorJsHtml from "editorjs-html";
 import { DownloadSimple, FileArchive, FilePdf } from "@phosphor-icons/react";
 
 function attaches(block: any) {
-  console.log("Arquivo: ", block.data);
+  // console.log("Arquivo: ", block.data);
 
   const handleDownload = () => {
     // Lógica para obter o arquivo a ser baixado
@@ -28,11 +28,11 @@ function attaches(block: any) {
       <div className={styles.uploadFileContainer}>
         <div style={{ display: "flex" }}>
           <div className={styles.contentIcon}>
-            <FileArchive size={24} />
+            <span>PDF</span>
           </div>
           <div className={styles.contentInfo}>
             <h6>{block ? block.data.title : 'File type'}</h6>
-            <p>{block.data.size}</p>
+            <p>Arquivo</p>
           </div>
         </div>
         <button onClick={handleDownload} className={styles.contentDownload}>

@@ -128,9 +128,9 @@ export function DesktopLayout() {
                 <h4>06 artigos publicados</h4>
               </div>
               <div style={{ width: "100%" }}>
-                <Link href={`/articles`}>
+                <Link href={`/profile/${user?.nickname}`}>
                   <Button className={styles.asideButton}>
-                    <h3>Mais artigos</h3>
+                    <h3>Visitar perfil</h3>
                   </Button>
                 </Link>
               </div>
