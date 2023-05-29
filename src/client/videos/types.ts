@@ -35,6 +35,18 @@ export const VideoDecoder = t.object({
 
 export type Video = t.TypeOf<typeof VideoDecoder>;
 
+export const UpdateVideoResolver = t.object({
+  title: t.string().min(1, "Título é obrigatório"),
+  playlist: t.string().nullish(),
+  description: t.string().nullish(),
+  tags: t.string().min(1, "Tags é obrigatório"),
+  file: t.any().optional(),
+  thumbnail: t
+    .any()
+    .refine((file) => file, "Foto de capa é obrigatório")
+    .optional(),
+});
+
 export const CreateVideoResolver = t.object({
   title: t.string().min(1, "Título é obrigatório"),
   playlist: t.string().nullish(),
