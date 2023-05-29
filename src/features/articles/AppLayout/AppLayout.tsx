@@ -4,7 +4,7 @@ import CardArticle from "../CardArticle";
 import { useArticles } from "@/client/articles";
 
 export function AppLayout() {
-  // const { articles } = useArticles();
+  const { articles } = useArticles();
   return (
     <DefaultLayout>
       <DefaultLayout.Header />
@@ -13,9 +13,9 @@ export function AppLayout() {
 
         </section>
         <section className={styles.gridArticlesContainer}>
-          {/* {articles?.map((article: any, index: any) => (
+          {articles?.map((article: any, index: any) => (
             <CardArticle article={article} key={index} />
-          ))} */}
+          ))}
         </section>
       </DefaultLayout.Content>
       <DefaultLayout.CreatePostButton />
