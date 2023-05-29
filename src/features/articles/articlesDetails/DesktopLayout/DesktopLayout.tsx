@@ -36,7 +36,7 @@ export function DesktopLayout() {
 
   return (
     <DefaultLayout>
-      {showModalDelete ? (
+      {/* {showModalDelete ? (
         <DeleteArticleDialog
           onClose={() => setShowModalDelete(false)}
           articleId={article?.id}
@@ -136,7 +136,7 @@ export function DesktopLayout() {
             </div>
           </aside>
         </section>
-      </div>
+      </div> */}
     </DefaultLayout>
   );
 }
