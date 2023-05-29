@@ -1,18 +1,8 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import { CreatePostCard, PostFromUrl } from "@/features/posts";
-import {
-  FeedList,
-  MainTrends,
-  PopularToday,
-  Suggestions,
-} from "@/features/feed";
-import { FeatureDecoder, useFeatureFlag } from "@/lib/features";
+import { FeedList, MainTrends } from "@/features/feed";
 
 export function DesktopLayout() {
-  const { isEnabled: isEnabledArticlesSection } = useFeatureFlag(
-    FeatureDecoder.Values.ARTICLES_SECTION,
-  );
-
   return (
     <DefaultLayout>
       <DefaultLayout.GridWithSider>
@@ -23,12 +13,8 @@ export function DesktopLayout() {
         </DefaultLayout.Content>
         <DefaultLayout.Sider>
           <MainTrends />
-          {isEnabledArticlesSection && (
-            <>
-              <PopularToday />
-              <Suggestions />
-            </>
-          )}
+          {/* <PopularToday />
+              <Suggestions />*/}
         </DefaultLayout.Sider>
       </DefaultLayout.GridWithSider>
     </DefaultLayout>

@@ -28,7 +28,7 @@ export function PostDialog({ postId, onClose }: Props) {
         <Dialog.Header
           closable
           title={`Publicação de ${getFirstNameAndLastName(
-            post.author.fullName,
+            post.author.fullName
           )}`}
         />
         <CommentProvider>
@@ -39,10 +39,10 @@ export function PostDialog({ postId, onClose }: Props) {
             <DesktopPostDialogStats post={post} />
             <AppPostDialogStats post={post} />
 
-            <Post.CommentList post={post} expanded />
+            <Post.CommentList origin={post} originType="posts" expanded />
           </Dialog.Body>
           <Dialog.Footer>
-            <Post.CommentField post={post} />
+            <Post.CommentField originType={"posts"} origin={post} />
           </Dialog.Footer>
         </CommentProvider>
       </Dialog.Content>

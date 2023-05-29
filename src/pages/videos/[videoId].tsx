@@ -11,11 +11,9 @@ function VideoPage() {
     id: session?.userId,
   });
 
-  const isEnabled =
-    user?.email.endsWith("@nhai360.com") ||
-    user?.email.endsWith("@catency.com");
+  const isAdmin = user?.role?.name === "ADMIN";
 
-  if (!isEnabled) {
+  if (!isAdmin) {
     return null;
   }
 

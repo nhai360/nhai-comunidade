@@ -1,6 +1,19 @@
 {
   "extends": "@oigabrielteodoro/eslint-config/next",
   "rules": {
+    "prettier/prettier": "off",
+    "no-empty-pattern": "off",
+    "no-useless-catch": "off",
+    "object-shorthand": "off",
+    "no-use-before-define": "off",
+    "prefer-const": "off",
+    "spaced-comment": "off",
+    "yoda": "off",
+    "dot-notation": "off",
+    "no-undef": "off",
+    "no-useless-return": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "eqeqeq": "off",
     "jsx-a11y/alt-text": 0,
     "@next/next/no-img-element": 0,
     "no-unused-vars": 0

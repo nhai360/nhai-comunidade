@@ -65,7 +65,7 @@ export const CommentDecoder: t.Schema<Comment> = t.lazy(() =>
     likes: CommentLikeDecoder.array(),
     type: t.nativeEnum(CommentType),
     options: CommentOptionDecoder.array().optional(),
-  }),
+  })
 );
 
 export const CreateCommentDecoder = t.object({
@@ -73,15 +73,17 @@ export const CreateCommentDecoder = t.object({
 });
 
 export type CreateCommentParams = {
-  postId: string;
+  originId: string;
   replyId?: string;
   content: string;
   type: CommentType;
   options?: Partial<CommentOption>[];
+  originType: "posts" | "videos";
 };
 
 export type GetParams = {
-  postId: string;
+  originId: string;
+  originType: "posts" | "videos";
 };
 
 export type DeleteParams = {

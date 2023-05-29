@@ -21,7 +21,7 @@ export function MainTrends() {
   const { posts } = useTrending();
 
   const { isEnabled: isEnabledFilter } = useFeatureFlag(
-    FeatureDecoder.Values.FILTER_TRENDING,
+    FeatureDecoder.Values.FILTER_TRENDING
   );
 
   return (
@@ -30,10 +30,10 @@ export function MainTrends() {
         <Typography.Text size="body2" weight="bold" color="title">
           Principais trends
         </Typography.Text>
-        <S.Actions>
+        {/* <S.Actions>
           {isEnabledFilter && <FilterButton />}
           <HelpButton />
-        </S.Actions>
+        </S.Actions> */}
       </S.Header>
       <S.TrendList>
         {posts.map((post) => (
@@ -65,7 +65,7 @@ export function MainTrends() {
                 {getFirstNameAndLastName(post.author.fullName)}
               </Typography.Text>
             </S.TrendItemContent>
-            <Link href={`?postId=${post.id}`}>
+            <Link href={`/?postId=${post.id}`}>
               <Button icon size="small" variant="transparent">
                 <ShareSquareIcon color={theme.colors.textSecondary.value} />
               </Button>

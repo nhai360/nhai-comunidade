@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Avatar, Card, MuxVideo, Typography } from "@/ui";
 
-import { useAuthContext } from "@/contexts";
+import { CommentProvider, useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
 import { useVideo } from "@/client/videos";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
@@ -10,6 +10,8 @@ import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import { LikeButton } from "@/features/video-player";
 
 import * as S from "./VideoPlayerCard.styles";
+import { format } from "date-fns";
+import { Post } from "@/features/posts";
 
 export function VideoPlayerCard() {
   const router = useRouter();
@@ -30,6 +32,9 @@ export function VideoPlayerCard() {
     return null;
   }
 
+  const createdAt = format(new Date(video?.createdAt), "dd MMM");
+  const isCreator = video?.author?.id === user?.id;
+
   return (
     <Card css={{ display: "flex", flexDirection: "column", gap: "$4" }}>
       <MuxVideo
@@ -40,6 +45,8 @@ export function VideoPlayerCard() {
           video_title: video.title,
           viewer_user_id: session?.userId,
         }}
+        video={video}
+        isCreator={isCreator}
       />
       <Typography.Title size="subHeadline" weight="bold">
         {video?.title}
@@ -55,7 +62,7 @@ export function VideoPlayerCard() {
           <S.UserInformationContainer>
             <Typography.Text css={{ color: "$textTitle" }}>
               {getFirstNameAndLastName(video?.author?.fullName)}
-              <S.TimeLabel>23 Jan</S.TimeLabel>
+              <S.TimeLabel>{createdAt}</S.TimeLabel>
             </Typography.Text>
             <Typography.Text size="body3" color="secondary">
               @{user?.nickname}
@@ -65,6 +72,14 @@ export function VideoPlayerCard() {
 
         <LikeButton video={video} />
       </S.UserAndLikeContainer>
+
+      <Typography.Text size="caption" color="secondary">
+        {video?.description}
+      </Typography.Text>
+      <CommentProvider>
+        <Post.CommentField originType={"videos"} origin={video} />
+        <Post.CommentList origin={video} originType="videos" expanded />
+      </CommentProvider>
     </Card>
   );
 }

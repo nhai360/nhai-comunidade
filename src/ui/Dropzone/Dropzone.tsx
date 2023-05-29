@@ -38,7 +38,7 @@ const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     onDropRejected,
     ...props
   },
-  ref,
+  ref
 ) => {
   const { field } = useController({
     name,
@@ -64,9 +64,13 @@ const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 
   function handleDropRejected(
     fileRejections: FileRejection[],
-    event: DropEvent,
+    event: DropEvent
   ) {
-    toast.error("Imagem não suportada. Use apenas imagens com até 1MB");
+    toast.error(
+      `Imagem não suportada. Use apenas imagens com até ${
+        maxSize / (1024 * 1024)
+      }MB`
+    );
 
     onDropRejected && onDropRejected(fileRejections, event);
   }

@@ -7,18 +7,24 @@ import { useComments } from "@/client/comments";
 import * as S from "./PostCommentList.styles";
 
 type Props = {
-  post: Post;
+  origin: any;
+  originType: "posts" | "videos";
   expanded?: boolean;
 };
 
-export function PostCommentList({ post, expanded = false }: Props) {
-  const { comments = post.comments } = useComments(
+export function PostCommentList({
+  origin,
+  originType,
+  expanded = false,
+}: Props) {
+  const { comments } = useComments(
     {
-      postId: post.id,
+      originId: origin.id,
+      originType,
     },
     {
       enabled: expanded,
-    },
+    }
   );
 
   const commentsToShow = expanded ? comments : comments.slice(0, 1);
@@ -30,7 +36,7 @@ export function PostCommentList({ post, expanded = false }: Props) {
       <S.Container>
         {commentsToShow.map((comment) => (
           <Comment
-            post={post}
+            origin={origin}
             key={comment.id}
             comment={comment}
             maxReplies={maxReplies}

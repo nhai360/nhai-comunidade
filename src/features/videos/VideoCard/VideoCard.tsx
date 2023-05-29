@@ -15,7 +15,7 @@ type Props = {
 };
 
 export function VideoCard({ video }: Props) {
-  const createdAtFormatted = format(new Date(video.createAt), "dd MMM");
+  const createdAtFormatted = format(new Date(video.createdAt), "dd MMM");
 
   return (
     <Link href={`/videos/${video.id}`}>
@@ -23,9 +23,10 @@ export function VideoCard({ video }: Props) {
         css={{
           transition: "all 0.2s",
           cursor: "pointer",
-
+          width: "100%",
+          height: 320,
           "&:hover": {
-            transform: "translateY(-16px)",
+            transform: "translateY(-8px)",
           },
         }}
       >

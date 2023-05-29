@@ -17,7 +17,7 @@ import { Poll } from "./Poll";
 import * as S from "./Comment.styles";
 
 type Props = {
-  post: Post;
+  origin: any;
   comment: Comment;
   maxReplies?: number;
 };
@@ -27,9 +27,9 @@ const COLORS: Record<CommentType, "pink" | "yellow"> = {
   [CommentType.COMMENT]: "pink",
 };
 
-export function CommentComponent({ post, comment, maxReplies }: Props) {
+export function CommentComponent({ origin, comment, maxReplies }: Props) {
   const [content, setContent] = useState(
-    comment.content ? createEditorStateWithText(comment.content) : null,
+    comment.content ? createEditorStateWithText(comment.content) : null
   );
 
   return (
@@ -71,7 +71,7 @@ export function CommentComponent({ post, comment, maxReplies }: Props) {
           )}
 
           <RepliesList
-            post={post}
+            origin={origin}
             replies={comment.replies}
             maxReplies={maxReplies}
           />

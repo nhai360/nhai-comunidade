@@ -13,11 +13,18 @@ import { authenticatedAPI } from "@/client";
 import { useAuthContext } from "@/contexts";
 
 import * as S from "./Sidebar.styles";
+import { useUser } from "@/client/users";
 
 export function Sidebar() {
   const router = useRouter();
 
-  const { logout } = useAuthContext();
+  const { session, logout } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
+  const isAdmin = user?.role?.name === "ADMIN";
 
   function handleLogout() {
     logout();
@@ -31,13 +38,17 @@ export function Sidebar() {
     <S.Container>
       <nav>
         <S.NavigationList>
-          <NavigationItem active tooltip="Feed">
+          <NavigationItem tooltip="Feed">
             <HomeIcon />
           </NavigationItem>
-          <NavigationItem tooltip="Em breve" disabled>
+          <NavigationItem href="/videos" tooltip="Vídeos" disabled={!isAdmin}>
             <CameraIcon />
           </NavigationItem>
-          <NavigationItem tooltip="Em breve" disabled>
+          <NavigationItem
+            href="/articles"
+            tooltip="Materiais Didáticos"
+            disabled={!isAdmin}
+          >
             <ListLineParagraphSquareIcon />
           </NavigationItem>
         </S.NavigationList>

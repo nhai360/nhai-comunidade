@@ -1,0 +1,38 @@
+.contentContainer {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  padding: 32px 32px 80px 116px;
+  max-width: 1920px;
+  align-self: center;
+
+  .infoHeader {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    padding: 32px 32px;
+    border-radius: 24px;
+
+    h2 {
+      font-family: "Red Hat Display";
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 18px;
+      max-width: 50%;
+    }
+    margin-bottom: 1rem;
+  }
+
+  .gridArticlesContainer {  
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+
+    @media screen and (min-width: 1200px) {
+      gap: 24px;
+    }
+  }
+}

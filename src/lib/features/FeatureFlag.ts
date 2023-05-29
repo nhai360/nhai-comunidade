@@ -18,7 +18,7 @@ const environment = process.env.NEXT_PUBLIC_ENVIRONMENT ?? "prod";
 const openFlags: OpenFlags = {
   EXAMPLE: true,
   ARTICLES_SECTION: true,
-  CREATE_DISCUSSION: true,
+  CREATE_DISCUSSION: false,
   FILTER_TRENDING: true,
   PROFILE_LOCATION: true,
 };

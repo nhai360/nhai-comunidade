@@ -16,13 +16,13 @@ export function BottomBar() {
 
   return (
     <S.Container>
-      <NavigationItem active>
+      <NavigationItem>
         <HomeIcon />
       </NavigationItem>
-      <NavigationItem disabled>
+      <NavigationItem href="/videos">
         <CameraIcon />
       </NavigationItem>
-      <NavigationItem disabled>
+      <NavigationItem href="/articles">
         <ListLineParagraphSquareIcon />
       </NavigationItem>
       <Button

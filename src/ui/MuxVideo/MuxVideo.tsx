@@ -10,10 +10,25 @@ import {
 } from "@phosphor-icons/react";
 
 import { Button, ProgressBar, Slider, Tooltip, Typography } from "@/ui";
-import { EditIcon, LinkIcon, PlayIcon } from "@/ui/_icons";
+import {
+  CheckIcon,
+  EditIcon,
+  LinkIcon,
+  PlayIcon,
+  TrashIcon,
+} from "@/ui/_icons";
 import { addSeconds, format, startOfDay } from "@/lib/date-fns";
 
 import * as S from "./MuxVideo.styles";
+import { useRouter } from "next/router";
+import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
+import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+
+const UploadVideoDialog = dynamic(
+  () => import("../../features/videos/UploadVideoDialog/UploadVideoDialog"),
+  { ssr: false }
+);
 
 const ONE_HOUR_IN_SECONDS = 60 * 60;
 
@@ -31,11 +46,18 @@ const ICON_BUTTON_PROPS = {
 
 export function MuxVideo({
   controls = false,
+  isCreator = false,
+  video,
   ...rest
-}: Partial<Omit<BaseVideoProps, "ref">>) {
+}: any) {
+  const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const { deleteVideo } = useDeleteVideo();
+
   const [isPaused, setIsPaused] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const [durationTime, setDurationTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -49,6 +71,20 @@ export function MuxVideo({
       videoRef.current.volume = 0.5;
     }
   }, []);
+
+  function handleCopyVideoUrl() {
+    if (isCopied) return;
+
+    navigator.clipboard.writeText(
+      `${window.location.origin}/videos/${video?.id}`
+    );
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  }
 
   function togglePlayState() {
     if (!videoRef.current) return;
@@ -105,7 +141,7 @@ export function MuxVideo({
 
   const durationFormatted = format(
     durationTimeInSeconds,
-    durationIsMoreThanHour ? "hh:mm:ss" : "mm:ss",
+    durationIsMoreThanHour ? "hh:mm:ss" : "mm:ss"
   );
 
   const currentTimeInMinutes = addSeconds(baseDate, currentTime);
@@ -113,80 +149,115 @@ export function MuxVideo({
 
   const currentTimeFormatted = format(
     currentTimeInMinutes,
-    currentTimeIsMoreThanHour ? "hh:mm:ss" : "mm:ss",
+    currentTimeIsMoreThanHour ? "hh:mm:ss" : "mm:ss"
   );
 
   const currentPercentProgress = useMemo(() => {
     return (currentTime / durationTime) * 100;
   }, [currentTime, durationTime]);
 
+  const handleEditVideo = () => setShowEdit(true);
+
+  const handleDeleteVideo = () => {
+    video?.id &&
+      deleteVideo(
+        {
+          videoId: video?.id,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Vídeo excluído!");
+            router?.push("/videos");
+          },
+          onError: () => {
+            toast.error("Não foi possível excluir seu vídeo. Tente novamente.");
+          },
+        }
+      );
+  };
+
   return (
-    <S.Container>
-      <BaseVideo
-        ref={videoRef}
-        controls={controls}
-        onTimeUpdate={(event) =>
-          setCurrentTime(event.currentTarget.currentTime)
-        }
-        onDurationChange={(event) =>
-          setDurationTime(event.currentTarget.duration)
-        }
-        onClick={togglePlayState}
-        className="mux-video"
-        envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
-        {...rest}
-      />
-      <S.ControlsContainer>
-        <ProgressBar
-          currentPercent={currentPercentProgress}
-          css={{ background: "$neutral500" }}
+    <>
+      {showEdit && (
+        <UploadVideoDialog
+          video={video as any}
+          onClose={() => setShowEdit(false)}
         />
-        <S.Controls>
-          <S.ControlsRow>
-            <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
-              {isPaused || isFinished ? (
-                <PlayIcon />
-              ) : (
-                <PauseCircle size={24} />
-              )}
-            </Button>
-            <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
-              <SkipForward size={20} />
-            </Button>
-            <S.VolumeContainer>
-              <Tooltip message={`${volume}%`}>
-                <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
-                  {volume === 0 ? (
-                    <SpeakerSimpleX size={20} />
-                  ) : (
-                    <SpeakerSimpleHigh size={20} />
-                  )}
+      )}
+      <S.Container>
+        <BaseVideo
+          ref={videoRef}
+          controls={controls}
+          onTimeUpdate={(event) =>
+            setCurrentTime(event.currentTarget.currentTime)
+          }
+          onDurationChange={(event) =>
+            setDurationTime(event.currentTarget.duration)
+          }
+          onClick={togglePlayState}
+          className="mux-video"
+          envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
+          {...rest}
+        />
+        <S.ControlsContainer>
+          <ProgressBar
+            currentPercent={currentPercentProgress}
+            css={{ background: "$neutral500" }}
+          />
+          <S.Controls>
+            <S.ControlsRow>
+              <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
+                {isPaused || isFinished ? (
+                  <PlayIcon />
+                ) : (
+                  <PauseCircle size={24} />
+                )}
+              </Button>
+              <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
+                <SkipForward size={20} />
+              </Button>
+              <S.VolumeContainer>
+                <Tooltip message={`${volume}%`}>
+                  <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
+                    {volume === 0 ? (
+                      <SpeakerSimpleX size={20} />
+                    ) : (
+                      <SpeakerSimpleHigh size={20} />
+                    )}
+                  </Button>
+                </Tooltip>
+                <Slider
+                  max={100}
+                  min={0}
+                  value={[volume]}
+                  onValueChange={([volume]) => changeVolume(volume)}
+                />
+              </S.VolumeContainer>
+              <Typography.Text color="neutral">
+                {currentTimeFormatted} / {durationFormatted}
+              </Typography.Text>
+            </S.ControlsRow>
+            <S.ControlsRow>
+              {isCreator && (
+                <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
+                  <TrashIcon size={24} />
                 </Button>
-              </Tooltip>
-              <Slider
-                max={100}
-                min={0}
-                value={[volume]}
-                onValueChange={([volume]) => changeVolume(volume)}
-              />
-            </S.VolumeContainer>
-            <Typography.Text color="neutral">
-              {currentTimeFormatted} / {durationFormatted}
-            </Typography.Text>
-          </S.ControlsRow>
-          <S.ControlsRow>
-            <Button {...ICON_BUTTON_PROPS}>
-              <EditIcon size={24} />
-            </Button>
-            <Button {...ICON_BUTTON_PROPS}>
-              <LinkIcon size={24} />
-            </Button>
-            <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
-              <FrameCorners size={24} weight="light" />
-            </Button>
-          </S.ControlsRow>
-        </S.Controls>
-      </S.ControlsContainer>
-    </S.Container>
+              )}
+              {isCreator && (
+                <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
+                  <EditIcon size={24} />
+                </Button>
+              )}
+              <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
+                {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
+              </Button>
+              <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
+                <FrameCorners size={24} weight="light" />
+              </Button>
+            </S.ControlsRow>
+          </S.Controls>
+        </S.ControlsContainer>
+      </S.Container>
+    </>
   );
 }

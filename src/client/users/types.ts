@@ -8,8 +8,16 @@ export const UserStatsDecoder = t.object({
   totalMinutesWatched: t.number(),
 });
 
+export const UserRoleDecoder = t.object({
+  name: t.string(),
+  updatedAt: t.string().datetime(),
+  //TODO: Revisar se o "nullish()" no "createAt" está correto...
+  createAt: t.string().datetime().nullish(),
+});
+
 export const UserDecoder = t.object({
   id: t.string(),
+  role: UserRoleDecoder.nullish(),
   fullName: t.string(),
   email: t.string(),
   nickname: t.string(),
@@ -19,7 +27,8 @@ export const UserDecoder = t.object({
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
   banner: MediaDecoder.nullish(),
-  createAt: t.string().datetime(),
+  //TODO: Revisar se o "nullish()" no "createAt" está correto...
+  createdAt: t.string().datetime().nullish(),
   score: ScoreDecoder.nullish(),
   stats: UserStatsDecoder.nullish(),
 });
@@ -34,7 +43,7 @@ export const CreateUserDecoder = t.object({
     .max(20, "O apelido deve ter no máximo 20 caracteres")
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")',
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
     )
     .transform((arg) => arg.toLowerCase().replace("@", "")),
   email: t
@@ -54,7 +63,7 @@ export const UpdateUserDecoder = t.object({
     .max(20, "O apelido deve ter no máximo 20 caracteres")
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")',
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
     )
     .transform((arg) => arg.toLowerCase().replace("@", "")),
   bio: t

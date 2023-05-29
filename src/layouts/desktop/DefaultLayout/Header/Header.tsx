@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { Avatar, Button, Logo, Popover, Tag, Tooltip, Typography } from "@/ui";
+import { Avatar, Button, Logo, Popover, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
@@ -16,8 +16,15 @@ import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 import { UploadVideoDialog } from "@/features/videos";
+import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 
 import * as S from "./Header.styles";
+import dynamic from "next/dynamic";
+
+const CreateArticleDialog = dynamic(
+  () => import("../../../../features/articles/CreateArticleDialog"),
+  { ssr: false }
+);
 
 export function Header() {
   const { searchTerm, handleChange, handleSearch } = useSearch();
@@ -28,15 +35,19 @@ export function Header() {
     id: session?.userId,
   });
 
-  const isEnabled =
-    user?.email.endsWith("@nhai360.com") ||
-    user?.email.endsWith("@catency.com");
+  const isAdmin = user?.role?.name === "ADMIN";
+  const isEnabled = isAdmin;
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
 
   const [isUploadVideoDialogVisible, setIsUploadVideoDialogVisible] =
     useState(false);
+
+  const [isCreateBroadcastDialogVisible, setIsCreateBroadcastDialogVisible] =
+    useState(false);
+
+  const [isCreateArticleVisible, setIsCreateArticleVisible] = useState(false);
 
   return (
     <>
@@ -47,6 +58,19 @@ export function Header() {
       {isUploadVideoDialogVisible && (
         <UploadVideoDialog
           onClose={() => setIsUploadVideoDialogVisible(false)}
+        />
+      )}
+
+      {isCreateBroadcastDialogVisible && (
+        <CreateBroadcastDialog
+          onClose={() => setIsCreateBroadcastDialogVisible(false)}
+        />
+      )}
+
+      {isCreateArticleVisible && (
+        <CreateArticleDialog
+          type="create"
+          onClose={() => setIsCreateArticleVisible(false)}
         />
       )}
 
@@ -85,6 +109,20 @@ export function Header() {
                     <Typography.Text>Vídeo</Typography.Text>
                   </Popover.Action>
                 )}
+                {isEnabled && (
+                  <Popover.Action
+                    onClick={() => setIsCreateArticleVisible(true)}
+                  >
+                    <Typography.Text>Artigo</Typography.Text>
+                  </Popover.Action>
+                )}
+                {isEnabled && (
+                  <Popover.Action
+                    onClick={() => setIsCreateBroadcastDialogVisible(true)}
+                  >
+                    <Typography.Text>Transmissão</Typography.Text>
+                  </Popover.Action>
+                )}
               </Popover>
             </Popover.Root>
             {/* <Tooltip message="Novo post" position="bottom">
@@ -110,7 +148,10 @@ export function Header() {
                     {getFirstNameAndLastName(user?.fullName)}
                   </Typography.Text>
                   {user?.nickname && (
-                    <Typography.Text size="body3" color="secondary">
+                    <Typography.Text
+                      size="body3"
+                      color={isAdmin ? "pink" : "secondary"}
+                    >
                       @{user?.nickname}
                     </Typography.Text>
                   )}

@@ -2,6 +2,7 @@ import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import { Videos } from "@/features/videos";
 import { withAuth } from "@/middlewares";
+import { useEffect } from "react";
 
 function VideosPage() {
   const { session } = useAuthContext();
@@ -10,15 +11,18 @@ function VideosPage() {
     id: session?.userId,
   });
 
-  const isEnabled =
-    user?.email.endsWith("@nhai360.com") ||
-    user?.email.endsWith("@catency.com");
+  const isAdmin = user?.role?.name === "ADMIN";
 
-  if (!isEnabled) {
+  if (!isAdmin) {
     return null;
   }
 
-  return <Videos.DesktopLayout />;
+  return (
+    <>
+      <Videos.DesktopLayout />
+      <Videos.AppLayout />
+    </>
+  );
 }
 
 export default withAuth(VideosPage);

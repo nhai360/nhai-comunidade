@@ -1,4 +1,5 @@
 import { DefaultLayout } from "@/layouts/desktop";
+import styles from "./styles.module.scss";
 
 import { MainTrends } from "@/features/feed";
 import { FeaturedVideoCard, VideosList } from "@/features/videos";
@@ -6,15 +7,17 @@ import { FeaturedVideoCard, VideosList } from "@/features/videos";
 export function DesktopLayout() {
   return (
     <DefaultLayout>
-      <DefaultLayout.GridWithSider>
-        <DefaultLayout.Content css={{ gap: "$6" }}>
-          <FeaturedVideoCard />
-          <VideosList />
-        </DefaultLayout.Content>
-        <DefaultLayout.Sider>
-          <MainTrends />
-        </DefaultLayout.Sider>
-      </DefaultLayout.GridWithSider>
+      <div className={styles.contentContainer}>
+        <section className={styles.contentHolder}>
+          <article className={styles.articleContainer}>
+            <FeaturedVideoCard />
+          </article>
+          <aside className={styles.asideContainer}>
+            <MainTrends />
+          </aside>
+        </section>
+        <VideosList />
+      </div>
     </DefaultLayout>
   );
 }
