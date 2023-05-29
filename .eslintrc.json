@@ -6,6 +6,7 @@
     "no-useless-catch": "off",
     "object-shorthand": "off",
     "no-use-before-define": "off",
+    "no-extra-boolean-cast": "off",
     "prefer-const": "off",
     "spaced-comment": "off",
     "yoda": "off",

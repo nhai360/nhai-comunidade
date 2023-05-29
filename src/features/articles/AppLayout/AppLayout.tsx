@@ -9,6 +9,9 @@ export function AppLayout() {
     <DefaultLayout>
       <DefaultLayout.Header />
       <DefaultLayout.Content>
+        <section className={styles.contentHeader}>
+
+        </section>
         <section className={styles.gridArticlesContainer}>
           {articles?.map((article: any, index: any) => (
             <CardArticle article={article} key={index} />
