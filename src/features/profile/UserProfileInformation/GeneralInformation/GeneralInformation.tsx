@@ -19,7 +19,7 @@ import * as S from "./GeneralInformation.styles";
 
 export function GeneralInformation() {
   const { isEnabled: isEnabledProfileLocation } = useFeatureFlag(
-    FeatureDecoder.Values.PROFILE_LOCATION,
+    FeatureDecoder.Values.PROFILE_LOCATION
   );
 
   const [bio, setBio] = useState(createEditorStateWithText(""));
@@ -37,13 +37,16 @@ export function GeneralInformation() {
       onSuccess: ({ bio }) => {
         setBio(createEditorStateWithText(bio ?? "Nenhuma biografia informada"));
       },
-    },
+    }
   );
 
   const createdAtFormatted = useMemo(() => {
     if (!user) return "";
 
-    return format(new Date(user?.createAt as any), "'Por aqui desde' MMMM 'de' yyyy");
+    return format(
+      new Date(user?.createdAt as any),
+      "'Por aqui desde' MMMM 'de' yyyy"
+    );
   }, [user]);
 
   return (

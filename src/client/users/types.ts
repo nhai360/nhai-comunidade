@@ -28,7 +28,7 @@ export const UserDecoder = t.object({
   profilePicture: MediaDecoder.nullish(),
   banner: MediaDecoder.nullish(),
   //TODO: Revisar se o "nullish()" no "createAt" está correto...
-  createAt: t.string().datetime().nullish(),
+  createdAt: t.string().datetime().nullish(),
   score: ScoreDecoder.nullish(),
   stats: UserStatsDecoder.nullish(),
 });
