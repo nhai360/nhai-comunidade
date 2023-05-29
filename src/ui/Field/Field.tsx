@@ -11,6 +11,8 @@ import {
 
 import * as S from "./Field.styles";
 
+import AsyncCreatableSelect from "react-select/async-creatable";
+
 type FieldProps = {
   htmlFor?: string;
   label?: string;
@@ -89,12 +91,18 @@ const FieldInput: ForwardRefRenderFunction<
 
 type FieldSelectProps = FieldProps & SelectProps;
 
-const FieldSelect: ForwardRefRenderFunction<
-  HTMLInputElement,
-  FieldSelectProps
-> = (
-  { label, helperText, errorText, name, required, children, ...rest },
-  ref
+const FieldSelect = (
+  {
+    label,
+    helperText,
+    errorText,
+    name,
+    required,
+    data,
+    onChange,
+    ...rest
+  }: any,
+  ref: any
 ) => {
   const hasError = Boolean(errorText);
 
@@ -106,16 +114,17 @@ const FieldSelect: ForwardRefRenderFunction<
       htmlFor={name}
       required={required}
     >
-      <Select
+      <AsyncCreatableSelect
         ref={ref as any}
         id={name}
         name={name}
         error={hasError}
         {...rest}
         size="medium"
-      >
-        {children}
-      </Select>
+        isClearable
+        defaultOptions={data}
+        onChange={(a: any) => onChange("playlist", a?.value)}
+      />
     </Field>
   );
 };

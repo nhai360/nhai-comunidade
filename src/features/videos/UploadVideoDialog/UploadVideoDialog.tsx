@@ -32,6 +32,7 @@ import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
 import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { useAuthContext } from "@/contexts";
+import { useAddVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 
 type Props = {
   onClose: () => void;
@@ -69,6 +70,8 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
+
+  const { addVideoPlaylist } = useAddVideoPlaylist();
 
   const {
     createVideo,
@@ -133,9 +136,23 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
               source,
               thumbnail: media,
               tags: tagsInArray,
-              playlist: playlist,
             },
             {
+              onSuccess: (video) => {
+                // playlist && addVideoPlaylist(
+                //   {
+                //     videoId: video?.id,
+                //     playlistId: playlist,
+                //   },
+                //   {
+                //     onError: () => {
+                //       toast.error(
+                //         "Não foi possível adicionar o vídeo na playlist. Tente novamente"
+                //       );
+                //     },
+                //   }
+                // );
+              },
               onError: () => {
                 toast.error(
                   "Não foi possível postar o seu vídeo. Tente novamente"
@@ -239,17 +256,17 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     {...register("tags")}
                   />
                 )}
-                <Field.Select
+                {/* <Field.Select
                   label="Playlist"
                   placeholder="Selecione a playlist do vídeo"
                   {...register("playlist")}
-                >
-                  {userplaylists?.map((playlist) => (
-                    <option key={playlist?.id} value={playlist?.id}>
-                      {playlist?.title}
-                    </option>
-                  ))}
-                </Field.Select>
+                  onChange={setValue}
+                  data={
+                    userplaylists?.map((playlist) => {
+                      return { value: playlist?.id, label: playlist?.title };
+                    }) || []
+                  }
+                ></Field.Select> */}
                 <Field label="Descrição" required={false}>
                   <TextArea
                     defaultValue={video?.description}
