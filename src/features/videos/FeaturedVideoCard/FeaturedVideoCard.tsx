@@ -28,14 +28,16 @@ export function FeaturedVideoCard() {
     <Card>
       <S.FlexContainer>
         <S.Content>
-          <Typography.Title size="h2" weight="bold" color="title">
-            Semana +Digital: A diversidade como potência
-          </Typography.Title>
-          <Typography.Text>
-            Nesta primeira semana do mês do Orgulho, acontecerá na nossa
-            Plataforma Contaí Comunidade o evento Reconstruindo Sistemas - A
-            Diversidade como Potência.
-          </Typography.Text>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <Typography.Title size="h2" weight="bold" color="title">
+              Semana +Digital: A diversidade como potência
+            </Typography.Title>
+            <Typography.Text>
+              Nesta primeira semana do mês do Orgulho, acontecerá na nossa
+              Plataforma Contaí Comunidade o evento Reconstruindo Sistemas - A
+              Diversidade como Potência.
+            </Typography.Text>
+          </div>
           <S.Actions>
             <Button onClick={handleWatch} className={styles.customButton}>
               <PlayIcon />
@@ -51,7 +53,7 @@ export function FeaturedVideoCard() {
             </Button>
           </S.Actions>
         </S.Content>
-        <div>
+        <div style={{ flex: 0.4 }}>
           <S.Thumbnail
             src={
               featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"

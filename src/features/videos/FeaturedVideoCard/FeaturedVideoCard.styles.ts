@@ -4,16 +4,20 @@ export const FlexContainer = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   gap: "$6",
+  maxHeight: 320,
 
   "@media (max-width: 768px)": {
     flexDirection: "column-reverse",
     gap: "$2",
+    maxHeight: "auto",
   },
 });
 
 export const Content = styled("div", {
   display: "flex",
+  flex: 0.6,
   flexDirection: "column",
+  justifyContent: "space-between",
   gap: "$8",
 });
 
