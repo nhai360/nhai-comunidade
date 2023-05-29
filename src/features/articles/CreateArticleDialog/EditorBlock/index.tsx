@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 
 type IUploadFile = {
   file: any;
-  typeFile: 'IMAGE' | 'FILE';
+  typeFile: "IMAGE" | "DOCUMENT";
 };
 
 //props
@@ -26,12 +26,12 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
   //add a reference to editor
   const ref = useRef<EditorJS>();
 
-  async function createMedia(fileType: 'IMAGE'| 'FILE') {
+  async function createMedia(fileType: "IMAGE" | "DOCUMENT") {
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/media/`;
 
       const requestBody = {
-        category: 'IMAGE',
+        category: fileType,
       };
 
       const response = await axios.post(apiUrl, requestBody, {
@@ -47,8 +47,11 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     }
   }
 
-  async function uploadFile(file: any, fileType: 'IMAGE' | 'FILE') {
+  async function uploadFile(file: any, fileType: "IMAGE" | "DOCUMENT") {
     try {
+      if (file.type === "application/pdf") {
+        return;
+      }
       const mediaId = await createMedia(fileType);
       if (mediaId === "") {
         console.log("media error");
@@ -97,7 +100,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                  * @return {Promise.<{success, file: {url}}>}
                  */
                 uploadByFile(file: string) {
-                  return uploadFile(file, 'IMAGE').then((data) => {
+                  return uploadFile(file, "IMAGE").then((data) => {
                     return {
                       success: 1,
                       file: {
@@ -130,6 +133,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
           attaches: {
             class: AttachesTool,
             config: {
+              types: "application/pdf",
               uploader: {
                 /**x
                  * Upload file to the server and return an uploaded image data
@@ -137,11 +141,13 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                  * @return {Promise.<{success, file: {url}}>}
                  */
                 uploadByFile(file: string) {
-                  return uploadFile(file, 'FILE').then((data) => {
+                  return uploadFile(file, "DOCUMENT").then((data) => {
                     return {
                       success: 1,
                       file: {
                         url: data.url,
+                        name: data.name,
+                        size: data.size,
                         // any other image data you want to store, such as width, height, color, extension, etc
                       },
                     };
