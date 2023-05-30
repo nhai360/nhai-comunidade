@@ -1,10 +1,49 @@
 import { useFeedContext } from "@/contexts";
+import { useArticleContext } from "@/contexts/ArticleContext";
+import { useVideoContext } from "@/contexts/VideoContext";
+import { useRouter } from "next/router";
 import { ChangeEvent, useRef } from "react";
 
 export function useSearch() {
   const timerId = useRef(0);
+  const router = useRouter();
 
-  const { searchTerm, setSearchTerm, handleSearch } = useFeedContext();
+  const path = router?.pathname?.split("/")[1];
+
+  const {
+    searchTerm: searchTermPost,
+    setSearchTerm: setSearchTermPost,
+    handleSearch: handleSearchPost,
+  } = useFeedContext();
+
+  const {
+    searchTerm: searchTermVideo,
+    setSearchTerm: setSearchTermVideo,
+    handleSearch: handleSearchVideo,
+  } = useVideoContext();
+
+  const {
+    searchTerm: searchTermArticle,
+    setSearchTerm: setSearchTermArticle,
+    handleSearch: handleSearchArticle,
+  } = useArticleContext();
+
+  const searchTerm =
+    path === "videos"
+      ? searchTermVideo
+      : path === "articles"
+      ? searchTermArticle
+      : searchTermPost;
+
+  const handleSearch = () => {
+    if (path === "") {
+      handleSearchPost();
+    } else if (path === "videos") {
+      handleSearchVideo();
+    } else if (path === "articles") {
+      handleSearchArticle();
+    }
+  };
 
   function handleSearchAfterTyping() {
     if (timerId.current !== 0) {
@@ -19,7 +58,13 @@ export function useSearch() {
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.currentTarget.value);
+    if (path === "") {
+      setSearchTermPost(event.currentTarget.value);
+    } else if (path === "videos") {
+      setSearchTermVideo(event.currentTarget.value);
+    } else if (path === "articles") {
+      setSearchTermArticle(event.currentTarget.value);
+    }
     handleSearchAfterTyping();
   }
 

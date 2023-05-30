@@ -1,10 +1,10 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import styles from "../styles.module.scss";
 import CardArticle from "../CardArticle";
-import { useArticles } from "@/client/articles";
+import { useArticleContext } from "@/contexts/ArticleContext";
 
 export function DesktopLayout() {
-  const { articles } = useArticles();
+  const { articles } = useArticleContext();
 
   return (
     <DefaultLayout>

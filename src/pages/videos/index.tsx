@@ -1,11 +1,14 @@
+import { VideosProvider } from "@/contexts/VideoContext";
 import { Videos } from "@/features/videos";
 import { withAuth } from "@/middlewares";
 
 function VideosPage() {
   return (
     <>
-      <Videos.DesktopLayout />
-      <Videos.AppLayout />
+      <VideosProvider>
+        <Videos.DesktopLayout />
+        <Videos.AppLayout />
+      </VideosProvider>
     </>
   );
 }

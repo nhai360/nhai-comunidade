@@ -68,8 +68,8 @@ const DropzoneComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
   ) {
     toast.error(
       `Imagem não suportada. Use apenas imagens com até ${
-        maxSize / (1024 * 1024)
-      }MB`
+        maxSize / (1024 * 1024 * 1024)
+      }GB`
     );
 
     onDropRejected && onDropRejected(fileRejections, event);

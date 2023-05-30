@@ -18,22 +18,7 @@ export const ArticleDecoder = t.object({
   id: t.string(),
   title: t.string(),
   //TODO: Revisar tipagem.
-  content: t.object({
-    time: t.number(),
-    blocks: t.array(
-      t.object({
-        id: t.string(),
-        type: t.union([
-          t.literal("header"),
-          t.literal("paragraph"),
-          t.literal("image"),
-        ]),
-        data: t.record(t.unknown()),
-        tunes: t.record(t.unknown()).optional(),
-      })
-    ),
-    version: t.string(),
-  }),
+  content: t.string(),
   createdAt: t.string().nullish(),
   updatedAt: t.string().nullish(),
   author: UserDecoder.nullish(),
@@ -46,6 +31,12 @@ export type Article = t.TypeOf<typeof ArticleDecoder>;
 
 export type GetArticleParams = {
   articleId?: string;
+};
+
+export type GetArticlesParams = {
+  search?: string;
+  orderBy?: keyof Article;
+  orderDirection?: "asc" | "desc";
 };
 
 export type ContentType = {

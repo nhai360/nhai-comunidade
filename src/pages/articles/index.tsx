@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import styles from "./styles.module.scss";
 import CardArticle from "@/features/articles/CardArticle";
 import { Articles } from "@/features/articles";
+import { ArticlesProvider } from "@/contexts/ArticleContext";
 
 function ArticlesPage() {
   const { session } = useAuthContext();
@@ -22,10 +23,10 @@ function ArticlesPage() {
   }
 
   return (
-    <>
+    <ArticlesProvider>
       <Articles.AppLayout />
       <Articles.DesktopLayout />
-    </>
+    </ArticlesProvider>
   );
 }
 

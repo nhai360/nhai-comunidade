@@ -12,10 +12,21 @@ import * as S from "./VideoCard.styles";
 
 type Props = {
   video: Video;
+  hasHover?: boolean;
 };
 
-export function VideoCard({ video }: Props) {
+export function VideoCard({ video, hasHover = true }: Props) {
   const createdAtFormatted = format(new Date(video.createdAt), "dd MMM");
+
+  const hoverCss = hasHover
+    ? {
+        "&:hover": {
+          transform: "translateY(-8px)",
+        },
+      }
+    : {
+        margin: "4px 0",
+      };
 
   return (
     <Link href={`/videos/${video.id}`}>
@@ -25,9 +36,7 @@ export function VideoCard({ video }: Props) {
           cursor: "pointer",
           width: "100%",
           height: 320,
-          "&:hover": {
-            transform: "translateY(-8px)",
-          },
+          ...hoverCss,
         }}
       >
         {video.thumbnail?.url && (

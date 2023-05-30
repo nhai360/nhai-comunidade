@@ -5,9 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import * as S from "./VideosList.styles";
 import { Typography } from "@/ui";
+import { useVideoContext } from "@/contexts/VideoContext";
 
 export function VideosList() {
-  const { videos } = useVideos();
+  const { videos } = useVideoContext();
 
   return (
     <S.Container>

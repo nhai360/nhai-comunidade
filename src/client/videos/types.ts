@@ -96,6 +96,12 @@ export type GetParams = {
   nickname?: string;
 };
 
+export type GetVideosParams = {
+  search?: string;
+  orderBy?: keyof Video;
+  orderDirection?: "asc" | "desc";
+};
+
 export type GetVideoParams = {
   videoId?: string;
 };

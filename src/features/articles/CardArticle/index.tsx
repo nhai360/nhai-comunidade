@@ -26,7 +26,7 @@ const CardArticle = ({ article }: Props) => {
         blocks?.find((b: any) => b?.type === "paragraph")?.data?.text
       );
     } catch (error) {}
-  }, []);
+  }, [article]);
 
   return (
     <>

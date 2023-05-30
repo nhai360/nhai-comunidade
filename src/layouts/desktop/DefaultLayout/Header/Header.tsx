@@ -20,6 +20,7 @@ import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard"
 
 import * as S from "./Header.styles";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const CreateArticleDialog = dynamic(
   () => import("../../../../features/articles/CreateArticleDialog"),

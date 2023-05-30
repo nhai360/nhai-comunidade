@@ -1,19 +1,31 @@
 import { useQuery } from "react-query";
 
 import { authenticatedAPI, decodeResponse } from "@/client";
-import { Article, ArticleDecoder } from "@/client/articles/types";
+import {
+  Article,
+  ArticleDecoder,
+  GetArticlesParams,
+} from "@/client/articles/types";
 
-async function getArticles() {
-  const response = await authenticatedAPI.get(`/articles`);
+export async function getArticles({
+  orderBy = "createdAt",
+  orderDirection = "desc",
+  search,
+}: GetArticlesParams) {
+  const response = await authenticatedAPI.get("/articles", {
+    params: {
+      // orderBy: `${orderBy}:${orderDirection}`,
+      search,
+    },
+  });
 
-  // return decodeResponse<Article[]>(response, ArticleDecoder.array());
-  return response.data;
+  return decodeResponse<Article[]>(response, ArticleDecoder.array());
 }
 
-export function useArticles() {
-  const { data: articles = [], ...rest } = useQuery({
-    queryKey: ["articles"],
-    queryFn: getArticles,
+export function useArticles(params: GetArticlesParams = {}) {
+  const { data: articles, ...rest } = useQuery<Article[]>({
+    queryKey: "articles",
+    queryFn: () => getArticles(params),
   });
 
   return {
