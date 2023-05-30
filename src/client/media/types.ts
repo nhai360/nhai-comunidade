@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import * as t from "zod";
 
 export enum MediaCategory {
@@ -22,6 +23,7 @@ export const MediaDecoder = t.object({
 export type Media = t.TypeOf<typeof MediaDecoder>;
 
 export type PostParams = {
+  setPercentage?: Dispatch<SetStateAction<number>>;
   file: File;
   category: MediaCategory;
   mimeType?: string;
