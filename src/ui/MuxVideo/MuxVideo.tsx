@@ -48,6 +48,7 @@ export function MuxVideo({
   controls = false,
   isCreator = false,
   video,
+  isMobile = false,
   ...rest
 }: any) {
   const router = useRouter();
@@ -194,69 +195,84 @@ export function MuxVideo({
           onDurationChange={(event) =>
             setDurationTime(event.currentTarget.duration)
           }
-          onClick={togglePlayState}
+          onClick={!isMobile ? togglePlayState : openFullScreen}
           className="mux-video"
           envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
           {...rest}
         />
-        <S.ControlsContainer>
-          <ProgressBar
-            currentPercent={currentPercentProgress}
-            css={{ background: "$neutral500" }}
-          />
-          <S.Controls>
-            <S.ControlsRow>
-              <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
-                {isPaused || isFinished ? (
-                  <PlayIcon />
-                ) : (
-                  <PauseCircle size={24} />
-                )}
-              </Button>
-              <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
-                <SkipForward size={20} />
-              </Button>
-              <S.VolumeContainer>
-                <Tooltip message={`${volume}%`}>
-                  <Button {...ICON_BUTTON_PROPS} onClick={toggleVolumeState}>
-                    {volume === 0 ? (
-                      <SpeakerSimpleX size={20} />
-                    ) : (
-                      <SpeakerSimpleHigh size={20} />
-                    )}
+        {!isMobile && (
+          <S.ControlsContainer
+            style={{ padding: isMobile ? "8px 12px" : "$6" }}
+          >
+            {!isMobile && (
+              <ProgressBar
+                currentPercent={currentPercentProgress}
+                css={{ background: "$neutral500" }}
+              />
+            )}
+            <S.Controls>
+              <S.ControlsRow style={{ marginTop: isMobile ? 0 : "$3" }}>
+                <Button {...ICON_BUTTON_PROPS} onClick={togglePlayState}>
+                  {isPaused || isFinished ? (
+                    <PlayIcon />
+                  ) : (
+                    <PauseCircle size={24} />
+                  )}
+                </Button>
+                {!isMobile && (
+                  <Button {...ICON_BUTTON_PROPS} onClick={skipForward}>
+                    <SkipForward size={20} />
                   </Button>
-                </Tooltip>
-                <Slider
-                  max={100}
-                  min={0}
-                  value={[volume]}
-                  onValueChange={([volume]) => changeVolume(volume)}
-                />
-              </S.VolumeContainer>
-              <Typography.Text color="neutral">
-                {currentTimeFormatted} / {durationFormatted}
-              </Typography.Text>
-            </S.ControlsRow>
-            <S.ControlsRow>
-              {isCreator && (
-                <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
-                  <TrashIcon size={24} />
+                )}
+                {!isMobile && (
+                  <>
+                    <S.VolumeContainer>
+                      <Tooltip message={`${volume}%`}>
+                        <Button
+                          {...ICON_BUTTON_PROPS}
+                          onClick={toggleVolumeState}
+                        >
+                          {volume === 0 ? (
+                            <SpeakerSimpleX size={20} />
+                          ) : (
+                            <SpeakerSimpleHigh size={20} />
+                          )}
+                        </Button>
+                      </Tooltip>
+                      <Slider
+                        max={100}
+                        min={0}
+                        value={[volume]}
+                        onValueChange={([volume]) => changeVolume(volume)}
+                      />
+                    </S.VolumeContainer>
+                    <Typography.Text color="neutral">
+                      {currentTimeFormatted} / {durationFormatted}
+                    </Typography.Text>
+                  </>
+                )}
+              </S.ControlsRow>
+              <S.ControlsRow style={{ marginTop: isMobile ? 0 : "$3" }}>
+                {isCreator && !isMobile && (
+                  <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
+                    <TrashIcon size={24} />
+                  </Button>
+                )}
+                {isCreator && !isMobile && (
+                  <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
+                    <EditIcon size={24} />
+                  </Button>
+                )}
+                <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
+                  {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
                 </Button>
-              )}
-              {isCreator && (
-                <Button onClick={handleEditVideo} {...ICON_BUTTON_PROPS}>
-                  <EditIcon size={24} />
+                <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
+                  <FrameCorners size={24} weight="light" />
                 </Button>
-              )}
-              <Button {...ICON_BUTTON_PROPS} onClick={handleCopyVideoUrl}>
-                {isCopied ? <CheckIcon size={20} /> : <LinkIcon size={24} />}
-              </Button>
-              <Button {...ICON_BUTTON_PROPS} onClick={openFullScreen}>
-                <FrameCorners size={24} weight="light" />
-              </Button>
-            </S.ControlsRow>
-          </S.Controls>
-        </S.ControlsContainer>
+              </S.ControlsRow>
+            </S.Controls>
+          </S.ControlsContainer>
+        )}
       </S.Container>
     </>
   );

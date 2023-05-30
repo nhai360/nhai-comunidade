@@ -13,7 +13,7 @@ import * as S from "./VideoPlayerCard.styles";
 import { format } from "date-fns";
 import { Post } from "@/features/posts";
 
-export function VideoPlayerCard() {
+export function VideoPlayerCard({ isMobile = false }) {
   const router = useRouter();
 
   const { session } = useAuthContext();
@@ -47,6 +47,7 @@ export function VideoPlayerCard() {
         }}
         video={video}
         isCreator={isCreator}
+        isMobile={isMobile}
       />
       <Typography.Title size="subHeadline" weight="bold">
         {video?.title}
