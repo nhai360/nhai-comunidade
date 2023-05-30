@@ -67,12 +67,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
 
   const { session } = useAuthContext();
   const { userplaylists } = useUserPlaylists({ userId: session?.userId });
-  const {
-    upload,
-    data: source,
-    isSuccess: isSuccessUpload,
-    isError: isErrorUpload,
-  } = useUpload();
+  const { upload, data: source, isError: isErrorUpload } = useUpload();
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
@@ -91,7 +86,11 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     isSuccess: isUpdatingSuccess,
   } = useUpdateVideo();
 
-  const isLoading = isUploadingThumbnail || isCreatingVideo || isUpdatingVideo;
+  const isLoading =
+    isUploadingThumbnail ||
+    isCreatingVideo ||
+    isUpdatingVideo ||
+    percentage < 100;
 
   function handleUpload(files: File[]) {
     const currentFile = files[0];
@@ -107,9 +106,6 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
         setPercentage,
       },
       {
-        onSuccess: () => {
-          toast.success("O upload do seu vídeo comprimido foi concluído!");
-        },
         onError: () => {
           toast.error(
             "Não foi possível completar o upload do seu vídeo comprimido. Tente novamente"
@@ -127,6 +123,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     playlist,
   }: CreateVideoParams) {
     if (!source) {
+      console.log("Source:", source);
       return toast.error(
         "Você precisa fazer um novo upload de vídeo, o anterior falhou!"
       );
@@ -345,22 +342,22 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     gap: "$3",
                   }}
                 >
-                  {isErrorUpload ? (
-                    <>
-                      <CloseIcon />
-                      Falha no upload do vídeo
-                    </>
-                  ) : isSuccessUpload ? (
-                    <>
-                      <CheckCircleIcon />
-                      Vídeo carregado e pronto para ser postado
-                    </>
-                  ) : (
+                  {percentage < 100 ? (
                     <>
                       <Loading />
                       {percentage >= 100
                         ? `Processando vídeo`
                         : `Enviando vídeo ${percentage && `(${percentage}%)`}`}
+                    </>
+                  ) : isErrorUpload ? (
+                    <>
+                      <CloseIcon />
+                      Falha no upload do vídeo
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircleIcon />
+                      Vídeo carregado e pronto para ser postado
                     </>
                   )}
                 </Typography.Text>
@@ -369,7 +366,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 <Button
                   type="submit"
                   loading={isLoading}
-                  disabled={!isSuccessUpload}
+                  disabled={percentage < 100 || isErrorUpload}
                   onClick={() => handleSubmit(handleCreateVideo)()}
                 >
                   Postar vídeo

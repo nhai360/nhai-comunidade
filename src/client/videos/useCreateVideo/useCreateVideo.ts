@@ -4,7 +4,10 @@ import { authenticatedAPI } from "@/client";
 import { PostParams, invalidateVideosQueries } from "@/client/videos";
 
 async function createVideoRequest(params: PostParams) {
-  const response = await authenticatedAPI.post("/videos", params);
+  const response = await authenticatedAPI.post("/videos", {
+    ...params,
+    source: { id: params?.source?.id },
+  });
 
   return response.data;
 }
