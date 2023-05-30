@@ -61,6 +61,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   }, [video]);
 
   const file = watch("file");
+  const [percentage, setPercentage] = useState<number>(0);
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
 
@@ -103,6 +104,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
         file: currentFile,
         category: MediaCategory.VIDEO,
         mimeType: "video",
+        setPercentage,
       },
       {
         onSuccess: () => {
@@ -238,11 +240,12 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
 
   return (
     <>
-      <Dialog open onOpenChange={onClose}>
+      <Dialog open>
         <Dialog.Content>
           <Dialog.Header
             title={video ? "Editar vídeo" : file ? file.name : "Enviar vídeo"}
             closable
+            onClose={onClose}
           />
           <Dialog.Body>
             {file || video ? (
@@ -355,8 +358,9 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                   ) : (
                     <>
                       <Loading />
-                      Enviando vídeo
-                      {/*{uploadProgress && `(${uploadProgress}%)`} */}
+                      {percentage >= 100
+                        ? `Processando vídeo`
+                        : `Enviando vídeo ${percentage && `(${percentage}%)`}`}
                     </>
                   )}
                 </Typography.Text>
