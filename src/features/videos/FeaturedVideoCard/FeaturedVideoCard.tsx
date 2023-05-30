@@ -6,7 +6,11 @@ import * as S from "./FeaturedVideoCard.styles";
 import { useRouter } from "next/router";
 import { useVideoContext } from "@/contexts/VideoContext";
 
-export function FeaturedVideoCard() {
+interface IFeaturedVideoCard {
+  isMobile?: boolean;
+}
+
+export function FeaturedVideoCard({ isMobile = false }: IFeaturedVideoCard) {
   const router = useRouter();
   const { videos } = useVideoContext();
 
@@ -26,12 +30,18 @@ export function FeaturedVideoCard() {
 
   return (
     <Card>
-      <S.FlexContainer>
+      <S.FlexContainer style={{ maxHeight: isMobile ? 420 : 360 }}>
         <S.Content>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Typography.Title size="h2" weight="bold" color="title">
-              Semana +Digital: A diversidade como potência
-            </Typography.Title>
+            {isMobile ? (
+              <Typography.Title size="h3" weight="bold" color="title">
+                Semana +Digital: A diversidade como potência
+              </Typography.Title>
+            ) : (
+              <Typography.Title size="h2" weight="bold" color="title">
+                Semana +Digital: A diversidade como potência
+              </Typography.Title>
+            )}
             <Typography.Text>
               Nesta primeira semana do mês do Orgulho, acontecerá na nossa
               Plataforma Contaí Comunidade o evento Reconstruindo Sistemas - A
@@ -53,9 +63,11 @@ export function FeaturedVideoCard() {
             </Button>
           </S.Actions>
         </S.Content>
-        <div style={{ flex: 0.4 }}>
-          <S.Thumbnail src={"/featured-video-thumbnail.png"} />
-        </div>
+        {!isMobile && (
+          <div style={{ flex: 0.4 }}>
+            <S.Thumbnail src={"/featured-video-thumbnail.png"} />
+          </div>
+        )}
       </S.FlexContainer>
     </Card>
   );

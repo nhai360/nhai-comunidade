@@ -4,7 +4,6 @@ export const FlexContainer = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   gap: "$6",
-  maxHeight: 320,
 
   "@media (max-width: 768px)": {
     flexDirection: "column-reverse",
