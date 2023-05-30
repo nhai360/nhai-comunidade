@@ -1,15 +1,14 @@
 import { DefaultLayout } from "@/layouts/app";
-import { FeaturedVideoCard } from "../FeaturedVideoCard";
-import { useVideos } from "@/client/videos";
 import { VideoCard } from "../VideoCard";
+import { useVideoContext } from "@/contexts/VideoContext";
 
 export function AppLayout() {
-  const { videos } = useVideos();
+  const { videos } = useVideoContext();
   return (
     <DefaultLayout>
       <DefaultLayout.Header />
       <DefaultLayout.Content>
-        <FeaturedVideoCard />
+        {/* <FeaturedVideoCard /> */}
         {videos.map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}

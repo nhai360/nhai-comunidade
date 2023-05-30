@@ -3,12 +3,12 @@ import { ExclamationCircleIcon, PlayIcon } from "@/ui/_icons";
 
 import styles from "./styles.module.scss";
 import * as S from "./FeaturedVideoCard.styles";
-import { useVideos } from "@/client/videos";
 import { useRouter } from "next/router";
+import { useVideoContext } from "@/contexts/VideoContext";
 
 export function FeaturedVideoCard() {
   const router = useRouter();
-  const { videos } = useVideos();
+  const { videos } = useVideoContext();
 
   const featuredVideo = videos[0];
 
@@ -54,11 +54,7 @@ export function FeaturedVideoCard() {
           </S.Actions>
         </S.Content>
         <div style={{ flex: 0.4 }}>
-          <S.Thumbnail
-            src={
-              featuredVideo?.thumbnail?.url || "/featured-video-thumbnail.png"
-            }
-          />
+          <S.Thumbnail src={"/featured-video-thumbnail.png"} />
         </div>
       </S.FlexContainer>
     </Card>
