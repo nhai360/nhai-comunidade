@@ -5,6 +5,7 @@ import { authenticatedAPI, decodeResponse } from "@/client";
 import { Media, MediaDecoder, PostParams } from "@/client/media";
 import axios from "axios";
 import { getToken } from "@/lib/auth";
+import { toast } from "react-toastify";
 
 async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
   function formatFileSize(sizeInBytes: number) {
@@ -28,7 +29,7 @@ async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
     const upload = UpChunk.createUpload({
       endpoint: uploadmux?.data?.url,
       file: file,
-      chunkSize: 1024 * 100, // Uploads the file in ~5mb chunks
+      chunkSize: 1024 * 20,
     });
 
     // subscribe to events
@@ -43,6 +44,7 @@ async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
 
     // subscribe to events
     upload.on("success", () => {
+      toast.success("O upload do seu vídeo comprimido foi concluído!");
       console.log("Wrap it up, we're done here. 👋\n");
     });
 
@@ -83,8 +85,9 @@ async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
       await authenticatedAPI.put(`/media/${media.id}/upload`, formData, config);
 
       return media;
+    } else {
+      throw new Error("Upload request failed");
     }
-    throw new Error("Upload request failed");
   }
 }
 
