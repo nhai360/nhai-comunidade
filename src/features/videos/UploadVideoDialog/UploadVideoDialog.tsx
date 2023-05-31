@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCreateVideo } from "@/client/videos";
-import { MediaCategory, useUpload } from "@/client/media";
+import { Media, MediaCategory, useUpload } from "@/client/media";
 import {
   Button,
   Dialog,
@@ -33,6 +33,7 @@ import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
 import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { useAuthContext } from "@/contexts";
 import { useAddVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
+import { UploadVideoToMux } from "@/client/media/UploadVideoToMux";
 
 type Props = {
   onClose: () => void;
@@ -61,13 +62,16 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   }, [video]);
 
   const file = watch("file");
-  const [percentage, setPercentage] = useState<number>(0);
+  const [uploadPercent, setUploadPercent] = useState<number>(0);
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+  const [isUploadError, setIsUploadError] = useState(false);
+  const [source, setSource] = useState<Media>();
+
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
 
   const { session } = useAuthContext();
   const { userplaylists } = useUserPlaylists({ userId: session?.userId });
-  const { upload, data: source, isError: isErrorUpload } = useUpload();
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
@@ -90,7 +94,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     isUploadingThumbnail ||
     isCreatingVideo ||
     isUpdatingVideo ||
-    percentage < 100;
+    uploadPercent < 100;
 
   function handleUpload(files: File[]) {
     const currentFile = files[0];
@@ -98,21 +102,13 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
       return;
     }
 
-    upload(
-      {
-        file: currentFile,
-        category: MediaCategory.VIDEO,
-        mimeType: "video",
-        setPercentage,
-      },
-      {
-        onError: () => {
-          toast.error(
-            "Não foi possível completar o upload do seu vídeo comprimido. Tente novamente"
-          );
-        },
-      }
-    );
+    UploadVideoToMux({
+      file: currentFile,
+      setUploadPercent,
+      setIsUploadError,
+      setIsUploadSuccess,
+      setSource: setSource as any,
+    });
   }
 
   function handleCreateVideo({
@@ -343,23 +339,27 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     gap: "$3",
                   }}
                 >
-                  {percentage < 100 ? (
+                  {uploadPercent < 100 ? (
                     <>
                       <Loading />
-                      {percentage >= 100
+                      {uploadPercent >= 100
                         ? `Processando vídeo`
-                        : `Enviando vídeo ${percentage && `(${percentage}%)`}`}
+                        : `Enviando vídeo ${
+                            uploadPercent && `(${uploadPercent}%)`
+                          }`}
                     </>
-                  ) : isErrorUpload ? (
+                  ) : isUploadError ? (
                     <>
                       <CloseIcon />
                       Falha no upload do vídeo
                     </>
                   ) : (
-                    <>
-                      <CheckCircleIcon />
-                      Vídeo carregado e pronto para ser postado
-                    </>
+                    isUploadSuccess && (
+                      <>
+                        <CheckCircleIcon />
+                        Vídeo carregado e pronto para ser postado
+                      </>
+                    )
                   )}
                 </Typography.Text>
               )}
@@ -367,7 +367,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 <Button
                   type="submit"
                   loading={isLoading}
-                  disabled={percentage < 100 || isErrorUpload}
+                  disabled={!isUploadSuccess}
                   onClick={() => handleSubmit(handleCreateVideo)()}
                 >
                   Postar vídeo
