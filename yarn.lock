@@ -1191,10 +1191,10 @@
     uuid "^9.0.0"
     webrtc-adapter "^8.2.0"
 
-"@mux/upchunk@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@mux/upchunk/-/upchunk-3.2.0.tgz#93b20675e9d03ba595c28ffca68a50fda699fee8"
-  integrity sha512-ndQBrK6hpCNpbMQd2p0g5NqyVEJxaqqIEk9tJ+ETD5AXGbajq2/L3Rrlf4hcOY9K0LW+8mJw/tpNCNpEmkAW1g==
+"@mux/upchunk@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@mux/upchunk/-/upchunk-3.1.0.tgz#6ffb8489554eb6f3421330b433d79a43dc7319ee"
+  integrity sha512-zHOhax0boD0qrPSBhNgK8qR8p2BA3NP0TAygYFEWzHEve2eFXd5f+nf6nJ90lA66rznt4K1pG55zw79Xl4sz1g==
   dependencies:
     event-target-shim "^6.0.2"
     xhr "^2.6.0"

@@ -22,7 +22,7 @@ export async function UploadVideoToMux({
   const uploadUrl = uploadmux?.data?.url;
   const uploadId = uploadmux?.data?.id;
 
-  if (!uploadUrl) {
+  if (!uploadUrl || !uploadId) {
     setIsUploadError(true);
     return;
   }
