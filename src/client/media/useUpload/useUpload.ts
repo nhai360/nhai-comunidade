@@ -38,7 +38,6 @@ async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
     });
 
     upload.on("progress", (progress) => {
-      console.log("Porcentagem do upload: 👋\n", progress?.detail);
       setPercentage && setPercentage(progress?.detail?.toFixed(2));
     });
 
