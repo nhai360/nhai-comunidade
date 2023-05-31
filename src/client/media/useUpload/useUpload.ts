@@ -26,10 +26,16 @@ async function uploadRequest({ file, setPercentage, ...params }: PostParams) {
     if (!uploadmux?.data?.url) {
       throw new Error("Upload request failed");
     }
+
+    const fileSize = file.size;
+    const maxChunkSize = 1024 * 5;
+
+    const numberOfChunks = Math.ceil(fileSize / maxChunkSize);
+
     const upload = UpChunk.createUpload({
       endpoint: uploadmux?.data?.url,
       file: file,
-      chunkSize: 1024 * 20,
+      chunkSize: Math.ceil(fileSize / numberOfChunks),
     });
 
     // subscribe to events
