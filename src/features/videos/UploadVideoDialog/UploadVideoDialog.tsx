@@ -135,6 +135,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
       {
         file: thumbnail,
         category: MediaCategory.IMAGE,
+        mimeType: "image",
       },
       {
         onSuccess: (media) => {
