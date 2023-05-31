@@ -23,8 +23,15 @@ export const MediaDecoder = t.object({
 export type Media = t.TypeOf<typeof MediaDecoder>;
 
 export type PostParams = {
-  setPercentage?: Dispatch<SetStateAction<number>>;
   file: File;
   category: MediaCategory;
   mimeType?: string;
+};
+
+export type PostMuxVideoParams = {
+  setUploadPercent: Dispatch<SetStateAction<number>>;
+  setIsUploadSuccess: Dispatch<SetStateAction<boolean>>;
+  setIsUploadError: Dispatch<SetStateAction<boolean>>;
+  setSource: Dispatch<SetStateAction<Media>>;
+  file: File;
 };
