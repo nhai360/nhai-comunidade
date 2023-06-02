@@ -1,7 +1,6 @@
 .contentContainer {
   width: 100%;
   height: auto;
-  overflow: auto;
   padding: 32px 32px 80px 116px;
   max-width: 1920px;
   align-self: center;
@@ -25,7 +24,8 @@
     margin-bottom: 1rem;
   }
 
-  .gridArticlesContainer {  
+  .gridArticlesContainer {
+    background-color: red;
     display: grid;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
@@ -34,5 +34,19 @@
     @media screen and (min-width: 1200px) {
       gap: 24px;
     }
+  }
+}
+
+.mobileHeadline {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 32px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
   }
 }
