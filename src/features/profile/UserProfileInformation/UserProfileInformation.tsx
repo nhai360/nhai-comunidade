@@ -74,12 +74,12 @@ export function UserProfileInformation() {
           {...uploadedArticlesButtonProps}
           onClick={() => setSelectedTab("uploadedArticles")}
         >
-          Articles
+          Artigos
         </Button>
       </S.TabsContainer>
       {selectedTab === "score" && <Score />}
       {selectedTab === "uploadedVideos" && <UploadedVideos />}
-      {selectedTab === "uploadedArticles" && <UploadedArticles />}
+      {selectedTab === "uploadedArticles" && <UploadedArticles userId={user?.id as string} />}
     </S.Container>
   );
 }

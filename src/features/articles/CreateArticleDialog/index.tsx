@@ -111,7 +111,7 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
 
     toast.success("Artigo alterado com sucesso!");
     onClose();
-    router.push('/articles')
+    router.push("/articles");
     return response;
   };
 
@@ -188,11 +188,13 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
               </div>
             </div>
 
-            <EditorBlock
-              data={editorRendererType}
-              onChange={setData}
-              holder="editorjs-container"
-            />
+            <div style={{ marginTop: 132, zIndex: 0 }}>
+              <EditorBlock
+                data={editorRendererType}
+                onChange={setData}
+                holder="editorjs-container"
+              />
+            </div>
           </div>
         </Dialog.Content>
       </Dialog>
