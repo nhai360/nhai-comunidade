@@ -59,7 +59,7 @@ const CardArticle = ({ article }: Props) => {
         <h3>{`${article?.title}`}</h3>
         <p>{`${description?.substring(0, 60)}`}</p>
 
-        <Link href={`articles/${article?.id}`}>
+        <Link href={`/articles/${article?.id}`}>
           <Button className={styles.articleButton}>
             <h3>Ler artigo completo</h3>
           </Button>
