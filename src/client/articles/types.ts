@@ -57,3 +57,7 @@ export type ContentType = {
   >[];
   version: string;
 };
+
+export type GetParams = {
+  userId?: string;
+};

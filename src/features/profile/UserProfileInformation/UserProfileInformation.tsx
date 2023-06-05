@@ -12,8 +12,9 @@ import { Score } from "./Score";
 import { UploadedVideos } from "./UploadedVideos";
 import { GeneralInformation } from "./GeneralInformation";
 import * as S from "./UserProfileInformation.styles";
+import { UploadedArticles } from "./UploadedArticles";
 
-type SelectedTab = "score" | "uploadedVideos";
+type SelectedTab = "score" | "uploadedVideos" | "uploadedArticles";
 
 export function UserProfileInformation() {
   const router = useRouter();
@@ -43,6 +44,11 @@ export function UserProfileInformation() {
   const uploadedVideosButtonProps =
     selectedTab === "uploadedVideos" ? selectedButtonProps : defaultButtonProps;
 
+  const uploadedArticlesButtonProps =
+    selectedTab === "uploadedArticles"
+      ? selectedButtonProps
+      : defaultButtonProps;
+
   return (
     <S.Container>
       <Avatar
@@ -64,9 +70,16 @@ export function UserProfileInformation() {
         >
           Vídeos
         </Button>
+        <Button
+          {...uploadedArticlesButtonProps}
+          onClick={() => setSelectedTab("uploadedArticles")}
+        >
+          Articles
+        </Button>
       </S.TabsContainer>
       {selectedTab === "score" && <Score />}
       {selectedTab === "uploadedVideos" && <UploadedVideos />}
+      {selectedTab === "uploadedArticles" && <UploadedArticles />}
     </S.Container>
   );
 }
