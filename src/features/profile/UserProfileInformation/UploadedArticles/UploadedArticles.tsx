@@ -9,19 +9,15 @@ import * as S from "./UploadedArticles.styles";
 import { useArticles } from "@/client/articles";
 import CardArticle from "@/features/articles/CardArticle";
 import { useArticlesFromUser } from "@/client/articles/useArticlesFromUser";
-import { useUser } from "@/client/users";
+import { useUser, useUserFromNickname } from "@/client/users";
 
-export function UploadedArticles() {
-  const router = useRouter();
+interface IUploadedArticles {
+  userId: string;
+}
 
-  const { session } = useAuthContext();
-
-  const { user } = useUser({
-    id: session?.userId,
-  });
-
+export function UploadedArticles({ userId }: IUploadedArticles) {
   const { articles } = useArticlesFromUser({
-    userId: user?.id as string,
+    userId: userId as string,
   });
 
   return (

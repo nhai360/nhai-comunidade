@@ -33,6 +33,8 @@ export function DesktopLayout() {
   const createdAt =
     article && format(new Date(article?.createdAt as any), "MMM dd");
 
+    
+
 
   return (
     <DefaultLayout>
@@ -127,7 +129,7 @@ export function DesktopLayout() {
                 <h4>Autor</h4>
               </div>
               <div style={{ width: "100%" }}>
-                <Link href={`/profile/${user?.nickname}`}>
+                <Link href={`/profile/${article?.author?.nickname}`}>
                   <Button className={styles.asideButton}>
                     <h3>Visitar perfil</h3>
                   </Button>

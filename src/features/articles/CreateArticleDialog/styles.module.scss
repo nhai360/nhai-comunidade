@@ -6,6 +6,8 @@
   overflow-y: auto;
 
   .header {
+    z-index: 9;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -14,6 +16,9 @@
     height: 100px;
     margin-bottom: 0.875rem;
     border-bottom: 1px solid #eaeaea;
+    background-color: white;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
 
     .titleContainer {
       display: flex;
