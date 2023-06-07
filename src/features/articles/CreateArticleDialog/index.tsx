@@ -3,10 +3,6 @@ import { Avatar, Button, Dialog, Loading, Success } from "@/ui";
 import { useEffect, useRef, useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
 
-import Header from "@editorjs/header";
-import ImageTool from "@editorjs/image";
-import axios from "axios";
-import { getToken } from "@/lib/auth";
 import dynamic from "next/dynamic";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
@@ -26,46 +22,6 @@ type Props = {
   onClose: () => void;
   type: "create" | "edit";
   editData?: any;
-};
-
-const datinha = {
-  time: 1685139549399,
-  blocks: [
-    {
-      id: "8Nig4Ik_bA",
-      type: "header",
-      data: {
-        text: "Por que o Gil do Vigor assaltou o Pão de açúcar?",
-        level: 1,
-      },
-    },
-    {
-      id: "zQEsY3bcHx",
-      type: "paragraph",
-      data: { text: "Desde pequeno ele sempre foi assim...<br>" },
-    },
-    {
-      id: "CrtX4aFYgn",
-      type: "image",
-      data: {
-        file: {
-          url: "https://contai-media.nyc3.cdn.digitaloceanspaces.com/contaiapp_2023_05_26_23309930acc34ddd.jpg",
-        },
-        caption: "AAIAI, EU SOU DOIDO POR IOGURTE!!!",
-        withBorder: false,
-        stretched: false,
-        withBackground: false,
-      },
-    },
-    {
-      id: "OY2V8ElnDy",
-      type: "paragraph",
-      data: {
-        text: 'Gil do Vigor, o querido participante do Big Brother Brasil 21, conquistou o coração do público com sua autenticidade e alegria contagiante. No entanto, recentemente ele se envolveu em uma situação inusitada que acabou ganhando destaque nas redes sociais. Gil foi apelidado de "o assaltante de iogurte do Pão de Açúcar" após ter sido flagrado comendo um iogurte dentro do supermercado sem pagar. O incidente virou motivo de piada, mas também gerou uma reflexão sobre nossas atitudes e o respeito às normas sociais. Apesar do episódio divertido, Gil continua sendo um exemplo de superação e carisma, e sua trajetória inspiradora continua encantando a todos.',
-      },
-    },
-  ],
-  version: "2.27.0",
 };
 
 const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
@@ -160,7 +116,6 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
       }
     } catch (error) {
       console.error(error);
-    } finally {
     }
   }
 
