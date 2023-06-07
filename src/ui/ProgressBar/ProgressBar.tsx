@@ -1,6 +1,11 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import Slider from "react-slider";
 import styles from "./styles.module.scss";
+import * as S from "./ProgressBar.styles";
+
+type Props = {
+  currentPercent?: number;
+} & ComponentProps<typeof S.Container>;
 
 type ProgressBarProps = {
   currentTime: number;
@@ -8,7 +13,7 @@ type ProgressBarProps = {
   onTimeChange: (newTime: number) => void;
 };
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({
+export const VideoProgressBar: React.FC<ProgressBarProps> = ({
   currentTime,
   durationTime,
   onTimeChange,
@@ -39,3 +44,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     </>
   );
 };
+
+export function ProgressBar({ currentPercent = 0, ...rest }: Props) {
+  return (
+    <S.Container {...rest}>
+      <S.Filled css={{ width: `${currentPercent}%` }} />
+    </S.Container>
+  );
+}
