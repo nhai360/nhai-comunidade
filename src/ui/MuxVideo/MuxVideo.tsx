@@ -177,6 +177,13 @@ export function MuxVideo({
       );
   };
 
+  const handleTimeChange = (newTime: number) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   return (
     <>
       {showEdit && (
@@ -206,8 +213,9 @@ export function MuxVideo({
           >
             {!isMobile && (
               <ProgressBar
-                currentPercent={currentPercentProgress}
-                css={{ background: "$neutral500" }}
+                currentTime={currentTime}
+                durationTime={durationTime}
+                onTimeChange={handleTimeChange}
               />
             )}
             <S.Controls>
