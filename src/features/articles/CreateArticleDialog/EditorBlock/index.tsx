@@ -83,10 +83,20 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     if (!ref.current) {
       const editor = new EditorJS({
         holder: holder,
-
         placeholder: "Comece seu artigo aqui...",
         tools: {
-          header: Header,
+          header: {
+            class: Header as any,
+            shortcut: "CMD+SHIFT+H",
+            toolbox: {
+              title: "Título",
+            },
+            inlineToolbar: true,
+            config: {
+              levels: [1, 2, 3, 4],
+              defaultLevel: 1,
+            },
+          },
           image: {
             class: ImageTool,
             config: {
@@ -203,6 +213,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               blockTunes: {
                 toggler: {
                   "Click to tune": "Clique para ajustar",
+                  "Click to delete": "Clique para deletar",
                   "or drag to move": "ou arraste para mover",
                 },
               },
@@ -214,6 +225,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               toolbar: {
                 toolbox: {
                   Add: "Adicionar",
+                  Filter: "Filtro",
                 },
               },
             },
@@ -225,13 +237,17 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
             toolNames: {
               Text: "Texto",
               Heading: "Título",
+
               List: "Lista",
               Image: "Imagem",
+
               Warning: "Aviso",
+              Attachment: "Arquivo",
               Checklist: "Lista de verificação",
               Quote: "Citação",
               Code: "Código",
               Delimiter: "Delimitador",
+
               "Raw HTML": "HTML bruto",
               Table: "Tabela",
               Link: "Link",
@@ -249,6 +265,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                * Each subsection is the i18n dictionary that will be passed to the corresponded plugin
                * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
                */
+
               warning: {
                 // <-- 'Warning' tool will accept this dictionary section
                 Title: "Título",
@@ -282,6 +299,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                */
               delete: {
                 Delete: "Deletar",
+                "Click to delete": "Clique para deletar",
               },
               moveUp: {
                 "Move up": "Mover para cima",
