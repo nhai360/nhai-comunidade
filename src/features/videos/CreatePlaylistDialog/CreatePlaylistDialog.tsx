@@ -46,9 +46,7 @@ export function CreatePlaylistDialog({ onClose }: Props) {
         title,
       },
       {
-        onSuccess: (media) => {
-          console.log("ARROZ FRITOOO");
-        },
+        onSuccess: (media) => {},
         onError: () => {
           toast.error("Não foi possível criar a playlist. Tente novamente!");
         },
