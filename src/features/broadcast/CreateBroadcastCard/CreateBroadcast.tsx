@@ -192,32 +192,15 @@ export function CreateBroadcastDialog({ onClose }: Props) {
           css={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             padding: "$4",
           }}
         >
-          <Typography.Text
-            size="body3"
-            color="secondary"
-            weight="bold"
-            css={{ display: "inline-flex", alignItems: "center", gap: "$3" }}
-          >
-            {isSuccessUpload ? (
-              <>
-                <CheckCircleIcon />
-                Transmissão criada
-              </>
-            ) : (
-              <>
-                <Loading />
-                Criando transmissão
-              </>
-            )}
-          </Typography.Text>
           <Button
             type="submit"
             loading={isLoading}
-            disabled={!isSuccessUpload}
+            // disabled={!isSuccessUpload}
+            disabled
             onClick={() => handleSubmit(handleCreateVideo)()}
           >
             Criar transmissão

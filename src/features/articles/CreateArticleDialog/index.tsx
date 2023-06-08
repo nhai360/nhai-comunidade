@@ -3,10 +3,6 @@ import { Avatar, Button, Dialog, Loading, Success } from "@/ui";
 import { useEffect, useRef, useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
 
-import Header from "@editorjs/header";
-import ImageTool from "@editorjs/image";
-import axios from "axios";
-import { getToken } from "@/lib/auth";
 import dynamic from "next/dynamic";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
@@ -15,6 +11,8 @@ import { Warning } from "@phosphor-icons/react";
 import { toast } from "react-toastify";
 import { useArticle } from "@/client/articles/useArticle";
 import { useRouter } from "next/router";
+import { useCreateArticle } from "@/client/articles/useCreateArticle";
+import { useUpdateArticle } from "@/client/articles/useUpdateArticle";
 
 const EditorBlock = dynamic(() => import("./EditorBlock"), {
   ssr: false,
@@ -26,51 +24,10 @@ type Props = {
   editData?: any;
 };
 
-const datinha = {
-  time: 1685139549399,
-  blocks: [
-    {
-      id: "8Nig4Ik_bA",
-      type: "header",
-      data: {
-        text: "Por que o Gil do Vigor assaltou o Pão de açúcar?",
-        level: 1,
-      },
-    },
-    {
-      id: "zQEsY3bcHx",
-      type: "paragraph",
-      data: { text: "Desde pequeno ele sempre foi assim...<br>" },
-    },
-    {
-      id: "CrtX4aFYgn",
-      type: "image",
-      data: {
-        file: {
-          url: "https://contai-media.nyc3.cdn.digitaloceanspaces.com/contaiapp_2023_05_26_23309930acc34ddd.jpg",
-        },
-        caption: "AAIAI, EU SOU DOIDO POR IOGURTE!!!",
-        withBorder: false,
-        stretched: false,
-        withBackground: false,
-      },
-    },
-    {
-      id: "OY2V8ElnDy",
-      type: "paragraph",
-      data: {
-        text: 'Gil do Vigor, o querido participante do Big Brother Brasil 21, conquistou o coração do público com sua autenticidade e alegria contagiante. No entanto, recentemente ele se envolveu em uma situação inusitada que acabou ganhando destaque nas redes sociais. Gil foi apelidado de "o assaltante de iogurte do Pão de Açúcar" após ter sido flagrado comendo um iogurte dentro do supermercado sem pagar. O incidente virou motivo de piada, mas também gerou uma reflexão sobre nossas atitudes e o respeito às normas sociais. Apesar do episódio divertido, Gil continua sendo um exemplo de superação e carisma, e sua trajetória inspiradora continua encantando a todos.',
-      },
-    },
-  ],
-  version: "2.27.0",
-};
-
 const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
   const router = useRouter();
   const { articleId } = router.query;
   const { session } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/articles/`;
 
@@ -82,42 +39,53 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
     articleId: articleId as string,
   });
 
+  const {
+    createArticle,
+    isLoading: isCreateLoading,
+    isError: isCreateError,
+  } = useCreateArticle();
+
+  const {
+    updateArticle,
+    isLoading: isUpdateLoading,
+    isError: isUpdateError,
+  } = useUpdateArticle();
+
   const [data, setData] = useState<OutputData>();
 
   const editorRendererType = type === "create" ? data : JSON.parse(editData);
   const buttonTitle = type === "create" ? "Publicar" : "Republicar";
 
-  console.log(editData);
-
   const handleCreate = async (requestBody: any) => {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
+    createArticle(requestBody, {
+      onSuccess: (article) => {
+        toast.success("Artigo publicado com sucesso!");
+        onClose();
+      },
+      onError: () => {
+        toast.error("Não foi possível postar o seu artigo. Tente novamente");
       },
     });
-    toast.success("Artigo publicado com sucesso!");
-    onClose();
-    return response;
   };
 
   const handleEdit = async (requestBody: any) => {
-    const response = await axios.patch(`${apiUrl + article?.id}`, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    toast.success("Artigo alterado com sucesso!");
-    onClose();
-    router.push("/articles");
-    return response;
+    updateArticle(
+      { articleId: String(articleId), body: requestBody },
+      {
+        onSuccess: (article) => {
+          toast.success("Artigo alterado com sucesso!");
+          onClose();
+          router.push("/articles");
+        },
+        onError: () => {
+          toast.error("Não foi possível alterar o seu artigo. Tente novamente");
+        },
+      }
+    );
   };
 
   async function handleArticle() {
     try {
-      setIsLoading(true);
       const hasHeader = data?.blocks.find(
         (block: any) => block.type === "header"
       );
@@ -148,10 +116,10 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   }
+
+  const loading = isUpdateLoading || isCreateLoading;
 
   return (
     <>
@@ -183,7 +151,7 @@ const CreateArticleDialog = ({ onClose, type, editData }: Props) => {
                   className={styles.articleButton}
                   onClick={handleArticle}
                 >
-                  {!isLoading ? <h3>{buttonTitle}</h3> : <Loading />}
+                  {!loading ? <h3>{buttonTitle}</h3> : <Loading />}
                 </Button>
               </div>
             </div>

@@ -9,11 +9,14 @@ async function uploadRequest({ file, ...params }: PostParams) {
   const media = decodeResponse<Media>(response, MediaDecoder);
 
   if (media.id) {
-    await authenticatedAPI.putForm(`/media/${media.id}/upload`, {
-      file,
-    });
+    const uploadFile = await authenticatedAPI.putForm(
+      `/media/${media.id}/upload`,
+      {
+        file,
+      }
+    );
 
-    return media;
+    return { ...media, url: uploadFile?.data?.url };
   }
 
   throw new Error("Upload request failed");

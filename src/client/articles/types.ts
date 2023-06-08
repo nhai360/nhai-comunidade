@@ -61,3 +61,8 @@ export type ContentType = {
 export type GetParams = {
   userId?: string;
 };
+
+export type PatchParams = {
+  articleId?: string;
+  body: any;
+};

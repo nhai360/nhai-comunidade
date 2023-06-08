@@ -1,0 +1,76 @@
+.cardArticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  background-color: white;
+  padding: 12px;
+  border-radius: 24px;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    text-transform: uppercase;
+    font-size: 28px;
+    margin-bottom: 8px;
+    
+    font-weight: 800;
+    background: linear-gradient(
+      to right,
+      #ef5350,
+      #f48fb1,
+      #7e57c2,
+      #2196f3,
+      #26c6da,
+      #43a047,
+      #eeff41,
+      #f9a825,
+      #ff5722
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    transition: 0.5s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .date {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 1rem 0;
+  }
+
+  .articleImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 24px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #efefef;
+  }
+
+  .articleButton {
+    width: 100%;
+    margin-top: 1rem;
+
+    h3 {
+      margin-bottom: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}

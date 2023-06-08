@@ -9,6 +9,7 @@ import ImageTool from "@editorjs/image";
 import AttachesTool from "@editorjs/attaches";
 
 import styles from "./styles.module.scss";
+import { useAuthContext } from "@/contexts";
 
 type IUploadFile = {
   file: any;
@@ -26,6 +27,8 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
   //add a reference to editor
   const ref = useRef<EditorJS>();
 
+  const { session } = useAuthContext();
+
   async function createMedia(fileType: "IMAGE" | "DOCUMENT") {
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/media/`;
@@ -37,7 +40,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
       const response = await axios.post(apiUrl, requestBody, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `Bearer ${session?.access_token}`,
         },
       });
 
@@ -49,9 +52,6 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
 
   async function uploadFile(file: any, fileType: "IMAGE" | "DOCUMENT") {
     try {
-      // if (file.type === "application/pdf") {
-      //   return;
-      // }
       const mediaId = await createMedia(fileType);
       if (mediaId === "") {
         console.log("media error");
@@ -66,7 +66,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${getToken()}`,
+            Authorization: `Bearer ${session?.access_token}`,
           },
         }
       );
@@ -83,10 +83,20 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     if (!ref.current) {
       const editor = new EditorJS({
         holder: holder,
-
         placeholder: "Comece seu artigo aqui...",
         tools: {
-          header: Header,
+          header: {
+            class: Header as any,
+            shortcut: "CMD+SHIFT+H",
+            toolbox: {
+              title: "Título",
+            },
+            inlineToolbar: true,
+            config: {
+              levels: [1, 2, 3, 4],
+              defaultLevel: 1,
+            },
+          },
           image: {
             class: ImageTool,
             config: {
@@ -134,6 +144,8 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
             class: AttachesTool,
             config: {
               types: "application/pdf",
+              buttonText: "Insira o arquivo",
+              errorMessage: "Não foi possível subir o arquivo.",
               uploader: {
                 /**x
                  * Upload file to the server and return an uploaded image data
@@ -203,6 +215,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               blockTunes: {
                 toggler: {
                   "Click to tune": "Clique para ajustar",
+                  "Click to delete": "Clique para deletar",
                   "or drag to move": "ou arraste para mover",
                 },
               },
@@ -216,6 +229,10 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                   Add: "Adicionar",
                 },
               },
+              popover: {
+                Filter: "Pesquisar",
+                "Nothing found": "Nada encontrado.",
+              },
             },
 
             /**
@@ -225,9 +242,11 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
             toolNames: {
               Text: "Texto",
               Heading: "Título",
+
               List: "Lista",
               Image: "Imagem",
-              Warning: "Aviso",
+
+              Attachment: "Arquivo",
               Checklist: "Lista de verificação",
               Quote: "Citação",
               Code: "Código",
@@ -249,6 +268,24 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                * Each subsection is the i18n dictionary that will be passed to the corresponded plugin
                * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
                */
+
+              header: {
+                "Heading 1": "Título 1",
+                "Heading 2": "Título 2",
+                "Heading 3": "Título 3",
+                "Heading 4": "Título 4",
+                "Heading 5": "Título 5",
+                "Heading 6": "Título 6",
+              },
+
+              image: {
+                "Select an Image": "Selecione a imagem.",
+              },
+
+              attaches: {
+                "File title": "Título do arquivo",
+              },
+
               warning: {
                 // <-- 'Warning' tool will accept this dictionary section
                 Title: "Título",
@@ -282,6 +319,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                */
               delete: {
                 Delete: "Deletar",
+                "Click to delete": "Clique para deletar",
               },
               moveUp: {
                 "Move up": "Mover para cima",

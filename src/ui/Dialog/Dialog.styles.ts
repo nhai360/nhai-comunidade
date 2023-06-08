@@ -55,7 +55,7 @@ export const Content = styled(Dialog.Content, {
 export const Body = styled("main", {
   margin: "$4 $6 $6 $6",
   overflowY: "auto",
-  maxHeight: "60vh",
+  maxHeight: "75vh",
 });
 
 export const Footer = styled("footer", {

@@ -9,7 +9,7 @@ import {
   SpeakerSimpleX,
 } from "@phosphor-icons/react";
 
-import { Button, ProgressBar, Slider, Tooltip, Typography } from "@/ui";
+import { Button, Slider, Tooltip, Typography, VideoProgressBar } from "@/ui";
 import {
   CheckIcon,
   EditIcon,
@@ -177,6 +177,13 @@ export function MuxVideo({
       );
   };
 
+  const handleTimeChange = (newTime: number) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   return (
     <>
       {showEdit && (
@@ -205,9 +212,10 @@ export function MuxVideo({
             style={{ padding: isMobile ? "8px 12px" : "$6" }}
           >
             {!isMobile && (
-              <ProgressBar
-                currentPercent={currentPercentProgress}
-                css={{ background: "$neutral500" }}
+              <VideoProgressBar
+                currentTime={currentTime}
+                durationTime={durationTime}
+                onTimeChange={handleTimeChange}
               />
             )}
             <S.Controls>
