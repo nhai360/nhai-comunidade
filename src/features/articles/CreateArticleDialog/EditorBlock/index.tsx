@@ -83,20 +83,10 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
     if (!ref.current) {
       const editor = new EditorJS({
         holder: holder,
+
         placeholder: "Comece seu artigo aqui...",
         tools: {
-          header: {
-            class: Header as any,
-            shortcut: "CMD+SHIFT+H",
-            toolbox: {
-              title: "Título",
-            },
-            inlineToolbar: true,
-            config: {
-              levels: [1, 2, 3, 4],
-              defaultLevel: 1,
-            },
-          },
+          header: Header,
           image: {
             class: ImageTool,
             config: {
@@ -144,6 +134,9 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
             class: AttachesTool,
             config: {
               types: "application/pdf",
+
+              buttonText: "Insira o arquivo",
+              errorMessage: "Não foi possível subir o arquivo.",
               uploader: {
                 /**x
                  * Upload file to the server and return an uploaded image data
@@ -213,7 +206,6 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               blockTunes: {
                 toggler: {
                   "Click to tune": "Clique para ajustar",
-                  "Click to delete": "Clique para deletar",
                   "or drag to move": "ou arraste para mover",
                 },
               },
@@ -225,8 +217,11 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               toolbar: {
                 toolbox: {
                   Add: "Adicionar",
-                  Filter: "Filtro",
                 },
+              },
+              popover: {
+                Filter: "Pesquisar",
+                "Nothing found": "Nada encontrado.",
               },
             },
 
@@ -237,17 +232,14 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
             toolNames: {
               Text: "Texto",
               Heading: "Título",
-
               List: "Lista",
               Image: "Imagem",
-
-              Warning: "Aviso",
               Attachment: "Arquivo",
+              Warning: "Aviso",
               Checklist: "Lista de verificação",
               Quote: "Citação",
               Code: "Código",
               Delimiter: "Delimitador",
-
               "Raw HTML": "HTML bruto",
               Table: "Tabela",
               Link: "Link",
@@ -266,6 +258,23 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                * The name of a plugin should be equal the name you specify in the 'tool' section for that plugin
                */
 
+              header: {
+                "Heading 1": "Título 1",
+                "Heading 2": "Título 2",
+                "Heading 3": "Título 3",
+                "Heading 4": "Título 4",
+                "Heading 5": "Título 5",
+                "Heading 6": "Título 6",
+              },
+
+              image: {
+                "Select an Image": "Selecione a imagem.",
+              },
+
+              attaches: {
+                "File title": "Título do arquivo",
+              },
+
               warning: {
                 // <-- 'Warning' tool will accept this dictionary section
                 Title: "Título",
@@ -278,6 +287,7 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
               link: {
                 "Add a link": "Adicionar Link",
               },
+
               /**
                * The "stub" is an internal block tool, used to fit blocks that does not have the corresponded plugin
                */
@@ -299,7 +309,6 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                */
               delete: {
                 Delete: "Deletar",
-                "Click to delete": "Clique para deletar",
               },
               moveUp: {
                 "Move up": "Mover para cima",
