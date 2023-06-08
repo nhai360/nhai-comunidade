@@ -66,16 +66,16 @@ export function CreatePostDialog({ onClose }: Props) {
               {
                 onError: () => {
                   toast.error(
-                    "Não foi possível enviar sua publicação. Tente novamente.",
+                    "Não foi possível enviar sua publicação. Tente novamente."
                   );
                 },
-              },
+              }
             );
           },
           onError: () => {
             toast.error("Não foi possível enviar sua imagem. Tente novamente.");
           },
-        },
+        }
       );
 
       return;
@@ -119,7 +119,6 @@ export function CreatePostDialog({ onClose }: Props) {
                 src={user.profilePicture?.url}
                 fallback={getInitials(user.fullName)}
                 profileUrl={getProfileUrl(user.nickname)}
-                level={user.score?.level}
                 css={{
                   "@mobile": {
                     display: "none",

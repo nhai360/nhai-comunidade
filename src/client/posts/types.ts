@@ -51,7 +51,7 @@ export const TrendPostDecoder = PostDecoder.pick({
 export type TrendPost = t.TypeOf<typeof TrendPostDecoder>;
 
 export const CreatePostDecoder = t.object({
-  title: t.string().min(1, "Título é obrigatório"),
+  title: t.string().optional(),
   content: t.string().min(1, "Conteúdo é obrigatório"),
   image: t.any().optional(),
   color: PostColorDecoder.optional(),
@@ -62,7 +62,7 @@ export type CreatePostParams = t.TypeOf<typeof CreatePostDecoder>;
 export const CreatePostRequestDecoder = CreatePostDecoder.merge(
   t.object({
     images: MediaDecoder.array().optional(),
-  }),
+  })
 ).omit({
   image: true,
 });
