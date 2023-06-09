@@ -7,6 +7,7 @@ import { components } from "react-select";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Video } from "@/client/videos";
 import { Label, Typography } from "@/ui";
+import { Check } from "@phosphor-icons/react";
 
 type Props = {
   playlist: any;
@@ -19,9 +20,10 @@ export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
     userId: session?.userId,
   });
 
-  const playlistsList: any = userplaylists?.map((playlist) => {
-    return { value: playlist?.id, label: playlist?.title };
-  });
+  const playlistsList: any =
+    userplaylists?.map((playlist) => {
+      return { value: playlist?.id, label: playlist?.title };
+    }) || [];
 
   const customStyles = {
     container: (provided: any, state: any) => ({
@@ -37,8 +39,9 @@ export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
     }),
     option: (provided: any, state: any) => ({
       ...provided,
-      color: "#333",
-      padding: "8px 12px",
+      backgroundColor: state.isSelected ? "#f23d80" : provided.backgroundColor,
+      color: state.isSelected ? "white" : provided.color,
+      "&:hover": { backgroundColor: state.isSelected ? "#f23d80" : "#fde3ed" },
     }),
     singleValue: (provided: any, state: any) => ({
       ...provided,
@@ -51,9 +54,7 @@ export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
       <div>
         <components.Option {...props}>
           <label>{props.label}</label>{" "}
-          {props.isSelected && (
-            <input type="checkbox" checked={true} onChange={() => null} />
-          )}
+          {props.isSelected && <Check color="#fff" />}
         </components.Option>
       </div>
     );
@@ -71,13 +72,14 @@ export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
         </S.LabelContainer>
 
         <ReactSelect
-          options={[...playlistsList]}
+          options={playlistsList}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
           isLoading={isLoading}
           components={{
             Option,
           }}
+          isClearable
           styles={{ ...customStyles }}
           onChange={(selected) => setPlaylist(selected)}
           value={playlist}

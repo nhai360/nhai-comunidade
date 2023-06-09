@@ -30,9 +30,8 @@ import { UploadThumbnail } from "./UploadThumbnail";
 import { useEffect, useState } from "react";
 import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
-import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { useAuthContext } from "@/contexts";
-import { useAddVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
+import { useVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 import { UploadVideoToMux } from "@/client/media/UploadVideoToMux";
 import { PlaylistsSelector } from "../PlaylistsSelector";
 
@@ -77,8 +76,10 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
-  const { addVideoPlaylist, isLoading: isPlaylistLoading } =
-    useAddVideoPlaylist();
+  const {
+    add: { addVideoPlaylist, isLoading: isPlaylistAddLoading },
+    remove: { removeVideoPlaylist, isLoading: isPlaylistRemoveLoading },
+  } = useVideoPlaylist();
 
   const {
     createVideo,
@@ -95,7 +96,8 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const isLoading =
     isUploadingThumbnail ||
     isCreatingVideo ||
-    isPlaylistLoading ||
+    isPlaylistAddLoading ||
+    isPlaylistRemoveLoading ||
     isUpdatingVideo;
 
   function handleUpload(files: File[]) {
@@ -184,18 +186,38 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   }: CreateVideoParams) {
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
     const hasChangePlaylist = video?.playlist?.id != playlist?.value;
-    hasChangePlaylist &&
-      addVideoPlaylist(
-        {
-          videoId: video?.id,
-          playlistId: playlist?.value,
-        },
-        {
-          onError: () => {
-            toast.error("Não foi alterar a playlist do vídeo. Tente novamente");
+    if (hasChangePlaylist) {
+      if (playlist?.value) {
+        addVideoPlaylist(
+          {
+            videoId: video?.id,
+            playlistId: playlist?.value,
           },
-        }
-      );
+          {
+            onError: () => {
+              toast.error(
+                "Não foi alterar a playlist do vídeo. Tente novamente"
+              );
+            },
+          }
+        );
+      } else {
+        removeVideoPlaylist(
+          {
+            videoId: video?.id,
+            playlistId: video?.playlist?.id,
+          },
+          {
+            onError: () => {
+              toast.error(
+                "Não foi remover o vídeo da playlist. Tente novamente"
+              );
+            },
+          }
+        );
+      }
+    }
+
     video &&
       updateVideo(
         {
