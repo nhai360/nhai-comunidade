@@ -1,11 +1,8 @@
-import { default as ReactSelect } from "react-select";
+import { Dispatch, SetStateAction } from "react";
+import ReactSelect, { components } from "react-select";
 import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { useAuthContext } from "@/contexts";
 import * as S from "../../../ui/Field/Field.styles";
-import styles from "./styles.module.scss";
-import { components } from "react-select";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Video } from "@/client/videos";
 import { Label, Typography } from "@/ui";
 import { Check } from "@phosphor-icons/react";
 

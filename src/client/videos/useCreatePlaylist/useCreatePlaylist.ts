@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { authenticatedAPI } from "@/client";
-import { PostPlaylistParams, invalidateVideosQueries } from "@/client/videos";
+import { invalidateVideosQueries } from "@/client/videos";
+import { PostPlaylistParams } from "@/client/playlists";
 
 async function createPlaylistRequest(params: PostPlaylistParams) {
   const response = await authenticatedAPI.post("/playlists", params);
