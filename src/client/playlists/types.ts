@@ -9,7 +9,7 @@ export const PlaylistDecoder = t.object({
   author: UserDecoder.nullish(),
   createdAt: t.string(),
   updatedAt: t.string(),
-  videos: VideoDecoder.array().nullish(),
+  videos: VideoDecoder.array(),
 });
 
 export type Playlist = t.TypeOf<typeof PlaylistDecoder>;
@@ -17,3 +17,9 @@ export type Playlist = t.TypeOf<typeof PlaylistDecoder>;
 export type PostPlaylistParams = {
   title: string;
 };
+
+export const CreatePlaylistResolver = t.object({
+  title: t.string().min(1, "Título é obrigatório"),
+});
+
+export type CreatePlaylistParams = t.TypeOf<typeof CreatePlaylistResolver>;

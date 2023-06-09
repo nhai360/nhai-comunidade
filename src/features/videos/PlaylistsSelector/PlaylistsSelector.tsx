@@ -9,9 +9,14 @@ import { Check } from "@phosphor-icons/react";
 type Props = {
   playlist: any;
   setPlaylist: Dispatch<SetStateAction<any>>;
+  handleCreatePlaylist: () => void;
 };
 
-export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
+export function PlaylistsSelector({
+  playlist,
+  setPlaylist,
+  handleCreatePlaylist,
+}: Props) {
   const { session } = useAuthContext();
   const { userplaylists, isLoading, isError } = useUserPlaylists({
     userId: session?.userId,
@@ -83,6 +88,9 @@ export function PlaylistsSelector({ playlist, setPlaylist }: Props) {
           placeholder={"Selecione a playlist"}
           noOptionsMessage={() => "Você não tem nenhuma playlist"}
         />
+        <Typography.Link onClick={handleCreatePlaylist} as="small" color="pink">
+          Nova playlist +
+        </Typography.Link>
 
         {isError && (
           <Typography.Text as="small" color="pink">

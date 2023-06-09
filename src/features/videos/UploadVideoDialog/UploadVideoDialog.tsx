@@ -301,6 +301,9 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 <PlaylistsSelector
                   playlist={playlist}
                   setPlaylist={setPlaylist}
+                  handleCreatePlaylist={() =>
+                    setIsCreatePlaylistDialogVisible(true)
+                  }
                 />
                 {!video && (
                   <Field.Input

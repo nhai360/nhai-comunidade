@@ -5,6 +5,10 @@ export function invalidateVideosQueries(queryClient: QueryClient) {
   queryClient.invalidateQueries("videos");
 }
 
+export function invalidatePlaylistsQueries(queryClient: QueryClient) {
+  queryClient.invalidateQueries("userplaylists");
+}
+
 export * from "./types";
 export * from "./useVideo";
 export * from "./useVideos";

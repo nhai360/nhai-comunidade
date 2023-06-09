@@ -68,12 +68,6 @@ export const UpdateVideoResolver = t.object({
 
 export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
 
-export const CreatePlaylistResolver = t.object({
-  title: t.string().min(1, "Título é obrigatório"),
-});
-
-export type CreatePlaylistParams = t.TypeOf<typeof CreatePlaylistResolver>;
-
 export type PostParams = {
   tags: string[];
   source: Media;
