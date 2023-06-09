@@ -30,10 +30,10 @@ import { UploadThumbnail } from "./UploadThumbnail";
 import { useEffect, useState } from "react";
 import { CreatePlaylistDialog } from "../CreatePlaylistDialog";
 import { useUpdateVideo } from "@/client/videos/useUpdateVideo";
-import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { useAuthContext } from "@/contexts";
-import { useAddVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
+import { useVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 import { UploadVideoToMux } from "@/client/media/UploadVideoToMux";
+import { PlaylistsSelector } from "../PlaylistsSelector";
 
 type Props = {
   onClose: () => void;
@@ -65,18 +65,21 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const [uploadPercent, setUploadPercent] = useState<number>(0);
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
   const [isUploadError, setIsUploadError] = useState(false);
+  const [playlist, setPlaylist] = useState<any>();
   const [source, setSource] = useState<Media>();
 
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
 
   const { session } = useAuthContext();
-  const { userplaylists } = useUserPlaylists({ userId: session?.userId });
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
-  const { addVideoPlaylist } = useAddVideoPlaylist();
+  const {
+    add: { addVideoPlaylist, isLoading: isPlaylistAddLoading },
+    remove: { removeVideoPlaylist, isLoading: isPlaylistRemoveLoading },
+  } = useVideoPlaylist();
 
   const {
     createVideo,
@@ -93,8 +96,9 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const isLoading =
     isUploadingThumbnail ||
     isCreatingVideo ||
-    isUpdatingVideo ||
-    uploadPercent < 100;
+    isPlaylistAddLoading ||
+    isPlaylistRemoveLoading ||
+    isUpdatingVideo;
 
   function handleUpload(files: File[]) {
     const currentFile = files[0];
@@ -116,7 +120,6 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     description,
     thumbnail,
     tags,
-    playlist,
   }: CreateVideoParams) {
     if (!source) {
       console.log("Source:", source);
@@ -131,7 +134,6 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
       {
         file: thumbnail,
         category: MediaCategory.IMAGE,
-        mimeType: "image",
       },
       {
         onSuccess: (media) => {
@@ -145,19 +147,20 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
             },
             {
               onSuccess: (video) => {
-                // playlist && addVideoPlaylist(
-                //   {
-                //     videoId: video?.id,
-                //     playlistId: playlist,
-                //   },
-                //   {
-                //     onError: () => {
-                //       toast.error(
-                //         "Não foi possível adicionar o vídeo na playlist. Tente novamente"
-                //       );
-                //     },
-                //   }
-                // );
+                playlist?.value &&
+                  addVideoPlaylist(
+                    {
+                      videoId: video?.id,
+                      playlistId: playlist?.value,
+                    },
+                    {
+                      onError: () => {
+                        toast.error(
+                          "Não foi possível adicionar o vídeo na playlist. Tente novamente"
+                        );
+                      },
+                    }
+                  );
               },
               onError: () => {
                 toast.error(
@@ -182,6 +185,39 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     tags = "",
   }: CreateVideoParams) {
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
+    const hasChangePlaylist = video?.playlist?.id != playlist?.value;
+    if (hasChangePlaylist) {
+      if (playlist?.value) {
+        addVideoPlaylist(
+          {
+            videoId: video?.id,
+            playlistId: playlist?.value,
+          },
+          {
+            onError: () => {
+              toast.error(
+                "Não foi alterar a playlist do vídeo. Tente novamente"
+              );
+            },
+          }
+        );
+      } else {
+        removeVideoPlaylist(
+          {
+            videoId: video?.id,
+            playlistId: video?.playlist?.id,
+          },
+          {
+            onError: () => {
+              toast.error(
+                "Não foi remover o vídeo da playlist. Tente novamente"
+              );
+            },
+          }
+        );
+      }
+    }
+
     video &&
       updateVideo(
         {
@@ -197,6 +233,14 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
         }
       );
   }
+
+  useEffect(() => {
+    video?.playlist &&
+      setPlaylist({
+        value: video?.playlist?.id,
+        label: video.playlist?.title,
+      });
+  }, [video]);
 
   if (isSuccess) {
     return (
@@ -254,6 +298,13 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                   errorText={errors.title?.message}
                   {...register("title")}
                 />
+                <PlaylistsSelector
+                  playlist={playlist}
+                  setPlaylist={setPlaylist}
+                  handleCreatePlaylist={() =>
+                    setIsCreatePlaylistDialogVisible(true)
+                  }
+                />
                 {!video && (
                   <Field.Input
                     label="Tags"
@@ -263,17 +314,6 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     {...register("tags")}
                   />
                 )}
-                {/* <Field.Select
-                  label="Playlist"
-                  placeholder="Selecione a playlist do vídeo"
-                  {...register("playlist")}
-                  onChange={setValue}
-                  data={
-                    userplaylists?.map((playlist) => {
-                      return { value: playlist?.id, label: playlist?.title };
-                    }) || []
-                  }
-                ></Field.Select> */}
                 <Field label="Descrição" required={false}>
                   <TextArea
                     defaultValue={video?.description}
@@ -367,7 +407,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 <Button
                   type="submit"
                   loading={isLoading}
-                  disabled={!isUploadSuccess}
+                  disabled={!isUploadSuccess || uploadPercent < 100}
                   onClick={() => handleSubmit(handleCreateVideo)()}
                 >
                   Postar vídeo

@@ -144,6 +144,7 @@ const Link = styled(NextLink, {
   display: "flex",
   alignItems: "center",
   gap: "$2",
+  cursor: "pointer",
 
   "&:hover": {
     opacity: 0.8,

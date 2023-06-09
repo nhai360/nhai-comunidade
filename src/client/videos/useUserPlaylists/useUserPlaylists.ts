@@ -1,11 +1,8 @@
 import { useQuery } from "react-query";
 
 import { authenticatedAPI, decodeResponse } from "@/client";
-import {
-  GetUserPlaylistsParams,
-  Playlist,
-  PlaylistDecoder,
-} from "@/client/videos/types";
+import { GetUserPlaylistsParams } from "@/client/videos/types";
+import { Playlist, PlaylistDecoder } from "@/client/playlists";
 
 async function getUserPlaylists({ userId }: GetUserPlaylistsParams) {
   const response = await authenticatedAPI.get(`/users/${userId}/playlists`);

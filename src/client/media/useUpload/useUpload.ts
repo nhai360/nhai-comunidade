@@ -15,7 +15,6 @@ async function uploadRequest({ file, ...params }: PostParams) {
         file,
       }
     );
-
     return { ...media, url: uploadFile?.data?.url };
   }
 

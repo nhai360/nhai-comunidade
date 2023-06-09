@@ -11,18 +11,33 @@ async function addVideoPlaylistRequest({ playlistId, videoId }: any) {
   return response?.data;
 }
 
-export function useAddVideoPlaylist() {
+async function deleteVideoPlaylistRequest({ playlistId, videoId }: any) {
+  const response = await authenticatedAPI.delete(
+    `/playlists/${playlistId}/videos/${videoId}`
+  );
+
+  return response?.data;
+}
+
+export function useVideoPlaylist() {
   const queryClient = useQueryClient();
 
-  const { mutate: addVideoPlaylist, ...rest } = useMutation({
+  const { mutate: addVideoPlaylist, ...AddRest } = useMutation({
     mutationFn: addVideoPlaylistRequest,
     onSuccess: () => {
       invalidateVideosQueries(queryClient);
     },
   });
 
+  const { mutate: removeVideoPlaylist, ...deleteRest } = useMutation({
+    mutationFn: deleteVideoPlaylistRequest,
+    onSuccess: () => {
+      invalidateVideosQueries(queryClient);
+    },
+  });
+
   return {
-    addVideoPlaylist,
-    ...rest,
+    add: { addVideoPlaylist, ...AddRest },
+    remove: { removeVideoPlaylist, ...deleteRest },
   };
 }

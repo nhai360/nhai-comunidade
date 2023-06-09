@@ -7,14 +7,12 @@ import { useCreateVideo } from "@/client/videos";
 import { MediaCategory, useUpload } from "@/client/media";
 import { Button, Dialog, Divider, Field, Success } from "@/ui";
 
-import {
-  CreateVideoResolver,
-  CreateVideoParams,
-  CreatePlaylistParams,
-} from "@/client/videos/types";
-
 import * as S from "./CreatePlaylistDialog.styles";
 import { useCreatePlaylist } from "@/client/videos/useCreatePlaylist";
+import {
+  CreatePlaylistParams,
+  CreatePlaylistResolver,
+} from "@/client/playlists";
 
 type Props = {
   onClose: () => void;
@@ -27,8 +25,8 @@ export function CreatePlaylistDialog({ onClose }: Props) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<CreateVideoParams>({
-    resolver: zodResolver(CreateVideoResolver),
+  } = useForm<CreatePlaylistParams>({
+    resolver: zodResolver(CreatePlaylistResolver),
   });
 
   const {
@@ -40,13 +38,14 @@ export function CreatePlaylistDialog({ onClose }: Props) {
   const isLoading = isCreatingPlaylist;
 
   function handleCreatePlaylist({ title }: CreatePlaylistParams) {
-    console.log("To aqui");
     createPlaylist(
       {
         title,
       },
       {
-        onSuccess: (media) => {},
+        onSuccess: (media) => {
+          // toast.success("Playlist criada com sucesso!");
+        },
         onError: () => {
           toast.error("Não foi possível criar a playlist. Tente novamente!");
         },
@@ -72,9 +71,9 @@ export function CreatePlaylistDialog({ onClose }: Props) {
   }
 
   return (
-    <Dialog open onOpenChange={onClose}>
+    <Dialog open>
       <Dialog.Content>
-        <Dialog.Header title={"Nova playlist"} closable />
+        <Dialog.Header title={"Nova playlist"} onClose={onClose} closable />
         <Dialog.Body>
           <S.FormContainer onSubmit={handleSubmit(handleCreatePlaylist)}>
             <Field.Input

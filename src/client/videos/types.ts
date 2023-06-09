@@ -16,6 +16,15 @@ export const VideoLikeDecoder = t.object({
   author: UserDecoder,
 });
 
+export const PlaylistDecoder = t.object({
+  id: t.string(),
+  title: t.string(),
+  authorId: t.string(),
+  author: UserDecoder.nullish(),
+  createdAt: t.string(),
+  updatedAt: t.string(),
+});
+
 export const VideoDecoder = t.object({
   id: t.string(),
   title: t.string(),
@@ -31,20 +40,10 @@ export const VideoDecoder = t.object({
   tags: VideoTagDecoder.array().nullish(),
   likes: VideoLikeDecoder.array().nullish(),
   comments: CommentDecoder.array().nullish(),
+  playlist: PlaylistDecoder.nullish(),
 });
 
 export type Video = t.TypeOf<typeof VideoDecoder>;
-
-export const PlaylistDecoder = t.object({
-  id: t.string(),
-  title: t.string(),
-  authorId: t.string(),
-  author: UserDecoder.nullish(),
-  createdAt: t.string(),
-  updatedAt: t.string(),
-  videos: VideoDecoder.array().nullish(),
-});
-export type Playlist = t.TypeOf<typeof PlaylistDecoder>;
 
 export const CreateVideoResolver = t.object({
   title: t.string().min(1, "Título é obrigatório"),
@@ -69,12 +68,6 @@ export const UpdateVideoResolver = t.object({
 
 export type CreateVideoParams = t.TypeOf<typeof CreateVideoResolver>;
 
-export const CreatePlaylistResolver = t.object({
-  title: t.string().min(1, "Título é obrigatório"),
-});
-
-export type CreatePlaylistParams = t.TypeOf<typeof CreatePlaylistResolver>;
-
 export type PostParams = {
   tags: string[];
   source: Media;
@@ -86,10 +79,6 @@ export type PatchParams = {
   tags: string[];
   title: string;
   description?: string | null | undefined;
-};
-
-export type PostPlaylistParams = {
-  title: string;
 };
 
 export type GetParams = {

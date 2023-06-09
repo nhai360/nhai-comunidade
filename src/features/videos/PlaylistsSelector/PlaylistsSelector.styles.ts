@@ -1,18 +1,12 @@
 import { styled } from "@/../stitches.config";
 
-export const Container = styled("ul", {
-  display: "grid",
-  gridTemplateColumns: "repeat(3, 306px)",
-  gap: "$6",
-
-  marginTop: "$6",
-});
+export const Container = styled("div", {});
 
 export const PlaylistHighlight = styled("div", {
-  backgroundColor: "$blueLight",
+  backgroundColor: "$pinkLight",
   padding: "24px 0 20px 0",
   borderRadius: "$large",
-  marginTop: 16,
+  marginBottom: 24,
 });
 
 export const VideosGridContainer = styled("div", {
