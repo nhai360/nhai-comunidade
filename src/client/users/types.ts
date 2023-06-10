@@ -43,14 +43,26 @@ export const CreateUserDecoder = t.object({
     .max(20, "O apelido deve ter no máximo 20 caracteres")
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres underscore (Ex: "_")'
     )
     .transform((arg) => arg.toLowerCase().replace("@", "")),
+
   email: t
     .string()
     .email({ message: "O formato de e-mail é inválido" })
     .min(1, "E-mail é obrigatório"),
   password: t.string().min(1, "Senha é obrigatória"),
+  birthDate: t.date().optional(),
+  cellphone: t.string().min(1, "Celular é obrigatório"),
+  ethnicIdentity: t
+    .string()
+    .min(1, "Identificação étnico-racial é obrigatória"),
+  genderIdentity: t.string().min(1, "Identidade de gênero é obrigatória"),
+  sexualOrientation: t
+    .string()
+    .min(1, "Orientação sexual declarada é obrigatória"),
+  agreeToPrivacyPolicy: t.boolean(),
+  mediaConsent: t.boolean(),
 });
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
