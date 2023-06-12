@@ -9,6 +9,7 @@ import { format } from "@/lib/date-fns";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
 import * as S from "./VideoCard.styles";
+import { useRef } from "react";
 
 type Props = {
   video: Video;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export function VideoCard({ video, hasHover = true }: Props) {
+  const imageRef: any = useRef(null);
   const createdAtFormatted = format(new Date(video.createdAt), "dd MMM");
 
   const hoverCss = hasHover
@@ -28,6 +30,12 @@ export function VideoCard({ video, hasHover = true }: Props) {
         margin: "4px 0",
       };
 
+  const handleImageError = () => {
+    if (imageRef.current) {
+      imageRef.current.src = "/images/empty.jpg";
+    }
+  };
+
   return (
     <Link href={`/videos/${video.id}`}>
       <Card
@@ -39,8 +47,20 @@ export function VideoCard({ video, hasHover = true }: Props) {
           ...hoverCss,
         }}
       >
-        {video.thumbnail?.url && (
-          <S.ThumbnailImage src={video?.thumbnail?.url} />
+        {video.thumbnail?.url ? (
+          <S.ThumbnailImage
+            ref={imageRef}
+            src={video?.thumbnail?.url}
+            onError={handleImageError}
+            alt={video.title}
+          />
+        ) : (
+          <S.ThumbnailImage
+            ref={imageRef}
+            src={"/images/empty.jpg"}
+            onError={handleImageError}
+            alt={video.title}
+          />
         )}
         <Typography.Text
           css={{ display: "block", marginTop: "$3", color: "$textTitle" }}
