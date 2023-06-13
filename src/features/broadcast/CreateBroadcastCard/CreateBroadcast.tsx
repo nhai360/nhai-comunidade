@@ -38,10 +38,6 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     resolver: zodResolver(CreateVideoResolver),
   });
 
-  const file = watch("file");
-
-  const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
-
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
@@ -53,38 +49,12 @@ export function CreateBroadcastDialog({ onClose }: Props) {
 
   const isLoading = isUploadingThumbnail || isCreatingVideo;
 
-  function handleUpload(files: File[]) {
-    upload(
-      {
-        file: files[0],
-        category: MediaCategory.VIDEO,
-        mimeType: "video",
-      },
-      {
-        onSuccess: () => {
-          toast.success("O upload do seu vídeo foi concluído!");
-        },
-        onError: () => {
-          toast.error(
-            "Não foi possível completar o upload do seu vídeo. Tente novamente"
-          );
-        },
-      }
-    );
-  }
-
   function handleCreateVideo({
     title,
     description,
     thumbnail,
     tags,
   }: CreateVideoParams) {
-    if (!source) {
-      return toast.error(
-        "Você precisa fazer um novo upload de vídeo, o anterior falhou!"
-      );
-    }
-
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
 
     uploadThumbnail(
@@ -93,24 +63,24 @@ export function CreateBroadcastDialog({ onClose }: Props) {
         category: MediaCategory.IMAGE,
       },
       {
-        onSuccess: (media) => {
-          createVideo(
-            {
-              title,
-              description,
-              source,
-              thumbnail: media,
-              tags: tagsInArray,
-            },
-            {
-              onError: () => {
-                toast.error(
-                  "Não foi possível postar o seu vídeo. Tente novamente"
-                );
-              },
-            }
-          );
-        },
+        // onSuccess: (media) => {
+        //   createVideo(
+        //     {
+        //       title,
+        //       description,
+        //       source,
+        //       thumbnail: media,
+        //       tags: tagsInArray,
+        //     },
+        //     {
+        //       onError: () => {
+        //         toast.error(
+        //           "Não foi possível postar o seu vídeo. Tente novamente"
+        //         );
+        //       },
+        //     }
+        //   );
+        // },
         onError: () => {
           toast.error(
             "Não foi possível completar o upload da sua thumbnail. Tente novamente"
@@ -120,27 +90,10 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     );
   }
 
-  if (isSuccess) {
-    return (
-      <Dialog open onOpenChange={onClose}>
-        <Dialog.Content>
-          <Dialog.Header closable={false} />
-          <Dialog.Body>
-            <Success
-              title="Seu vídeo foi publicado com sucesso!"
-              description="Agora que compartilhou seu vídeo com sua comunidade, é só esperar para ver as discussões interessantes que podem surgir."
-              onClose={onClose}
-            />
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog>
-    );
-  }
-
   return (
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Header title={file ? file.name : "Nova Transmissão"} closable />
+        <Dialog.Header title={"Nova Transmissão"} closable />
         <Dialog.Body>
           <S.FormContainer onSubmit={handleSubmit(handleCreateVideo)}>
             <Field.Input
@@ -149,13 +102,13 @@ export function CreateBroadcastDialog({ onClose }: Props) {
               errorText={errors.title?.message}
               {...register("title")}
             />
-            {/* <Field.Input
+            <Field.Input
               label="Tags"
               placeholder="Adicionar tags"
               errorText={errors.tags?.message}
               helperText="Use a ',' para separar as tags do seu vídeo. Exemplo: tag 1, tag 2"
               {...register("tags")}
-            /> */}
+            />
             <Field label="Descrição" required={false}>
               <TextArea
                 control={control}

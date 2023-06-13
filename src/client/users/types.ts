@@ -52,17 +52,13 @@ export const CreateUserDecoder = t.object({
     .email({ message: "O formato de e-mail é inválido" })
     .min(1, "E-mail é obrigatório"),
   password: t.string().min(1, "Senha é obrigatória"),
-  birthDate: t.date().optional(),
-  cellphone: t.string().min(1, "Celular é obrigatório"),
-  ethnicIdentity: t
-    .string()
-    .min(1, "Identificação étnico-racial é obrigatória"),
-  genderIdentity: t.string().min(1, "Identidade de gênero é obrigatória"),
-  sexualOrientation: t
-    .string()
-    .min(1, "Orientação sexual declarada é obrigatória"),
-  agreeToPrivacyPolicy: t.boolean(),
-  mediaConsent: t.boolean(),
+  gender: t.string().optional(),
+  birthDate: t.string().min(10, "Data inválida"),
+  phone: t.string().optional(),
+  ethnicity: t.string().optional(),
+  sexualOrientation: t.string().optional(),
+  agreeToPrivacyPolicy: t.boolean().optional(),
+  mediaConsent: t.boolean().optional(),
 });
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
@@ -83,6 +79,11 @@ export const UpdateUserDecoder = t.object({
     .min(1, "Bio é obrigatório")
     .max(255, "A bio deve ter no máximo 255 caracteres"),
   avatar: t.any().optional(),
+  gender: t.string().optional(),
+  birthDate: t.string().optional(),
+  phone: t.string().optional(),
+  ethnicity: t.string().optional(),
+  sexualOrientation: t.string().optional(),
 });
 
 export type UpdateUserParams = t.TypeOf<typeof UpdateUserDecoder>;

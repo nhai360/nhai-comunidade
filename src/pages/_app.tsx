@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { setDefaultOptions } from "date-fns";
 import { pt } from "date-fns/locale";
+import { SpaceProvider } from "@/contexts/Space";
 
 const queryClient = new QueryClient();
 // Definindo a localização padrão para português
@@ -28,7 +29,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ScoreProvider>
-            <Component {...pageProps} />
+            <SpaceProvider>
+              <Component {...pageProps} />
+            </SpaceProvider>
           </ScoreProvider>
         </AuthProvider>
         <ToastContainer />

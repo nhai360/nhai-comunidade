@@ -18,6 +18,7 @@ type FieldProps = {
   label?: string;
   helperText?: string;
   errorText?: string;
+  setValue?: any;
   required?: boolean;
   children?: ReactNode;
 };
@@ -66,7 +67,10 @@ type FieldInputProps = FieldProps & InputProps;
 const FieldInput: ForwardRefRenderFunction<
   HTMLInputElement,
   FieldInputProps
-> = ({ label, helperText, errorText, name, required, ...rest }, ref) => {
+> = (
+  { label, helperText, errorText, name, required, setValue, ...rest },
+  ref
+) => {
   const hasError = Boolean(errorText);
 
   return (
@@ -119,11 +123,11 @@ const FieldSelect = (
         id={name}
         name={name}
         error={hasError}
-        {...rest}
         size="medium"
         isClearable
         defaultOptions={data}
-        onChange={(a: any) => onChange("playlist", a?.value)}
+        onChange={(a: any) => onChange(name, a?.value)}
+        {...rest}
       />
     </Field>
   );

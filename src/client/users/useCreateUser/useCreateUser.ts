@@ -5,7 +5,10 @@ import { api, decodeResponse } from "@/client";
 import { CreateUserParams, User, UserDecoder } from "@/client/users/types";
 
 async function createUserRequest(params: CreateUserParams) {
-  const response = await api.post("/auth/signup", params);
+  const response = await api.post("/auth/signup", {
+    ...params,
+    birthDate: new Date(params?.birthDate),
+  });
 
   return decodeResponse<User>(response, UserDecoder);
 }

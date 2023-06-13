@@ -1,0 +1,15 @@
+.contentContainer {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  padding: 16px 32px 80px 116px;
+  max-width: 1920px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pageTitle {
+    margin: 32px 0;
+  }
+}

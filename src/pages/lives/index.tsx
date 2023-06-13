@@ -1,8 +1,7 @@
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
-import { Videos } from "@/features/videos";
 import { withAuth } from "@/middlewares";
-import { useEffect } from "react";
+import { Lives } from "@/features/lives";
 
 function StagePage() {
   const { session } = useAuthContext();
@@ -17,7 +16,12 @@ function StagePage() {
     return null;
   }
 
-  return <></>;
+  return (
+    <>
+      <Lives.DesktopLayout />
+      <Lives.AppLayout />
+    </>
+  );
 }
 
 export default withAuth(StagePage);

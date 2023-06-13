@@ -7,13 +7,14 @@ import * as S from "./DefaultLayout.styles";
 
 type Props = {
   children: ReactNode;
+  hasSider?: boolean;
 };
 
-export function DefaultLayout({ children }: Props) {
+export function DefaultLayout({ children, hasSider = true }: Props) {
   return (
     <S.Wrapper>
       <Header />
-      <Sidebar />
+      {hasSider && <Sidebar />}
       {children}
     </S.Wrapper>
   );
