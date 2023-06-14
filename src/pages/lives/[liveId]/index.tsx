@@ -37,6 +37,11 @@ import ParticipantContext from "@/contexts/Participant";
 import InviteParticipantButton from "@/components/Buttons/InviteParticipantButton";
 import { useLive } from "@/client/lives";
 
+import { Button } from "@/ui";
+import { Broadcast } from "@phosphor-icons/react";
+import { Levels } from "react-activity";
+import JoinLive from "@/features/lives/JoinLive";
+
 const headerHeight = 80;
 const chatWidth = 300;
 
@@ -202,9 +207,7 @@ const Home = ({
       <p>Live não encontrada...</p>
     </>
   ) : participant?.interactionRequired ? (
-    <>
-      <button onClick={handleSubmit}>Entrar no espaço</button>
-    </>
+    <JoinLive handleSubmit={handleSubmit} />
   ) : isJoined ? (
     <>
       <div className={styles.header}>
@@ -256,7 +259,9 @@ const Home = ({
     </>
   ) : (
     <>
-      <p>Carregando...</p>
+      <div className={styles.spaceGreetings}>
+        <Levels color={"#f23d80"} size={32} />
+      </div>
     </>
   );
 };

@@ -1,0 +1,21 @@
+.spaceGreetings {
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 2rem;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #808080;
+  }
+}
