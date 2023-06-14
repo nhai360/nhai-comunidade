@@ -22,7 +22,6 @@ import useWindowDimensions from "../../../hooks/useWindowDimension";
 
 import Gallery from "@/components/Gallery";
 import Timer from "@/components/Timer/Timer";
-import ScreenShareRenderer from "@/components/renderers/ScreenShareRenderer";
 import ChatContext from "../../../contexts/Chat";
 import CancelButton from "@/components/Buttons/CancelButton";
 import { useRouter } from "next/router";
@@ -35,6 +34,8 @@ import { TEMPORARY_SPACE_PASSTHROUGH } from "@/lib/constants";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import ParticipantContext from "@/contexts/Participant";
+import InviteParticipantButton from "@/components/Buttons/InviteParticipantButton";
+import { useLive } from "@/client/lives";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -54,9 +55,23 @@ const Home = ({
 }: Props): JSX.Element => {
   const router = useRouter();
 
-  const id = router?.query?.spaceId;
+  const liveId = router?.query?.liveId;
+
+  const { live, isLoading } = useLive({ liveId: liveId as string });
+
+  const liveInfos = {
+    spaceId: "RSx00l00Y2rHL15q17FZhOZY4lJ4nMaEGNJ5xUzK3tGLI",
+    broadcastId: "Pf8erMJlvI9W9mS7TLiSflOYYsM800ry45oeZ01d6MIhY",
+    live: {
+      muxLiveId: "vTGHWqHVcQV025htF00B013c738LujFX9e5hne5Rd8C71E",
+      liveId: "cliuy9ywo001hb7aky5vh19g7",
+    },
+  };
 
   const { session } = useAuthContext();
+
+  const userIsParticipant =
+    !isLoading && live?.guests?.find((g) => g?.guest?.id === session?.userId);
 
   const participant = useContext(ParticipantContext);
 
@@ -66,10 +81,8 @@ const Home = ({
 
   let gap = 10;
 
-  // AJUSTAR ISSO DEPOIS QUE FAZER A INTEGRAÇÃO
   const {
     participantCount,
-    attachScreenShare,
     isScreenShareActive,
     isBroadcasting,
     spaceEndsAt,
@@ -111,10 +124,10 @@ const Home = ({
   );
 
   const handleJoin = useCallback(() => {
-    if (typeof id === "string" && canJoinSpace) {
-      authenticate(id, `${user?.fullName}|${user?.id}`);
+    if (typeof liveInfos?.spaceId === "string" && canJoinSpace) {
+      authenticate(liveInfos?.spaceId, `${user?.fullName}|${user?.id}`);
     }
-  }, [id, canJoinSpace, authenticate, user?.id]);
+  }, [liveInfos?.spaceId, canJoinSpace, authenticate, user?.id]);
 
   const handleSubmit = async () => {
     participant.setParticipantName(user?.fullName || "");
@@ -124,7 +137,7 @@ const Home = ({
 
   useEffect(() => {
     if (!isRouterReady) return;
-    if (!id || Array.isArray(id)) {
+    if (!liveInfos?.spaceId || Array.isArray(liveInfos?.spaceId)) {
       console.warn("No space selected");
       return;
     }
@@ -134,7 +147,15 @@ const Home = ({
       router.events.off("routeChangeStart", leaveSpace);
       router.events.off("routeChangeComplete", handleJoin);
     };
-  }, [id, user, router, handleJoin, leaveSpace, isRouterReady, user?.fullName]);
+  }, [
+    liveInfos?.spaceId,
+    user,
+    router,
+    handleJoin,
+    leaveSpace,
+    isRouterReady,
+    user?.fullName,
+  ]);
 
   // const { isChatOpen } = useContext(ChatContext);
   const { width = 0, height = 0 } = useWindowDimensions();
@@ -176,7 +197,11 @@ const Home = ({
 
   const participantsPerPage = Math.round(rows * columns);
 
-  return participant?.interactionRequired ? (
+  return !live || !userIsParticipant ? (
+    <>
+      <p>Live não encontrada...</p>
+    </>
+  ) : participant?.interactionRequired ? (
     <>
       <button onClick={handleSubmit}>Entrar no espaço</button>
     </>
@@ -219,7 +244,7 @@ const Home = ({
 
         <div className={styles.mainTools}>
           <CameraButton />
-          {/* <ScreenShareButton /> */}
+          <InviteParticipantButton guests={live?.guests} />
           <MicButton />
           <BroadcastButton />
         </div>
