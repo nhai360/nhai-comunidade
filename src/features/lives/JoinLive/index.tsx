@@ -8,13 +8,15 @@ import "react-activity/dist/library.css";
 
 import * as animationData from "../../../../public/streamlott.json";
 import { Button } from "@/ui";
-import { Broadcast } from "@phosphor-icons/react";
+import { Broadcast, SignIn } from "@phosphor-icons/react";
+import { Live } from "@/client/lives";
 
 interface IJoinLive {
+  live: Live;
   handleSubmit: () => void;
 }
 
-const JoinLive = ({ handleSubmit }: IJoinLive) => {
+const JoinLive = ({ handleSubmit, live }: IJoinLive) => {
   return (
     <>
       <div className={styles.spaceGreetings}>
@@ -28,9 +30,11 @@ const JoinLive = ({ handleSubmit }: IJoinLive) => {
           width={200}
         />
         <span>SEJA BEM-VINDO</span>
-        <h2>Nome da live</h2>
+        <h2>
+          <Broadcast size={20} color="red" /> {live?.title}
+        </h2>
         <Button onClick={handleSubmit}>
-          Preparar transmissão <Broadcast size={20} />{" "}
+          Preparar transmissão <SignIn size={20} />{" "}
         </Button>
       </div>
     </>

@@ -207,7 +207,7 @@ const Home = ({
       <p>Live não encontrada...</p>
     </>
   ) : participant?.interactionRequired ? (
-    <JoinLive handleSubmit={handleSubmit} />
+    <JoinLive handleSubmit={handleSubmit} live={live} />
   ) : isJoined ? (
     <>
       <div className={styles.header}>
@@ -246,8 +246,8 @@ const Home = ({
         </div>
 
         <div className={styles.mainTools}>
-          <CameraButton />
           <InviteParticipantButton guests={live?.guests} />
+          <CameraButton />
           <MicButton />
           <BroadcastButton />
         </div>

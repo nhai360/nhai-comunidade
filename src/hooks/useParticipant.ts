@@ -63,7 +63,7 @@ export function useParticipant(connectionId: string): Participant {
   const [isCameraOff, setIsCameraOff] = useState(true);
   //DESCOMENTAR ABAIXO
   const [displayName, setDisplayName] = useState(participant.displayName);
-  const { userWantsMicMuted } = React.useContext(UserContext);
+  const { participantWantsMicMuted } = React.useContext(UserContext);
 
   const hasMicTrack = useMemo(() => {
     return !!microphoneTrack;
@@ -102,7 +102,7 @@ export function useParticipant(connectionId: string): Participant {
         }
         if (track.source === TrackSource.Microphone) {
           setMicrophoneTrack(track);
-          if (isLocal && userWantsMicMuted) {
+          if (isLocal && participantWantsMicMuted) {
             (track as LocalTrack).mute();
           }
           if (track.isMuted()) {
@@ -133,13 +133,13 @@ export function useParticipant(connectionId: string): Participant {
 
   useEffect(() => {
     if (isLocal && microphoneTrack instanceof LocalTrack) {
-      if (userWantsMicMuted && !microphoneTrack.muted) {
+      if (participantWantsMicMuted && !microphoneTrack.muted) {
         microphoneTrack.mute();
-      } else if (!userWantsMicMuted && microphoneTrack.muted) {
+      } else if (!participantWantsMicMuted && microphoneTrack.muted) {
         microphoneTrack.unMute();
       }
     }
-  }, [userWantsMicMuted, isLocal, microphoneTrack]);
+  }, [participantWantsMicMuted, isLocal, microphoneTrack]);
 
   useEffect(() => {
     if (!participant) return;
