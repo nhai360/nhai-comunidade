@@ -6,18 +6,15 @@ import Lottie from "react-lottie";
 
 import "react-activity/dist/library.css";
 
-import * as animationData from "../../../../public/notfound.json";
+import * as animationData from "../../../../public/streamlott.json";
 import { Button } from "@/ui";
-import { ArrowBendUpLeft, Broadcast, HouseSimple } from "@phosphor-icons/react";
-import { useRouter } from "next/router";
+import { Broadcast } from "@phosphor-icons/react";
 
-const JoinLive = () => {
-  const router = useRouter();
+interface IJoinLive {
+  handleSubmit: () => void;
+}
 
-  const handleBack = () => {
-    router.push("/videos");
-  };
-
+const JoinLive = ({ handleSubmit }: IJoinLive) => {
   return (
     <>
       <div className={styles.spaceGreetings}>
@@ -30,10 +27,10 @@ const JoinLive = () => {
           height={200}
           width={200}
         />
-        <span>Vish...</span>
-        <h2>Esta live não existe.</h2>
-        <Button onClick={handleBack}>
-          <HouseSimple size={24} /> Voltar para a plataforma
+        <span>SEJA BEM-VINDO</span>
+        <h2>Nome da live</h2>
+        <Button onClick={handleSubmit}>
+          Preparar transmissão <Broadcast size={20} />{" "}
         </Button>
       </div>
     </>
