@@ -41,6 +41,7 @@ import { Button } from "@/ui";
 import { Broadcast } from "@phosphor-icons/react";
 import { Levels } from "react-activity";
 import JoinLive from "@/features/lives/JoinLive";
+import LiveNotFound from "@/features/lives/LiveNotFound";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -204,7 +205,7 @@ const Home = ({
 
   return !live || !userIsParticipant ? (
     <>
-      <p>Live não encontrada...</p>
+      <LiveNotFound />
     </>
   ) : participant?.interactionRequired ? (
     <JoinLive handleSubmit={handleSubmit} />
