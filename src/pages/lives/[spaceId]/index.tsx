@@ -136,10 +136,10 @@ const Home = ({
     };
   }, [id, user, router, handleJoin, leaveSpace, isRouterReady, user?.fullName]);
 
-  const { isChatOpen } = useContext(ChatContext);
+  // const { isChatOpen } = useContext(ChatContext);
   const { width = 0, height = 0 } = useWindowDimensions();
 
-  const availableWidth = width - (isChatOpen && width > 800 ? chatWidth : 0);
+  const availableWidth = width - (width > 800 ? chatWidth : 0);
 
   const paddingY = height < 600 ? 10 : 40;
   const paddingX = availableWidth < 800 ? 40 : 60;
@@ -184,7 +184,7 @@ const Home = ({
     <>
       <div className={styles.header}>
         <Image src="/logo.svg" width="100" height="100" alt="Contaí! Stage" />
-        <p>Number of participants: {participantCount || 0}</p>
+        {/* <p>Number of participants: {participantCount || 0}</p> */}
         <div className={styles.indicatorTop}>
           <BroadcastIndicator isOnline={isBroadcasting} />
         </div>
@@ -210,8 +210,7 @@ const Home = ({
             participantsPerPage={participantsPerPage}
           />
         </div>
-
-        {/* <Chat messages={[]} isOpen={width > 800 && isChatOpen} /> */}
+        <Chat messages={[]} isOpen={width > 800} />
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>
