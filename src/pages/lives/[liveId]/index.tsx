@@ -194,7 +194,7 @@ const Home = ({
 
   const participantsPerPage = Math.round(rows * columns);
 
-  return !live || !userIsParticipant ? (
+  return !live?.spaceId || !userIsParticipant ? (
     <LiveNotFound />
   ) : participant?.interactionRequired ? (
     <JoinLive handleSubmit={handleSubmit} live={live} />
@@ -239,7 +239,7 @@ const Home = ({
           <InviteParticipantButton guests={live?.guests || []} />
           <CameraButton />
           <MicButton />
-          <BroadcastButton />
+          <BroadcastButton live={live} />
         </div>
 
         <div className={styles.callOut}>
@@ -260,13 +260,13 @@ export default Home;
 
 const { MUX_SPACES_BACKEND_URL = "", MUX_SPACES_HELIOS_URL = "" } = process.env;
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { liveId } = context.query;
   let passthrough;
   let createdAt;
 
   try {
-    if (typeof id === "string") {
-      ({ passthrough, created_at: createdAt } = await fetchSpace(id));
+    if (typeof liveId === "string") {
+      ({ passthrough, created_at: createdAt } = await fetchSpace(liveId));
     }
   } catch (error) {}
 

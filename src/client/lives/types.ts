@@ -44,3 +44,9 @@ export type PostParams = {
     id: string;
   };
 };
+
+export type PostBroadcastParams = {
+  spaceId: string;
+  broadcastId: string;
+  liveId: string;
+};
