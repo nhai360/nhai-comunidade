@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import * as t from "zod";
-import { MediaDecoder } from "../media";
+import { Media, MediaDecoder } from "../media";
 import { UserDecoder } from "../users";
 import { VideoLikeDecoder } from "../videos";
 
@@ -15,10 +15,13 @@ export const LiveDecoder = t.object({
   id: t.string(),
   title: t.string(),
   description: t.string().nullish(),
+  spaceId: t.string().nullish(),
+  broadcastId: t.string().nullish(),
+  muxLiveId: t.string().nullish(),
   source: MediaDecoder.nullish(),
   sourceId: t.string().nullish(),
   author: UserDecoder.nullish(),
-  guests: GuestLiveDecoder.array(),
+  guests: GuestLiveDecoder.array().nullish(),
   likes: VideoLikeDecoder.array().nullish(),
 });
 
@@ -26,4 +29,18 @@ export type Live = t.TypeOf<typeof LiveDecoder>;
 
 export type GetLiveParams = {
   liveId?: string;
+};
+
+export type GetUserLivesParams = {
+  nickname?: string;
+};
+
+export type PostParams = {
+  tags: string[];
+  title: string;
+  description?: string | null | undefined;
+  startTime: Date;
+  source: {
+    id: string;
+  };
 };

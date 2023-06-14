@@ -14,6 +14,7 @@ import { useAuthContext } from "@/contexts";
 
 import * as S from "./Sidebar.styles";
 import { useUser } from "@/client/users";
+import { Broadcast } from "@phosphor-icons/react";
 
 export function Sidebar() {
   const router = useRouter();
@@ -44,13 +45,14 @@ export function Sidebar() {
           <NavigationItem href="/videos" tooltip="Vídeos">
             <CameraIcon />
           </NavigationItem>
-          <NavigationItem
-            href="/articles"
-            tooltip="Materiais Didáticos"
-            disabled={!isAdmin}
-          >
+          <NavigationItem href="/articles" tooltip="Materiais Didáticos">
             <ListLineParagraphSquareIcon />
           </NavigationItem>
+          {isAdmin && (
+            <NavigationItem href="/lives" tooltip="Transmissões">
+              <Broadcast size={22} color="currentColor" />
+            </NavigationItem>
+          )}
         </S.NavigationList>
       </nav>
 

@@ -65,15 +65,6 @@ const Home = ({
 
   const { live, isLoading } = useLive({ liveId: liveId as string });
 
-  const liveInfos = {
-    spaceId: "RSx00l00Y2rHL15q17FZhOZY4lJ4nMaEGNJ5xUzK3tGLI",
-    broadcastId: "Pf8erMJlvI9W9mS7TLiSflOYYsM800ry45oeZ01d6MIhY",
-    live: {
-      muxLiveId: "vTGHWqHVcQV025htF00B013c738LujFX9e5hne5Rd8C71E",
-      liveId: "cliuy9ywo001hb7aky5vh19g7",
-    },
-  };
-
   const { session } = useAuthContext();
 
   const userIsParticipant =
@@ -130,10 +121,10 @@ const Home = ({
   );
 
   const handleJoin = useCallback(() => {
-    if (typeof liveInfos?.spaceId === "string" && canJoinSpace) {
-      authenticate(liveInfos?.spaceId, `${user?.fullName}|${user?.id}`);
+    if (typeof live?.spaceId === "string" && canJoinSpace) {
+      authenticate(live?.spaceId, `${user?.fullName}|${user?.id}`);
     }
-  }, [liveInfos?.spaceId, canJoinSpace, authenticate, user?.id]);
+  }, [live?.spaceId, canJoinSpace, authenticate, user?.id]);
 
   const handleSubmit = async () => {
     participant.setParticipantName(user?.fullName || "");
@@ -143,7 +134,7 @@ const Home = ({
 
   useEffect(() => {
     if (!isRouterReady) return;
-    if (!liveInfos?.spaceId || Array.isArray(liveInfos?.spaceId)) {
+    if (!isLoading && !live?.spaceId) {
       console.warn("No space selected");
       return;
     }
@@ -154,7 +145,7 @@ const Home = ({
       router.events.off("routeChangeComplete", handleJoin);
     };
   }, [
-    liveInfos?.spaceId,
+    live?.spaceId,
     user,
     router,
     handleJoin,
@@ -245,7 +236,7 @@ const Home = ({
         </div>
 
         <div className={styles.mainTools}>
-          <InviteParticipantButton guests={live?.guests} />
+          <InviteParticipantButton guests={live?.guests || []} />
           <CameraButton />
           <MicButton />
           <BroadcastButton />

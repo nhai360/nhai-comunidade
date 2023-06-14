@@ -22,12 +22,15 @@ import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
 
 import * as S from "./CreateBroadcastDialog.styles";
 import { UploadThumbnail } from "./UploadThumbnail";
+import { useCreateLive } from "@/client/lives/useCreateLive";
+import { useRouter } from "next/router";
 
 type Props = {
   onClose: () => void;
 };
 
 export function CreateBroadcastDialog({ onClose }: Props) {
+  const router = useRouter();
   const {
     register,
     watch,
@@ -41,13 +44,9 @@ export function CreateBroadcastDialog({ onClose }: Props) {
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
-  const {
-    createVideo,
-    isLoading: isCreatingVideo,
-    isSuccess,
-  } = useCreateVideo();
+  const { createLive, isLoading: isCreatingLive, isSuccess } = useCreateLive();
 
-  const isLoading = isUploadingThumbnail || isCreatingVideo;
+  const isLoading = isUploadingThumbnail || isCreatingLive;
 
   function handleCreateVideo({
     title,
@@ -63,24 +62,27 @@ export function CreateBroadcastDialog({ onClose }: Props) {
         category: MediaCategory.IMAGE,
       },
       {
-        // onSuccess: (media) => {
-        //   createVideo(
-        //     {
-        //       title,
-        //       description,
-        //       source,
-        //       thumbnail: media,
-        //       tags: tagsInArray,
-        //     },
-        //     {
-        //       onError: () => {
-        //         toast.error(
-        //           "Não foi possível postar o seu vídeo. Tente novamente"
-        //         );
-        //       },
-        //     }
-        //   );
-        // },
+        onSuccess: (media) => {
+          createLive(
+            {
+              title,
+              description,
+              source: {
+                id: media?.id,
+              },
+              tags: tagsInArray,
+              startTime: new Date(),
+            },
+            {
+              onSuccess: (live) => {
+                router.push(`/lives/${live?.live.liveId}`);
+              },
+              onError: () => {
+                toast.error("Não foi possível criar a live. Tente novamente");
+              },
+            }
+          );
+        },
         onError: () => {
           toast.error(
             "Não foi possível completar o upload da sua thumbnail. Tente novamente"
@@ -152,8 +154,7 @@ export function CreateBroadcastDialog({ onClose }: Props) {
           <Button
             type="submit"
             loading={isLoading}
-            // disabled={!isSuccessUpload}
-            disabled
+            disabled={isLoading}
             onClick={() => handleSubmit(handleCreateVideo)()}
           >
             Criar transmissão
