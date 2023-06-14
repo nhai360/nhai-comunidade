@@ -33,14 +33,15 @@ export function DesktopLayout() {
             </div>
             <span>
               {" "}
-              Transmita momentos especiais em tempo real para o mundo inteiro.
-              Com nosso serviço de transmissões ao vivo, você pode compartilhar
-              sua criatividade.
+              Transmita momentos especiais em tempo real para a plataforma
+              Contaí. Com o serviço de transmissões ao vivo, você pode
+              compartilhar sua criatividade.
             </span>
 
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
               <Button
                 style={{
+                  borderRadius: 8,
                   fontWeight: 500,
                   fontSize: 16,
                 }}
@@ -49,6 +50,7 @@ export function DesktopLayout() {
               </Button>
               <Button
                 style={{
+                  borderRadius: 8,
                   border: "1px solid #dadada",
                   color: "#414141",
                   fontWeight: 400,
@@ -78,7 +80,7 @@ export function DesktopLayout() {
                 <h3>{limitText(live?.title, 24)}</h3>
               </div>
 
-              <h4>{format(new Date(), "dd 'de' MM yyyy 'às' HH:mm")}</h4>
+              <h4>{format(new Date(), "dd 'de' MMMM yyyy 'às' HH:mm")}</h4>
             </div>
           ))}
         </div>
