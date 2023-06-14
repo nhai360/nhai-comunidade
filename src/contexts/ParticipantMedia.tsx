@@ -13,15 +13,15 @@ import {
   TrackSource,
 } from "@mux/spaces-web";
 
-import UserContext from "./User";
+import UserContext from "./Participant";
 
 import { defaultAudioConstraints } from "../shared/defaults";
 
-interface UserMediaState {
+interface ParticipantMediaState {
   activeCamera?: LocalTrack;
   activeMicrophone?: LocalTrack;
 
-  userMediaError?: string;
+  participantMediaError?: string;
   requestPermissionAndPopulateDevices: () => void;
   requestPermissionAndStartDevices: (
     microphoneDeviceId?: string,
@@ -46,9 +46,11 @@ interface UserMediaState {
   } | null;
 }
 
-export const UserMediaContext = createContext({} as UserMediaState);
+export const ParticipantMediaContext = createContext(
+  {} as ParticipantMediaState
+);
 
-export default UserMediaContext;
+export default ParticipantMediaContext;
 
 const defaultCameraOption: CreateLocalMediaOptions = {
   video: {},
@@ -75,13 +77,13 @@ type Props = {
   children: ReactNode;
 };
 
-export const UserMediaProvider: React.FC<Props> = ({ children }) => {
+export const ParticipantMediaProvider: React.FC<Props> = ({ children }) => {
   const {
     cameraDeviceId,
     setCameraDeviceId,
     microphoneDeviceId,
     setMicrophoneDeviceId,
-    userWantsMicMuted,
+    participantWantsMicMuted,
   } = React.useContext(UserContext);
   const [microphoneDevices, setMicrophoneDevices] = useState<InputDeviceInfo[]>(
     []
@@ -90,7 +92,7 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
   const [cameraDevices, setCameraDevices] = useState<InputDeviceInfo[]>([]);
   const [activeCamera, setActiveCamera] = useState<LocalTrack>();
   const [localAudioAnalyser, setLocalAudioAnalyser] = useState<AnalyserNode>();
-  const [userMediaError, setUserMediaError] = useState<string>();
+  const [participantMediaError, setParticipantMediaError] = useState<string>();
 
   const activeCameraId = useMemo(() => {
     return activeCamera?.deviceId;
@@ -196,14 +198,14 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
           e instanceof DOMException
         ) {
           // permission denied to camera
-          setUserMediaError("NotAllowedError");
+          setParticipantMediaError("NotAllowedError");
         } else if (
           e.name == "OverconstrainedError" ||
           e.name == "ConstraintNotSatisfiedError"
         ) {
           tracks = await getUserMedia({ audio: true, video: true });
         } else {
-          setUserMediaError(e.name);
+          setParticipantMediaError(e.name);
         }
       }
 
@@ -215,7 +217,7 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
             if (track.deviceId) {
               setMicrophoneDeviceId(track.deviceId);
             }
-            if (userWantsMicMuted) {
+            if (participantWantsMicMuted) {
               track.mute();
             }
             break;
@@ -234,7 +236,7 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
       setupLocalMicrophoneAnalyser,
       setMicrophoneDeviceId,
       setCameraDeviceId,
-      userWantsMicMuted,
+      participantWantsMicMuted,
     ]
   );
 
@@ -280,14 +282,14 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
           e instanceof DOMException
         ) {
           // permission denied to camera
-          setUserMediaError("NotAllowedError");
+          setParticipantMediaError("NotAllowedError");
         } else if (
           e.name == "OverconstrainedError" ||
           e.name == "ConstraintNotSatisfiedError"
         ) {
-          setUserMediaError("OverconstrainedError");
+          setParticipantMediaError("OverconstrainedError");
         } else {
-          setUserMediaError(e.name);
+          setParticipantMediaError(e.name);
         }
       }
 
@@ -299,7 +301,7 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
             if (track.deviceId) {
               setMicrophoneDeviceId(track.deviceId);
             }
-            if (userWantsMicMuted) {
+            if (participantWantsMicMuted) {
               track.mute();
             }
             break;
@@ -308,7 +310,11 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
 
       return tracks[0];
     },
-    [setupLocalMicrophoneAnalyser, setMicrophoneDeviceId, userWantsMicMuted]
+    [
+      setupLocalMicrophoneAnalyser,
+      setMicrophoneDeviceId,
+      participantWantsMicMuted,
+    ]
   );
 
   const changeActiveMicrophone = useCallback(
@@ -374,14 +380,14 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
           e instanceof DOMException
         ) {
           // permission denied to camera
-          setUserMediaError("NotAllowedError");
+          setParticipantMediaError("NotAllowedError");
         } else if (
           e.name == "OverconstrainedError" ||
           e.name == "ConstraintNotSatisfiedError"
         ) {
-          setUserMediaError("OverconstrainedError");
+          setParticipantMediaError("OverconstrainedError");
         } else {
-          setUserMediaError(e.name);
+          setParticipantMediaError(e.name);
         }
       }
 
@@ -421,12 +427,12 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
   }, [loadDevices]);
 
   useEffect(() => {
-    if (userWantsMicMuted && !activeMicrophone?.muted) {
+    if (participantWantsMicMuted && !activeMicrophone?.muted) {
       activeMicrophone?.mute();
-    } else if (!userWantsMicMuted && activeMicrophone?.muted) {
+    } else if (!participantWantsMicMuted && activeMicrophone?.muted) {
       activeMicrophone?.unMute();
     }
-  }, [userWantsMicMuted, activeMicrophone]);
+  }, [participantWantsMicMuted, activeMicrophone]);
 
   useEffect(() => {
     navigator.mediaDevices.addEventListener("devicechange", onDeviceChange);
@@ -439,12 +445,12 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
   }, [onDeviceChange]);
 
   return (
-    <UserMediaContext.Provider
+    <ParticipantMediaContext.Provider
       value={{
         activeCamera,
         activeMicrophone,
 
-        userMediaError,
+        participantMediaError,
         requestPermissionAndPopulateDevices,
         requestPermissionAndStartDevices,
 
@@ -464,6 +470,6 @@ export const UserMediaProvider: React.FC<Props> = ({ children }) => {
       }}
     >
       {children}
-    </UserMediaContext.Provider>
+    </ParticipantMediaContext.Provider>
   );
 };

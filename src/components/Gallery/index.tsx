@@ -1,13 +1,20 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 // import { IconButton, Center, Flex } from "@chakra-ui/react";
 
-import UserContext from "../../contexts/User";
+import UserContext from "../../contexts/Participant";
 
 import { useSpace } from "../../hooks/useSpace";
 
 import Participant from "../Participant";
 import ParticipantAudio from "../ParticipantAudio";
 import GalleryLayout from "../GalleryLayout";
+import { useParticipantMedia } from "@/hooks/useParticipantMedia";
 // import ChevronLeftIcon from "@/components/icons/ChevronLeftIcon";
 // import ChevronRightIcon from "@/components/icons/ChevronRightIcon";
 
@@ -21,8 +28,8 @@ function pushToFront<T>(array: T[], element: T) {
 
 interface Props {
   gap: number;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
   participantsPerPage: number;
 }
 
@@ -32,6 +39,16 @@ export default function Gallery({
   height,
   participantsPerPage,
 }: Props): JSX.Element {
+  const didPopulateDevicesRef = useRef(false);
+  const { requestPermissionAndPopulateDevices } = useParticipantMedia();
+
+  useEffect(() => {
+    if (didPopulateDevicesRef.current === false) {
+      didPopulateDevicesRef.current = true;
+      requestPermissionAndPopulateDevices();
+    }
+  }, [requestPermissionAndPopulateDevices]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const {
     connectionIds,
@@ -39,28 +56,27 @@ export default function Gallery({
     localParticipantConnectionId,
     screenShareParticipantConnectionId,
   } = useSpace();
-  // const { pinnedConnectionId } = React.useContext(UserContext);
+  const { pinnedConnectionId } = React.useContext(UserContext);
 
-  // const orderedConnectionIds = useMemo(() => {
-  //   // const ids = [...connectionIds];
-  //   const ids = [{}];
-  //   [
-  //     screenShareParticipantConnectionId,
-  //     pinnedConnectionId,
-  //     localParticipantConnectionId,
-  //   ].forEach((id) => {
-  //     if (id) {
-  //       pushToFront(ids, id);
-  //     }
-  //   });
+  const orderedConnectionIds = useMemo(() => {
+    const ids = [...connectionIds];
+    [
+      screenShareParticipantConnectionId,
+      pinnedConnectionId,
+      localParticipantConnectionId,
+    ].forEach((id) => {
+      if (id) {
+        pushToFront(ids, id);
+      }
+    });
 
-  //   return ids;
-  // }, [
-  //   connectionIds,
-  //   localParticipantConnectionId,
-  //   pinnedConnectionId,
-  //   screenShareParticipantConnectionId,
-  // ]);
+    return ids;
+  }, [
+    connectionIds,
+    localParticipantConnectionId,
+    pinnedConnectionId,
+    screenShareParticipantConnectionId,
+  ]);
 
   const numberPages = useMemo(() => {
     if (participantCount >= participantsPerPage) {
@@ -70,38 +86,40 @@ export default function Gallery({
     }
   }, [participantCount, participantsPerPage]);
 
-  // const goToPreviousPage = useCallback(() => {
-  //   if (currentPage > 1) {
-  //     setCurrentPage((page) => page - 1);
-  //   }
-  // }, [currentPage]);
+  const goToPreviousPage = useCallback(() => {
+    if (currentPage > 1) {
+      setCurrentPage((page) => page - 1);
+    }
+  }, [currentPage]);
 
-  // const paginatedConnectionIds = useMemo(() => {
-  //   const startIndex = currentPage * participantsPerPage - participantsPerPage;
-  //   const endIndex = startIndex + participantsPerPage;
-  //   const pageParticipants = orderedConnectionIds.slice(startIndex, endIndex);
-  //   // if there are no participants, then only the local view will show up on the page
-  //   // we need to go back to the previous page.
-  //   if (pageParticipants.length === 0) {
-  //     goToPreviousPage();
-  //   }
-  //   return pageParticipants;
-  // }, [
-  //   orderedConnectionIds,
-  //   currentPage,
-  //   participantsPerPage,
-  //   goToPreviousPage,
-  // ]);
+  const paginatedConnectionIds = useMemo(() => {
+    const startIndex = currentPage * participantsPerPage - participantsPerPage;
+    const endIndex = startIndex + participantsPerPage;
+    const pageParticipants = orderedConnectionIds.slice(startIndex, endIndex);
+    // if there are no participants, then only the local view will show up on the page
+    // we need to go back to the previous page.
+    if (pageParticipants.length === 0) {
+      goToPreviousPage();
+    }
+    return pageParticipants;
+  }, [
+    orderedConnectionIds,
+    currentPage,
+    participantsPerPage,
+    goToPreviousPage,
+  ]);
 
-  // const hidePaginateCtrlRight = currentPage === numberPages;
+  const hidePaginateCtrlRight = currentPage === numberPages;
 
-  // const hidePaginateCtrlLeft = currentPage === 1;
+  const hidePaginateCtrlLeft = currentPage === 1;
 
-  // const goToNextPage = () => {
-  //   if (currentPage < numberPages) {
-  //     setCurrentPage((page) => page + 1);
-  //   }
-  // };
+  const goToNextPage = () => {
+    if (currentPage < numberPages) {
+      setCurrentPage((page) => page + 1);
+    }
+  };
+
+  const widthBetweenPagination = numberPages === 1 ? width : width - 80;
 
   return (
     <div
@@ -134,23 +152,19 @@ export default function Gallery({
         />
       </div> */}
       <div style={{ width: width, height: "100%" }}>
-        {/* {connectionIds.map((connectionId) => ( */}
-        {/* Aqui precisa ter um map */}
-        {/* <ParticipantAudio key={connectionId} connectionId={connectionId} /> */}
-        <ParticipantAudio key={1} connectionId="" />
-        {/* ))} */}
+        {connectionIds.map((connectionId) => (
+          <ParticipantAudio key={connectionId} connectionId={connectionId} />
+        ))}
         <GalleryLayout
-          // width={widthBetweenPagination}
-          // height={height}
+          width={widthBetweenPagination}
+          height={height}
           gap={gap - 6}
         >
-          {/* {paginatedConnectionIds.map((connectionId) => {
-            return ( */}
-          {/* <Participant key={connectionId} connectionId={connectionId} /> */}
-          <Participant key={1} connectionId="" />
-          <Participant key={2} connectionId="" />
-          {/* );
-          })} */}
+          {paginatedConnectionIds.map((connectionId) => {
+            return (
+              <Participant key={connectionId} connectionId={connectionId} />
+            );
+          })}
         </GalleryLayout>
       </div>
       {/* <Center w="40px" marginRight="12px">

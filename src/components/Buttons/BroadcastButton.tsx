@@ -3,19 +3,19 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { BiStation } from "react-icons/bi";
+import { useSpace } from "@/hooks/useSpace";
 
 interface Props {}
 
 const BroadcastButton = ({}: Props) => {
-  const [isStreaming, setIsStreaming] = useState(false);
+  const { isBroadcasting } = useSpace();
+
+  const handleBroadcast = () => {};
 
   return (
     <>
-      <button
-        onClick={() => setIsStreaming(!isStreaming)}
-        className={styles.buttonBroadcast}
-      >
-        {isStreaming && (
+      <button onClick={handleBroadcast} className={styles.buttonBroadcast}>
+        {isBroadcasting && (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>
@@ -44,7 +44,7 @@ const BroadcastButton = ({}: Props) => {
             </div>
           </>
         )}
-        {!isStreaming && (
+        {!isBroadcasting && (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>

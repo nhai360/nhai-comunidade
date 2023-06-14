@@ -9,12 +9,13 @@ import {
   LocalParticipant,
   LocalTrack,
   ParticipantEvent,
+  RemoteParticipant,
   Track,
   TrackSource,
 } from "@mux/spaces-web";
 
 import SpaceContext from "../contexts/Space";
-import UserContext from "../contexts/User";
+import UserContext from "../contexts/Participant";
 
 export interface Participant {
   id: string;
@@ -34,9 +35,8 @@ export function useParticipant(connectionId: string): Participant {
   const { localParticipant, remoteParticipants } = useContext(SpaceContext);
 
   //DESCOMENTAR E APAGAR O PARTICIPANT DE BAIXO
-  // let participant: LocalParticipant | RemoteParticipant | undefined =
-  //   remoteParticipants.find((p) => p.connectionId === connectionId);
-  let participant: any;
+  let participant: LocalParticipant | RemoteParticipant | undefined =
+    remoteParticipants.find((p) => p.connectionId === connectionId);
 
   if (
     !participant &&
@@ -47,9 +47,9 @@ export function useParticipant(connectionId: string): Participant {
   }
 
   //DESCOMENTAR
-  // if (typeof participant === "undefined") {
-  //   throw new Error(`No participant found with connectionId: ${connectionId}`);
-  // }
+  if (typeof participant === "undefined") {
+    throw new Error(`No participant found with connectionId: ${connectionId}`);
+  }
 
   const id = useMemo(() => (participant ? participant.id : ""), [participant]);
   const isLocal = useMemo(
@@ -62,8 +62,7 @@ export function useParticipant(connectionId: string): Participant {
   const [isMicTrackMuted, setIsMicTrackMuted] = useState(false);
   const [isCameraOff, setIsCameraOff] = useState(true);
   //DESCOMENTAR ABAIXO
-  // const [displayName, setDisplayName] = useState(participant.displayName);
-  const [displayName, setDisplayName] = useState("Natan");
+  const [displayName, setDisplayName] = useState(participant.displayName);
   const { userWantsMicMuted } = React.useContext(UserContext);
 
   const hasMicTrack = useMemo(() => {

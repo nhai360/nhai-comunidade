@@ -34,6 +34,7 @@ import { fetchSpace } from "@/pages/api/spaces/[id]";
 import { TEMPORARY_SPACE_PASSTHROUGH } from "@/lib/constants";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
+import ParticipantContext from "@/contexts/Participant";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -57,6 +58,8 @@ const Home = ({
 
   const { session } = useAuthContext();
 
+  const participant = useContext(ParticipantContext);
+
   const { user } = useUser({
     id: session?.userId,
   });
@@ -68,7 +71,9 @@ const Home = ({
     participantCount,
     attachScreenShare,
     isScreenShareActive,
+    isBroadcasting,
     spaceEndsAt,
+    isJoined,
     joinSpace,
     leaveSpace,
   } = useSpace();
@@ -110,6 +115,12 @@ const Home = ({
       authenticate(id, `${user?.fullName}|${user?.id}`);
     }
   }, [id, canJoinSpace, authenticate, user?.id]);
+
+  const handleSubmit = async () => {
+    participant.setParticipantName(user?.fullName || "");
+    participant.setInteractionRequired(false);
+    handleJoin();
+  };
 
   useEffect(() => {
     if (!isRouterReady) return;
@@ -165,13 +176,17 @@ const Home = ({
 
   const participantsPerPage = Math.round(rows * columns);
 
-  return (
+  return participant?.interactionRequired ? (
+    <>
+      <button onClick={handleSubmit}>Entrar no espaço</button>
+    </>
+  ) : isJoined ? (
     <>
       <div className={styles.header}>
         <Image src="/logo.svg" width="100" height="100" alt="Contaí! Stage" />
         <p>Number of participants: {participantCount || 0}</p>
         <div className={styles.indicatorTop}>
-          <BroadcastIndicator isOnline={false} />
+          <BroadcastIndicator isOnline={isBroadcasting} />
         </div>
       </div>
 
@@ -190,21 +205,20 @@ const Home = ({
         >
           <Gallery
             gap={gap}
-            // width={galleryWidth}
-            // height={galleryHeight}
+            width={galleryWidth}
+            height={galleryHeight}
             participantsPerPage={participantsPerPage}
           />
         </div>
 
-        <Chat messages={[]} isOpen={width > 800 && isChatOpen} />
+        {/* <Chat messages={[]} isOpen={width > 800 && isChatOpen} /> */}
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>
-          <BroadcastIndicator isOnline={false} />
+          <BroadcastIndicator isOnline={isBroadcasting} />
         </div>
 
         <div className={styles.mainTools}>
-          <button onClick={handleJoin}>Entrar no espaço</button>
           <CameraButton />
           {/* <ScreenShareButton /> */}
           <MicButton />
@@ -215,6 +229,10 @@ const Home = ({
           <CancelButton />
         </div>
       </div>
+    </>
+  ) : (
+    <>
+      <p>Carregando...</p>
     </>
   );
 };

@@ -25,8 +25,9 @@ import {
 
 import { MAX_PARTICIPANTS_PER_PAGE } from "../lib/constants";
 
-import UserContext from "./User";
-import UserMediaContext from "./UserMedia";
+import UserContext from "./Participant";
+import UserMediaContext from "./ParticipantMedia";
+import { toast } from "react-toastify";
 
 interface SpaceState {
   space: Space | null;
@@ -75,8 +76,12 @@ type Props = {
 };
 
 export const SpaceProvider: React.FC<Props> = ({ children }) => {
-  const { userWantsMicMuted, microphoneDeviceId, cameraOff, cameraDeviceId } =
-    useContext(UserContext);
+  const {
+    participantWantsMicMuted,
+    microphoneDeviceId,
+    cameraOff,
+    cameraDeviceId,
+  } = useContext(UserContext);
   const { getMicrophone, getCamera } = useContext(UserMediaContext);
 
   const [space, setSpace] = useState<Space | null>(null);
@@ -153,7 +158,7 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
         const publishedMicrophone = publishedTracks.find(
           (track) => track.source === TrackSource.Microphone
         );
-        if (publishedMicrophone && userWantsMicMuted) {
+        if (publishedMicrophone && participantWantsMicMuted) {
           publishedMicrophone.mute();
         }
       }
@@ -164,7 +169,7 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
       microphoneDeviceId,
       getCamera,
       cameraDeviceId,
-      userWantsMicMuted,
+      participantWantsMicMuted,
     ]
   );
 
@@ -396,12 +401,17 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
         }
         const microphoneTrack = await getMicrophone(deviceId);
         await localParticipant.publishTracks([microphoneTrack]);
-        if (userWantsMicMuted) {
+        if (participantWantsMicMuted) {
           microphoneTrack.mute();
         }
       }
     },
-    [localParticipant, microphoneDeviceId, getMicrophone, userWantsMicMuted]
+    [
+      localParticipant,
+      microphoneDeviceId,
+      getMicrophone,
+      participantWantsMicMuted,
+    ]
   );
 
   const publishCamera = useCallback(
@@ -421,7 +431,7 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
           throw new Error("That camera is already published.");
         }
         const cameraTrack = await getCamera(deviceId);
-        localParticipant.publishTracks([cameraTrack]);
+        localParticipant?.publishTracks([cameraTrack]);
       }
     },
     [localParticipant, cameraDeviceId, getCamera]
@@ -440,7 +450,7 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
       if (publishedDevice) {
         localParticipant.unpublishTracks([publishedDevice]);
       } else {
-        throw new Error("Device to un-published was not found.");
+        toast.error("Não foi possível carregar a câmera");
       }
     },
     [localParticipant]

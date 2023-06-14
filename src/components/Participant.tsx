@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import UserContext from "../contexts/User";
+import UserContext from "../contexts/Participant";
 import { useParticipant } from "../hooks/useParticipant";
 
 import Pin from "./Pin";

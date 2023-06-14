@@ -3,14 +3,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-interface UserState {
+interface ParticipantState {
   id: string;
   participantName: string;
   setParticipantName: (newName: string) => string;
   interactionRequired: boolean;
   setInteractionRequired: (requiresInteraction: boolean) => void;
-  userWantsMicMuted: boolean;
-  setUserWantsMicMuted: (mute: boolean) => void;
+  participantWantsMicMuted: boolean;
+  setParticipantWantsMicMuted: (mute: boolean) => void;
   cameraOff: boolean;
   setCameraOff: (mute: boolean) => void;
   microphoneDeviceId: string;
@@ -21,15 +21,15 @@ interface UserState {
   setPinnedConnectionId: (newConnectionId: string) => void;
 }
 
-const UserContext = createContext({} as UserState);
+const ParticipantContext = createContext({} as ParticipantState);
 
-export default UserContext;
+export default ParticipantContext;
 
 interface Props {
   children: ReactNode;
 }
 
-export const UserProvider = ({ children }: Props) => {
+export const ParticipantProvider = ({ children }: Props) => {
   const [interactionRequired, setInteractionRequired] = useState(true);
   const [participantName, setParticipantName] = useLocalStorage(
     "participantName",
@@ -39,7 +39,8 @@ export const UserProvider = ({ children }: Props) => {
   // This should never change unless we reload
   const id = uuidv4();
 
-  const [userWantsMicMuted, setUserWantsMicMuted] = useState(false);
+  const [participantWantsMicMuted, setParticipantWantsMicMuted] =
+    useState(false);
   const [cameraOff, setCameraOff] = useState(false);
 
   const [microphoneDeviceId, setMicrophoneDeviceId] = useLocalStorage(
@@ -61,15 +62,15 @@ export const UserProvider = ({ children }: Props) => {
   );
 
   return (
-    <UserContext.Provider
+    <ParticipantContext.Provider
       value={{
         id,
         participantName,
         setParticipantName: handleSetParticipantName,
         interactionRequired,
         setInteractionRequired,
-        userWantsMicMuted,
-        setUserWantsMicMuted,
+        participantWantsMicMuted,
+        setParticipantWantsMicMuted,
         cameraOff,
         setCameraOff,
         microphoneDeviceId,
@@ -81,6 +82,6 @@ export const UserProvider = ({ children }: Props) => {
       }}
     >
       {children}
-    </UserContext.Provider>
+    </ParticipantContext.Provider>
   );
 };
