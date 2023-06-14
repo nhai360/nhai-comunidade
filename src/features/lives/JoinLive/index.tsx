@@ -8,7 +8,7 @@ import "react-activity/dist/library.css";
 
 import * as animationData from "../../../../public/streamlott.json";
 import { Button } from "@/ui";
-import { Broadcast, SignIn } from "@phosphor-icons/react";
+import { Broadcast } from "@phosphor-icons/react";
 import { Live } from "@/client/lives";
 
 interface IJoinLive {
@@ -33,9 +33,7 @@ const JoinLive = ({ handleSubmit, live }: IJoinLive) => {
         <h2>
           <Broadcast size={20} color="red" /> {live?.title}
         </h2>
-        <Button onClick={handleSubmit}>
-          Preparar transmissão <SignIn size={20} />{" "}
-        </Button>
+        <Button onClick={handleSubmit}>Preparar transmissão</Button>
       </div>
     </>
   );

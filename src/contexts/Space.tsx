@@ -81,6 +81,7 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
     microphoneDeviceId,
     cameraOff,
     cameraDeviceId,
+    setInteractionRequired,
   } = useContext(UserContext);
   const { getMicrophone, getCamera } = useContext(UserMediaContext);
 
@@ -544,6 +545,8 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
       setLocalParticipant(null);
       setIsJoined(false);
       setSpaceEndsAt(null);
+      setInteractionRequired(true);
+
       // Don't call setSpace(null) here, as things like ACR Score submission depend on it
     }
   }, [space]);

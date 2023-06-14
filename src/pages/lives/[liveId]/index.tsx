@@ -41,6 +41,7 @@ import { Button } from "@/ui";
 import { Broadcast } from "@phosphor-icons/react";
 import { Levels } from "react-activity";
 import JoinLive from "@/features/lives/JoinLive";
+import LiveNotFound from "@/features/lives/LiveNotFound";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -203,13 +204,11 @@ const Home = ({
   const participantsPerPage = Math.round(rows * columns);
 
   return !live || !userIsParticipant ? (
-    <>
-      <p>Live não encontrada...</p>
-    </>
+    <LiveNotFound />
   ) : participant?.interactionRequired ? (
     <JoinLive handleSubmit={handleSubmit} live={live} />
   ) : isJoined ? (
-    <>
+    <div style={{ overflow: "hidden" }}>
       <div className={styles.header}>
         <Image src="/logo.svg" width="100" height="100" alt="Contaí! Stage" />
         {/* <p>Number of participants: {participantCount || 0}</p> */}
@@ -256,7 +255,7 @@ const Home = ({
           <CancelButton />
         </div>
       </div>
-    </>
+    </div>
   ) : (
     <>
       <div className={styles.spaceGreetings}>
