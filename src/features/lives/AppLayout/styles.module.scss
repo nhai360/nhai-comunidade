@@ -1,18 +1,13 @@
 .contentContainer {
   width: 100%;
-  height: 90vh;
   overflow: auto;
 
-  // padding: 16px 56px 80px 56px;
   background-color: white;
   max-width: 1920px;
   align-self: center;
   display: flex;
   align-items: center;
-
-  .pageTitle {
-    margin: 32px 0;
-  }
+  flex-direction: column;
 
   .headlineContent {
     display: flex;
@@ -21,6 +16,7 @@
 
     flex: 1;
     width: 100%;
+    padding-top: 48px;
 
     .headlineBox {
       padding: 0 48px;
@@ -29,13 +25,26 @@
       h2 {
         font-size: 42px;
         font-weight: 500;
+        @media screen and (max-width: 768px) {
+          font-size: 32px;
+        }
       }
 
       span {
         font-size: 18px;
+        @media screen and (max-width: 768px) {
+          font-size: 14px;
+        }
         max-width: 10px;
         color: #868686;
         font-weight: 300;
+      }
+
+      .buttonBox {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 48px;
       }
     }
   }
@@ -49,18 +58,17 @@
 
     overflow-y: auto;
 
-    flex: 1;
-    width: 100%;
+    padding: 32px 16px;
 
-    height: 100%;
+    width: 100%;
 
     .card {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 16px;
       background-color: #ffffff;
-      width: 600px;
+      width: 100%;
+      max-width: 600px;
 
       padding: 16px;
       padding-right: 24px;
@@ -81,7 +89,15 @@
       }
 
       h3 {
-        font-size: 24px;
+        overflow: hidden; /* Oculta o texto que excede o espaço disponível */
+        text-overflow: ellipsis; /* Adiciona "..." quando o texto é cortado */
+        overflow-wrap: break-word;
+        width: 100%;
+        font-size: 20px;
+
+        @media screen and (max-width: 768px) {
+          font-size: 18px;
+        }
         font-weight: 400;
       }
 
@@ -95,8 +111,10 @@
 
       h4 {
         font-size: 14px;
+        @media screen and (max-width: 768px) {
+          font-size: 12px;
+        }
         font-weight: 400;
-        
 
         &:hover {
           color: #ffffff;

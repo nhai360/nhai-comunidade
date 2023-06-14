@@ -6,7 +6,7 @@ export const Container = styled("button", {
   justifyContent: "center",
 
   columnGap: "$2",
-  borderRadius: "$medium",
+  borderRadius: "$small",
   border: 0,
 
   fontFamily: "$body",
