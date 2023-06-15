@@ -375,10 +375,14 @@ export const SpaceProvider: React.FC<Props> = ({ children }) => {
         setLocalParticipant(_localParticipant);
         setIsBroadcasting(_space.broadcasting);
         setIsJoined(true);
+        toast.success("Você ingressou no espaço!");
       } catch (error: any) {
+        toast.error("Não foi possível entrar no espaço");
+        console.error(error.message);
         setJoinError(error.message);
         setIsBroadcasting(false);
         setIsJoined(false);
+        setInteractionRequired(true);
       }
     },
     [publishForLocalParticipant, router.isReady, router.query.auto_sub_limit]

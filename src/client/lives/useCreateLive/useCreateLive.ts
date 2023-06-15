@@ -6,7 +6,6 @@ import { PostParams, invalidateLivesQueries } from "@/client/lives";
 async function createLiveRequest(params: PostParams) {
   const response = await authenticatedAPI.post("/lives", {
     ...params,
-    source: { id: params?.source?.id },
   });
 
   return response.data;

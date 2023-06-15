@@ -11,7 +11,7 @@ const CancelButton = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push("/videos");
+    router.push("/lives");
   };
 
   const handleLeave = () => {

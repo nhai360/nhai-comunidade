@@ -36,14 +36,15 @@ export function AppLayout() {
               </div>
               <span>
                 {" "}
-                Transmita momentos especiais em tempo real para o mundo inteiro.
-                Com nosso serviço de transmissões ao vivo, você pode
+                Transmita momentos especiais em tempo real para a plataforma
+                Contaí. Com o serviço de transmissões ao vivo, você pode
                 compartilhar sua criatividade.
               </span>
 
               <div className={styles.buttonBox}>
                 <Button
                   style={{
+                    borderRadius: 8,
                     fontWeight: 500,
                     fontSize: 16,
                   }}
@@ -52,6 +53,7 @@ export function AppLayout() {
                 </Button>
                 <Button
                   style={{
+                    borderRadius: 8,
                     border: "1px solid #dadada",
                     color: "#414141",
                     fontWeight: 400,

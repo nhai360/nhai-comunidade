@@ -70,6 +70,9 @@ export function CreateBroadcastDialog({ onClose }: Props) {
               source: {
                 id: media?.id,
               },
+              thumbnail: {
+                id: media?.id,
+              },
               tags: tagsInArray,
               startTime: new Date(),
             },

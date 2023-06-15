@@ -41,6 +41,9 @@ export type PostParams = {
   title: string;
   description?: string | null | undefined;
   startTime: Date;
+  thumbnail: {
+    id: string;
+  };
   source: {
     id: string;
   };
