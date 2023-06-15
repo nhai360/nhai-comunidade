@@ -54,3 +54,9 @@ export type PostBroadcastParams = {
   broadcastId: string;
   liveId: string;
 };
+
+export type PostLiveInviteParams = {
+  spaceId: string;
+  guestId: string;
+  liveId: string;
+};
