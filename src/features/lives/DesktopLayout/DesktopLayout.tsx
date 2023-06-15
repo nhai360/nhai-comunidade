@@ -72,17 +72,19 @@ export function DesktopLayout() {
           </div>
         </div>
         <div className={styles.livesContent}>
-          {lives?.map((live, index) => (
-            <div key={index} className={styles.card}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <img src={"/poster-flipped.jpg"} alt="" />
+          <div className={styles.scrollViewContainer}>
+            {lives?.map((live, index) => (
+              <div key={index} className={styles.card}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                  <img src={"/poster-flipped.jpg"} alt="" />
 
-                <h3>{limitText(live?.title, 24)}</h3>
+                  <h3>{limitText(live?.title, 24)}aaa</h3>
+                </div>
+
+                <h4>{format(new Date(), "dd 'de' MMMM yyyy 'às' HH:mm")}</h4>
               </div>
-
-              <h4>{format(new Date(), "dd 'de' MMMM yyyy 'às' HH:mm")}</h4>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </DefaultLayout>
