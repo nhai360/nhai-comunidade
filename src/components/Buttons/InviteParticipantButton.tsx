@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { BiUserPlus } from "react-icons/bi";
+import { InviteParticipantDialog } from "@/features/lives/InviteParticipantDialog";
 
 interface Props {
   guests: any[];
@@ -29,6 +30,11 @@ const InviteParticipantButton = ({ guests }: Props) => {
         </div>
         <BiUserPlus size="1.8em" />
       </button>
+
+      <InviteParticipantDialog
+        guests={guests}
+        onClose={() => setShowModal(false)}
+      />
     </>
   );
 };

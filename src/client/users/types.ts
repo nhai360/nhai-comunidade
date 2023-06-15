@@ -88,6 +88,20 @@ export const UpdateUserDecoder = t.object({
 
 export type UpdateUserParams = t.TypeOf<typeof UpdateUserDecoder>;
 
+export const UserNicknameDecoder = t.object({
+  nickname: t
+    .string()
+    .min(1, "Apelido é obrigatório")
+    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .regex(
+      /^[a-zA-Z0-9_@]+$/,
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
+    )
+    .transform((arg) => arg.toLowerCase().replace("@", "")),
+});
+
+export type UserNicknameParams = t.TypeOf<typeof UserNicknameDecoder>;
+
 export const SessionDecoder = t.object({
   access_token: t.string(),
   refresh_token: t.string(),
