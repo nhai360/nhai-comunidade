@@ -15,6 +15,7 @@ import Participant from "../Participant";
 import ParticipantAudio from "../ParticipantAudio";
 import GalleryLayout from "../GalleryLayout";
 import { useParticipantMedia } from "@/hooks/useParticipantMedia";
+import { Live } from "@/client/lives";
 // import ChevronLeftIcon from "@/components/icons/ChevronLeftIcon";
 // import ChevronRightIcon from "@/components/icons/ChevronRightIcon";
 
@@ -31,12 +32,14 @@ interface Props {
   width: number;
   height: number;
   participantsPerPage: number;
+  live: Live;
 }
 
 export default function Gallery({
   gap,
   width,
   height,
+  live,
   participantsPerPage,
 }: Props): JSX.Element {
   const didPopulateDevicesRef = useRef(false);
@@ -162,7 +165,11 @@ export default function Gallery({
         >
           {paginatedConnectionIds.map((connectionId) => {
             return (
-              <Participant key={connectionId} connectionId={connectionId} />
+              <Participant
+                live={live}
+                key={connectionId}
+                connectionId={connectionId}
+              />
             );
           })}
         </GalleryLayout>

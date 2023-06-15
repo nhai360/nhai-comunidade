@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import UserContext from "../contexts/Participant";
 import { useParticipant } from "../hooks/useParticipant";
@@ -7,17 +7,22 @@ import Pin from "./Pin";
 import VideoRenderer from "./renderers/VideoRenderer";
 import ParticipantInfoBar from "./ParticipantInfoBar";
 import ParticipantName from "./ParticipantName";
+import { Live } from "@/client/lives";
+import { Avatar } from "@/ui";
+import { getInitials } from "@/lib/string";
 
 interface Props {
   width?: number;
   height?: number;
   connectionId: string;
+  live: Live;
 }
 
 export default function Participant({
   width,
   height,
   connectionId,
+  live,
 }: Props): JSX.Element {
   const {
     id,
@@ -28,11 +33,14 @@ export default function Participant({
     isCameraOff,
     cameraWidth,
     cameraHeight,
-    displayName,
     attachVideoElement,
   } = useParticipant(connectionId);
 
   const outlineWidth = 3;
+
+  const participant = live?.guests?.find((a) => a?.guest?.id === id)?.guest;
+
+  const name = participant?.fullName?.split(" ")[0];
 
   return (
     <div
@@ -61,15 +69,17 @@ export default function Participant({
       />
 
       <ParticipantInfoBar
-        name={displayName || id}
+        name={name || id}
         isMuted={!hasMicTrack || isMicTrackMuted}
         parentHeight={height!}
       />
 
       {isCameraOff && (
-        <ParticipantName isSmall={width! <= 400}>
-          {displayName || id}
-        </ParticipantName>
+        <>
+          <ParticipantName participant={participant} isSmall={width! <= 400}>
+            {name || id}
+          </ParticipantName>
+        </>
       )}
 
       {!isLocal && <Pin connectionId={connectionId} />}

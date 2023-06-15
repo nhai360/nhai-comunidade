@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { limitText } from "../utils";
 
 export function DesktopLayout() {
+  const router = useRouter();
   const { lives } = useLiveContext();
 
   return (
@@ -32,7 +33,6 @@ export function DesktopLayout() {
               <h2>Você pode acessar ao lado.</h2>
             </div>
             <span>
-              {" "}
               Transmita momentos especiais em tempo real para o mundo inteiro.
               Com nosso serviço de transmissões ao vivo, você pode compartilhar
               sua criatividade.
@@ -71,14 +71,23 @@ export function DesktopLayout() {
         </div>
         <div className={styles.livesContent}>
           {lives?.map((live, index) => (
-            <div key={index} className={styles.card}>
+            <div
+              key={index}
+              className={styles.card}
+              onClick={() => router.push(`/lives/${live.id}`)}
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 <img src={"/poster-flipped.jpg"} alt="" />
 
                 <h3>{limitText(live?.title, 24)}</h3>
               </div>
 
-              <h4>{format(new Date(), "dd 'de' MM yyyy 'às' HH:mm")}</h4>
+              <h4>
+                {format(
+                  new Date(live?.startTime),
+                  "dd 'de' MMMM yyyy 'às' HH:mm"
+                )}
+              </h4>
             </div>
           ))}
         </div>

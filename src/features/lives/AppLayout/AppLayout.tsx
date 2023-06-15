@@ -6,8 +6,10 @@ import styles from "./styles.module.scss";
 import { useLiveContext } from "@/contexts/LiveContext";
 import { format } from "date-fns";
 import { limitText } from "../utils";
+import { useRouter } from "next/router";
 
 export function AppLayout() {
+  const router = useRouter();
   const { lives } = useLiveContext();
 
   return (
@@ -72,7 +74,11 @@ export function AppLayout() {
           </div>
           <div className={styles.livesContent}>
             {lives?.map((live, index) => (
-              <div key={index} className={styles.card}>
+              <div
+                key={index}
+                className={styles.card}
+                onClick={() => router.push(`/lives/${live.id}`)}
+              >
                 <img src={"/poster-flipped.jpg"} alt="" />
 
                 <div
@@ -83,8 +89,13 @@ export function AppLayout() {
                     gap: 8,
                   }}
                 >
-                  <h3>{limitText(live?.title, 4)}</h3>
-                  <h4>{format(new Date(), "dd 'de' MMMM yyyy 'às' HH:mm")}</h4>
+                  <h3>{limitText(live?.title, 12)}</h3>
+                  <h4>
+                    {format(
+                      new Date(live?.startTime),
+                      "dd 'de' MMMM yyyy 'às' HH:mm"
+                    )}
+                  </h4>
                 </div>
               </div>
             ))}

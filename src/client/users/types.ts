@@ -22,7 +22,7 @@ export const UserDecoder = t.object({
   email: t.string(),
   nickname: t.string(),
   bio: t.string().nullable(),
-  birthDate: t.string().datetime().nullable(),
+  birthDate: t.string().datetime().nullish(),
   userGenderId: t.string().nullish(),
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),

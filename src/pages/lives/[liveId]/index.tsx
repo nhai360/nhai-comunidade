@@ -42,6 +42,7 @@ import { Broadcast } from "@phosphor-icons/react";
 import { Levels } from "react-activity";
 import JoinLive from "@/features/lives/JoinLive";
 import LiveNotFound from "@/features/lives/LiveNotFound";
+import { toast } from "react-toastify";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -112,23 +113,35 @@ const Home = ({
 
   const authenticate = useCallback(
     (spaceId: string, participantId: string) => {
-      mutation.mutate({
-        spaceId,
-        participantId,
-      });
+      mutation.mutate(
+        {
+          spaceId,
+          participantId,
+        },
+        {
+          onSuccess: (e) => {
+            console.log("DEU CERTO", e);
+          },
+          onError: (e) => {
+            console.log("DEU ERRO", e);
+            toast.error("Não foi possível entrar no espaço :(");
+            participant.setInteractionRequired(true);
+          },
+        }
+      );
     },
     [mutation]
   );
 
   const handleJoin = useCallback(() => {
     if (typeof live?.spaceId === "string" && canJoinSpace) {
-      authenticate(live?.spaceId, `${user?.fullName}|${user?.id}`);
+      authenticate(live?.spaceId, `${session?.userId}`);
+      participant.setParticipantName(user?.fullName?.split(" ")[0] || "");
+      participant.setInteractionRequired(false);
     }
-  }, [live?.spaceId, canJoinSpace, authenticate, user?.id]);
+  }, [live?.spaceId, canJoinSpace, authenticate, session?.userId]);
 
   const handleSubmit = async () => {
-    participant.setParticipantName(user?.fullName || "");
-    participant.setInteractionRequired(false);
     handleJoin();
   };
 
@@ -137,13 +150,14 @@ const Home = ({
     if (!isLoading && !live?.spaceId) {
       console.warn("No space selected");
       return;
+    } else {
+      router.events.on("routeChangeStart", leaveSpace);
+      router.events.on("routeChangeComplete", handleJoin);
+      return () => {
+        router.events.off("routeChangeStart", leaveSpace);
+        router.events.off("routeChangeComplete", handleJoin);
+      };
     }
-    router.events.on("routeChangeStart", leaveSpace);
-    router.events.on("routeChangeComplete", handleJoin);
-    return () => {
-      router.events.off("routeChangeStart", leaveSpace);
-      router.events.off("routeChangeComplete", handleJoin);
-    };
   }, [
     live?.spaceId,
     user,
@@ -222,6 +236,7 @@ const Home = ({
           }}
         >
           <Gallery
+            live={live}
             gap={gap}
             width={galleryWidth}
             height={galleryHeight}
