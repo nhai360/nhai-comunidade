@@ -54,11 +54,18 @@ export const CreateUserDecoder = t.object({
   password: t.string().min(1, "Senha é obrigatória"),
   gender: t.string().optional(),
   birthDate: t.string().min(10, "Data inválida"),
-  phone: t.string().optional(),
+  phone: t
+    .string()
+    .refine(
+      (value) => /^\+\d{1,3}\s?\(\d{2,3}\)\s?\d{4,5}-\d{4}$/.test(value),
+      {
+        message: "Número de telefone inválido",
+      }
+    )
+    .optional(),
   ethnicity: t.string().optional(),
   sexualOrientation: t.string().optional(),
   agreeToPrivacyPolicy: t.boolean().optional(),
-  mediaConsent: t.boolean().optional(),
 });
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;

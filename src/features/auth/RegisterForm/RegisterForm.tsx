@@ -32,8 +32,33 @@ export function RegisterForm() {
 
   const { errors } = formState;
 
+  function calcularIdade(dataNascimento: Date): number {
+    const hoje: Date = new Date();
+    let idade: number = hoje.getFullYear() - dataNascimento.getFullYear();
+    const mesAtual: number = hoje.getMonth() + 1;
+    const diaAtual: number = hoje.getDate();
+    const mesNascimento: number = dataNascimento.getMonth() + 1;
+    const diaNascimento: number = dataNascimento.getDate();
+
+    if (
+      mesAtual < mesNascimento ||
+      (mesAtual === mesNascimento && diaAtual < diaNascimento)
+    ) {
+      idade--;
+    }
+
+    return idade;
+  }
+
   function handleRegister(params: CreateUserParams) {
-    if (tab === 1) {
+    const idade = calcularIdade(new Date(params?.birthDate));
+    if (idade < 18) {
+      setError("birthDate", {
+        message: "Você precisa ser maior de idade",
+      });
+    } else if (!params?.agreeToPrivacyPolicy) {
+      alert("Você precisa aceitar os termos e condições...");
+    } else if (tab === 1) {
       setTab(2);
     } else {
       if (
@@ -139,12 +164,7 @@ export function RegisterForm() {
           </S.FieldContainer>
           <Checkbox
             name="agreeToPrivacyPolicy"
-            label="Eu concordo com a coleta e o uso das minhas informações pessoais conforme descrito na Política de Privacidade."
-            control={control}
-          />
-          <Checkbox
-            name="mediaConsent"
-            label="Consentimento de mídia."
+            label="Eu concordo com a coleta e o uso das minhas informações pessoais conforme descrito na Política de Privacidade e Consentimento de mídia."
             control={control}
           />
         </>
@@ -153,7 +173,7 @@ export function RegisterForm() {
           <Field.Input
             required
             label="Telefone"
-            placeholder="(00) 00000-0000"
+            placeholder="+00 (00) 00000-0000"
             errorText={errors.phone?.message}
             {...register("phone")}
           />
