@@ -117,13 +117,6 @@ export function Header() {
                     <Typography.Text>Artigo</Typography.Text>
                   </Popover.Action>
                 )}
-                {isEnabled && (
-                  <Popover.Action
-                    onClick={() => setIsCreateBroadcastDialogVisible(true)}
-                  >
-                    <Typography.Text>Transmissão</Typography.Text>
-                  </Popover.Action>
-                )}
               </Popover>
             </Popover.Root>
             {/* <Tooltip message="Novo post" position="bottom">

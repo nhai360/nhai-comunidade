@@ -8,7 +8,11 @@ import { Broadcast } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { limitText } from "../utils";
 
-export function DesktopLayout() {
+interface Types {
+  handleCreate: () => void;
+}
+
+export function DesktopLayout({ handleCreate }: Types) {
   const router = useRouter();
   const { lives } = useLiveContext();
 
@@ -41,15 +45,17 @@ export function DesktopLayout() {
 
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
               <Button
+                onClick={handleCreate}
                 style={{
                   borderRadius: 8,
                   fontWeight: 500,
                   fontSize: 16,
                 }}
               >
-                Nova Transmissão{" "}
+                Nova Transmissão
               </Button>
               <Button
+                onClick={() => router.push("/")}
                 style={{
                   borderRadius: 8,
                   border: "1px solid #dadada",
