@@ -22,7 +22,7 @@ function StagePage() {
   }
 
   return (
-    <LivesProvider nickname={user?.nickname}>
+    <LivesProvider userId={session?.userId || ""}>
       <Lives.DesktopLayout
         handleCreate={() => setIsCreateBroadcastDialogVisible(true)}
       />

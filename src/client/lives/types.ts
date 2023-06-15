@@ -33,7 +33,7 @@ export type GetLiveParams = {
 };
 
 export type GetUserLivesParams = {
-  nickname?: string;
+  userId?: string;
 };
 
 export type PostParams = {

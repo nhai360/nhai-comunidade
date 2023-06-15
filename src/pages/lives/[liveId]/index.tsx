@@ -109,26 +109,18 @@ const Home = ({
     onSuccess: async (data) => {
       await joinSpace(data.spaceJWT, endsAt, user?.fullName);
     },
+    onError: (e) => {
+      toast.error("Não foi possível entrar no espaço :(");
+      participant.setInteractionRequired(true);
+    },
   });
 
   const authenticate = useCallback(
     (spaceId: string, participantId: string) => {
-      mutation.mutate(
-        {
-          spaceId,
-          participantId,
-        },
-        {
-          onSuccess: (e) => {
-            console.log("DEU CERTO", e);
-          },
-          onError: (e) => {
-            console.log("DEU ERRO", e);
-            toast.error("Não foi possível entrar no espaço :(");
-            participant.setInteractionRequired(true);
-          },
-        }
-      );
+      mutation.mutate({
+        spaceId,
+        participantId,
+      });
     },
     [mutation]
   );
