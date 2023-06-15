@@ -101,27 +101,43 @@ export function Header() {
                 <Popover.Action
                   onClick={() => setIsCreatePostDialogVisible(true)}
                 >
-                  <Typography.Text>Publicação</Typography.Text>
+                  <Typography.Text
+                    style={{ fontFamily: "Outfit", fontSize: 14 }}
+                  >
+                    Publicação
+                  </Typography.Text>
                 </Popover.Action>
                 {isEnabled && (
                   <Popover.Action
                     onClick={() => setIsUploadVideoDialogVisible(true)}
                   >
-                    <Typography.Text>Vídeo</Typography.Text>
+                    <Typography.Text
+                      style={{ fontFamily: "Outfit", fontSize: 14 }}
+                    >
+                      Vídeo
+                    </Typography.Text>
                   </Popover.Action>
                 )}
                 {isEnabled && (
                   <Popover.Action
                     onClick={() => setIsCreateArticleVisible(true)}
                   >
-                    <Typography.Text>Artigo</Typography.Text>
+                    <Typography.Text
+                      style={{ fontFamily: "Outfit", fontSize: 14 }}
+                    >
+                      Artigo
+                    </Typography.Text>
                   </Popover.Action>
                 )}
                 {isEnabled && (
                   <Popover.Action
                     onClick={() => setIsCreateBroadcastDialogVisible(true)}
                   >
-                    <Typography.Text>Transmissão</Typography.Text>
+                    <Typography.Text
+                      style={{ fontFamily: "Outfit", fontSize: 14 }}
+                    >
+                      Transmissão
+                    </Typography.Text>
                   </Popover.Action>
                 )}
               </Popover>
