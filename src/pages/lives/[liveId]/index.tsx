@@ -237,7 +237,7 @@ const Home = ({
             participantsPerPage={participantsPerPage}
           />
         </div>
-        <Chat messages={[]} isOpen={width > 800} />
+        <Chat liveId={live?.id} isOpen={width > 800} />
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>

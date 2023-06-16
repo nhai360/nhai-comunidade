@@ -9,12 +9,6 @@ import {
 } from "@/services/firebase/chat";
 
 function FeedPage() {
-  // const [chat, setChat] = useState([]);
-
-  // useEffect(() => {
-  //   handleGetChat("clixpk1yy0002yidw18kdnquq", setChat);
-  // }, []);
-
   // useEffect(() => {
   //   console.log(chat);
   // }, [chat]);
