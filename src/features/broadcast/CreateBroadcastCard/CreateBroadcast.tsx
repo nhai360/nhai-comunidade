@@ -22,12 +22,15 @@ import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
 
 import * as S from "./CreateBroadcastDialog.styles";
 import { UploadThumbnail } from "./UploadThumbnail";
+import { useCreateLive } from "@/client/lives/useCreateLive";
+import { useRouter } from "next/router";
 
 type Props = {
   onClose: () => void;
 };
 
 export function CreateBroadcastDialog({ onClose }: Props) {
+  const router = useRouter();
   const {
     register,
     watch,
@@ -38,40 +41,12 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     resolver: zodResolver(CreateVideoResolver),
   });
 
-  const file = watch("file");
-
-  const { upload, data: source, isSuccess: isSuccessUpload } = useUpload();
-
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
-  const {
-    createVideo,
-    isLoading: isCreatingVideo,
-    isSuccess,
-  } = useCreateVideo();
+  const { createLive, isLoading: isCreatingLive, isSuccess } = useCreateLive();
 
-  const isLoading = isUploadingThumbnail || isCreatingVideo;
-
-  function handleUpload(files: File[]) {
-    upload(
-      {
-        file: files[0],
-        category: MediaCategory.VIDEO,
-        mimeType: "video",
-      },
-      {
-        onSuccess: () => {
-          toast.success("O upload do seu vídeo foi concluído!");
-        },
-        onError: () => {
-          toast.error(
-            "Não foi possível completar o upload do seu vídeo. Tente novamente"
-          );
-        },
-      }
-    );
-  }
+  const isLoading = isUploadingThumbnail || isCreatingLive;
 
   function handleCreateVideo({
     title,
@@ -79,12 +54,6 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     thumbnail,
     tags,
   }: CreateVideoParams) {
-    if (!source) {
-      return toast.error(
-        "Você precisa fazer um novo upload de vídeo, o anterior falhou!"
-      );
-    }
-
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
 
     uploadThumbnail(
@@ -94,19 +63,25 @@ export function CreateBroadcastDialog({ onClose }: Props) {
       },
       {
         onSuccess: (media) => {
-          createVideo(
+          createLive(
             {
               title,
               description,
-              source,
-              thumbnail: media,
+              source: {
+                id: media?.id,
+              },
+              thumbnail: {
+                id: media?.id,
+              },
               tags: tagsInArray,
+              startTime: new Date(),
             },
             {
+              onSuccess: (live) => {
+                router.push(`/lives/${live?.live.liveId}`);
+              },
               onError: () => {
-                toast.error(
-                  "Não foi possível postar o seu vídeo. Tente novamente"
-                );
+                toast.error("Não foi possível criar a live. Tente novamente");
               },
             }
           );
@@ -120,27 +95,10 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     );
   }
 
-  if (isSuccess) {
-    return (
-      <Dialog open onOpenChange={onClose}>
-        <Dialog.Content>
-          <Dialog.Header closable={false} />
-          <Dialog.Body>
-            <Success
-              title="Seu vídeo foi publicado com sucesso!"
-              description="Agora que compartilhou seu vídeo com sua comunidade, é só esperar para ver as discussões interessantes que podem surgir."
-              onClose={onClose}
-            />
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog>
-    );
-  }
-
   return (
     <Dialog open onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Header title={file ? file.name : "Nova Transmissão"} closable />
+        <Dialog.Header title={"Nova Transmissão"} closable />
         <Dialog.Body>
           <S.FormContainer onSubmit={handleSubmit(handleCreateVideo)}>
             <Field.Input
@@ -149,13 +107,13 @@ export function CreateBroadcastDialog({ onClose }: Props) {
               errorText={errors.title?.message}
               {...register("title")}
             />
-            {/* <Field.Input
+            <Field.Input
               label="Tags"
               placeholder="Adicionar tags"
               errorText={errors.tags?.message}
               helperText="Use a ',' para separar as tags do seu vídeo. Exemplo: tag 1, tag 2"
               {...register("tags")}
-            /> */}
+            />
             <Field label="Descrição" required={false}>
               <TextArea
                 control={control}
@@ -199,8 +157,7 @@ export function CreateBroadcastDialog({ onClose }: Props) {
           <Button
             type="submit"
             loading={isLoading}
-            // disabled={!isSuccessUpload}
-            disabled
+            disabled={isLoading}
             onClick={() => handleSubmit(handleCreateVideo)()}
           >
             Criar transmissão

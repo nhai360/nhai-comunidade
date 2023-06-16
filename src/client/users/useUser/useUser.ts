@@ -41,6 +41,7 @@ export function useUserFromNickname(
 
   return {
     user,
+    getUser,
     ...rest,
   };
 }

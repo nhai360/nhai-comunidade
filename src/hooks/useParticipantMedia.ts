@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import UserMediaContext from "../contexts/UserMedia";
+import ParticipantMediaContext from "../contexts/ParticipantMedia";
 
-interface UserMedia {
-  userMediaError?: string;
+interface ParticipantMedia {
+  participantMediaError?: string;
   requestPermissionAndPopulateDevices: () => void;
   requestPermissionAndStartDevices: (
     microphoneDeviceId?: string,
@@ -26,9 +26,9 @@ interface UserMedia {
   } | null;
 }
 
-export function useUserMedia(): UserMedia {
+export function useParticipantMedia(): ParticipantMedia {
   const {
-    userMediaError,
+    participantMediaError,
     requestPermissionAndPopulateDevices,
     requestPermissionAndStartDevices,
 
@@ -43,10 +43,10 @@ export function useUserMedia(): UserMedia {
     unMuteActiveMicrophone,
     changeActiveMicrophone,
     getActiveMicrophoneLevel,
-  } = useContext(UserMediaContext);
+  } = useContext(ParticipantMediaContext);
 
   return {
-    userMediaError,
+    participantMediaError,
     requestPermissionAndPopulateDevices,
     requestPermissionAndStartDevices,
 

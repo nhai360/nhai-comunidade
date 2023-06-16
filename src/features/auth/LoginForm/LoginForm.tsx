@@ -58,11 +58,18 @@ export function LoginForm() {
 
   return (
     <S.FormContainer onSubmit={handleSubmit(handleLogin)}>
-      <Typography.Text as="h3" size="body1" weight="bold" color="title">
-        Preencha os campos para
-        <br />
-        acessar sua conta
-      </Typography.Text>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <Typography.Title size="h1" weight="bold" color="title">
+          Acessar
+        </Typography.Title>
+        <Typography.Text
+          weight="medium"
+          color="secondary"
+          style={{ margin: 0 }}
+        >
+          Preencha os campos para acessar sua conta.
+        </Typography.Text>
+      </div>
 
       <S.FieldContainer>
         <Field.Input

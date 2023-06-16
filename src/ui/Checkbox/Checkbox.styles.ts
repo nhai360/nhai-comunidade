@@ -13,8 +13,9 @@ export const Container = styled("div", {
 
 export const Root = styled(Checkbox.Root, {
   boxShadow: "$xs",
-  height: "20px",
-  width: "20px",
+  height: "24px",
+  minWidth: "24px",
+  width: "24px",
   background: "$neutral200",
   border: "1px solid $neutral400",
   borderRadius: "$small",

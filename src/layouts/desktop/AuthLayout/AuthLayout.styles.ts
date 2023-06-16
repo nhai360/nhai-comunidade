@@ -2,14 +2,21 @@ import { styled } from "@/../stitches.config";
 
 export const Container = styled("main", {
   height: "100vh",
-  paddingBlock: "$8",
+  // paddingBlock: "$8",
   background:
     "linear-gradient(90deg, #F23D80 0%, #FFC700 30.98%, #63D130 60.93%, #00A0FF 99.14%)",
 
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
 
-  overflow: "hidden",
+  // overflow: "hidden",
+  overflow: "auto",
+
+  "&::-webkit-scrollbar": {
+    width: 0,
+    height: 0,
+    display: "none",
+  },
 
   "@laptop": {
     gridTemplateColumns: "1fr",
@@ -49,6 +56,7 @@ export const TitleContainer = styled("section", {
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
+  padding: "48px 0",
 
   h1: {
     maxWidth: "492px",

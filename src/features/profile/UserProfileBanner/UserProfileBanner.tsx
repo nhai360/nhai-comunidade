@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import ReactDropzone from "react-dropzone";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,7 @@ import * as S from "./UserProfileBanner.styles";
 const MAX_SIZE = 1024 * 1024; // 1mb
 
 export function UserProfileBanner() {
+  const bannerRef: any = useRef(null);
   const router = useRouter();
 
   const { session } = useAuthContext();
@@ -53,22 +54,32 @@ export function UserProfileBanner() {
             {
               onError: () => {
                 toast.error(
-                  "Não foi possível atualizar seu perfil. Tente novamente.",
+                  "Não foi possível atualizar seu perfil. Tente novamente."
                 );
               },
-            },
+            }
           );
         },
-      },
+      }
     );
   }
 
   const isLoading = isUpdating || isUploading;
 
+  const handleImageError = () => {
+    if (bannerRef.current) {
+      bannerRef.current.src = "/images/empty.jpg";
+    }
+  };
+
   return (
     <S.Container>
       {user?.banner?.url ? (
-        <S.Banner src={user.banner.url} />
+        <S.Banner
+          src={user.banner.url}
+          onError={handleImageError}
+          ref={bannerRef}
+        />
       ) : (
         <S.Placeholder />
       )}

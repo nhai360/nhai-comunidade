@@ -22,7 +22,7 @@ export const UserDecoder = t.object({
   email: t.string(),
   nickname: t.string(),
   bio: t.string().nullable(),
-  birthDate: t.string().datetime().nullable(),
+  birthDate: t.string().datetime().nullish(),
   userGenderId: t.string().nullish(),
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
@@ -43,14 +43,29 @@ export const CreateUserDecoder = t.object({
     .max(20, "O apelido deve ter no máximo 20 caracteres")
     .regex(
       /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres underscore (Ex: "_")'
     )
     .transform((arg) => arg.toLowerCase().replace("@", "")),
+
   email: t
     .string()
     .email({ message: "O formato de e-mail é inválido" })
     .min(1, "E-mail é obrigatório"),
   password: t.string().min(1, "Senha é obrigatória"),
+  gender: t.string().optional(),
+  birthDate: t.string().min(10, "Data inválida"),
+  phone: t
+    .string()
+    .refine(
+      (value) => /^\+\d{1,3}\s?\(\d{2,3}\)\s?\d{4,5}-\d{4}$/.test(value),
+      {
+        message: "Número de telefone inválido",
+      }
+    )
+    .optional(),
+  ethnicity: t.string().optional(),
+  sexualOrientation: t.string().optional(),
+  agreeToPrivacyPolicy: t.boolean().optional(),
 });
 
 export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
@@ -71,9 +86,28 @@ export const UpdateUserDecoder = t.object({
     .min(1, "Bio é obrigatório")
     .max(255, "A bio deve ter no máximo 255 caracteres"),
   avatar: t.any().optional(),
+  gender: t.string().optional(),
+  birthDate: t.string().optional(),
+  phone: t.string().optional(),
+  ethnicity: t.string().optional(),
+  sexualOrientation: t.string().optional(),
 });
 
 export type UpdateUserParams = t.TypeOf<typeof UpdateUserDecoder>;
+
+export const UserNicknameDecoder = t.object({
+  nickname: t
+    .string()
+    .min(1, "Apelido é obrigatório")
+    .max(20, "O apelido deve ter no máximo 20 caracteres")
+    .regex(
+      /^[a-zA-Z0-9_@]+$/,
+      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
+    )
+    .transform((arg) => arg.toLowerCase().replace("@", "")),
+});
+
+export type UserNicknameParams = t.TypeOf<typeof UserNicknameDecoder>;
 
 export const SessionDecoder = t.object({
   access_token: t.string(),

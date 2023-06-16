@@ -1,29 +1,26 @@
+import React, { useEffect } from "react";
+import styles from "./index.module.scss";
 
-import React from 'react'
-import styles from './index.module.scss'
-
-
-interface Props {
-    isOnline: boolean;
+interface IBroadcastIndicator {
+  isOnline: boolean;
 }
 
-const BroadcastIndicator = ({isOnline}: Props) => {
-    return (
+const BroadcastIndicator = ({ isOnline }: IBroadcastIndicator) => {
+  return (
+    <div className={styles.broadcastIndicator}>
+      {!isOnline ? (
         <>
-            <div className={styles.broadcastIndicator}>
-
-            {isOnline && <>
-            <span className={styles.onlineDot}></span>
-            <span>AO VIVO</span>
-            </>} 
-            {!isOnline && <>
-                <span className={styles.offlineDot}></span>
-                <span>OFFLINE</span>
-            </>} 
-            
-            </div>
+          <span className={styles.offlineDot}></span>
+          <span>OFFLINE</span>
         </>
-    )
-}
+      ) : (
+        <>
+          <span className={styles.onlineDot}></span>
+          <span>AO VIVO</span>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default BroadcastIndicator;

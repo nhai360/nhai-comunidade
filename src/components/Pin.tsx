@@ -1,7 +1,7 @@
 import React from "react";
 import { MdPushPin, MdOutlinePushPin } from "react-icons/md";
 
-import UserContext from "../contexts/User";
+import UserContext from "../contexts/Participant";
 
 interface Props {
   connectionId: string;

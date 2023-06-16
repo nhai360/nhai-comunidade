@@ -3,19 +3,58 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { BiStation } from "react-icons/bi";
+import { useSpace } from "@/hooks/useSpace";
+import { Live } from "@/client/lives";
+import { useBroadcastLive } from "@/client/lives/useBroadcastLive";
+import { toast } from "react-toastify";
 
-interface Props {}
+interface Props {
+  live: Live;
+}
 
-const BroadcastButton = ({}: Props) => {
-  const [isStreaming, setIsStreaming] = useState(false);
+const BroadcastButton = ({ live }: Props) => {
+  const { isBroadcasting } = useSpace();
+  const {
+    start: { startBroadcast, isLoading: isStarting, isError: isStartError },
+    stop: { stopBroadcast, isLoading: isStoping, isError: isStopError },
+  } = useBroadcastLive();
+
+  const params = {
+    spaceId: live?.spaceId,
+    broadcastId: live?.broadcastId,
+    liveId: live?.muxLiveId,
+  };
+
+  const handleBroadcast = () => {
+    if (params?.spaceId && params?.liveId && params?.broadcastId) {
+      if (isBroadcasting) {
+        stopBroadcast(params as any, {
+          onSuccess: () => {
+            toast.success("A transmissão iniciou!");
+          },
+          onError: () => {
+            toast.error("Falha iniciar a transmissão. Tente novamente");
+          },
+        });
+      } else {
+        startBroadcast(params as any, {
+          onSuccess: () => {
+            toast.success("A transmissão iniciou!");
+          },
+          onError: () => {
+            toast.error("Falha iniciar a transmissão. Tente novamente");
+          },
+        });
+      }
+    } else {
+      toast.error("Falha iniciar a transmissão. Tente novamente");
+    }
+  };
 
   return (
     <>
-      <button
-        onClick={() => setIsStreaming(!isStreaming)}
-        className={styles.buttonBroadcast}
-      >
-        {isStreaming && (
+      <button onClick={handleBroadcast} className={styles.buttonBroadcast}>
+        {isBroadcasting && (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>
@@ -44,7 +83,7 @@ const BroadcastButton = ({}: Props) => {
             </div>
           </>
         )}
-        {!isStreaming && (
+        {!isBroadcasting && (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>
