@@ -122,7 +122,7 @@ export default function Gallery({
     }
   };
 
-  const widthBetweenPagination = numberPages === 1 ? width : width - 80;
+  const widthBetweenPagination = numberPages === 1 ? width : width - 0;
 
   return (
     <div

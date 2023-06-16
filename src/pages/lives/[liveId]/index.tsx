@@ -167,8 +167,8 @@ const Home = ({
 
   const availableWidth = width - (width > 800 ? chatWidth : 0);
 
-  const paddingY = height < 600 ? 10 : 40;
-  const paddingX = availableWidth < 800 ? 40 : 60;
+  const paddingY = height < 600 ? 10 : 0;
+  const paddingX = availableWidth < 800 ? 40 : 48;
 
   let galleryWidth = availableWidth - paddingX * 2;
   if (isScreenShareActive) {
@@ -201,6 +201,7 @@ const Home = ({
   const columns = Math.max(Math.ceil(galleryWidth / (160 * scaleFactor)), 1);
 
   const participantsPerPage = Math.round(rows * columns);
+
 
   return !live?.spaceId || !userIsParticipant ? (
     <LiveNotFound />
