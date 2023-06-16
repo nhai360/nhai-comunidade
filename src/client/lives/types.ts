@@ -17,6 +17,7 @@ export const LiveDecoder = t.object({
   description: t.string().nullish(),
   startTime: t.string().datetime(),
   spaceId: t.string().nullish(),
+  playbackId: t.string().nullish(),
   broadcastId: t.string().nullish(),
   muxLiveId: t.string().nullish(),
   source: MediaDecoder.nullish(),
@@ -60,3 +61,9 @@ export type PostLiveInviteParams = {
   guestId: string;
   liveId: string;
 };
+
+export const CreateChatResolver = t.object({
+  message: t.string().min(1, "Escreva uma mensagem..."),
+});
+
+export type CreateChatParams = t.TypeOf<typeof CreateChatResolver>;

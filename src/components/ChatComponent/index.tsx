@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import MessageItem from "../MessageItem";
+import { handleGetChat } from "@/services/firebase/chat";
 
 interface Props {
   isOpen: boolean;
-  messages: [];
+  liveId: string;
 }
 
-const Chat = ({ isOpen, messages }: Props) => {
+const Chat = ({ isOpen, liveId }: Props) => {
   const messagesEndRef = useRef<any>(null);
+  const [chat, setChat] = useState([]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -18,7 +20,11 @@ const Chat = ({ isOpen, messages }: Props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [chat]);
+
+  useEffect(() => {
+    liveId && handleGetChat(liveId, setChat);
+  }, [liveId]);
 
   return (
     <>
@@ -31,11 +37,14 @@ const Chat = ({ isOpen, messages }: Props) => {
         </div>
         <div className={styles.divider} />
         <ul className={styles.messageWrapper}>
-          <MessageItem
-            color="#ff2424"
-            name="Natan"
-            message="Hey guys, whats the topic of this week?"
-          />
+          {chat.map((data: any, key) => (
+            <MessageItem
+              key={key}
+              name={data.userName}
+              message={data.message}
+              nickname={data?.nickname}
+            />
+          ))}
 
           <div ref={messagesEndRef} />
         </ul>

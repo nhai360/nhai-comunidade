@@ -1,6 +1,5 @@
 import { Feed } from "@/features/feed";
 import { FeedProvider } from "@/contexts";
-
 import { withAuth } from "../middlewares";
 
 function FeedPage() {

@@ -1,16 +1,17 @@
-.messageItem{
-    display:flex;
-    flex-direction: column;
-    row-gap:5px;
+.messageItem {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
 
-
-    .name{
-        font-weight:700;
-        font-size:1rem;
-        
-    }
-    .message{
-        font-weight:600;
-        font-size:0.8rem
-    }
+  .name {
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .message {
+    font-weight: 400;
+    font-size: 0.8rem;
+    display: inline-block;
+    word-wrap: break-word;
+  }
 }
