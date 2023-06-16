@@ -246,7 +246,11 @@ const Home = ({
 
         <div className={styles.mainTools}>
           {userIsAuthor && (
-            <InviteParticipantButton guests={live?.guests || []} />
+            <InviteParticipantButton
+              spaceId={live?.spaceId}
+              liveId={live?.id}
+              guests={live?.guests || []}
+            />
           )}
           <CameraButton />
           <MicButton />

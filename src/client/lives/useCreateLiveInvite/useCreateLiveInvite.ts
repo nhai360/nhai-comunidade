@@ -8,8 +8,9 @@ import {
 } from "@/client/lives";
 
 async function createLiveInviteRequest(params: PostLiveInviteParams) {
-  const { liveId, ...restParams } = params;
+  const { liveId, guestId, ...restParams } = params;
   const response = await authenticatedAPI.post(`/lives/${liveId}/invite`, {
+    guests: [guestId],
     ...restParams,
   });
 

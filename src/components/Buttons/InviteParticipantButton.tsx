@@ -7,9 +7,11 @@ import { InviteParticipantDialog } from "@/features/lives/InviteParticipantDialo
 
 interface Props {
   guests: any[];
+  spaceId: string;
+  liveId: string;
 }
 
-const InviteParticipantButton = ({ guests }: Props) => {
+const InviteParticipantButton = ({ guests, spaceId, liveId }: Props) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -31,10 +33,14 @@ const InviteParticipantButton = ({ guests }: Props) => {
         <BiUserPlus size="1.8em" />
       </button>
 
-      <InviteParticipantDialog
-        guests={guests}
-        onClose={() => setShowModal(false)}
-      />
+      {showModal && (
+        <InviteParticipantDialog
+          guests={guests}
+          spaceId={spaceId}
+          liveId={liveId}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </>
   );
 };
