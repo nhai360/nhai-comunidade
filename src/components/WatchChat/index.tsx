@@ -54,7 +54,7 @@ export const WatchChat = ({ liveId, user }: Props) => {
     const block = invalidChatText(message);
     if (message?.length > 0 && !block) {
       setLoading(true);
-      await handleCreateChatMessage("clixpk1yy0002yidw18kdnquq", {
+      await handleCreateChatMessage(liveId, {
         message: message,
         userId: user?.id,
         userName: user?.fullName,
