@@ -4,8 +4,8 @@
   background-color: #fff;
   flex-direction: column;
   border: 1px solid #b6b6b6;
-  max-width: 325px;
-  min-width: 325px;
+  max-width: 360px;
+  min-width: 360px;
   overflow: hidden;
   @media (max-width: 1366px) {
     display: none;
@@ -35,7 +35,7 @@
   flex-direction: column;
   position: relative;
   padding: 25px;
-  row-gap: 20px;
+  row-gap: 8px;
   list-style: none;
   overflow-y: scroll;
   height: 100%;

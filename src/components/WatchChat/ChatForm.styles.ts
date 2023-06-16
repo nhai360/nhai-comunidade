@@ -8,7 +8,7 @@ export const FormContainer = styled("form", {
   columnGap: "$2",
   maxWidth: "488px",
   width: "100%",
-  padding: "$6 $3",
+  padding: "$3 $3 $6",
   overflowY: "auto",
 
   "&::-webkit-scrollbar": {

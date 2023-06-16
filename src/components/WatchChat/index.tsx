@@ -15,6 +15,7 @@ import { CreateChatParams, CreateChatResolver } from "@/client/lives";
 import { toast } from "react-toastify";
 import * as S from "./ChatForm.styles";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
+import { invalidChatText } from "@/lib/utils";
 
 interface Props {
   liveId: string;
@@ -50,7 +51,8 @@ export const WatchChat = ({ liveId, user }: Props) => {
   }, [liveId]);
 
   const handleComment = async ({ message }: CreateChatParams) => {
-    if (message?.length > 0) {
+    const block = invalidChatText(message);
+    if (message?.length > 0 && !block) {
       setLoading(true);
       await handleCreateChatMessage("clixpk1yy0002yidw18kdnquq", {
         message: message,
@@ -88,11 +90,7 @@ export const WatchChat = ({ liveId, user }: Props) => {
           <div ref={messagesEndRef} />
         </ul>
         <S.FormContainer onSubmit={handleSubmit(handleComment)}>
-          <Field.Input
-            placeholder="Mensagem"
-            errorText={errors.message?.message}
-            {...register("message")}
-          />
+          <Field.Input placeholder="Mensagem" {...register("message")} />
           <Button
             loading={loading}
             type="submit"

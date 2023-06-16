@@ -9,7 +9,9 @@
     cursor: pointer;
   }
   .message {
-    font-weight: 600;
+    font-weight: 400;
     font-size: 0.8rem;
+    display: inline-block;
+    word-wrap: break-word;
   }
 }
