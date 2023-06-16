@@ -3,6 +3,8 @@ import {
   collection,
   doc,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -14,12 +16,15 @@ export const handleGetChat = async (liveId: string, setChat: any) => {
     const liveChatDoc = doc(db, "LIVECHAT", liveId);
 
     const messageCol = collection(liveChatDoc, "MESSAGES");
-    return onSnapshot(messageCol, (snapshot) => {
-      const messageList = snapshot.docs.map((doc) => {
-        return { ...doc.data() };
-      });
-      setChat(messageList);
-    });
+    return onSnapshot(
+      query(messageCol, orderBy("createdAt", "asc")),
+      (snapshot) => {
+        const messageList = snapshot.docs.map((doc) => {
+          return { ...doc.data() };
+        });
+        setChat(messageList);
+      }
+    );
   } catch (error: any) {
     toast.error("Falha ao pegar chat: " + error.message);
     return [];
@@ -49,5 +54,6 @@ export const handleCreateChatMessage = async (
 interface ICreateChatMessage {
   userId: string;
   userName: string;
+  nickname: string;
   message: string;
 }

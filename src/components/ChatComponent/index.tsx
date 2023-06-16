@@ -40,9 +40,9 @@ const Chat = ({ isOpen, liveId }: Props) => {
           {chat.map((data: any, key) => (
             <MessageItem
               key={key}
-              color="#ff2424"
               name={data.userName}
               message={data.message}
+              nickname={data?.nickname}
             />
           ))}
 

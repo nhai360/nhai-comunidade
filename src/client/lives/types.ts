@@ -60,3 +60,9 @@ export type PostLiveInviteParams = {
   guestId: string;
   liveId: string;
 };
+
+export const CreateChatResolver = t.object({
+  message: t.string().min(1, "Escreva uma mensagem..."),
+});
+
+export type CreateChatParams = t.TypeOf<typeof CreateChatResolver>;
