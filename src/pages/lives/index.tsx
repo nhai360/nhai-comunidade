@@ -5,8 +5,10 @@ import { Lives } from "@/features/lives";
 import { LivesProvider } from "@/contexts/LiveContext";
 import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function StagePage() {
+  const router = useRouter();
   const { session } = useAuthContext();
   const [isCreateBroadcastDialogVisible, setIsCreateBroadcastDialogVisible] =
     useState(false);
@@ -18,6 +20,7 @@ function StagePage() {
   const isAdmin = user?.role?.name === "ADMIN";
 
   if (!isAdmin) {
+    router.push("/");
     return null;
   }
 

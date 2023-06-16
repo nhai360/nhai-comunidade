@@ -71,6 +71,8 @@ const Home = ({
   const userIsParticipant =
     !isLoading && live?.guests?.find((g) => g?.guest?.id === session?.userId);
 
+  const userIsAuthor = live?.author?.id === session?.userId;
+
   const participant = useContext(ParticipantContext);
 
   const { user } = useUser({
@@ -243,10 +245,12 @@ const Home = ({
         </div>
 
         <div className={styles.mainTools}>
-          <InviteParticipantButton guests={live?.guests || []} />
+          {userIsAuthor && (
+            <InviteParticipantButton guests={live?.guests || []} />
+          )}
           <CameraButton />
           <MicButton />
-          <BroadcastButton live={live} />
+          {userIsAuthor && <BroadcastButton live={live} />}
         </div>
 
         <div className={styles.callOut}>
