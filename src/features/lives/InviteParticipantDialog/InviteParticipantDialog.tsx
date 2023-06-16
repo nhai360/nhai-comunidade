@@ -21,13 +21,21 @@ import {
 } from "@/client/users";
 import { useStateManager } from "react-select";
 import { useState } from "react";
+import { useCreateLiveInvite } from "@/client/lives/useCreateLiveInvite";
 
 type Props = {
   onClose: () => void;
   guests: User[];
+  spaceId: string;
+  liveId: string;
 };
 
-export function InviteParticipantDialog({ onClose, guests }: Props) {
+export function InviteParticipantDialog({
+  onClose,
+  guests,
+  spaceId,
+  liveId,
+}: Props) {
   const {
     register,
     watch,
@@ -38,6 +46,11 @@ export function InviteParticipantDialog({ onClose, guests }: Props) {
   } = useForm<UserNicknameParams>({
     resolver: zodResolver(UserNicknameDecoder),
   });
+  const {
+    createLiveInvite,
+    isLoading: isInviteLoading,
+    isError: isInviteError,
+  } = useCreateLiveInvite();
 
   const { getUser, user, isLoading, isError, isSuccess } = useUserFromNickname({
     nickname: "" as string,
@@ -53,7 +66,23 @@ export function InviteParticipantDialog({ onClose, guests }: Props) {
             message: "Esse usuário já está na transmissão...",
           });
         } else {
-          
+          createLiveInvite(
+            {
+              guestId: r.id,
+              liveId,
+              spaceId,
+            },
+            {
+              onSuccess: () => {
+                toast.success("Convite enviado com sucesso!");
+              },
+              onError: () => {
+                toast.error(
+                  "Não foi possível enviar sua publicação. Tente novamente."
+                );
+              },
+            }
+          );
         }
       })
       .catch((err) => console.log(err));
