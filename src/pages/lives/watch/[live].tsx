@@ -30,14 +30,14 @@ const WatchLive = (): JSX.Element => {
     id: session?.userId,
   });
 
-  return !!live?.spaceId && !isLoading && user ? (
+  return !!live?.spaceId && !isLoading && user && live?.playbackId ? (
     <div className={styles.main}>
       <div className={styles.videoContainer}>
         <MuxVideo
-          playbackId={"QJbNm0013sSCip00frsOy2MNs8TwOQgf3X8RovXc9HGUM"}
+          playbackId={live?.playbackId}
           streamType="live"
           metadata={{
-            video_id: "QJbNm0013sSCip00frsOy2MNs8TwOQgf3X8RovXc9HGUM",
+            video_id: live?.playbackId,
             video_title: live?.title,
             viewer_user_id: session?.userId,
           }}
@@ -49,7 +49,7 @@ const WatchLive = (): JSX.Element => {
         />
       </div>
 
-      <WatchChat user={user} liveId="clixpk1yy0002yidw18kdnquq" />
+      <WatchChat user={user} liveId={live?.id} />
     </div>
   ) : isLoading ? (
     <div className={styles.spaceGreetings}>
