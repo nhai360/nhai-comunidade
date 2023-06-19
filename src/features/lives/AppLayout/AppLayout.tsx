@@ -3,10 +3,10 @@ import { useVideoContext } from "@/contexts/VideoContext";
 import { Button, Typography } from "@/ui";
 import { Broadcast } from "@phosphor-icons/react";
 import styles from "./styles.module.scss";
-import { useLiveContext } from "@/contexts/LiveContext";
 import { format } from "date-fns";
 import { limitText } from "../utils";
 import { useRouter } from "next/router";
+import { useUserLiveContext } from "@/contexts/UserLiveContext";
 
 interface Types {
   handleCreate: () => void;
@@ -14,7 +14,7 @@ interface Types {
 
 export function AppLayout({ handleCreate }: Types) {
   const router = useRouter();
-  const { lives } = useLiveContext();
+  const { userlives } = useUserLiveContext();
 
   return (
     <DefaultLayout>
@@ -81,7 +81,7 @@ export function AppLayout({ handleCreate }: Types) {
             </div>
           </div>
           <div className={styles.livesContent}>
-            {lives?.map((live, index) => (
+            {userlives?.map((live, index) => (
               <div
                 key={index}
                 className={styles.card}

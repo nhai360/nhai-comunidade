@@ -3,17 +3,16 @@ import { useQuery } from "react-query";
 import { authenticatedAPI, decodeResponse } from "@/client";
 import { GetUserLivesParams, Live, LiveDecoder } from "@/client/lives/types";
 
-async function getLives({ userId }: GetUserLivesParams) {
-  const response = await authenticatedAPI.get(`/users/${userId}/guestLives`);
+async function getLives() {
+  const response = await authenticatedAPI.get(`/lives/getLiveSchedule`);
 
   return decodeResponse<Live[]>(response, LiveDecoder.array());
 }
 
-export function useLives({ userId }: GetUserLivesParams) {
+export function useLives() {
   const { data: lives, ...rest } = useQuery({
-    enabled: !!userId,
-    queryKey: ["userlives", { userId }],
-    queryFn: () => getLives({ userId }),
+    queryKey: "lives",
+    queryFn: () => getLives(),
   });
 
   return {

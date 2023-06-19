@@ -22,7 +22,7 @@ const BroadcastButton = ({ live }: Props) => {
   const params = {
     spaceId: live?.spaceId,
     broadcastId: live?.broadcastId,
-    liveId: live?.muxLiveId,
+    liveId: live?.id,
   };
 
   const handleBroadcast = () => {

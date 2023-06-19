@@ -2,10 +2,10 @@ import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import { withAuth } from "@/middlewares";
 import { Lives } from "@/features/lives";
-import { LivesProvider } from "@/contexts/LiveContext";
 import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { UserLivesProvider } from "@/contexts/UserLiveContext";
 
 function StagePage() {
   const router = useRouter();
@@ -25,7 +25,7 @@ function StagePage() {
   }
 
   return (
-    <LivesProvider userId={session?.userId || ""}>
+    <UserLivesProvider userId={session?.userId || ""}>
       <Lives.DesktopLayout
         handleCreate={() => setIsCreateBroadcastDialogVisible(true)}
       />
@@ -38,7 +38,7 @@ function StagePage() {
           onClose={() => setIsCreateBroadcastDialogVisible(false)}
         />
       )}
-    </LivesProvider>
+    </UserLivesProvider>
   );
 }
 

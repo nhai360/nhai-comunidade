@@ -6,9 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import * as S from "./VideosList.styles";
 import { Typography } from "@/ui";
 import { useVideoContext } from "@/contexts/VideoContext";
+import { useLiveContext } from "@/contexts/LiveContext";
+import { LiveWatchCard } from "@/features/lives/LiveWatchCard";
 
 export function VideosList() {
   const { videos } = useVideoContext();
+  const { lives } = useLiveContext();
 
   return (
     <S.Container>
@@ -28,6 +31,17 @@ export function VideosList() {
           ))}
         </Swiper>
       </S.PlaylistHighlight> */}
+      {lives?.length > 0 && (
+        <>
+          <Typography.Text size="h3">Lives para assistir</Typography.Text>
+          <S.VideosGridContainer>
+            {lives.map((live) => (
+              <LiveWatchCard key={live.id} live={live} />
+            ))}
+          </S.VideosGridContainer>
+        </>
+      )}
+
       <Typography.Text size="h3">Vídeos sugeridos</Typography.Text>
       <S.VideosGridContainer>
         {videos.map((video) => (
