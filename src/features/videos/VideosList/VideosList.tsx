@@ -8,10 +8,20 @@ import { Typography } from "@/ui";
 import { useVideoContext } from "@/contexts/VideoContext";
 import { useLiveContext } from "@/contexts/LiveContext";
 import { LiveWatchCard } from "@/features/lives/LiveWatchCard";
+import { useAuthContext } from "@/contexts";
+import { useUser } from "@/client/users";
 
 export function VideosList() {
   const { videos } = useVideoContext();
   const { lives } = useLiveContext();
+
+  const { session } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
+  const isAdmin = user?.role?.name === "ADMIN";
 
   return (
     <S.Container>
@@ -31,7 +41,7 @@ export function VideosList() {
           ))}
         </Swiper>
       </S.PlaylistHighlight> */}
-      {lives?.length > 0 && (
+      {lives?.length > 0 && isAdmin && (
         <>
           <Typography.Text size="h3">Lives para assistir</Typography.Text>
           <S.VideosGridContainer>

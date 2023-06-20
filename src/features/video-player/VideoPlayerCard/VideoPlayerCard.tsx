@@ -67,7 +67,7 @@ export function VideoPlayerCard({ isMobile = false }) {
               <S.TimeLabel>{createdAt}</S.TimeLabel>
             </Typography.Text>
             <Typography.Text size="body3" color="secondary">
-              @{user?.nickname}
+              @{video?.author?.nickname}
             </Typography.Text>
           </S.UserInformationContainer>
         </S.UserContainer>
