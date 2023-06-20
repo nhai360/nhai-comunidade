@@ -56,8 +56,10 @@ const CardArticle = ({ article }: Props) => {
           </div>
         </div>
 
-        <h3>{`${article?.title}`}</h3>
-        <p>{`${description?.substring(0, 60)}`}</p>
+        <h3 dangerouslySetInnerHTML={{ __html: article?.title }}></h3>
+        <p
+          dangerouslySetInnerHTML={{ __html: description?.substring(0, 60) }}
+        ></p>
 
         <Link href={`/articles/${article?.id}`}>
           <Button className={styles.articleButton}>

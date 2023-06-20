@@ -176,6 +176,8 @@ export function RegisterForm() {
             placeholder="+00 (00) 00000-0000"
             errorText={errors.phone?.message}
             {...register("phone")}
+            mask="phone"
+            setValue={setValue}
           />
           <Field.Select
             required

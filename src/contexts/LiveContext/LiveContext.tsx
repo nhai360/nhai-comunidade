@@ -11,7 +11,6 @@ import {
 
 type LivesProviderProps = {
   children: ReactNode;
-  userId: string;
 };
 
 type LiveContextParams = {
@@ -23,12 +22,10 @@ type LiveContextParams = {
 
 const LiveContext = createContext({} as LiveContextParams);
 
-export function LivesProvider({ children, userId = "" }: LivesProviderProps) {
+export function LivesProvider({ children }: LivesProviderProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { lives = [], refetch } = useLives({
-    userId,
-  });
+  const { lives = [], refetch } = useLives();
 
   function handleSearch() {
     refetch();

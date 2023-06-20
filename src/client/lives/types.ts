@@ -20,6 +20,7 @@ export const LiveDecoder = t.object({
   playbackId: t.string().nullish(),
   broadcastId: t.string().nullish(),
   muxLiveId: t.string().nullish(),
+  thumbnail: MediaDecoder.nullish(),
   source: MediaDecoder.nullish(),
   sourceId: t.string().nullish(),
   author: UserDecoder.nullish(),

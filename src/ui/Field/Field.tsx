@@ -1,13 +1,8 @@
 import { ForwardRefRenderFunction, forwardRef, ReactNode } from "react";
 
-import {
-  Input,
-  InputProps,
-  Select,
-  SelectProps,
-  Label,
-  Typography,
-} from "@/ui";
+import MaskedInput from "react-text-mask";
+
+import { Input, InputProps, SelectProps, Label, Typography } from "@/ui";
 
 import * as S from "./Field.styles";
 
@@ -21,6 +16,7 @@ type FieldProps = {
   setValue?: any;
   required?: boolean;
   children?: ReactNode;
+  mask?: "phone";
 };
 
 export function Field({
@@ -68,7 +64,7 @@ const FieldInput: ForwardRefRenderFunction<
   HTMLInputElement,
   FieldInputProps
 > = (
-  { label, helperText, errorText, name, required, setValue, ...rest },
+  { label, helperText, errorText, name, required, setValue, mask, ...rest },
   ref
 ) => {
   const hasError = Boolean(errorText);
@@ -81,14 +77,35 @@ const FieldInput: ForwardRefRenderFunction<
       htmlFor={name}
       required={required}
     >
-      <Input
-        ref={ref}
-        id={name}
-        name={name}
-        error={hasError}
-        {...rest}
-        size="medium"
-      />
+      {mask === "phone" ? (
+        <MaskedInput
+          mask={phoneMask}
+          placeholder="+__ (___) ____-____"
+          guide={false}
+          {...(rest as any)}
+          onChange={(value) => setValue("phone", value?.target?.value)}
+          render={(ref, props) => (
+            <Input
+              ref={ref as any}
+              id={name}
+              name={name}
+              error={hasError}
+              {...rest}
+              {...props}
+              size="medium"
+            />
+          )}
+        />
+      ) : (
+        <Input
+          ref={ref}
+          id={name}
+          name={name}
+          error={hasError}
+          {...rest}
+          size="medium"
+        />
+      )}
     </Field>
   );
 };
@@ -135,3 +152,25 @@ const FieldSelect = (
 
 Field.Select = forwardRef(FieldSelect);
 Field.Input = forwardRef(FieldInput);
+
+const phoneMask = [
+  "+",
+  /\d/,
+  /\d/,
+  " ",
+  "(",
+  /\d/,
+  /\d/,
+  ")",
+  " ",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  "-",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+];

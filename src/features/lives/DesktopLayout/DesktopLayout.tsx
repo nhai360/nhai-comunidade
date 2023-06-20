@@ -1,12 +1,12 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import styles from "./styles.module.scss";
-import { useLiveContext } from "@/contexts/LiveContext";
 import { useRouter } from "next/router";
 import { LiveCard } from "../LiveCard";
 import { Button } from "@/ui";
 import { Broadcast } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { limitText } from "../utils";
+import { useUserLiveContext } from "@/contexts/UserLiveContext";
 
 interface Types {
   handleCreate: () => void;
@@ -14,7 +14,7 @@ interface Types {
 
 export function DesktopLayout({ handleCreate }: Types) {
   const router = useRouter();
-  const { lives } = useLiveContext();
+  const { userlives } = useUserLiveContext();
 
   return (
     <DefaultLayout hasSider={false}>
@@ -80,7 +80,7 @@ export function DesktopLayout({ handleCreate }: Types) {
         </div>
         <div className={styles.livesContent}>
           <div className={styles.scrollViewContainer}>
-            {lives
+            {userlives
               ?.filter((a) => a?.spaceId)
               ?.map((live, index) => (
                 <div
