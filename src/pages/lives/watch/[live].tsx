@@ -39,11 +39,22 @@ const WatchLive = (): JSX.Element => {
       mux.monitor(videoRef.current, {
         debug: false,
         data: {
-          env_key: "bua0bfe03e8818lbkjb5g2g0j", // required
-          // Metadata fields
-          player_name: "Live Player", // any arbitrary string you want to use to identify this player
+          env_key: "bua0bfe03e8818lbkjb5g2g0j",
+          viewer_user_id: session?.userId, // ex: '12345'
+          experiment_name: "", // ex: 'player_test_A'
+          sub_property_id: "", // ex: 'cus-1'
+
+          // Player Metadata
+          player_name: "live-player", // any arbitrary string you want to use to identify this player
+          player_version: "", // ex: '1.0.0'
           player_init_time: initTime,
-          // ...
+
+          // Video Metadata
+          video_id: `${live?.playbackId}`,
+          video_title: live?.title,
+          video_series: "", // ex: 'Weekly Great Videos'
+          video_stream_type: "live", // 'live' or 'on-demand'
+          video_cdn: "", // ex: 'Fastly', 'Akamai'
         },
       });
     }
