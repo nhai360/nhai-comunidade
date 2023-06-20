@@ -51,6 +51,19 @@ export const handleCreateChatMessage = async (
   }
 };
 
+export const getConnectedLivesCount = (liveId: string) => {
+  console.log("[CHAT]: handleGetChat");
+  const liveChatDoc = doc(db, "LIVECHAT", liveId);
+
+  const messageCol = collection(liveChatDoc, "MESSAGES");
+  return onSnapshot(
+    query(messageCol, orderBy("createdAt", "asc")),
+    (snapshot) => {
+      snapshot?.size;
+    }
+  );
+};
+
 interface ICreateChatMessage {
   userId: string;
   userName: string;
