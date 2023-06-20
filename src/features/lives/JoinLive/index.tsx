@@ -10,6 +10,7 @@ import * as animationData from "../../../../public/streamlott.json";
 import { Button } from "@/ui";
 import { Broadcast } from "@phosphor-icons/react";
 import { Live } from "@/client/lives";
+import Link from "next/link";
 
 interface IJoinLive {
   live: Live;
@@ -34,6 +35,9 @@ const JoinLive = ({ handleSubmit, live }: IJoinLive) => {
           <Broadcast size={20} color="red" /> {live?.title}
         </h2>
         <Button onClick={handleSubmit}>Preparar transmissão</Button>
+        <Link href={"/"} className={styles.backButton}>
+          Voltar para a plataforma
+        </Link>
       </div>
     </>
   );
