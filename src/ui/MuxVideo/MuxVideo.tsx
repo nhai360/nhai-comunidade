@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
+import mux from "mux-embed";
 
 const UploadVideoDialog = dynamic(
   () => import("../../features/videos/UploadVideoDialog/UploadVideoDialog"),
@@ -183,6 +184,23 @@ export function MuxVideo({
       setCurrentTime(newTime);
     }
   };
+
+  useEffect(() => {
+    if (videoRef.current) {
+      const initTime = mux.utils.now();
+
+      mux.monitor(videoRef.current, {
+        debug: false,
+        data: {
+          env_key: "bua0bfe03e8818lbkjb5g2g0j", // required
+          // Metadata fields
+          player_name: "Live Player", // any arbitrary string you want to use to identify this player
+          player_init_time: initTime,
+          // ...
+        },
+      });
+    }
+  }, [videoRef]);
 
   return (
     <>

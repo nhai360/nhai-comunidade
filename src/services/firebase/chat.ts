@@ -50,7 +50,6 @@ export const handleCreateChatMessage = async (
     toast.error("Falha ao criar novo arquivo: " + error.message);
   }
 };
-
 interface ICreateChatMessage {
   userId: string;
   userName: string;
