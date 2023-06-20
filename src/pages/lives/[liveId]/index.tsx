@@ -200,7 +200,10 @@ const Home = (): JSX.Element => {
         <Image src="/logo.svg" width="100" height="100" alt="Contaí! Stage" />
         {/* <p>Number of participants: {participantCount || 0}</p> */}
         <div className={styles.indicatorTop}>
-          <BroadcastIndicator isOnline={isBroadcasting} />
+          <BroadcastIndicator
+            playbackId={`${live?.playbackId}`}
+            isOnline={isBroadcasting}
+          />
         </div>
       </div>
 
@@ -229,7 +232,10 @@ const Home = (): JSX.Element => {
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>
-          <BroadcastIndicator isOnline={isBroadcasting} />
+          <BroadcastIndicator
+            playbackId={`${live?.playbackId}`}
+            isOnline={isBroadcasting}
+          />
         </div>
 
         <div className={styles.mainTools}>
