@@ -43,21 +43,23 @@ export function LiveWatchCard({ live, hasHover = true }: Props) {
           ...hoverCss,
         }}
       >
-        {live.thumbnail?.url ? (
-          <S.ThumbnailImage
-            ref={imageRef}
-            src={live?.thumbnail?.url}
-            onError={handleImageError}
-            alt={live.title}
-          />
-        ) : (
-          <S.ThumbnailImage
-            ref={imageRef}
-            src={"/images/empty.jpg"}
-            onError={handleImageError}
-            alt={live.title}
-          />
-        )}
+        <S.ThumbContainer>
+          {live.thumbnail?.url ? (
+            <S.ThumbnailImage
+              ref={imageRef}
+              src={live?.thumbnail?.url}
+              onError={handleImageError}
+              alt={live.title}
+            />
+          ) : (
+            <S.ThumbnailImage
+              ref={imageRef}
+              src={"/images/empty.jpg"}
+              onError={handleImageError}
+              alt={live.title}
+            />
+          )}
+        </S.ThumbContainer>
         <Typography.Text
           css={{ display: "block", marginTop: "$3", color: "$textTitle" }}
         >
@@ -77,7 +79,17 @@ export function LiveWatchCard({ live, hasHover = true }: Props) {
               @{live.author?.nickname}
             </Typography.Text>
           </S.UserInformationContainer>
-          <S.TimeLabel>{createdAtFormatted}</S.TimeLabel>
+          <S.UserInformationContainer
+            style={{ flex: 1, alignItems: "flex-end" }}
+          >
+            <S.LiveIndicator>
+              <S.Circle />
+              <Typography.Text css={{ color: "$neutral100", fontSize: 12 }}>
+                LIVE
+              </Typography.Text>
+            </S.LiveIndicator>
+            <S.TimeLabel>{createdAtFormatted}</S.TimeLabel>
+          </S.UserInformationContainer>
         </S.UserContainer>
       </Card>
     </Link>

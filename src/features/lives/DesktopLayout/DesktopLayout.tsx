@@ -1,9 +1,8 @@
 import { DefaultLayout } from "@/layouts/desktop";
 import styles from "./styles.module.scss";
 import { useRouter } from "next/router";
-import { LiveCard } from "../LiveCard";
 import { Button } from "@/ui";
-import { Broadcast } from "@phosphor-icons/react";
+import { Broadcast, CaretRight } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { limitText } from "../utils";
 import { useUserLiveContext } from "@/contexts/UserLiveContext";
@@ -86,17 +85,39 @@ export function DesktopLayout({ handleCreate }: Types) {
                 <div
                   key={index}
                   className={styles.card}
-                  onClick={() => router.push(`/lives/${live.id}`)}
+                  style={{
+                    cursor: live?.status !== "FINISHED" ? "pointer" : "default",
+                  }}
+                  onClick={() =>
+                    live?.status !== "FINISHED" &&
+                    router.push(`/lives/${live.id}`)
+                  }
                 >
                   <div
                     style={{ display: "flex", alignItems: "center", gap: 16 }}
                   >
-                    <img src={"/poster-flipped.jpg"} alt="" />
-
-                    <h3>{limitText(live?.title, 24)}</h3>
+                    <img
+                      src={live?.thumbnail?.url || "/images/empty.jpg"}
+                      alt=""
+                    />
+                    <div>
+                      <h3>{limitText(live?.title, 24)}</h3>
+                      <h4>
+                        {format(
+                          new Date(live?.startTime),
+                          "dd 'de' MMMM yyyy 'às' HH:mm"
+                        )}
+                      </h4>
+                    </div>
                   </div>
 
-                  <h4>{format(new Date(), "dd 'de' MMMM yyyy 'às' HH:mm")}</h4>
+                  {live?.status !== "FINISHED" ? (
+                    <CaretRight size={20} />
+                  ) : (
+                    <div className={styles.finishedTag}>
+                      <span>Finalizada</span>
+                    </div>
+                  )}
                 </div>
               ))}
           </div>
