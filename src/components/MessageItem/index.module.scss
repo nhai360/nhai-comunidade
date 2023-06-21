@@ -15,3 +15,59 @@
     word-wrap: break-word;
   }
 }
+
+.ownerMessageItem {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+
+  .name {
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .message {
+    font-weight: 400;
+    font-size: 0.8rem;
+    display: inline-block;
+    word-wrap: break-word;
+  }
+
+  .deleteIcon {
+    transition: all 0.2s ease-in;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    width: 32px;
+    height: 32px;
+    right: 20px;
+    cursor: pointer;
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 29%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 29%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 29%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);
+  }
+
+  &:hover {
+    .deleteIcon {
+      display: flex;
+    }
+  }
+}

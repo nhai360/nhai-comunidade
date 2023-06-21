@@ -228,7 +228,7 @@ const Home = (): JSX.Element => {
             participantsPerPage={participantsPerPage}
           />
         </div>
-        <Chat liveId={live?.id} isOpen={width > 800} />
+        <Chat liveId={live?.id} isOwner={userIsAuthor} isOpen={width > 800} />
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>

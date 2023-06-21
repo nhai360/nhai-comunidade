@@ -81,9 +81,11 @@ export const WatchChat = ({ liveId, user }: Props) => {
           {chat.map((data: any, key) => (
             <MessageItem
               key={key}
+              commentId={data?._id}
               name={data.userName}
               message={data.message}
               nickname={data?.nickname}
+              liveId={liveId}
             />
           ))}
 

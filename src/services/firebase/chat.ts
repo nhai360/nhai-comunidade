@@ -21,7 +21,7 @@ export const handleGetChat = async (liveId: string, setChat: any) => {
       query(messageCol, orderBy("createdAt", "asc")),
       (snapshot) => {
         const messageList = snapshot.docs.map((doc) => {
-          return { ...doc.data() };
+          return { _id: doc?.id, ...doc.data() };
         });
         setChat(messageList);
       }
