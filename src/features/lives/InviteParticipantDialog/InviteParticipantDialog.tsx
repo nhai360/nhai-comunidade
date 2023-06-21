@@ -181,11 +181,11 @@ export function InviteParticipantDialog({
           css={{
             display: "flex",
             alignItems: "center",
-            justifyContent: guests.length < 5 ? "flex-end" : "space-between",
+            justifyContent: guests.length < 5 ? "flex-end" : "flex-start",
             padding: "$4",
           }}
         >
-          {guests.length >= 5 && (
+          {guests.length >= 5 ? (
             <>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Info size={32} />
@@ -199,14 +199,15 @@ export function InviteParticipantDialog({
                 </Typography.Text>
               </div>
             </>
+          ) : (
+            <Button
+              type="submit"
+              loading={isLoading}
+              onClick={() => handleSubmit(handleCreatePlaylist)()}
+            >
+              Procurar
+            </Button>
           )}
-          <Button
-            type="submit"
-            loading={isLoading}
-            onClick={() => handleSubmit(handleCreatePlaylist)()}
-          >
-            Procurar
-          </Button>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>
