@@ -126,6 +126,7 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
               message={data.message}
               nickname={data?.nickname}
               liveId={liveId}
+              isOwner={user?.role?.name === "ADMIN"}
             />
           ))}
 

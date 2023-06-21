@@ -1,0 +1,41 @@
+
+
+.Container {
+    max-width: 1920px;
+    margin: 0px auto;
+    position: relative;
+    background-color: #FFF;
+    min-height: 100vh;
+    padding:10px 0px;
+}
+
+.RowVideo{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: 100%;
+}
+
+.Breadcrumb {
+    padding: 15px 20px;
+    
+    .BreadcrumbText {
+        color: #313131;
+        font-size: 1rem;
+
+        @media (max-width: 400px) {
+            font-size: 0.6rem !important;
+        }
+
+        @media (max-width:768px) {
+            font-size: 0.7rem;
+        }
+
+        strong {
+            color: #fff;
+            background-color: #EE0014;
+            padding: 15px 10px;
+        }
+    }
+}
+

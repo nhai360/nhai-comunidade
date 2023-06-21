@@ -27,7 +27,11 @@ const CreateArticleDialog = dynamic(
   { ssr: false }
 );
 
-export function Header() {
+interface IHeader {
+  canCreate?: boolean;
+}
+
+export function Header({ canCreate = true }: IHeader) {
   const { searchTerm, handleChange, handleSearch } = useSearch();
 
   const { session } = useAuthContext();
@@ -86,39 +90,41 @@ export function Header() {
               onChange={handleChange}
               onSearch={handleSearch}
             />
-            <Popover.Root>
-              <Popover.Trigger asChild>
-                <div>
-                  <Tooltip message="Criar" position="bottom">
-                    <Button icon variant="transparent">
-                      <AddCircleIcon />
-                    </Button>
-                  </Tooltip>
-                </div>
-              </Popover.Trigger>
+            {canCreate && (
+              <Popover.Root>
+                <Popover.Trigger asChild>
+                  <div>
+                    <Tooltip message="Criar" position="bottom">
+                      <Button icon variant="transparent">
+                        <AddCircleIcon />
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </Popover.Trigger>
 
-              <Popover side="bottom" sideOffset={8} align="center">
-                <Popover.Action
-                  onClick={() => setIsCreatePostDialogVisible(true)}
-                >
-                  <Typography.Text>Publicação</Typography.Text>
-                </Popover.Action>
-                {isEnabled && (
+                <Popover side="bottom" sideOffset={8} align="center">
                   <Popover.Action
-                    onClick={() => setIsUploadVideoDialogVisible(true)}
+                    onClick={() => setIsCreatePostDialogVisible(true)}
                   >
-                    <Typography.Text>Vídeo</Typography.Text>
+                    <Typography.Text>Publicação</Typography.Text>
                   </Popover.Action>
-                )}
-                {isEnabled && (
-                  <Popover.Action
-                    onClick={() => setIsCreateArticleVisible(true)}
-                  >
-                    <Typography.Text>Artigo</Typography.Text>
-                  </Popover.Action>
-                )}
-              </Popover>
-            </Popover.Root>
+                  {isEnabled && (
+                    <Popover.Action
+                      onClick={() => setIsUploadVideoDialogVisible(true)}
+                    >
+                      <Typography.Text>Vídeo</Typography.Text>
+                    </Popover.Action>
+                  )}
+                  {isEnabled && (
+                    <Popover.Action
+                      onClick={() => setIsCreateArticleVisible(true)}
+                    >
+                      <Typography.Text>Artigo</Typography.Text>
+                    </Popover.Action>
+                  )}
+                </Popover>
+              </Popover.Root>
+            )}
             {/* <Tooltip message="Novo post" position="bottom">
               
             </Tooltip> */}

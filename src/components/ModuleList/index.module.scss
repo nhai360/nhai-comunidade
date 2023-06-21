@@ -1,0 +1,144 @@
+.divider {
+    content: '';
+    width: 100%;
+    height: 2px;
+
+    background-color: #cccccc40;
+
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+
+.moduleWrapper {
+    width: 40%;
+    position: relative;
+    margin: 0px 20px;
+
+    @media (max-width:1024px) {
+        display: none;
+    }
+}
+
+.containerColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.topVideo {
+    background-color: #EE0014;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 400px;
+
+    /* Safari */
+    position: relative;
+    top: 30px;
+    align-self: flex-end;
+
+    @media (max-width:1024px) {
+        display: none;
+    }
+
+
+
+    .topVideoList {
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+
+
+    }
+
+
+    .moduleCard {
+        background: #fff;
+        border-radius: 10px;
+        padding: 0px 0px;
+        width: 80%;
+
+        @media (max-width:1440px) {
+            width: max-content;
+        }
+
+        margin:10px;
+
+        .rowCard {
+            padding: 20px 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .moduleWatched {
+                strong {
+                    color: #EE0014
+                }
+            }
+        }
+
+        .moduleTitle {
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 10px 20px;
+
+        }
+
+        .divider {
+            margin: 10px 0px;
+            margin-bottom: 20px;
+        }
+
+        .videosInfo {
+            padding: 0px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+
+            padding-bottom: 20px;
+
+            .numberVideosInfo {
+                margin-right: 10px;
+                color: #8C8C8C;
+            }
+
+            .minutesInfo {
+                margin-left: 10px;
+                color: #8C8C8C;
+            }
+        }
+
+    }
+
+
+    .cardVideo {
+        background: #fff;
+        border-radius: 10px;
+        padding: 0px 0px;
+        width: 80%;
+
+        @media (max-width:1440px) {
+            width: max-content;
+        }
+
+        .thumbnailWrapper {
+              
+            padding:20px;
+            img {
+                max-width: 100%;
+            }
+        }
+
+        margin:10px;
+    }
+
+}
