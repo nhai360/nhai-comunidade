@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { BiStation } from "react-icons/bi";
 import { useSpace } from "@/hooks/useSpace";
 import { Live } from "@/client/lives";
 import { useBroadcastLive } from "@/client/lives/useBroadcastLive";
 import { toast } from "react-toastify";
+import { Loading } from "@/ui";
 
 interface Props {
   live: Live;
@@ -15,9 +16,13 @@ interface Props {
 const BroadcastButton = ({ live }: Props) => {
   const { isBroadcasting } = useSpace();
   const {
-    start: { startBroadcast, isLoading: isStarting, isError: isStartError },
-    stop: { stopBroadcast, isLoading: isStoping, isError: isStopError },
+    start: { startBroadcast, isLoading: isStarting },
+    stop: { stopBroadcast, isLoading: isStoping },
   } = useBroadcastLive();
+
+  const [canClick, setCanClick] = useState<"START" | "STOP" | "">("");
+
+  const loading = !!canClick || isStarting || isStoping;
 
   const params = {
     spaceId: live?.spaceId,
@@ -26,22 +31,26 @@ const BroadcastButton = ({ live }: Props) => {
   };
 
   const handleBroadcast = () => {
-    if (params?.spaceId && params?.liveId && params?.broadcastId) {
+    if (params?.spaceId && params?.liveId && params?.broadcastId && !loading) {
       if (isBroadcasting) {
+        setCanClick("STOP");
         stopBroadcast(params as any, {
           onSuccess: () => {
             toast.success("A transmissão iniciou!");
           },
           onError: () => {
+            setCanClick("");
             toast.error("Falha iniciar a transmissão. Tente novamente");
           },
         });
       } else {
+        setCanClick("START");
         startBroadcast(params as any, {
           onSuccess: () => {
             toast.success("A transmissão iniciou!");
           },
           onError: () => {
+            setCanClick("");
             toast.error("Falha iniciar a transmissão. Tente novamente");
           },
         });
@@ -51,10 +60,25 @@ const BroadcastButton = ({ live }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (
+      (canClick === "START" && isBroadcasting) ||
+      (canClick === "STOP" && !isBroadcasting)
+    ) {
+      setCanClick("");
+    }
+  }, [isBroadcasting]);
+
   return (
     <>
-      <button onClick={handleBroadcast} className={styles.buttonBroadcast}>
-        {isBroadcasting && (
+      <button
+        onClick={handleBroadcast}
+        disabled={loading}
+        className={styles.buttonBroadcast}
+      >
+        {loading ? (
+          <Loading />
+        ) : isBroadcasting ? (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>
@@ -82,8 +106,7 @@ const BroadcastButton = ({ live }: Props) => {
               </span>
             </div>
           </>
-        )}
-        {!isBroadcasting && (
+        ) : (
           <>
             {" "}
             <div className={styles.broadcastButtonTextMobile}>
