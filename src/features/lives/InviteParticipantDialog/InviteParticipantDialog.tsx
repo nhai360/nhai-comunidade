@@ -16,7 +16,6 @@ import {
 import * as S from "./InviteParticipantDialog.styles";
 import styles from "./guestsCard.module.scss";
 import {
-  User,
   UserNicknameDecoder,
   UserNicknameParams,
   useUserFromNickname,
@@ -99,7 +98,10 @@ export function InviteParticipantDialog({
           );
         }
       })
-      .catch((err) => toast.error("Este usuário não existe."));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Este usuário não existe.");
+      });
   }
 
   if (isSuccess) {

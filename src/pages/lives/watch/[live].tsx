@@ -25,12 +25,18 @@ const WatchLive = (): JSX.Element => {
 
   const liveId = router?.query?.live;
 
-  const { live, isLoading } = useLive({ liveId: liveId as string });
+  const [loading, setLoading] = useState(true);
+
+  const { live, isLoading, isError } = useLive({ liveId: liveId as string });
 
   const { session } = useAuthContext();
   const { user } = useUser({
     id: session?.userId,
   });
+
+  useEffect(() => {
+    (!!live?.id || isError) && setLoading(false);
+  }, [live]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -60,7 +66,11 @@ const WatchLive = (): JSX.Element => {
     }
   }, [videoRef]);
 
-  return !!live?.spaceId && !isLoading && user && live?.playbackId ? (
+  return isLoading || loading ? (
+    <div className={styles.spaceGreetings}>
+      <Levels color={"#f23d80"} size={32} />
+    </div>
+  ) : !!live?.spaceId && !!user && !!live?.playbackId ? (
     <div className={styles.main}>
       <div className={styles.videoContainer}>
         <MuxVideo
@@ -78,14 +88,12 @@ const WatchLive = (): JSX.Element => {
           width={"100%"}
           height={"100%"}
           style={{ backgroundColor: "#323232" }}
+          autoPlay
+          muted
         />
       </div>
 
       <WatchChat live={live} user={user} liveId={live?.id} />
-    </div>
-  ) : isLoading ? (
-    <div className={styles.spaceGreetings}>
-      <Levels color={"#f23d80"} size={32} />
     </div>
   ) : (
     <LiveNotFound />
