@@ -3,7 +3,15 @@ import { toast } from "react-toastify";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button, Dialog, Divider, Field, Success, Typography } from "@/ui";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  Divider,
+  Field,
+  Success,
+  Typography,
+} from "@/ui";
 
 import * as S from "./InviteParticipantDialog.styles";
 import styles from "./guestsCard.module.scss";
@@ -17,7 +25,8 @@ import { useCreateLiveInvite } from "@/client/lives/useCreateLiveInvite";
 import { useRouter } from "next/router";
 import { Guest } from "@/client/lives";
 
-import Image from "next/image";
+import { getInitials, getProfileUrl } from "@/lib/string";
+import { Info } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -127,33 +136,70 @@ export function InviteParticipantDialog({
               />
             </S.FormContainer>
           )}
-          {guests.map((d, k) => (
-            <>
-              <div key={k} className={styles.cardGuests}>
-                <div style={{ display: "flex", gap: 16 }}>
-                  <Image
-                    style={{ objectFit: "cover" }}
-                    width={32}
-                    height={32}
-                    src={d.guest?.profilePicture?.url || ""}
-                    alt={`${d.guest?.nickname}/profile-picture`}
-                  />
-                  <span>{d.guest?.fullName}</span>
+
+          <div style={{ width: "100%", overflow: "auto" }}>
+            {guests.map((d, k) => (
+              <>
+                <div key={k} className={styles.cardGuests}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 16,
+                    }}
+                  >
+                    <Avatar.Square
+                      alt={d.guest?.fullName}
+                      src={d.guest?.profilePicture?.url}
+                      fallback={getInitials(d.guest?.fullName)}
+                      level={d.guest?.score?.level}
+                      size={"small"}
+                      css={{
+                        borderRadius: 32,
+                        "@laptop": {
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "32px",
+                        },
+                        "@mobile": {
+                          width: "24px",
+                          height: "24px",
+                          borderRadius: "24px",
+                        },
+                      }}
+                    />
+                    <span>{d.guest?.fullName}</span>
+                  </div>
+                  <div></div>
                 </div>
-                <div></div>
-              </div>
-            </>
-          ))}
+              </>
+            ))}
+          </div>
         </Dialog.Body>
         <Divider />
         <Dialog.Footer
           css={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: guests.length < 5 ? "flex-end" : "space-between",
             padding: "$4",
           }}
         >
+          {guests.length >= 5 && (
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Info size={32} />
+                <Typography.Text
+                  size="body2"
+                  color="primary"
+                  align="center"
+                  weight="regular"
+                >
+                  Limite de participantes atingido...
+                </Typography.Text>
+              </div>
+            </>
+          )}
           <Button
             type="submit"
             loading={isLoading}
