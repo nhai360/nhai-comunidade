@@ -81,7 +81,7 @@ const WatchLive = (): JSX.Element => {
         />
       </div>
 
-      <WatchChat user={user} liveId={live?.id} />
+      <WatchChat live={live} user={user} liveId={live?.id} />
     </div>
   ) : isLoading ? (
     <div className={styles.spaceGreetings}>

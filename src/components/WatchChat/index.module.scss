@@ -4,11 +4,13 @@
   background-color: #fff;
   flex-direction: column;
   border: 1px solid #b6b6b6;
-  max-width: 360px;
-  min-width: 360px;
-  overflow: hidden;
-  @media (max-width: 1366px) {
-    display: none;
+
+  width: 100%;
+
+  @media (min-width: 1200px) {
+    max-width: 360px;
+    min-width: 360px;
+    overflow: hidden;
   }
 }
 
@@ -16,17 +18,25 @@
   display: grid;
   flex-direction: column;
   position: relative;
-  padding: 25px;
-  row-gap: 10px;
+  padding: 12px;
+  overflow: hidden;
+  row-gap: 8px;
+  
   .headingTitle {
     color: #202020;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100px;
+    display: block;
+    overflow: hidden;
   }
   .headingParagraph {
     color: #8c8c8c;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 14px;
+    margin-bottom: 4px;
   }
 }
 
@@ -34,7 +44,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 25px;
+  padding: 12px;
   row-gap: 8px;
   list-style: none;
   overflow-y: scroll;
