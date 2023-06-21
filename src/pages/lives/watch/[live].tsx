@@ -45,7 +45,7 @@ const WatchLive = (): JSX.Element => {
       mux.monitor(videoRef.current, {
         debug: false,
         data: {
-          env_key: "bua0bfe03e8818lbkjb5g2g0j",
+          env_key: process.env.MUX_ENV_KEY_DATA,
           viewer_user_id: session?.userId, // ex: '12345'
           experiment_name: "", // ex: 'player_test_A'
           sub_property_id: "", // ex: 'cus-1'
@@ -81,7 +81,7 @@ const WatchLive = (): JSX.Element => {
             video_id: live?.playbackId,
             video_title: live?.title,
             viewer_user_id: session?.userId,
-            env_key: "bua0bfe03e8818lbkjb5g2g0j",
+            env_key: process.env.MUX_ENV_KEY_DATA,
           }}
           title={live?.title}
           controls
