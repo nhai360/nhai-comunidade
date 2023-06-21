@@ -4,6 +4,7 @@ import { authenticatedAPI } from "@/client";
 import {
   PostLiveInviteParams,
   PostParams,
+  invalidateLiveQueries,
   invalidateLivesQueries,
 } from "@/client/lives";
 
@@ -23,7 +24,7 @@ export function useCreateLiveInvite() {
   const { mutate: createLiveInvite, ...rest } = useMutation({
     mutationFn: createLiveInviteRequest,
     onSuccess: () => {
-      invalidateLivesQueries(queryClient);
+      invalidateLiveQueries(queryClient);
     },
   });
 

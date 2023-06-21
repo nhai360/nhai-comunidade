@@ -30,3 +30,25 @@ export const TimeLabel = styled("time", {
   alignSelf: "flex-start",
   textTransform: "capitalize",
 });
+
+export const LiveIndicator = styled("div", {
+  alignSelf: "flex-end",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "red",
+  borderRadius: 4,
+  padding: "2px 6px",
+  marginBottom: 4,
+});
+
+export const Circle = styled("div", {
+  backgroundColor: "white",
+  borderRadius: 300,
+  width: 6,
+  height: 6,
+  marginRight: 4,
+});
+
+export const ThumbContainer = styled("div", {
+  display: "flex",
+});

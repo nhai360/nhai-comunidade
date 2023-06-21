@@ -44,7 +44,7 @@ export function VideoPlayerCard({ isMobile = false }) {
           video_id: video.playbackId,
           video_title: video.title,
           viewer_user_id: session?.userId,
-          env_key: "bua0bfe03e8818lbkjb5g2g0j",
+          env_key: process.env.MUX_ENV_KEY_DATA,
         }}
         video={video}
         isCreator={isCreator}

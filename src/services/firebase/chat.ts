@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   orderBy,
@@ -20,7 +21,7 @@ export const handleGetChat = async (liveId: string, setChat: any) => {
       query(messageCol, orderBy("createdAt", "asc")),
       (snapshot) => {
         const messageList = snapshot.docs.map((doc) => {
-          return { ...doc.data() };
+          return { _id: doc?.id, ...doc.data() };
         });
         setChat(messageList);
       }
@@ -50,6 +51,25 @@ export const handleCreateChatMessage = async (
     toast.error("Falha ao criar novo arquivo: " + error.message);
   }
 };
+
+export const handleDeleteChatComment = async (
+  liveId: string,
+  commentId: string
+) => {
+  try {
+    console.log("[CHAT]: handleDeleteChatComment");
+    const liveChatDocRef = doc(db, "LIVECHAT", liveId);
+    const messageColRef = collection(liveChatDocRef, "MESSAGES");
+
+    const commentDocRef = doc(messageColRef, commentId);
+    await deleteDoc(commentDocRef);
+
+    console.log("Documento excluído com sucesso!");
+  } catch (error: any) {
+    toast.error("Falha ao excluir comentário: " + error.message);
+  }
+};
+
 interface ICreateChatMessage {
   userId: string;
   userName: string;

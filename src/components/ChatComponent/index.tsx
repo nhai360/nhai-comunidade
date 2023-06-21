@@ -8,9 +8,10 @@ import { handleGetChat } from "@/services/firebase/chat";
 interface Props {
   isOpen: boolean;
   liveId: string;
+  isOwner: boolean;
 }
 
-const Chat = ({ isOpen, liveId }: Props) => {
+const Chat = ({ isOpen, liveId, isOwner }: Props) => {
   const messagesEndRef = useRef<any>(null);
   const [chat, setChat] = useState([]);
 
@@ -40,9 +41,12 @@ const Chat = ({ isOpen, liveId }: Props) => {
           {chat.map((data: any, key) => (
             <MessageItem
               key={key}
+              commentId={data?._id}
               name={data.userName}
               message={data.message}
               nickname={data?.nickname}
+              liveId={liveId}
+              isOwner={isOwner}
             />
           ))}
 

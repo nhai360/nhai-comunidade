@@ -25,12 +25,18 @@ const WatchLive = (): JSX.Element => {
 
   const liveId = router?.query?.live;
 
-  const { live, isLoading } = useLive({ liveId: liveId as string });
+  const [loading, setLoading] = useState(true);
+
+  const { live, isLoading, isError } = useLive({ liveId: liveId as string });
 
   const { session } = useAuthContext();
   const { user } = useUser({
     id: session?.userId,
   });
+
+  useEffect(() => {
+    (!!live?.id || isError) && setLoading(false);
+  }, [live]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -39,7 +45,7 @@ const WatchLive = (): JSX.Element => {
       mux.monitor(videoRef.current, {
         debug: false,
         data: {
-          env_key: "bua0bfe03e8818lbkjb5g2g0j",
+          env_key: process.env.MUX_ENV_KEY_DATA,
           viewer_user_id: session?.userId, // ex: '12345'
           experiment_name: "", // ex: 'player_test_A'
           sub_property_id: "", // ex: 'cus-1'
@@ -60,7 +66,11 @@ const WatchLive = (): JSX.Element => {
     }
   }, [videoRef]);
 
-  return !!live?.spaceId && !isLoading && user && live?.playbackId ? (
+  return isLoading || loading ? (
+    <div className={styles.spaceGreetings}>
+      <Levels color={"#f23d80"} size={32} />
+    </div>
+  ) : !!live?.spaceId && !!user && !!live?.playbackId ? (
     <div className={styles.main}>
       <div className={styles.videoContainer}>
         <MuxVideo
@@ -71,21 +81,19 @@ const WatchLive = (): JSX.Element => {
             video_id: live?.playbackId,
             video_title: live?.title,
             viewer_user_id: session?.userId,
-            env_key: "bua0bfe03e8818lbkjb5g2g0j",
+            env_key: process.env.MUX_ENV_KEY_DATA,
           }}
           title={live?.title}
           controls
           width={"100%"}
           height={"100%"}
           style={{ backgroundColor: "#323232" }}
+          autoPlay
+          muted
         />
       </div>
 
-      <WatchChat user={user} liveId={live?.id} />
-    </div>
-  ) : isLoading ? (
-    <div className={styles.spaceGreetings}>
-      <Levels color={"#f23d80"} size={32} />
+      <WatchChat live={live} user={user} liveId={live?.id} />
     </div>
   ) : (
     <LiveNotFound />
