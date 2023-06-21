@@ -17,6 +17,7 @@ export const LiveDecoder = t.object({
   id: t.string(),
   title: t.string(),
   description: t.string().nullish(),
+  status: t.string().nullish(),
   startTime: t.string().datetime(),
   spaceId: t.string().nullish(),
   playbackId: t.string().nullish(),
