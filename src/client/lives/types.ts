@@ -11,6 +11,8 @@ export const GuestLiveDecoder = t.object({
   guest: UserDecoder.nullish(),
 });
 
+export type Guest = t.TypeOf<typeof GuestLiveDecoder>;
+
 export const LiveDecoder = t.object({
   id: t.string(),
   title: t.string(),

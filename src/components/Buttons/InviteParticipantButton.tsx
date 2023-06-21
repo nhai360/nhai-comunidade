@@ -17,7 +17,6 @@ const InviteParticipantButton = ({ guests, spaceId, liveId }: Props) => {
   return (
     <>
       <button
-        disabled={guests?.length >= 5 && true}
         onClick={() => setShowModal(true)}
         id={styles.ScreenSharing}
         className={styles.buttonWrapper}

@@ -3,30 +3,25 @@ import { toast } from "react-toastify";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCreateVideo } from "@/client/videos";
-import { MediaCategory, useUpload } from "@/client/media";
 import { Button, Dialog, Divider, Field, Success, Typography } from "@/ui";
 
 import * as S from "./InviteParticipantDialog.styles";
-import { useCreatePlaylist } from "@/client/videos/useCreatePlaylist";
-import {
-  CreatePlaylistParams,
-  CreatePlaylistResolver,
-} from "@/client/playlists";
+import styles from "./guestsCard.module.scss";
 import {
   User,
   UserNicknameDecoder,
   UserNicknameParams,
   useUserFromNickname,
 } from "@/client/users";
-import { useStateManager } from "react-select";
-import { useState } from "react";
 import { useCreateLiveInvite } from "@/client/lives/useCreateLiveInvite";
 import { useRouter } from "next/router";
+import { Guest } from "@/client/lives";
+
+import Image from "next/image";
 
 type Props = {
   onClose: () => void;
-  guests: User[];
+  guests: Guest[];
   spaceId: string;
   liveId: string;
 };
@@ -55,13 +50,12 @@ export function InviteParticipantDialog({
   } = useCreateLiveInvite();
 
   const router = useRouter();
-  let shareLink = ""
+  let shareLink = "";
 
   if (typeof window !== "undefined") {
     const { hostname } = window.location;
     shareLink = hostname + router.asPath;
   }
-
 
   const { getUser, user, isLoading, isError } = useUserFromNickname({
     nickname: "" as string,
@@ -70,7 +64,7 @@ export function InviteParticipantDialog({
   function handleCreatePlaylist({ nickname }: UserNicknameParams) {
     getUser({ nickname })
       .then((r) => {
-        const guestMatch = guests.find((g) => g.id == r.id);
+        const guestMatch = guests.find((g) => g.guest?.id == r.id);
 
         if (guestMatch) {
           setError("nickname", {
@@ -123,14 +117,33 @@ export function InviteParticipantDialog({
       <Dialog.Content>
         <Dialog.Header title={"Convidar"} onClose={onClose} closable />
         <Dialog.Body>
-          <S.FormContainer onSubmit={handleSubmit(handleCreatePlaylist)}>
-            <Field.Input
-              label="Nickname"
-              placeholder="Digite o nickname do usuário"
-              errorText={errors.nickname?.message}
-              {...register("nickname")}
-            />
-          </S.FormContainer>
+          {guests.length < 5 && (
+            <S.FormContainer onSubmit={handleSubmit(handleCreatePlaylist)}>
+              <Field.Input
+                label="Nickname"
+                placeholder="Digite o nickname do usuário"
+                errorText={errors.nickname?.message}
+                {...register("nickname")}
+              />
+            </S.FormContainer>
+          )}
+          {guests.map((d, k) => (
+            <>
+              <div key={k} className={styles.cardGuests}>
+                <div style={{ display: "flex", gap: 16 }}>
+                  <Image
+                    style={{ objectFit: "cover" }}
+                    width={32}
+                    height={32}
+                    src={d.guest?.profilePicture?.url || ""}
+                    alt={`${d.guest?.nickname}/profile-picture`}
+                  />
+                  <span>{d.guest?.fullName}</span>
+                </div>
+                <div></div>
+              </div>
+            </>
+          ))}
         </Dialog.Body>
         <Divider />
         <Dialog.Footer
