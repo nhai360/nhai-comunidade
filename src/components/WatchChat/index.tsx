@@ -8,21 +8,23 @@ import {
   handleGetChat,
 } from "@/services/firebase/chat";
 import { User } from "@/client/users";
-import { Button, Field } from "@/ui";
+import { Avatar, Button, Field } from "@/ui";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateChatParams, CreateChatResolver } from "@/client/lives";
+import { CreateChatParams, CreateChatResolver, Live } from "@/client/lives";
 import { toast } from "react-toastify";
 import * as S from "./ChatForm.styles";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { invalidChatText } from "@/lib/utils";
+import { getInitials } from "@/lib/string";
 
 interface Props {
   liveId: string;
   user: User;
+  live: Live;
 }
 
-export const WatchChat = ({ liveId, user }: Props) => {
+export const WatchChat = ({ liveId, user, live }: Props) => {
   const messagesEndRef = useRef<any>(null);
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,10 +73,48 @@ export const WatchChat = ({ liveId, user }: Props) => {
     <>
       <div className={styles.chatWrapper}>
         <div className={styles.chatHeading}>
-          <span className={styles.headingTitle}>Chat</span>
-          <span className={styles.headingParagraph}>
-            Confira os comentários da transmissão.
-          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <Avatar.Square
+              alt={"live-author-picture"}
+              src={live.author?.profilePicture?.url}
+              fallback={getInitials(live.author?.fullName)}
+              level={live.author?.score?.level}
+              size={"small"}
+              css={{
+                "@laptop": {
+                  width: "42px",
+                  height: "42px",
+                },
+                "@mobile": {
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "42px",
+                },
+              }}
+            />
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                height: "100%",
+              }}
+            >
+              <span className={styles.headingTitle}> {live?.title}</span>
+              <span className={styles.headingParagraph}>
+                @{live?.author?.nickname}{" "}
+              </span>
+            </div>
+          </div>
+
+          <span className={styles.headingParagraph}>{live?.description}</span>
         </div>
         <div className={styles.divider} />
         <ul className={styles.messageWrapper}>
