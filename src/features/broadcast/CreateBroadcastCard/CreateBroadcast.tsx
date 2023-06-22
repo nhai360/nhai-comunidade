@@ -24,6 +24,7 @@ import * as S from "./CreateBroadcastDialog.styles";
 import { UploadThumbnail } from "./UploadThumbnail";
 import { useCreateLive } from "@/client/lives/useCreateLive";
 import { useRouter } from "next/router";
+import { authenticatedAPI } from "@/client";
 
 type Props = {
   onClose: () => void;
@@ -48,14 +49,21 @@ export function CreateBroadcastDialog({ onClose }: Props) {
 
   const isLoading = isUploadingThumbnail || isCreatingLive;
 
-  function handleCreateVideo({
+  const handleCreateVideo = async ({
     title,
     description,
     thumbnail,
     tags,
-  }: CreateVideoParams) {
+  }: CreateVideoParams) => {
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
 
+    const source = await authenticatedAPI.post("/media", {
+      category: MediaCategory?.VIDEO,
+    });
+    if (!source?.data?.id) {
+      toast.error("Não foi possível criar a mídia :(");
+      return;
+    }
     uploadThumbnail(
       {
         file: thumbnail,
@@ -67,11 +75,11 @@ export function CreateBroadcastDialog({ onClose }: Props) {
             {
               title,
               description,
-              source: {
-                id: media?.id,
-              },
               thumbnail: {
                 id: media?.id,
+              },
+              source: {
+                id: source?.data?.id,
               },
               tags: tagsInArray,
               startTime: new Date(),
@@ -93,7 +101,7 @@ export function CreateBroadcastDialog({ onClose }: Props) {
         },
       }
     );
-  }
+  };
 
   return (
     <Dialog open onOpenChange={onClose}>

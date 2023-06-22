@@ -9,11 +9,18 @@
   background-color: #f23d80;
 
   h4 {
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: 600;
 
     span {
-        font-weight: 300;
+      font-weight: 300;
     }
+  }
+
+  p {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+    margin-right: 1rem;
   }
 }

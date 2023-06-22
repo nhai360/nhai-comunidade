@@ -20,6 +20,8 @@ const BroadcastButton = ({ live }: Props) => {
     stop: { stopBroadcast, isLoading: isStoping },
   } = useBroadcastLive();
 
+  const status = live?.status;
+
   const [canClick, setCanClick] = useState<"START" | "STOP" | "">("");
 
   const loading = !!canClick || isStarting || isStoping;
@@ -31,6 +33,10 @@ const BroadcastButton = ({ live }: Props) => {
   };
 
   const handleBroadcast = () => {
+    if (status === "FINISHED") {
+      toast?.error("Essa live já foi encerrada!");
+      return;
+    }
     if (params?.spaceId && params?.liveId && params?.broadcastId && !loading) {
       if (isBroadcasting) {
         setCanClick("STOP");

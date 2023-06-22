@@ -27,6 +27,10 @@ export const UserDecoder = t.object({
   updatedAt: t.string().datetime(),
   profilePicture: MediaDecoder.nullish(),
   banner: MediaDecoder.nullish(),
+  gender: t.string().nullish(),
+  phone: t.string().nullish(),
+  ethnicity: t.string().nullish(),
+  sexualOrientation: t.string().nullish(),
   //TODO: Revisar se o "nullish()" no "createAt" está correto...
   createdAt: t.string().datetime().nullish(),
   score: ScoreDecoder.nullish(),

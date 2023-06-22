@@ -14,11 +14,14 @@ function NegociosDeOrgulho() {
   const router = useRouter();
   const { session } = useAuthContext();
 
+  const { user } = useUser({
+    id: session?.userId,
+  });
 
   return (
     <>
       <div className={styles.Container}>
-        <Header canCreate={false} />
+        <Header user={user as any} canCreate={false} />
         <div className={styles.BannerProgram}>
           <div className={styles.Row}>
             <div className={styles.Breadcrumb}>

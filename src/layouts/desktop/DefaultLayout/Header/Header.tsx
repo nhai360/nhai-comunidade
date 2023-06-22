@@ -11,7 +11,7 @@ import {
   getInitials,
   getProfileUrl,
 } from "@/lib/string";
-import { useUser } from "@/client/users";
+import { User, useUser } from "@/client/users";
 
 import { useAuthContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
@@ -29,16 +29,11 @@ const CreateArticleDialog = dynamic(
 
 interface IHeader {
   canCreate?: boolean;
+  user: User;
 }
 
-export function Header({ canCreate = true }: IHeader) {
+export function Header({ canCreate = true, user }: IHeader) {
   const { searchTerm, handleChange, handleSearch } = useSearch();
-
-  const { session } = useAuthContext();
-
-  const { user } = useUser({
-    id: session?.userId,
-  });
 
   const isAdmin = user?.role?.name === "ADMIN";
   const isEnabled = isAdmin;

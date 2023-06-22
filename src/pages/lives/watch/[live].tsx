@@ -18,6 +18,7 @@ import { Levels } from "react-activity";
 import MuxVideo from "@mux/mux-video-react";
 import { WatchChat } from "@/components/WatchChat";
 import mux from "mux-embed";
+import { Header } from "@/layouts/desktop/DefaultLayout/Header";
 
 const WatchLive = (): JSX.Element => {
   const router = useRouter();
@@ -71,30 +72,33 @@ const WatchLive = (): JSX.Element => {
       <Levels color={"#f23d80"} size={32} />
     </div>
   ) : !!live?.spaceId && !!user && !!live?.playbackId ? (
-    <div className={styles.main}>
-      <div className={styles.videoContainer}>
-        <MuxVideo
-          ref={videoRef}
-          playbackId={live?.playbackId}
-          streamType="live"
-          metadata={{
-            video_id: live?.playbackId,
-            video_title: live?.title,
-            viewer_user_id: session?.userId,
-            env_key: process.env.MUX_ENV_KEY_DATA,
-          }}
-          title={live?.title}
-          controls
-          width={"100%"}
-          height={"100%"}
-          style={{ backgroundColor: "#323232" }}
-          autoPlay
-          muted
-        />
-      </div>
+    <>
+      <Header user={user} canCreate={false} />
+      <div className={styles.main}>
+        <div className={styles.videoContainer}>
+          <MuxVideo
+            ref={videoRef}
+            playbackId={live?.playbackId}
+            streamType="live"
+            metadata={{
+              video_id: live?.playbackId,
+              video_title: live?.title,
+              viewer_user_id: session?.userId,
+              env_key: process.env.MUX_ENV_KEY_DATA,
+            }}
+            title={live?.title}
+            controls
+            width={"100%"}
+            height={"100%"}
+            style={{ backgroundColor: "#323232" }}
+            autoPlay
+            muted
+          />
+        </div>
 
-      <WatchChat live={live} user={user} liveId={live?.id} />
-    </div>
+        <WatchChat live={live} user={user} liveId={live?.id} />
+      </div>
+    </>
   ) : (
     <LiveNotFound />
   );
