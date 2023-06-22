@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
 import styles from "./index.module.scss";
 import StepProgram from "@/components/StepProgram";
 import StartButton from "@/components/StartButton";
@@ -8,21 +8,12 @@ import TabComponent from "@/components/TabComponent";
 import { Header } from "@/layouts/desktop/DefaultLayout/Header";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
+import { useRouter } from "next/router";
 
 function NegociosDeOrgulho() {
   const router = useRouter();
   const { session } = useAuthContext();
 
-  const { user } = useUser({
-    id: session?.userId,
-  });
-
-  const isAdmin = user?.role?.name === "ADMIN";
-
-  if (!isAdmin) {
-    router?.push("/");
-    return null;
-  }
 
   return (
     <>
