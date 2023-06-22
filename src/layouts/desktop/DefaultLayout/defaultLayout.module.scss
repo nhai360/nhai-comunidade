@@ -1,0 +1,19 @@
+.containerHightlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px;
+  width: 100%;
+  height: 56px;
+
+  background-color: #f23d80;
+
+  h4 {
+    color: #FFFFFF;
+    font-weight: 600;
+
+    span {
+        font-weight: 300;
+    }
+  }
+}
