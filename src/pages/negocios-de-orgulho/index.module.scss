@@ -1,0 +1,83 @@
+.BannerProgram {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+    background-size: cover;
+    padding: 30px;
+    background-image: url('../../../public/banner-nhai.png');
+
+    .Row {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.Container {
+    max-width: 1920px;
+    margin: 0px auto;
+    position: relative;
+    background-color: #FFF;
+    min-height: 100vh;
+}
+
+
+.Breadcrumb {
+    padding: 15px 0px;
+
+    .BreadcrumbText {
+        color: #fefefe;
+        font-size: 1rem;
+
+        @media (max-width: 400px) {
+            font-size: 0.6rem !important;
+        }
+
+        @media (max-width:768px) {
+            font-size: 0.7rem;
+        }
+
+        strong {
+            color: #fff;
+            background-color: #EE0014;
+            padding: 15px 10px;
+        }
+    }
+}
+
+.LogoAmstel {
+    display: flex;
+    flex-direction: column;
+}
+
+.LogoAmstel img:nth-of-type(1) {
+    max-width: 230px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+.LogoAmstel img:nth-of-type(2) {
+    max-width: 320px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.textBanner {
+    margin-top: 20px;
+    color: #fff;
+    max-width: 300px;
+}
+
+
+.buttonWrapper {
+    margin-top: 50px;
+}
+
+.buttonCSS {
+    background-color: #fff;
+    text-transform: uppercase;
+}

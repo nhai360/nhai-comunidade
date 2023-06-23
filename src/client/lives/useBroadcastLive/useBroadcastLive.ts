@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { authenticatedAPI } from "@/client";
-import { PostBroadcastParams, invalidateLivesQueries } from "@/client/lives";
+import { PostBroadcastParams, invalidateLiveQueries } from "@/client/lives";
 
 async function startBroadcastRequest(params: PostBroadcastParams) {
   const response = await authenticatedAPI.post("/lives/start", {
@@ -25,14 +25,14 @@ export function useBroadcastLive() {
   const { mutate: startBroadcast, ...restStart } = useMutation({
     mutationFn: startBroadcastRequest,
     onSuccess: () => {
-      invalidateLivesQueries(queryClient);
+      invalidateLiveQueries(queryClient);
     },
   });
 
   const { mutate: stopBroadcast, ...restStop } = useMutation({
     mutationFn: stopBroadcastRequest,
     onSuccess: () => {
-      invalidateLivesQueries(queryClient);
+      invalidateLiveQueries(queryClient);
     },
   });
 

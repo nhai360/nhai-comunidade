@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import { Avatar, Button, Typography } from "@/ui";
-import { Article } from "@/client/articles";
-import { format } from "date-fns";
-import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 import Link from "next/link";
-import { ArrowSquareOut, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 
-type Props = {
-  article: Article;
+type ICardHightlight = {
+  isMobile?: boolean;
 };
 
-const CardHighlight = () => {
+const CardHighlight = ({ isMobile }: ICardHightlight) => {
   return (
     <>
       <div className={styles.cardArticle}>
-        <div
-          style={{
-            padding: 20,
-            paddingLeft: 8,
-            paddingRight: 8,
-            paddingBottom: 0,
-          }}
-        >
+        <div className={styles.cardArticleHolder}>
           <div>
-            <p>Evento</p>
+            <div className={styles.articleImg}></div>
+          </div>
+          <div>
+            <p>Evento • 26.06.2023</p>
             <Link
-              href={"https://google.com/"}
+              href={"https://nhai.com.br/semana-digital"}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -37,19 +28,6 @@ const CardHighlight = () => {
               </h3>
             </Link>
           </div>
-          <p className={styles.date}>26.06.2023</p>
-
-          {/* <Link href={"https://google.com/"}>
-            <Button className={styles.articleButton}>
-              <h3>Saiba Mais</h3>
-            </Button>
-          </Link> */}
-        </div>
-        <div>
-          <div
-            className={styles.articleImg}
-            style={{ backgroundImage: `url('/empty.jpg)` }}
-          ></div>
         </div>
       </div>
     </>

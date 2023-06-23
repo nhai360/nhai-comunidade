@@ -1,0 +1,24 @@
+.video {
+    position: relative;
+    width: 100%;    
+}
+
+.videoWrapper {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #cecece80;
+    border-radius: 10px;
+    margin: 20px;
+
+    .videoPlayer {
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .videoTitle {
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 20px 0px
+    }
+}

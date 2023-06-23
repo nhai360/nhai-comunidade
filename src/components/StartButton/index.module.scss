@@ -1,0 +1,38 @@
+
+
+.ctaBanner {
+    position: relative;
+    background-color: #fff;
+    color: #EE0014;
+    text-transform: uppercase;
+    padding:15px 30px;
+    font-size: 1rem;
+    max-width: fit-content;
+    font-weight: 700;
+    text-decoration: none;
+    svg {
+        margin-left:10px;
+    }
+    overflow: hidden;
+    transition: 0.3s all ease-in-out;
+    @media (max-width: 400px) {
+        font-size: 0.8rem; 
+    }
+}
+
+.ctaBanner:before{
+    position: absolute;
+    bottom:0;
+    right:0px;
+    width:0%;
+    height:3px;
+    content: '';
+    background-color: #88121c;
+    transition: 0.3s all ease-in-out;
+}
+
+.ctaBanner:hover:before{
+    left:0px;
+    width:100%;
+    transition: 0.3s all ease-in-out;
+}

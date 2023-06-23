@@ -15,7 +15,6 @@ import { CreateChatParams, CreateChatResolver, Live } from "@/client/lives";
 import { toast } from "react-toastify";
 import * as S from "./ChatForm.styles";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
-import { invalidChatText } from "@/lib/utils";
 import { getInitials } from "@/lib/string";
 
 interface Props {
@@ -53,8 +52,7 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
   }, [liveId]);
 
   const handleComment = async ({ message }: CreateChatParams) => {
-    const block = invalidChatText(message);
-    if (message?.length > 0 && !block) {
+    if (message?.length > 0) {
       setLoading(true);
       await handleCreateChatMessage(liveId, {
         message: message,
@@ -126,6 +124,7 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
               message={data.message}
               nickname={data?.nickname}
               liveId={liveId}
+              isOwner={user?.role?.name === "ADMIN"}
             />
           ))}
 

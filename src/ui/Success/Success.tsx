@@ -51,29 +51,33 @@ export function Success({
         {description}
       </Typography.Text>
 
-      <div
-        style={{
-          padding: 16,
-          border: "1px solid #dadada",
-          margin: "1rem 0",
-          borderRadius: 8,
-        }}
-      >
-        <Typography.Text
-          size="body2"
-          color="primary"
-          align="center"
-          weight="regular"
+      {link && (
+        <div
+          style={{
+            padding: 16,
+            border: "1px solid #dadada",
+            margin: "1rem 0",
+            borderRadius: 8,
+          }}
         >
-          {link}
-        </Typography.Text>
-      </div>
+          <Typography.Text
+            size="body2"
+            color="primary"
+            align="center"
+            weight="regular"
+          >
+            {link}
+          </Typography.Text>
+        </div>
+      )}
 
-      <CopyToClipboard text={`${link}`} onCopy={() => setCopied(!copied)}>
-        <Button variant={copied ? "outline" : "primary"}>
-          {copied ? "Copiado ✅" : "Copiar link"}
-        </Button>
-      </CopyToClipboard>
+      {link && (
+        <CopyToClipboard text={`${link}`} onCopy={() => setCopied(!copied)}>
+          <Button variant={copied ? "outline" : "primary"}>
+            {copied ? "Copiado ✅" : "Copiar link"}
+          </Button>
+        </CopyToClipboard>
+      )}
     </S.Container>
   );
 }

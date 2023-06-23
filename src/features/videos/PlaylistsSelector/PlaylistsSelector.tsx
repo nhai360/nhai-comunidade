@@ -10,12 +10,14 @@ type Props = {
   playlist: any;
   setPlaylist: Dispatch<SetStateAction<any>>;
   handleCreatePlaylist: () => void;
+  isOpicional?: boolean;
 };
 
 export function PlaylistsSelector({
   playlist,
   setPlaylist,
   handleCreatePlaylist,
+  isOpicional = true,
 }: Props) {
   const { session } = useAuthContext();
   const { userplaylists, isLoading, isError } = useUserPlaylists({
@@ -66,11 +68,13 @@ export function PlaylistsSelector({
     <>
       <S.Container>
         <S.LabelContainer>
-          <Label>Playlist</Label>
+          <Label>{isOpicional ? "Playlist" : "Módulo"}</Label>
 
-          <Typography.Text size="body3" color="secondary">
-            Opcional
-          </Typography.Text>
+          {isOpicional && (
+            <Typography.Text size="body3" color="secondary">
+              Opcional
+            </Typography.Text>
+          )}
         </S.LabelContainer>
 
         <ReactSelect
@@ -85,11 +89,17 @@ export function PlaylistsSelector({
           styles={{ ...customStyles }}
           onChange={(selected) => setPlaylist(selected)}
           value={playlist}
-          placeholder={"Selecione a playlist"}
-          noOptionsMessage={() => "Você não tem nenhuma playlist"}
+          placeholder={
+            isOpicional ? "Selecione a playlist" : "Selecione um módulo"
+          }
+          noOptionsMessage={() =>
+            isOpicional
+              ? "Você não tem nenhuma playlist"
+              : "Você não tem nenhum módulo"
+          }
         />
         <Typography.Link onClick={handleCreatePlaylist} as="small" color="pink">
-          Nova playlist +
+          {isOpicional ? "Nova playlist +" : "Novo módulo +"}
         </Typography.Link>
 
         {isError && (

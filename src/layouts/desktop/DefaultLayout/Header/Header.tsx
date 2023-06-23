@@ -11,7 +11,7 @@ import {
   getInitials,
   getProfileUrl,
 } from "@/lib/string";
-import { useUser } from "@/client/users";
+import { User, useUser } from "@/client/users";
 
 import { useAuthContext } from "@/contexts";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
@@ -27,14 +27,14 @@ const CreateArticleDialog = dynamic(
   { ssr: false }
 );
 
-export function Header() {
+interface IHeader {
+  canCreate?: boolean;
+  user: User;
+}
+
+export function Header({ canCreate = true, user }: IHeader) {
+  const router = useRouter();
   const { searchTerm, handleChange, handleSearch } = useSearch();
-
-  const { session } = useAuthContext();
-
-  const { user } = useUser({
-    id: session?.userId,
-  });
 
   const isAdmin = user?.role?.name === "ADMIN";
   const isEnabled = isAdmin;
@@ -86,39 +86,43 @@ export function Header() {
               onChange={handleChange}
               onSearch={handleSearch}
             />
-            <Popover.Root>
-              <Popover.Trigger asChild>
-                <div>
-                  <Tooltip message="Criar" position="bottom">
-                    <Button icon variant="transparent">
-                      <AddCircleIcon />
-                    </Button>
-                  </Tooltip>
-                </div>
-              </Popover.Trigger>
+            {canCreate && (
+              <Popover.Root>
+                <Popover.Trigger asChild>
+                  <div>
+                    <Tooltip message="Criar" position="bottom">
+                      <Button icon variant="transparent">
+                        <AddCircleIcon />
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </Popover.Trigger>
 
-              <Popover side="bottom" sideOffset={8} align="center">
-                <Popover.Action
-                  onClick={() => setIsCreatePostDialogVisible(true)}
-                >
-                  <Typography.Text>Publicação</Typography.Text>
-                </Popover.Action>
-                {isEnabled && (
+                <Popover side="bottom" sideOffset={8} align="center">
                   <Popover.Action
-                    onClick={() => setIsUploadVideoDialogVisible(true)}
+                    onClick={() => setIsCreatePostDialogVisible(true)}
                   >
-                    <Typography.Text>Vídeo</Typography.Text>
+                    <Typography.Text>Publicação</Typography.Text>
                   </Popover.Action>
-                )}
-                {isEnabled && (
-                  <Popover.Action
-                    onClick={() => setIsCreateArticleVisible(true)}
-                  >
-                    <Typography.Text>Artigo</Typography.Text>
-                  </Popover.Action>
-                )}
-              </Popover>
-            </Popover.Root>
+                  {isEnabled ||
+                    (user?.nickname ===
+                      process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO && (
+                      <Popover.Action
+                        onClick={() => setIsUploadVideoDialogVisible(true)}
+                      >
+                        <Typography.Text>Vídeo</Typography.Text>
+                      </Popover.Action>
+                    ))}
+                  {isEnabled && (
+                    <Popover.Action
+                      onClick={() => setIsCreateArticleVisible(true)}
+                    >
+                      <Typography.Text>Artigo</Typography.Text>
+                    </Popover.Action>
+                  )}
+                </Popover>
+              </Popover.Root>
+            )}
             {/* <Tooltip message="Novo post" position="bottom">
               
             </Tooltip> */}
@@ -127,31 +131,56 @@ export function Header() {
                 <NotificationIcon />
               </Button>
             </Tooltip> */}
-            <Link href={getProfileUrl(user?.nickname)}>
-              <S.UserContainer>
-                {user && (
-                  <Avatar
-                    progressBar
-                    alt={user?.fullName}
-                    src={user.profilePicture?.url}
-                    fallback={getInitials(user.fullName)}
-                  />
-                )}
-                <S.UserInfo>
-                  <Typography.Text color="primary" weight="medium">
-                    {getFirstNameAndLastName(user?.fullName)}
-                  </Typography.Text>
-                  {user?.nickname && (
-                    <Typography.Text
-                      size="body3"
-                      color={isAdmin ? "pink" : "secondary"}
-                    >
-                      @{user?.nickname}
-                    </Typography.Text>
+            {user ? (
+              <Link href={getProfileUrl(user?.nickname)}>
+                <S.UserContainer>
+                  {user && (
+                    <Avatar
+                      progressBar
+                      alt={user?.fullName}
+                      src={user.profilePicture?.url}
+                      fallback={getInitials(user.fullName)}
+                    />
                   )}
-                </S.UserInfo>
-              </S.UserContainer>
-            </Link>
+                  <S.UserInfo>
+                    <Typography.Text color="primary" weight="medium">
+                      {getFirstNameAndLastName(user?.fullName)}
+                    </Typography.Text>
+                    {user?.nickname && (
+                      <Typography.Text
+                        size="body3"
+                        color={isAdmin ? "pink" : "secondary"}
+                      >
+                        @{user?.nickname}
+                      </Typography.Text>
+                    )}
+                  </S.UserInfo>
+                </S.UserContainer>
+              </Link>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Button
+                  variant={"text"}
+                  style={{
+                    height: 48,
+                  }}
+                  onClick={() => router.push("auth/login")}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant={"primary"}
+                  style={{
+                    height: 48,
+                    borderRadius: 8,
+                    backgroundColor: "#01a1ff",
+                  }}
+                  onClick={() => router.push("auth/register")}
+                >
+                  Registrar-se
+                </Button>
+              </div>
+            )}
           </S.Actions>
         </S.Content>
       </S.Container>
