@@ -104,7 +104,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
               <div className={styles.rowHeader}>
                 <h5 className={styles.courseTitle}>{curso.title} </h5>
                 <p className={styles.courseInfo}>
-                  {!!user && (
+                  {user && (
                     <>
                       <span>{`0%`}</span> Assistido •{" "}
                     </>
@@ -122,7 +122,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
                     key={modulo.id}
                     className={styles.sliderItem}
                     onClick={() => {
-                      !!user
+                      user
                         ? router?.push(`/negocios-de-orgulho/${modulo?.id}`)
                         : router.push("/auth/register");
                     }}

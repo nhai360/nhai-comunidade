@@ -21,7 +21,7 @@ interface videos {
 }
 
 interface ModulesProps {
-  module: {
+  programModule: {
     id: string;
     title: string;
     thumbnail: string;
@@ -31,7 +31,10 @@ interface ModulesProps {
   setSelectedVideo: any;
 }
 
-const ModuleList: React.FC<ModulesProps> = ({ module, setSelectedVideo }) => {
+const ModuleList: React.FC<ModulesProps> = ({
+  programModule,
+  setSelectedVideo,
+}) => {
   return (
     <div className={styles.moduleWrapper}>
       <div className={styles.topVideo}>
@@ -56,18 +59,18 @@ const ModuleList: React.FC<ModulesProps> = ({ module, setSelectedVideo }) => {
                   <strong>0%</strong> assistido
                 </span>
               </div>
-              <h4 className={styles.moduleTitle}>{module?.title}</h4>
+              <h4 className={styles.moduleTitle}>{programModule?.title}</h4>
               <div className={styles.divider}></div>
               <div className={styles.videosInfo}>
                 <span className={styles.numberVideosInfo}>
-                  Aula 1 de {module?.episodes?.length}
+                  Aula 1 de {programModule?.episodes?.length}
                 </span>
                 •<span className={styles.minutesInfo}>0 minutos</span>
               </div>
             </div>
 
-            {!!module?.episodes &&
-              module?.episodes?.map((t) => (
+            {!!programModule?.episodes &&
+              programModule?.episodes?.map((t) => (
                 <div
                   key={t.id}
                   className={styles.cardVideo}

@@ -25,7 +25,7 @@ const PlayerScreen = () => {
 
   const { playlist } = usePlaylist({ playlistId: playlistId as any });
 
-  const module = {
+  const programModule = {
     id: playlistId,
     title: playlist?.title,
     thumbnail: playlist?.videos[0]?.thumbnail?.url,
@@ -34,8 +34,8 @@ const PlayerScreen = () => {
   };
 
   useEffect(() => {
-    !selectedVideo && setSelectedVideo(module.episodes[0]);
-  }, [module]);
+    !selectedVideo && setSelectedVideo(programModule.episodes[0]);
+  }, [programModule]);
 
   return (
     <>
@@ -44,7 +44,7 @@ const PlayerScreen = () => {
         <div className={styles.RowVideo}>
           {selectedVideo && <Player video={selectedVideo as any} />}
           <ModuleList
-            module={module as any}
+            programModule={programModule as any}
             setSelectedVideo={setSelectedVideo}
           />
         </div>
