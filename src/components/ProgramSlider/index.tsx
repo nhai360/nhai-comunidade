@@ -6,6 +6,7 @@ import { useVideosFromUser } from "@/client/videos";
 import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { User } from "@/client/users";
 import { handleProgramas } from "@/services/firebase/programas";
+import { useRouter } from "next/router";
 
 interface Curso {
   id: number;
@@ -28,6 +29,7 @@ interface SliderProps {
 }
 
 const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
+  const router = useRouter();
   const [programas, setProgramas] = useState<any[]>([]);
 
   useEffect(() => {
@@ -129,7 +131,13 @@ const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
                 className={styles.moduleSlider}
               >
                 {curso?.modulos?.map((modulo: any) => (
-                  <SwiperSlide key={modulo.id} className={styles.sliderItem}>
+                  <SwiperSlide
+                    key={modulo.id}
+                    className={styles.sliderItem}
+                    onClick={() => {
+                      router?.push(`/negocios-de-orgulho/${modulo?.id}`);
+                    }}
+                  >
                     <div className={`${styles.column} ${styles.itemHover}`}>
                       <img src={modulo.thumbnail as any} alt={modulo.title} />
                       <div className={styles.redHeader}>

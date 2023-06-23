@@ -6,21 +6,19 @@ import { withAuth } from "@/middlewares";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/contexts";
 import { useUser } from "@/client/users";
+import { usePlaylist } from "@/client/playlists/usePlaylist";
 
 const PlayerScreen = () => {
   const router = useRouter();
   const { session } = useAuthContext();
 
+  const { playlistId } = router.query;
+
   const { user } = useUser({
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === "ADMIN";
-
-  if (!isAdmin) {
-    router.push("/");
-    return null;
-  }
+  const { playlist } = usePlaylist({ playlistId: playlistId as any });
 
   const video = [
     {
@@ -31,6 +29,14 @@ const PlayerScreen = () => {
       url: "https://joy1.videvo.net/videvo_files/video/free/2012-08/large_watermarked/hd0029_preview.mp4",
     },
   ];
+
+  const module = {
+    id: playlistId,
+    title: playlist?.title,
+    thumbnail: playlist?.videos[0]?.thumbnail?.url,
+    watched: 0,
+    episodes: playlist?.videos?.length,
+  };
 
   const modules = [
     {

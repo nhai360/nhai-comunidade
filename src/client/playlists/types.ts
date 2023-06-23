@@ -23,3 +23,7 @@ export const CreatePlaylistResolver = t.object({
 });
 
 export type CreatePlaylistParams = t.TypeOf<typeof CreatePlaylistResolver>;
+
+export type GetPlaylistParams = {
+  playlistId?: string;
+};
