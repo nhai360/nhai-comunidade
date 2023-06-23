@@ -7,6 +7,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
@@ -70,9 +71,31 @@ export const handleDeleteChatComment = async (
   }
 };
 
+export const handleCreateLiveViewer = async (
+  liveId: string,
+  viewer: ICreateLiveViewer
+) => {
+  try {
+    const liveChatDocRef = doc(db, "LIVECHAT", liveId); // Substitua "liveChatId" pelo ID do documento desejado
+    const messageColRef = collection(liveChatDocRef, "VIEWERS");
+    const viewerDocRef = doc(messageColRef, viewer?.userId);
+
+    await setDoc(viewerDocRef, viewer);
+  } catch (error: any) {
+    console.error("Falha ao criar novo arquivo:", error);
+    toast.error("Falha ao criar novo arquivo: " + error.message);
+  }
+};
+
 interface ICreateChatMessage {
   userId: string;
   userName: string;
   nickname: string;
   message: string;
+}
+
+interface ICreateLiveViewer {
+  userId: string;
+  fullName: string;
+  nickname: string;
 }
