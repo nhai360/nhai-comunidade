@@ -6,7 +6,9 @@ import { GetPlaylistParams, Playlist, PlaylistDecoder } from "../types";
 async function getPlaylist({ playlistId }: GetPlaylistParams) {
   const response = await authenticatedAPI.get(`/playlists/${playlistId}`);
 
-  return decodeResponse<Playlist>(response, PlaylistDecoder);
+  const data = response?.data[0];
+
+  return data;
 }
 
 export function usePlaylist({ playlistId }: GetPlaylistParams) {

@@ -8,9 +8,10 @@ import { useUserFromNickname } from "@/client/users";
 
 type IProps = {
   isSigned: boolean;
+  programas: any[];
 };
 
-const TabComponent = ({ isSigned }: IProps) => {
+const TabComponent = ({ isSigned, programas }: IProps) => {
   const [active, setActive] = useState(1);
 
   const { user } = useUserFromNickname({
@@ -31,7 +32,7 @@ const TabComponent = ({ isSigned }: IProps) => {
         <a
           className={`${active === 2 && styles.active}`}
           onClick={() => isSigned && setActive(2)}
-          href={isSigned ? "javascript:void(0)" : "/register"}
+          href={isSigned ? "javascript:void(0)" : "/auth/register"}
         >
           {isSigned ? "FÓRUM AMSTEL" : "VISITAR FÓRUM"}
         </a>
@@ -39,7 +40,7 @@ const TabComponent = ({ isSigned }: IProps) => {
 
       {active === 1 && (
         <>
-          <ProgramSlider user={user as any} />
+          <ProgramSlider user={user as any} programas={programas} />
         </>
       )}
 

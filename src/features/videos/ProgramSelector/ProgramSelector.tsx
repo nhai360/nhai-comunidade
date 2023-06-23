@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ReactSelect, { components } from "react-select";
-import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
-import { useAuthContext } from "@/contexts";
 import * as S from "../../../ui/Field/Field.styles";
 import { Label, Typography } from "@/ui";
 import { Check } from "@phosphor-icons/react";
+import { handleProgramas } from "@/services/firebase/programas";
 
 type Props = {
   playlist: any;
@@ -13,20 +12,21 @@ type Props = {
   isOpicional?: boolean;
 };
 
-export function PlaylistsSelector({
+export function ProgramSelector({
   playlist,
   setPlaylist,
   handleCreatePlaylist,
   isOpicional = true,
 }: Props) {
-  const { session } = useAuthContext();
-  const { userplaylists, isLoading, isError } = useUserPlaylists({
-    userId: session?.userId,
-  });
+  const [programas, setProgramas] = useState<any[]>([]);
+
+  useEffect(() => {
+    handleProgramas(setProgramas);
+  }, []);
 
   const playlistsList: any =
-    userplaylists?.map((playlist) => {
-      return { value: playlist?.id, label: playlist?.title };
+    programas?.map((playlist) => {
+      return { value: playlist?._id, label: playlist?.name };
     }) || [];
 
   const customStyles = {
@@ -68,20 +68,13 @@ export function PlaylistsSelector({
     <>
       <S.Container>
         <S.LabelContainer>
-          <Label>{isOpicional ? "Playlist" : "Módulo"}</Label>
-
-          {isOpicional && (
-            <Typography.Text size="body3" color="secondary">
-              Opcional
-            </Typography.Text>
-          )}
+          <Label>Programa</Label>
         </S.LabelContainer>
 
         <ReactSelect
           options={playlistsList}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
-          isLoading={isLoading}
           components={{
             Option,
           }}
@@ -89,24 +82,12 @@ export function PlaylistsSelector({
           styles={{ ...customStyles }}
           onChange={(selected) => setPlaylist(selected)}
           value={playlist}
-          placeholder={
-            isOpicional ? "Selecione a playlist" : "Selecione um módulo"
-          }
-          noOptionsMessage={() =>
-            isOpicional
-              ? "Você não tem nenhuma playlist"
-              : "Você não tem nenhum módulo"
-          }
+          placeholder={"Selecione a playlist"}
+          noOptionsMessage={() => "Você não tem nenhuma playlist"}
         />
         <Typography.Link onClick={handleCreatePlaylist} as="small" color="pink">
-          {isOpicional ? "Nova playlist +" : "Novo módulo +"}
+          Novo programa +
         </Typography.Link>
-
-        {isError && (
-          <Typography.Text as="small" color="pink">
-            Não foi possível carregar suas playlists
-          </Typography.Text>
-        )}
       </S.Container>
     </>
   );

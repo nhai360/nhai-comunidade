@@ -36,7 +36,7 @@ const PlayerScreen = () => {
     title: playlist?.title,
     thumbnail: playlist?.videos[0]?.thumbnail?.url,
     watched: 0,
-    episodes: playlist?.videos?.length,
+    episodes: playlist?.videos,
   };
 
   return (

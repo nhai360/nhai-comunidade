@@ -8,6 +8,8 @@ import { Header } from "@/layouts/desktop/DefaultLayout/Header";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { handleProgramas } from "@/services/firebase/programas";
 
 function NegociosDeOrgulho() {
   const router = useRouter();
@@ -17,19 +19,31 @@ function NegociosDeOrgulho() {
     id: session?.userId,
   });
 
+  const [programas, setProgramas] = useState<any[]>([]);
+
+  useEffect(() => {
+    handleProgramas(setProgramas);
+  }, []);
+
   return (
     <>
       <div className={styles.Container}>
-        <Header user={user as any} canCreate={false} />
+        <Header
+          user={user as any}
+          canCreate={
+            user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO
+          }
+        />
         <div className={styles.BannerProgram}>
           <div className={styles.Row}>
             <div className={styles.Breadcrumb}>
               <span className={styles.BreadcrumbText}>
-                {"Contaí Comunidade > Vídeos > "} <strong>Espaço Amstel</strong>
+                {"Contaí Comunidade > Episódios > "}{" "}
+                <strong>Espaço Amstel</strong>
               </span>
             </div>
 
-            <StepProgram steps={0} stepsTotal={4} />
+            <StepProgram steps={0} stepsTotal={programas?.length} />
           </div>
 
           <div className={styles.LogoAmstel}>
@@ -45,7 +59,7 @@ function NegociosDeOrgulho() {
           </div>
         </div>
 
-        <TabComponent isSigned={!!session?.userId} />
+        <TabComponent isSigned={!!session?.userId} programas={programas} />
       </div>
     </>
   );

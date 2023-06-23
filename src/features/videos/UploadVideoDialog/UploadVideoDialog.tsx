@@ -34,6 +34,9 @@ import { useAuthContext } from "@/contexts";
 import { useVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 import { UploadVideoToMux } from "@/client/media/UploadVideoToMux";
 import { PlaylistsSelector } from "../PlaylistsSelector";
+import { useUser } from "@/client/users";
+import { ProgramSelector } from "../ProgramSelector";
+import { CreateProgramDialog } from "../CreateProgramDialog";
 
 type Props = {
   onClose: () => void;
@@ -65,13 +68,22 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const [uploadPercent, setUploadPercent] = useState<number>(0);
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
   const [isUploadError, setIsUploadError] = useState(false);
+  const [program, setProgram] = useState<any>();
   const [playlist, setPlaylist] = useState<any>();
   const [source, setSource] = useState<Media>();
 
   const [isCreatePlaylistDialogVisible, setIsCreatePlaylistDialogVisible] =
     useState(false);
+  const [isCreateProgramVisible, setIsCreateProgramVisible] = useState(false);
 
   const { session } = useAuthContext();
+
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
+  const isAmstel =
+    user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO;
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
@@ -126,6 +138,10 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
       return toast.error(
         "Você precisa fazer um novo upload de vídeo, o anterior falhou!"
       );
+    }
+
+    if (isAmstel && (!playlist || !program)) {
+      return toast.error("Programa e módulo são obrigatórios!");
     }
 
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
@@ -276,12 +292,20 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     );
   }
 
+  const videoString = isAmstel ? "episódio" : "vídeo";
+
   return (
     <>
       <Dialog open>
         <Dialog.Content>
           <Dialog.Header
-            title={video ? "Editar vídeo" : file ? file.name : "Enviar vídeo"}
+            title={
+              video
+                ? `Editar ${videoString}`
+                : file
+                ? file.name
+                : `Enviar ${videoString}`
+            }
             closable
             onClose={onClose}
           />
@@ -293,14 +317,22 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                 )}
               >
                 <Field.Input
-                  label="Título do vídeo"
-                  placeholder="Escreva o título do seu vídeo"
+                  label={`Título do ${videoString}`}
+                  placeholder={`Escreva o título do seu ${videoString}`}
                   errorText={errors.title?.message}
                   {...register("title")}
                 />
+                {isAmstel && (
+                  <ProgramSelector
+                    playlist={program}
+                    setPlaylist={setProgram}
+                    handleCreatePlaylist={() => setIsCreateProgramVisible(true)}
+                  />
+                )}
                 <PlaylistsSelector
                   playlist={playlist}
                   setPlaylist={setPlaylist}
+                  isOpicional={!isAmstel}
                   handleCreatePlaylist={() =>
                     setIsCreatePlaylistDialogVisible(true)
                   }
@@ -429,6 +461,9 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
         <CreatePlaylistDialog
           onClose={() => setIsCreatePlaylistDialogVisible(false)}
         />
+      )}
+      {isCreateProgramVisible && (
+        <CreateProgramDialog onClose={() => setIsCreateProgramVisible(false)} />
       )}
     </>
   );

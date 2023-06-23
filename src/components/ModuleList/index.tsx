@@ -65,20 +65,21 @@ const ModuleList: React.FC<ModulesProps> = ({ module }) => {
               </div>
             </div>
 
-            {module?.episodes?.map((t) => (
-              <div key={t.id} className={styles.cardVideo}>
-                <div className={styles.thumbnailWrapper}>
-                  <img src={t?.thumbnail?.url as any} alt={t?.title} />
-                </div>
-                <div className={styles.content}>
-                  <h3 className={styles.title}>{t?.title}</h3>
-                  <div className={styles.videoDuration}>0</div>
-                  {/* {e.watchedPercentage === 100 && (
+            {!!module?.episodes &&
+              module?.episodes?.map((t) => (
+                <div key={t.id} className={styles.cardVideo}>
+                  <div className={styles.thumbnailWrapper}>
+                    <img src={t?.thumbnail?.url as any} alt={t?.title} />
+                  </div>
+                  <div className={styles.content}>
+                    <h3 className={styles.title}>{t?.title}</h3>
+                    <div className={styles.videoDuration}>0</div>
+                    {/* {e.watchedPercentage === 100 && (
                       <span className={styles.completedBadge}>COMPLETO</span>
                     )} */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

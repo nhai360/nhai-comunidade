@@ -26,15 +26,11 @@ interface Modulo {
 
 interface SliderProps {
   user: User;
+  programas: any[];
 }
 
-const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
+const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
   const router = useRouter();
-  const [programas, setProgramas] = useState<any[]>([]);
-
-  useEffect(() => {
-    handleProgramas(setProgramas);
-  }, []);
 
   const { userplaylists } = useUserPlaylists({
     userId: user?.id,
@@ -106,23 +102,14 @@ const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
               className={`${styles.column} ${styles.boxPadding}`}
             >
               <div className={styles.rowHeader}>
-                <a href="#" className={styles.courseTitle}>
-                  {curso.title}{" "}
-                  <svg
-                    width="9"
-                    height="14"
-                    viewBox="0 0 9 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0.586694 1.82623L5.72314 6.96268L0.586693 12.1103L2.168 13.6916L8.89697 6.96268L2.168 0.233705L0.586694 1.82623Z"
-                      fill="#EE0014"
-                    />
-                  </svg>
-                </a>
+                <h5 className={styles.courseTitle}>{curso.title} </h5>
                 <p className={styles.courseInfo}>
-                  <span>{`0%`}</span> Assistido • <span>{`2`}</span> Módulos
+                  {!!user && (
+                    <>
+                      <span>{`0%`}</span> Assistido •{" "}
+                    </>
+                  )}
+                  <span>{curso?.modulos?.length}</span> Módulos
                 </p>
               </div>
               <Swiper
@@ -135,7 +122,9 @@ const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
                     key={modulo.id}
                     className={styles.sliderItem}
                     onClick={() => {
-                      router?.push(`/negocios-de-orgulho/${modulo?.id}`);
+                      !!user
+                        ? router?.push(`/negocios-de-orgulho/${modulo?.id}`)
+                        : router.push("/auth/register");
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
@@ -143,7 +132,11 @@ const ProgramSlider: React.FC<SliderProps> = ({ user }) => {
                       <div className={styles.redHeader}>
                         <div className={styles.titleWrapper}>
                           <p className={styles.courseInfo}>
-                            <span>{`0%`}</span> Assistido •{" "}
+                            {!!user && (
+                              <>
+                                <span>{`0%`}</span> Assistido •{" "}
+                              </>
+                            )}
                             <span>{modulo.episodes}</span> episódios
                           </p>
 

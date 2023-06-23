@@ -33,6 +33,7 @@ interface IHeader {
 }
 
 export function Header({ canCreate = true, user }: IHeader) {
+  const router = useRouter();
   const { searchTerm, handleChange, handleSearch } = useSearch();
 
   const isAdmin = user?.role?.name === "ADMIN";
@@ -130,31 +131,56 @@ export function Header({ canCreate = true, user }: IHeader) {
                 <NotificationIcon />
               </Button>
             </Tooltip> */}
-            <Link href={getProfileUrl(user?.nickname)}>
-              <S.UserContainer>
-                {user && (
-                  <Avatar
-                    progressBar
-                    alt={user?.fullName}
-                    src={user.profilePicture?.url}
-                    fallback={getInitials(user.fullName)}
-                  />
-                )}
-                <S.UserInfo>
-                  <Typography.Text color="primary" weight="medium">
-                    {getFirstNameAndLastName(user?.fullName)}
-                  </Typography.Text>
-                  {user?.nickname && (
-                    <Typography.Text
-                      size="body3"
-                      color={isAdmin ? "pink" : "secondary"}
-                    >
-                      @{user?.nickname}
-                    </Typography.Text>
+            {user ? (
+              <Link href={getProfileUrl(user?.nickname)}>
+                <S.UserContainer>
+                  {user && (
+                    <Avatar
+                      progressBar
+                      alt={user?.fullName}
+                      src={user.profilePicture?.url}
+                      fallback={getInitials(user.fullName)}
+                    />
                   )}
-                </S.UserInfo>
-              </S.UserContainer>
-            </Link>
+                  <S.UserInfo>
+                    <Typography.Text color="primary" weight="medium">
+                      {getFirstNameAndLastName(user?.fullName)}
+                    </Typography.Text>
+                    {user?.nickname && (
+                      <Typography.Text
+                        size="body3"
+                        color={isAdmin ? "pink" : "secondary"}
+                      >
+                        @{user?.nickname}
+                      </Typography.Text>
+                    )}
+                  </S.UserInfo>
+                </S.UserContainer>
+              </Link>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Button
+                  variant={"text"}
+                  style={{
+                    height: 48,
+                  }}
+                  onClick={() => router.push("auth/login")}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant={"primary"}
+                  style={{
+                    height: 48,
+                    borderRadius: 8,
+                    backgroundColor: "#01a1ff",
+                  }}
+                  onClick={() => router.push("auth/register")}
+                >
+                  Registrar-se
+                </Button>
+              </div>
+            )}
           </S.Actions>
         </S.Content>
       </S.Container>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./index.module.scss";
+import Link from "next/link";
 
 type IProps = {
   isSigned: boolean;
@@ -7,9 +8,9 @@ type IProps = {
 const StartButton = ({ isSigned }: IProps) => {
   return (
     <>
-      <a
+      <Link
         className={styles.ctaBanner}
-        href={isSigned ? "/playerscreen" : "/register"}
+        href={isSigned ? "" : "/auth/register"}
       >
         {!isSigned && "Venha fazer parte "}
         {isSigned && "COMEÇAR"}
@@ -26,7 +27,7 @@ const StartButton = ({ isSigned }: IProps) => {
             fill="black"
           />
         </svg>
-      </a>
+      </Link>
     </>
   );
 };
