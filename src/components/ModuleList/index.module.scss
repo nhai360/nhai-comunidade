@@ -1,144 +1,145 @@
 .divider {
-    content: '';
-    width: 100%;
-    height: 2px;
+  content: "";
+  width: 100%;
+  height: 2px;
 
-    background-color: #cccccc40;
-
+  background-color: #cccccc40;
 }
 
 .container {
-    width: 100%;
-    display: flex;
-    position: relative;
-    padding-top: 30px;
-    padding-bottom: 30px;
-
+  width: 100%;
+  display: flex;
+  position: relative;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .moduleWrapper {
-    width: 40%;
-    position: relative;
-    margin: 0px 20px;
-
-    @media (max-width:1024px) {
-        display: none;
-    }
-}
-
-.containerColumn {
-    display: flex;
-    flex-direction: column;
-}
-
-.topVideo {
-    background-color: #EE0014;
-    display: flex;
-    flex-direction: column;
+  width: 40%;
+  @media screen and (max-width: 1024px) {
     width: 100%;
-    min-width: 400px;
+  }
+  height: 100vh;
+  position: relative;
+  background-color: #ee0014;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 2px;
+    background-color: #ee0014;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  .topVideo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 
     /* Safari */
     position: relative;
     top: 30px;
     align-self: flex-end;
 
-    @media (max-width:1024px) {
-        display: none;
+    @media (max-width: 1024px) {
+      display: flex;
     }
-
-
 
     .topVideoList {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
 
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-
-
-
+      padding: 16px;
     }
-
 
     .moduleCard {
-        background: #fff;
-        border-radius: 10px;
-        padding: 0px 0px;
-        width: 80%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 0px 0px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 1rem;
 
-        @media (max-width:1440px) {
-            width: max-content;
+      .rowCard {
+        padding: 20px 20px 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .moduleWatched {
+          strong {
+            color: #ee0014;
+          }
+        }
+      }
+
+      .moduleTitle {
+        font-size: 18px;
+        margin-left: 20px;
+
+        font-weight: 700;
+      }
+
+      .divider {
+        margin: 10px 0px;
+        margin-bottom: 20px;
+      }
+
+      .videosInfo {
+        padding: 0px 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+
+        padding-bottom: 20px;
+
+        .numberVideosInfo {
+          margin-right: 10px;
+          color: #8c8c8c;
         }
 
-        margin:10px;
-
-        .rowCard {
-            padding: 20px 20px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            .moduleWatched {
-                strong {
-                    color: #EE0014
-                }
-            }
+        .minutesInfo {
+          margin-left: 10px;
+          color: #8c8c8c;
         }
-
-        .moduleTitle {
-            font-size: 1.25rem;
-            font-weight: 700;
-            padding: 10px 20px;
-
-        }
-
-        .divider {
-            margin: 10px 0px;
-            margin-bottom: 20px;
-        }
-
-        .videosInfo {
-            padding: 0px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-
-            padding-bottom: 20px;
-
-            .numberVideosInfo {
-                margin-right: 10px;
-                color: #8C8C8C;
-            }
-
-            .minutesInfo {
-                margin-left: 10px;
-                color: #8C8C8C;
-            }
-        }
-
+      }
     }
-
 
     .cardVideo {
-        background: #fff;
-        border-radius: 10px;
-        padding: 0px 0px;
-        width: 80%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 0px 0px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 16px;
 
-        @media (max-width:1440px) {
-            width: max-content;
+      .thumbnailWrapper {
+        padding: 20px;
+        background-color: #8c8c8c;
+        height: 200px;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        img {
+          width: 100%;
+          object-fit: cover;
         }
+      }
+      padding: 16px;
 
-        .thumbnailWrapper {
-              
-            padding:20px;
-            img {
-                max-width: 100%;
-            }
+      .content {
+        width: 100%;
+
+        .title {
+          font-weight: 600;
         }
-
-        margin:10px;
+      }
     }
-
+  }
 }

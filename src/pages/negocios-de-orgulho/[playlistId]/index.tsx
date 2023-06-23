@@ -5,8 +5,9 @@ import ModuleList from "@/components/ModuleList";
 import { withAuth } from "@/middlewares";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/contexts";
-import { useUser } from "@/client/users";
+import { User, useUser } from "@/client/users";
 import { usePlaylist } from "@/client/playlists/usePlaylist";
+import { Header } from "@/layouts/desktop/DefaultLayout/Header";
 
 const PlayerScreen = () => {
   const router = useRouter();
@@ -38,62 +39,13 @@ const PlayerScreen = () => {
     episodes: playlist?.videos?.length,
   };
 
-  const modules = [
-    {
-      id: 0,
-      title: "ADMINISTRAÇÃO DE NEGÓCIOS",
-      thumbnail: "image-1.png",
-      watchedPercentage: 25,
-      episodes: 4,
-      watchedEpisodes: 1,
-      duration: 240,
-      videos: [
-        {
-          id: 0,
-          title: "INTRODUÇÃO",
-          thumbnail: "image-1.png",
-          watchedPercentage: 100,
-          duration: 60,
-        },
-        {
-          id: 0,
-          title: "Por que bons relacionamentos são importantes?",
-          thumbnail: "image-1.png",
-          watchedPercentage: 25,
-          duration: 60,
-        },
-        {
-          id: 0,
-          title: "ADMINISTRAÇÃO DE NEGÓCIOS",
-          thumbnail: "image-1.png",
-          watchedPercentage: 25,
-          duration: 60,
-        },
-        {
-          id: 0,
-          title: "ADMINISTRAÇÃO DE NEGÓCIOS",
-          thumbnail: "image-1.png",
-          watchedPercentage: 25,
-          duration: 60,
-        },
-      ],
-    },
-  ];
-
   return (
     <>
+      <Header user={user as User} />
       <div className={styles.Container}>
-        <div className={styles.Row}>
-          <div className={styles.Breadcrumb}>
-            <span className={styles.BreadcrumbText}>
-              {"Contaí Comunidade > Vídeos > "} <strong>Espaço Amstel</strong>
-            </span>
-          </div>
-        </div>
-
         <div className={styles.RowVideo}>
           <Player video={video} />
-          <ModuleList modules={modules} />
+          <ModuleList module={module as any} />
         </div>
       </div>
     </>
