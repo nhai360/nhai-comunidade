@@ -2,6 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./index.module.scss";
+import { User } from "@/client/users";
 
 interface Posts {
   id: number;
@@ -11,10 +12,10 @@ interface Posts {
 }
 
 interface PostProps {
-  posts: Posts[];
+  user: User;
 }
 
-const ForumArea: React.FC<PostProps> = ({ posts }) => {
+const ForumArea: React.FC<PostProps> = ({ user }) => {
   return (
     <>
       <div className={styles.containerColumn}>
@@ -51,7 +52,7 @@ const ForumArea: React.FC<PostProps> = ({ posts }) => {
               </div>
 
               <div className={styles.topPostList}>
-                {posts.map((post) => (
+                {/* {posts.map((post) => (
                   <>
                     <a href="#" className={styles.topPostItem} key={post.id}>
                       <div className={styles.thumbnail}>
@@ -96,7 +97,7 @@ const ForumArea: React.FC<PostProps> = ({ posts }) => {
                       </div>
                     </a>
                   </>
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

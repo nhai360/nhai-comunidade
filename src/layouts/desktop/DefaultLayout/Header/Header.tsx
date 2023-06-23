@@ -103,13 +103,15 @@ export function Header({ canCreate = true, user }: IHeader) {
                   >
                     <Typography.Text>Publicação</Typography.Text>
                   </Popover.Action>
-                  {isEnabled && (
-                    <Popover.Action
-                      onClick={() => setIsUploadVideoDialogVisible(true)}
-                    >
-                      <Typography.Text>Vídeo</Typography.Text>
-                    </Popover.Action>
-                  )}
+                  {isEnabled ||
+                    (user?.nickname ===
+                      process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO && (
+                      <Popover.Action
+                        onClick={() => setIsUploadVideoDialogVisible(true)}
+                      >
+                        <Typography.Text>Vídeo</Typography.Text>
+                      </Popover.Action>
+                    ))}
                   {isEnabled && (
                     <Popover.Action
                       onClick={() => setIsCreateArticleVisible(true)}
