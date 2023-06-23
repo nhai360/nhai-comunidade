@@ -9,21 +9,15 @@ type Props = {
   playlist: any;
   setPlaylist: Dispatch<SetStateAction<any>>;
   handleCreatePlaylist: () => void;
-  isOpicional?: boolean;
+  programas: any[];
 };
 
 export function ProgramSelector({
   playlist,
   setPlaylist,
   handleCreatePlaylist,
-  isOpicional = true,
+  programas = [],
 }: Props) {
-  const [programas, setProgramas] = useState<any[]>([]);
-
-  useEffect(() => {
-    handleProgramas(setProgramas);
-  }, []);
-
   const playlistsList: any =
     programas?.map((playlist) => {
       return { value: playlist?._id, label: playlist?.name };

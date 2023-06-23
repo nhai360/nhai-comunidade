@@ -37,6 +37,10 @@ import { PlaylistsSelector } from "../PlaylistsSelector";
 import { useUser } from "@/client/users";
 import { ProgramSelector } from "../ProgramSelector";
 import { CreateProgramDialog } from "../CreateProgramDialog";
+import {
+  handleAddProgramaModule,
+  handleProgramas,
+} from "@/services/firebase/programas";
 
 type Props = {
   onClose: () => void;
@@ -105,6 +109,12 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     isSuccess: isUpdatingSuccess,
   } = useUpdateVideo();
 
+  const [programas, setProgramas] = useState<any[]>([]);
+
+  useEffect(() => {
+    handleProgramas(setProgramas);
+  }, []);
+
   const isLoading =
     isUploadingThumbnail ||
     isCreatingVideo ||
@@ -127,12 +137,12 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
     });
   }
 
-  function handleCreateVideo({
+  const handleCreateVideo = async ({
     title,
     description,
     thumbnail,
     tags,
-  }: CreateVideoParams) {
+  }: CreateVideoParams) => {
     if (!source) {
       console.log("Source:", source);
       return toast.error(
@@ -142,6 +152,15 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
 
     if (isAmstel && (!playlist || !program)) {
       return toast.error("Programa e módulo são obrigatórios!");
+    }
+
+    if (isAmstel) {
+      await handleAddProgramaModule(program?.value, [
+        ...programas
+          ?.find((p) => p?._id === program?.value)
+          ?.modules?.filter((m: any) => m !== playlist?.value),
+        playlist?.value,
+      ]);
     }
 
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
@@ -193,7 +212,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
         },
       }
     );
-  }
+  };
 
   function handleUpdateVideo({
     title,
@@ -327,6 +346,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                     playlist={program}
                     setPlaylist={setProgram}
                     handleCreatePlaylist={() => setIsCreateProgramVisible(true)}
+                    programas={programas}
                   />
                 )}
                 <PlaylistsSelector

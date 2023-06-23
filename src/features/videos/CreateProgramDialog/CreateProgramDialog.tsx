@@ -13,6 +13,8 @@ import {
   CreatePlaylistParams,
   CreatePlaylistResolver,
 } from "@/client/playlists";
+import { handleCreatePrograma } from "@/services/firebase/programas";
+import { useState } from "react";
 
 type Props = {
   onClose: () => void;
@@ -29,56 +31,30 @@ export function CreateProgramDialog({ onClose }: Props) {
     resolver: zodResolver(CreatePlaylistResolver),
   });
 
-  const {
-    createPlaylist,
-    isLoading: isCreatingPlaylist,
-    isSuccess,
-  } = useCreatePlaylist();
+  const [loading, setLoading] = useState(false);
 
-  const isLoading = isCreatingPlaylist;
-
-  function handleCreatePlaylist({ title }: CreatePlaylistParams) {
-    createPlaylist(
-      {
-        title,
-      },
-      {
-        onSuccess: (media) => {
-          // toast.success("Playlist criada com sucesso!");
-        },
-        onError: () => {
-          toast.error("Não foi possível criar a playlist. Tente novamente!");
-        },
-      }
-    );
-  }
-
-  if (isSuccess) {
-    return (
-      <Dialog open onOpenChange={onClose}>
-        <Dialog.Content>
-          <Dialog.Header closable={false} />
-          <Dialog.Body>
-            <Success
-              title="Sua playlist foi criada com sucesso!"
-              description="Agora pode adicionar seus vídeos a essa playlist."
-              onClose={onClose}
-            />
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog>
-    );
-  }
+  const handleCreatePlaylist = async ({ title }: CreatePlaylistParams) => {
+    setLoading(true);
+    await handleCreatePrograma(title)
+      .then(() => {
+        onClose();
+        toast.success("Programa criado com sucesso!");
+      })
+      .catch(() =>
+        toast.error("Não foi possível criar o programa. Tente novamente!")
+      );
+    setLoading(false);
+  };
 
   return (
     <Dialog open>
       <Dialog.Content>
-        <Dialog.Header title={"Nova playlist"} onClose={onClose} closable />
+        <Dialog.Header title={"Novo programa"} onClose={onClose} closable />
         <Dialog.Body>
           <S.FormContainer onSubmit={handleSubmit(handleCreatePlaylist)}>
             <Field.Input
-              label="Nome da playlist"
-              placeholder="Escreva o nome da sua playlist"
+              label="Nome do programa"
+              placeholder="Escreva o nome do seu programa"
               errorText={errors.title?.message}
               {...register("title")}
             />
@@ -95,10 +71,10 @@ export function CreateProgramDialog({ onClose }: Props) {
         >
           <Button
             type="submit"
-            loading={isLoading}
+            loading={loading}
             onClick={() => handleSubmit(handleCreatePlaylist)()}
           >
-            Criar playlist
+            Criar programa
           </Button>
         </Dialog.Footer>
       </Dialog.Content>
