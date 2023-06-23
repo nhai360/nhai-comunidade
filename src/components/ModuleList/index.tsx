@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { Video } from "@/client/videos";
 
@@ -28,9 +28,10 @@ interface ModulesProps {
     watched: number;
     episodes: Video[];
   };
+  setSelectedVideo: any;
 }
 
-const ModuleList: React.FC<ModulesProps> = ({ module }) => {
+const ModuleList: React.FC<ModulesProps> = ({ module, setSelectedVideo }) => {
   return (
     <div className={styles.moduleWrapper}>
       <div className={styles.topVideo}>
@@ -67,7 +68,11 @@ const ModuleList: React.FC<ModulesProps> = ({ module }) => {
 
             {!!module?.episodes &&
               module?.episodes?.map((t) => (
-                <div key={t.id} className={styles.cardVideo}>
+                <div
+                  key={t.id}
+                  className={styles.cardVideo}
+                  onClick={() => setSelectedVideo(t)}
+                >
                   <div className={styles.thumbnailWrapper}>
                     <img src={t?.thumbnail?.url as any} alt={t?.title} />
                   </div>
