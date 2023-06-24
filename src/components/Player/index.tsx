@@ -11,6 +11,9 @@ import { format } from "date-fns";
 import { LikeButton } from "@/features/video-player";
 import MuxVideo from "@mux/mux-video-react";
 import BtnGoBack from "@/ui/BtnGoBack";
+import { handleCreateUserProgress } from "@/services/firebase/progress";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
 import { useState } from "react";
@@ -44,6 +47,15 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
   const handleShowComments = () => {
     setShowComments(!showComments);
+  };
+
+  // Executar isso quando o vídeo acabar
+  const handleCompleteVideo = async () => {
+    if (user && video) {
+      await handleCreateUserProgress(user?.id, video).then(() => {
+        toast.success("Episódio concluído :)");
+      });
+    }
   };
 
   return (
