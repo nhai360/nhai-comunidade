@@ -6,7 +6,7 @@ import Link from "next/link";
 
 type IBtnGoBack = {
   url?: string;
-  style: any;
+  style?: any;
 };
 
 const BtnGoBack = ({ url, ...rest }: IBtnGoBack) => {

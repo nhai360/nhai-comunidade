@@ -11,22 +11,38 @@ import { format } from "date-fns";
 import { LikeButton } from "@/features/video-player";
 import MuxVideo from "@mux/mux-video-react";
 import BtnGoBack from "@/ui/BtnGoBack";
+import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
+import { useComments } from "@/client/comments";
+import { useState } from "react";
 
 interface VideoProps {
   video: Video;
 }
 
 const Player: React.FC<VideoProps> = ({ video }) => {
+  const [showComments, setShowComments] = useState(false);
   const { session } = useAuthContext();
 
   const { user } = useUser({
     id: session?.userId,
   });
 
+  const { comments } = useComments(
+    {
+      originId: video.id,
+      originType: "videos",
+    },
+    {
+      enabled: true,
+    }
+  );
+
   const isCreator = video?.author?.id === user?.id;
   const createdAt = format(new Date(video?.createdAt), "dd MMM");
 
-  console.log(video);
+  const handleShowComments = () => {
+    setShowComments(!showComments);
+  };
 
   return (
     <div className={styles.video}>
@@ -42,21 +58,6 @@ const Player: React.FC<VideoProps> = ({ video }) => {
       </div>
 
       <div className={styles.videoWrapper}>
-        {/* <MuxVideo
-          playbackId={video.playbackId}
-          streamType="on-demand"
-          metadata={{
-            video_id: video.playbackId,
-            video_title: video.title,
-            viewer_user_id: session?.userId,
-            env_key: process.env.MUX_ENV_KEY_DATA,
-          }}
-          video={video}
-          isCreator={isCreator}
-          isMobile={false}
-          style={{ borderRadius: 0 }}
-        /> */}
-
         <MuxVideo
           playbackId={video?.playbackId as string}
           streamType="on-demand"
@@ -103,7 +104,24 @@ const Player: React.FC<VideoProps> = ({ video }) => {
       <div style={{ padding: 16, paddingTop: 0 }}>
         <CommentProvider>
           <Post.CommentField originType={"videos"} origin={video} />
-          {/* <Post.CommentList origin={video} originType="videos" expanded /> */}
+          <div className={styles.divider}></div>
+
+          <div className={styles.comments} onClick={handleShowComments}>
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              <ChatText size={24} />
+              <span
+                className={styles.videoTitle}
+                style={{ fontWeight: showComments ? "bold" : 400 }}
+              >
+                {" "}
+                {`Comentários ${comments?.length}`}
+              </span>
+            </div>
+            {showComments ? <CaretUp size={20} /> : <CaretDown size={20} />}
+          </div>
+          {showComments ? (
+            <Post.CommentList origin={video} originType="videos" expanded />
+          ) : undefined}
         </CommentProvider>
       </div>
     </div>
