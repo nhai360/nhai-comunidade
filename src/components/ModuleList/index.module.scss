@@ -19,7 +19,6 @@
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
-  height: 100vh;
   position: relative;
   background-color: #ee0014;
   overflow: auto;
@@ -42,12 +41,9 @@
 
     /* Safari */
     position: relative;
-    top: 30px;
     align-self: flex-end;
 
-    @media (max-width: 1024px) {
-      display: flex;
-    }
+   
 
     .topVideoList {
       position: relative;
@@ -117,6 +113,11 @@
       border-radius: 10px;
       padding: 0px 0px;
       width: 100%;
+
+      @media screen and (min-width: 768px) {
+        width: 400px;
+      }
+
       height: auto;
       margin-bottom: 16px;
 

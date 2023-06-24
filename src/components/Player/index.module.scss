@@ -1,24 +1,36 @@
 .video {
-    position: relative;
-    width: 100%;    
+  position: relative;
+  width: 100%;
+
+  .breadcrumb {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 8px 0;
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    span {
+      font-size: 12px;
+    }
+  }
 }
 
 .videoWrapper {
-    padding: 20px 20px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #cecece80;
-    border-radius: 10px;
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
 
-    .videoPlayer {
-        border-radius: 10px;
-        width: 100%;
-    }
+  .videoDetailsContainer {
+    width: 100%;
+    padding: 16px;
+    padding-bottom: 0;
 
     .videoTitle {
-        font-size: 1.5rem;
-        font-weight: 700;
-        padding: 20px 0px
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 16px;
     }
+  }
 }

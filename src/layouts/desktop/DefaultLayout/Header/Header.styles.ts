@@ -5,7 +5,8 @@ export const Container = styled("header", {
   top: 0,
 
   background: "$neutral100",
-  height: "80px",
+  height: "56px",
+  padding: "32px 0",
 
   display: "flex",
   alignItems: "center",
@@ -22,7 +23,7 @@ export const Content = styled("div", {
   width: "100%",
 
   marginInline: "auto",
-  paddingInline: "$6",
+  paddingInline: "$4",
 
   "@tablet": {
     justifyContent: "center",
