@@ -13,6 +13,7 @@ import { Header as HeaderMobile } from "@/layouts/app/DefaultLayout/Header";
 import { Video, useVideo } from "@/client/videos";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimension";
+import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 
 const PlayerScreen = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const PlayerScreen = () => {
   const { session } = useAuthContext();
 
   const [selectedVideo, setSelectedVideo] = useState();
+  const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
 
   const { playlistId } = router.query;
 
@@ -36,6 +38,10 @@ const PlayerScreen = () => {
     watched: 0,
     episodes: playlist?.videos || [],
   };
+
+  useEffect(() => {
+    user && GetUserProgress(user?.id, setWatchedVideos);
+  }, []);
 
   useEffect(() => {
     !selectedVideo && setSelectedVideo(programModule.episodes[0]);

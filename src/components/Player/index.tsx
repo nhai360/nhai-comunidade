@@ -11,6 +11,9 @@ import { format } from "date-fns";
 import { LikeButton } from "@/features/video-player";
 import MuxVideo from "@mux/mux-video-react";
 import BtnGoBack from "@/ui/BtnGoBack";
+import { handleCreateUserProgress } from "@/services/firebase/progress";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 interface VideoProps {
   video: Video;
@@ -26,7 +29,14 @@ const Player: React.FC<VideoProps> = ({ video }) => {
   const isCreator = video?.author?.id === user?.id;
   const createdAt = format(new Date(video?.createdAt), "dd MMM");
 
-  console.log(video);
+  // Executar isso quando o vídeo acabar
+  const handleCompleteVideo = async () => {
+    if (user && video) {
+      await handleCreateUserProgress(user?.id, video).then(() => {
+        toast.success("Episódio concluído :)");
+      });
+    }
+  };
 
   return (
     <div className={styles.video}>
