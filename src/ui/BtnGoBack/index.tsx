@@ -14,7 +14,7 @@ const BtnGoBack = ({ url, ...rest }: IBtnGoBack) => {
     <>
       <Link href={url || "http://"}>
         <div {...rest} className={styles.btnGoBack}>
-          <CaretLeft size={20} />
+          <CaretLeft size={14} />
         </div>
       </Link>
     </>

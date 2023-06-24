@@ -7,16 +7,77 @@
     background-color: #ffffff;
     padding: 8px 0;
     padding-left: 8px;
+
+    @media screen and (min-width: 1024px) {
+      padding: 16px 0;
+      padding-left: 32px;
+    }
+
     display: flex;
     align-items: center;
     gap: 8px;
 
     span {
       font-size: 12px;
+
+      @media screen and (min-width: 1024px) {
+        font-size: 16px;
+      }
+    }
+
+    .breadcrumbPageIndicator {
+      @media screen and (min-width: 1024px) {
+        padding: 12px;
+        background-color: red;
+        text-transform: uppercase;
+        color: white;
+        font-size: 14px;
+      }
     }
   }
+}
 
-  .comments {
+.videoWrapper {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+
+  @media screen and (min-width: 1024px) {
+    padding: 0 32px;
+  }
+
+  .videoDetailsContainer {
+    width: 100%;
+    padding: 16px;
+
+    @media screen and (min-width: 1024px) {
+      padding: 0;
+      padding-top: 16px;
+    }
+
+    padding-bottom: 0;
+
+    .videoTitle {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.commentsSection {
+  padding: 16px;
+  padding-top: 0;
+
+  transition: all 0.4s ease-in-out;
+  @media screen and (min-width: 1024px) {
+    padding: 32px;
+    padding-top: 0;
+  }
+
+  .commentsBox {
+    cursor: pointer;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,24 +87,6 @@
     height: 48px;
     border-radius: 8px;
     background-color: #f1f1f1;
-  }
-}
-
-.videoWrapper {
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-
-  .videoDetailsContainer {
-    width: 100%;
-    padding: 16px;
-    padding-bottom: 0;
-
-    .videoTitle {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
   }
 }
 

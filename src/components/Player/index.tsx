@@ -14,14 +14,16 @@ import BtnGoBack from "@/ui/BtnGoBack";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
 import { useState } from "react";
+import useWindowDimensions from "@/hooks/useWindowDimension";
 
 interface VideoProps {
   video: Video;
 }
 
 const Player: React.FC<VideoProps> = ({ video }) => {
-  const [showComments, setShowComments] = useState(false);
   const { session } = useAuthContext();
+  const { width = 0 } = useWindowDimensions();
+  const [showComments, setShowComments] = useState(width > 1024 ? false : true);
 
   const { user } = useUser({
     id: session?.userId,
@@ -49,11 +51,13 @@ const Player: React.FC<VideoProps> = ({ video }) => {
       <div className={styles.breadcrumb}>
         <BtnGoBack
           style={{ border: "1px solid #dadadd", width: 32, height: 32 }}
-          url={"/videos"}
+          url={"/negocios-de-orgulho"}
         />
         <span className={styles.breadcrumbText}>
           {"Contaí Comunidade > Vídeos > Espaço Amstel > "}{" "}
-          <strong>Assistindo Vídeo</strong>
+          <strong className={styles.breadcrumbPageIndicator}>
+            Assistindo Vídeo
+          </strong>
         </span>
       </div>
 
@@ -77,7 +81,7 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
         <div className={styles.videoDetailsContainer}>
           <span className={styles.videoTitle}>{video?.title}</span>
-          <S.UserAndLikeContainer style={{ marginTop: 8 }}>
+          <S.UserAndLikeContainer style={{ marginTop: 16 }}>
             <S.UserContainer>
               <Avatar.Square
                 size="small"
@@ -101,29 +105,31 @@ const Player: React.FC<VideoProps> = ({ video }) => {
         </div>
       </div>
 
-      <div style={{ padding: 16, paddingTop: 0 }}>
+      <section className={styles.commentsSection}>
         <CommentProvider>
           <Post.CommentField originType={"videos"} origin={video} />
-          <div className={styles.divider}></div>
+          {width < 1024 && <div className={styles.divider}></div>}
 
-          <div className={styles.comments} onClick={handleShowComments}>
-            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <ChatText size={24} />
-              <span
-                className={styles.videoTitle}
-                style={{ fontWeight: showComments ? "bold" : 400 }}
-              >
-                {" "}
-                {`Comentários ${comments?.length}`}
-              </span>
+          {width < 1024 && (
+            <div className={styles.commentsBox} onClick={handleShowComments}>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <ChatText size={24} />
+                <span
+                  className={styles.videoTitle}
+                  style={{ fontWeight: showComments ? "bold" : 400 }}
+                >
+                  {" "}
+                  {`Comentários ${comments?.length}`}
+                </span>
+              </div>
+              {showComments ? <CaretUp size={20} /> : <CaretDown size={20} />}
             </div>
-            {showComments ? <CaretUp size={20} /> : <CaretDown size={20} />}
-          </div>
+          )}
           {showComments ? (
             <Post.CommentList origin={video} originType="videos" expanded />
           ) : undefined}
         </CommentProvider>
-      </div>
+      </section>
     </div>
   );
 };

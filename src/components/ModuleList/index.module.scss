@@ -21,7 +21,6 @@
   }
   position: relative;
   background-color: #ee0014;
-  overflow: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -49,16 +48,20 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
+      overflow: auto;
 
       padding: 16px;
 
       .moduleCard {
         background: #fff;
-        border-radius: 10px;
+        border-radius: 8px;
         padding: 0px 0px;
         width: 100%;
         overflow: hidden;
         margin-bottom: 1rem;
+
+        position: -webkit-sticky;
+        top: 10px;
 
         .rowCard {
           padding: 20px 20px 8px;
@@ -114,11 +117,15 @@
           grid-template-columns: repeat(2, 1fr);
         }
 
+        @media screen and (min-width: 1024px) {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
         gap: 16px;
 
         .cardVideo {
           background: #fff;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 0px 0px;
           width: 100%;
 

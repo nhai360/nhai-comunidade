@@ -45,13 +45,13 @@ const PlayerScreen = () => {
     <>
       {width >= 724 ? <Header user={user as User} /> : <HeaderMobile />}
       <div className={styles.Container}>
-        {/* <div className={styles.RowVideo}> */}
-        {selectedVideo && <Player video={selectedVideo as any} />}
-        <ModuleList
-          programModule={programModule as any}
-          setSelectedVideo={setSelectedVideo}
-        />
-        {/* </div> */}
+        <div className={styles.RowVideo}>
+          {selectedVideo && <Player video={selectedVideo as any} />}
+          <ModuleList
+            programModule={programModule as any}
+            setSelectedVideo={setSelectedVideo}
+          />
+        </div>
       </div>
     </>
   );
