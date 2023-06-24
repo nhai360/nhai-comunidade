@@ -72,6 +72,7 @@ export function DefaultLayout({ children, hasSider = true }: Props) {
                 borderRadius: 8,
                 backgroundColor: isSubscribe ? "#c82560" : "#01a1ff",
               }}
+              loading={loading}
               onClick={handleSubscribe}
               disabled={isSubscribe}
             >

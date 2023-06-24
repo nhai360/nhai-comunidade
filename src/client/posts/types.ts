@@ -87,3 +87,10 @@ export type LikePostParams = {
 export type DeletePostParams = {
   postId: string;
 };
+
+export type GetUserPostsParams = {
+  search?: string;
+  orderBy?: keyof Post;
+  orderDirection?: "asc" | "desc";
+  nickname: string;
+};
