@@ -13,7 +13,6 @@ import MuxVideo from "@mux/mux-video-react";
 import BtnGoBack from "@/ui/BtnGoBack";
 import { handleCreateUserProgress } from "@/services/firebase/progress";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
 import { useState } from "react";
@@ -26,7 +25,7 @@ interface VideoProps {
 const Player: React.FC<VideoProps> = ({ video }) => {
   const { session } = useAuthContext();
   const { width = 0 } = useWindowDimensions();
-  const [showComments, setShowComments] = useState(width > 1024 ? false : true);
+  const [showComments, setShowComments] = useState(width > 1024);
 
   const { user } = useUser({
     id: session?.userId,

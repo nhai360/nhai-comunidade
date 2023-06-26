@@ -8,6 +8,7 @@ import { Live } from "@/client/lives";
 import { useBroadcastLive } from "@/client/lives/useBroadcastLive";
 import { toast } from "react-toastify";
 import { Loading } from "@/ui";
+import { ChangeFirebaseBroadcastStatus } from "@/services/firebase/broadcast";
 
 interface Props {
   live: Live;
@@ -43,6 +44,7 @@ const BroadcastButton = ({ live }: Props) => {
         stopBroadcast(params as any, {
           onSuccess: () => {
             toast.success("A transmissão iniciou!");
+            ChangeFirebaseBroadcastStatus(params?.liveId, "FINISHED");
           },
           onError: () => {
             setCanClick("");
@@ -54,6 +56,7 @@ const BroadcastButton = ({ live }: Props) => {
         startBroadcast(params as any, {
           onSuccess: () => {
             toast.success("A transmissão iniciou!");
+            ChangeFirebaseBroadcastStatus(params?.liveId, "STARTED");
           },
           onError: () => {
             setCanClick("");
@@ -84,6 +87,20 @@ const BroadcastButton = ({ live }: Props) => {
       >
         {loading ? (
           <Loading />
+        ) : status === "FINISHED" ? (
+          <>
+            {" "}
+            <div className={styles.broadcastButtonTextMobile}>
+              <BiStation size="1.8em" />
+              <span className={styles.startBroadcast}>Live encerrada</span>
+            </div>
+            <div className={styles.broadcastButtonText}>
+              <BiStation size="1.8em" />
+              <span className={styles.startBroadcast}>
+                Transmissão encerrada
+              </span>
+            </div>
+          </>
         ) : isBroadcasting ? (
           <>
             {" "}
