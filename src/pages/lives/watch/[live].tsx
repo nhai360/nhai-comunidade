@@ -50,7 +50,8 @@ const WatchLive = (): JSX.Element => {
     if (firebaseStatus === "STARTED") {
       setTimeout(() => {
         setShowPlayer(true);
-        videoRef.current.play();
+
+        router.reload();
       }, 20000);
     } else {
       firebaseStatus === "FINISHED" &&
