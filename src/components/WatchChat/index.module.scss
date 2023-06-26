@@ -1,16 +1,17 @@
 .chatWrapper {
   display: flex;
-  height: 100%;
   background-color: #fff;
   flex-direction: column;
   border: 1px solid #b6b6b6;
 
   width: 100%;
+  height: 70%;
 
   @media (min-width: 1200px) {
     max-width: 360px;
     min-width: 360px;
     overflow: hidden;
+    height: 100%;
   }
 }
 
