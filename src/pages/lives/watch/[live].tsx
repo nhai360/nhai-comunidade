@@ -46,6 +46,10 @@ const WatchLive = (): JSX.Element => {
     liveId && GetFirebaseBroadcastStatus(liveId, setFirebaseStatus);
   }, [liveId]);
 
+  // useEffect(() => {
+  //   isError && router.push("/videos");
+  // }, [isError]);
+
   useEffect(() => {
     if (firebaseStatus === "STARTED") {
       setTimeout(() => {
@@ -63,11 +67,11 @@ const WatchLive = (): JSX.Element => {
 
   const handleReload = () => router.reload();
 
-  useEffect(() => {
-    if (firebaseStatus === "STARTED" && !showPlayer) {
-      handleReload();
-    }
-  }, [firebaseStatus]);
+  // useEffect(() => {
+  //   if (firebaseStatus === "STARTED" && !showPlayer) {
+  //     handleReload();
+  //   }
+  // }, [firebaseStatus]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -97,6 +101,10 @@ const WatchLive = (): JSX.Element => {
     }
   }, [videoRef]);
 
+  useEffect(() => {
+    !session?.userId && router.push("/videos");
+  }, []);
+
   return isLoading || loading ? (
     <div className={styles.spaceGreetings}>
       <Levels color={"#f23d80"} size={32} />
@@ -106,7 +114,24 @@ const WatchLive = (): JSX.Element => {
       <Header user={user} canCreate={false} />
       <div className={styles.main}>
         <div className={styles.videoContainer}>
-          {showPlayer ? (
+          <MuxVideo
+            ref={videoRef}
+            playbackId={live?.playbackId}
+            streamType="live"
+            metadata={{
+              video_id: live?.playbackId,
+              video_title: live?.title,
+              viewer_user_id: session?.userId,
+              env_key: process.env.MUX_ENV_KEY_DATA,
+            }}
+            title={live?.title}
+            controls
+            width={"100%"}
+            height={"100%"}
+            style={{ backgroundColor: "#323232" }}
+            muted
+          />
+          {/* {showPlayer ? (
             <MuxVideo
               ref={videoRef}
               playbackId={live?.playbackId}
@@ -135,7 +160,7 @@ const WatchLive = (): JSX.Element => {
                   : "A transmissão ainda não iniciou"}
               </p>
             </>
-          )}
+          )} */}
         </div>
 
         <WatchChat live={live} user={user} liveId={live?.id} />
