@@ -50,15 +50,22 @@ const WatchLive = (): JSX.Element => {
     if (firebaseStatus === "STARTED") {
       setTimeout(() => {
         setShowPlayer(true);
-
-        router.reload();
-      }, 20000);
+      }, 15000);
+      videoRef?.current?.play();
     } else {
       firebaseStatus === "FINISHED" &&
         setTimeout(() => {
           router.push("/videos");
         }, 10000);
       setShowPlayer(false);
+    }
+  }, [firebaseStatus]);
+
+  const handleReload = () => router.reload();
+
+  useEffect(() => {
+    if (firebaseStatus === "STARTED" && !showPlayer) {
+      handleReload();
     }
   }, [firebaseStatus]);
 
