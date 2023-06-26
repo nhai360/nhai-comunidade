@@ -75,13 +75,26 @@ export function RegisterForm() {
             onSuccess: () => {
               router.push("/auth/login");
             },
-            onError: () => {
-              toast.error(
-                "Não foi possível realizar o cadastro. Tente novamente"
-              );
-              setError("email", {
-                message: "Já existe um usuário cadastrado com esse e-mail",
-              });
+            onError: (err: any) => {
+              const message: string = err?.response?.data?.message;
+              if (message === "User with this email already exists.") {
+                setTab(1);
+                setError("email", {
+                  message: "Este e-mail já foi usado por outro usuário",
+                });
+              } else if (
+                message === "User with this nickname already exists."
+              ) {
+                setTab(1);
+                setError("nickname", {
+                  message: "Este nickname já foi usado por outro usuário",
+                });
+              } else {
+                console.log("REGISTER ERROR =>", message);
+                toast.error(
+                  "Não foi possível realizar o cadastro. Tente novamente"
+                );
+              }
             },
           }
         );
