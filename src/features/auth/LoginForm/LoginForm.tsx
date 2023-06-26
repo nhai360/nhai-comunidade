@@ -14,6 +14,7 @@ import {
 
 import * as S from "./LoginForm.styles";
 import { authenticatedAPI } from "@/client";
+import { useEffect } from "react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -22,15 +23,16 @@ export function LoginForm() {
 
   const { createSession, isLoading } = useCreateSession();
 
-  const { formState, register, handleSubmit, control, setError } =
+  const { formState, register, handleSubmit, control, setError, setValue } =
     useForm<CreateSessionParams>({
       resolver: zodResolver(CreateSessionDecoder),
-      defaultValues: {
-        remember: false,
-      },
     });
 
   const { errors } = formState;
+
+  useEffect(() => {
+    setValue("remember", true);
+  }, []);
 
   function handleLogin(params: CreateSessionParams) {
     createSession(params, {
@@ -90,7 +92,12 @@ export function LoginForm() {
         />
       </S.FieldContainer>
 
-      <Checkbox name="remember" label="Lembrar de mim?" control={control} />
+      <Checkbox
+        name="remember"
+        defaultChecked={true}
+        label="Lembrar de mim?"
+        control={control}
+      />
       <Button fullWidth type="submit" loading={isLoading}>
         Entrar
         <ArrowNarrowRightIcon />

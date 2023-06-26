@@ -44,6 +44,7 @@ export function Checkbox<T extends FieldValues>({
 
   return (
     <CheckboxControlled
+      {...rest}
       name={field.name}
       value={field.value}
       onCheckedChange={field.onChange}
