@@ -101,6 +101,10 @@ const WatchLive = (): JSX.Element => {
     }
   }, [videoRef]);
 
+  useEffect(() => {
+    !session?.userId && router.push("/videos");
+  }, []);
+
   return isLoading || loading ? (
     <div className={styles.spaceGreetings}>
       <Levels color={"#f23d80"} size={32} />
