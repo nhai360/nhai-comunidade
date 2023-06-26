@@ -21,8 +21,6 @@ export function VideosList() {
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === "ADMIN";
-
   return (
     <S.Container>
       {/* <S.PlaylistHighlight>
