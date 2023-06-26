@@ -119,7 +119,7 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
             </div>
           </div>
 
-          <span className={styles.headingParagraph}>{live?.description}</span>
+          <span className={styles.description}>{live?.description}</span>
         </div>
         <div className={styles.divider} />
         <ul className={styles.messageWrapper}>

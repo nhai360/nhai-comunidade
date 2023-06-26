@@ -8,30 +8,33 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 
-// export const GetFirebaseBroadcastStatus = async (liveId: string) => {
-//   try {
-//     console.log("GetFirebaseBroadcastStatus");
-//     const liveChatDoc = doc(db, "LIVECHAT", liveId);
+export const GetFirebaseBroadcastStatus = async (
+  liveId: string,
+  setStatus: any
+) => {
+  try {
+    console.log("GetFirebaseBroadcastStatus");
 
-//     const messageCol = collection(liveChatDoc, "MESSAGES");
-//     return onSnapshot(
-//       query(messageCol, orderBy("createdAt", "asc")),
-//       (snapshot) => {
-//         const messageList = snapshot.docs.map((doc) => {
-//           return { _id: doc?.id, ...doc.data() };
-//         });
-//         setChat(messageList);
-//       }
-//     );
-//   } catch (error: any) {
-//     toast.error("Falha ao pegar chat: " + error.message);
-//     return [];
-//   }
-// };
+    const liveCol = collection(db, "LIVECHAT");
+    return onSnapshot(
+      query(liveCol, where("liveId", "==", liveId)),
+      (snapshot) => {
+        const messageList: any = snapshot.docs.map((doc) => {
+          return { _id: doc?.id, ...doc.data() };
+        });
+        setStatus(messageList[0]?.status);
+      }
+    );
+  } catch (error: any) {
+    console.log("[GetFirebaseBroadcastStatus]", error);
+    return [];
+  }
+};
 
 export const ChangeFirebaseBroadcastStatus = async (
   liveId: string,
@@ -40,7 +43,7 @@ export const ChangeFirebaseBroadcastStatus = async (
   try {
     const liveChatDocRef = doc(db, "LIVECHAT", liveId);
 
-    await setDoc(liveChatDocRef, { status });
+    await setDoc(liveChatDocRef, { liveId, status });
   } catch (error: any) {
     console.error("Falha ao criar novo arquivo:", error);
     toast.error("Falha ao criar novo arquivo: " + error.message);

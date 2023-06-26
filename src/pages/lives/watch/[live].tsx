@@ -19,14 +19,17 @@ import MuxVideo from "@mux/mux-video-react";
 import { WatchChat } from "@/components/WatchChat";
 import mux from "mux-embed";
 import { Header } from "@/layouts/desktop/DefaultLayout/Header";
+import { GetFirebaseBroadcastStatus } from "@/services/firebase/broadcast";
 
 const WatchLive = (): JSX.Element => {
   const router = useRouter();
   const videoRef = useRef(null);
 
-  const liveId = router?.query?.live;
+  const liveId: any = router?.query?.live;
 
   const [loading, setLoading] = useState(true);
+  const [firebaseStatus, setFirebaseStatus] = useState("");
+  const [showPlayer, setShowPlayer] = useState(false);
 
   const { live, isLoading, isError } = useLive({ liveId: liveId as string });
 
@@ -38,6 +41,24 @@ const WatchLive = (): JSX.Element => {
   useEffect(() => {
     (!!live?.id || isError) && setLoading(false);
   }, [live]);
+
+  useEffect(() => {
+    liveId && GetFirebaseBroadcastStatus(liveId, setFirebaseStatus);
+  }, [liveId]);
+
+  useEffect(() => {
+    if (firebaseStatus === "STARTED") {
+      setTimeout(() => {
+        setShowPlayer(true);
+      }, 15000);
+    } else {
+      firebaseStatus === "FINISHED" &&
+        setTimeout(() => {
+          router.push("/videos");
+        }, 10000);
+      setShowPlayer(false);
+    }
+  }, [firebaseStatus]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -76,24 +97,37 @@ const WatchLive = (): JSX.Element => {
       <Header user={user} canCreate={false} />
       <div className={styles.main}>
         <div className={styles.videoContainer}>
-          <MuxVideo
-            ref={videoRef}
-            playbackId={live?.playbackId}
-            streamType="live"
-            metadata={{
-              video_id: live?.playbackId,
-              video_title: live?.title,
-              viewer_user_id: session?.userId,
-              env_key: process.env.MUX_ENV_KEY_DATA,
-            }}
-            title={live?.title}
-            controls
-            width={"100%"}
-            height={"100%"}
-            style={{ backgroundColor: "#323232" }}
-            autoPlay
-            muted
-          />
+          {showPlayer ? (
+            <MuxVideo
+              ref={videoRef}
+              playbackId={live?.playbackId}
+              streamType="live"
+              metadata={{
+                video_id: live?.playbackId,
+                video_title: live?.title,
+                viewer_user_id: session?.userId,
+                env_key: process.env.MUX_ENV_KEY_DATA,
+              }}
+              title={live?.title}
+              controls
+              width={"100%"}
+              height={"100%"}
+              style={{ backgroundColor: "#323232" }}
+              autoPlay
+              muted
+            />
+          ) : (
+            <>
+              <h5>Aguarde</h5>
+              <p>
+                {firebaseStatus === "STARTED"
+                  ? "A transmissão está iniciando"
+                  : firebaseStatus === "FINISHED"
+                  ? "A transmissão encerrou"
+                  : "A transmissão ainda não iniciou"}
+              </p>
+            </>
+          )}
         </div>
 
         <WatchChat live={live} user={user} liveId={live?.id} />
