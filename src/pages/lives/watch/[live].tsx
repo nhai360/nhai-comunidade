@@ -28,7 +28,7 @@ const WatchLive = (): JSX.Element => {
   const liveId: any = router?.query?.live;
 
   const [loading, setLoading] = useState(true);
-  const [firebaseStatus, setFirebaseStatus] = useState("STARTED");
+  const [firebaseStatus, setFirebaseStatus] = useState();
   const [showPlayer, setShowPlayer] = useState(true);
 
   const { live, isLoading, isError } = useLive({ liveId: liveId as string });
@@ -50,14 +50,14 @@ const WatchLive = (): JSX.Element => {
     if (firebaseStatus === "STARTED") {
       setTimeout(() => {
         setShowPlayer(true);
+        videoRef?.current?.play();
       }, 15000);
-      videoRef?.current?.play();
     } else {
+      setShowPlayer(false);
       firebaseStatus === "FINISHED" &&
         setTimeout(() => {
           router.push("/videos");
         }, 10000);
-      setShowPlayer(false);
     }
   }, [firebaseStatus]);
 
