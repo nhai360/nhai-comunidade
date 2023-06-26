@@ -23,13 +23,13 @@ import { GetFirebaseBroadcastStatus } from "@/services/firebase/broadcast";
 
 const WatchLive = (): JSX.Element => {
   const router = useRouter();
-  const videoRef = useRef(null);
+  const videoRef = useRef<any>(null);
 
   const liveId: any = router?.query?.live;
 
   const [loading, setLoading] = useState(true);
-  const [firebaseStatus, setFirebaseStatus] = useState("");
-  const [showPlayer, setShowPlayer] = useState(false);
+  const [firebaseStatus, setFirebaseStatus] = useState("STARTED");
+  const [showPlayer, setShowPlayer] = useState(true);
 
   const { live, isLoading, isError } = useLive({ liveId: liveId as string });
 
@@ -50,7 +50,8 @@ const WatchLive = (): JSX.Element => {
     if (firebaseStatus === "STARTED") {
       setTimeout(() => {
         setShowPlayer(true);
-      }, 15000);
+        videoRef.current.play();
+      }, 20000);
     } else {
       firebaseStatus === "FINISHED" &&
         setTimeout(() => {
@@ -113,7 +114,6 @@ const WatchLive = (): JSX.Element => {
               width={"100%"}
               height={"100%"}
               style={{ backgroundColor: "#323232" }}
-              autoPlay
               muted
             />
           ) : (
