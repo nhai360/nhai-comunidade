@@ -6,14 +6,15 @@ import Link from "next/link";
 
 type IBtnGoBack = {
   url?: string;
+  style?: any;
 };
 
-const BtnGoBack = ({ url }: IBtnGoBack) => {
+const BtnGoBack = ({ url, ...rest }: IBtnGoBack) => {
   return (
     <>
       <Link href={url || "http://"}>
-        <div className={styles.btnGoBack}>
-          <CaretLeft size={20} />
+        <div {...rest} className={styles.btnGoBack}>
+          <CaretLeft size={14} />
         </div>
       </Link>
     </>

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./index.module.scss";
 import { User } from "@/client/users";
+import { useUserPosts } from "@/client/posts/useUserPosts";
+import { useUserTrending } from "@/client/posts/useUserTrending";
+import { useVirtual } from "@tanstack/react-virtual";
+import { PostCard } from "@/features/posts";
+import * as S from "./ForumArea.styles";
 
 interface Posts {
   id: number;
@@ -16,6 +21,26 @@ interface PostProps {
 }
 
 const ForumArea: React.FC<PostProps> = ({ user }) => {
+  const parentRef = useRef(null);
+
+  const { posts = [] } = useUserPosts({
+    nickname: process?.env?.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
+  });
+
+  const { posts: trending } = useUserTrending({
+    nickname: process?.env?.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
+  });
+
+  const { virtualItems, measure, totalSize } = useVirtual({
+    size: posts.length,
+    parentRef,
+    keyExtractor: (index) => posts[index].id,
+  });
+
+  if (virtualItems.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <div className={styles.containerColumn}>
@@ -27,9 +52,35 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
               <h3>SEJA BEM-VINDO AO FORÚM AMSTEL.</h3>
             </div>
 
-            <div className={styles.postList}>
-              <span>Os posts vão aqui...</span>
-            </div>
+            <S.Container
+              ref={parentRef}
+              css={{
+                height: `${virtualItems.length * 785}px`,
+                "@mobile": { height: totalSize },
+              }}
+            >
+              <S.List
+                css={{
+                  transform: `translateY(${virtualItems[0].start}px)`,
+                }}
+              >
+                {virtualItems?.map((virtualItem) => {
+                  const post = posts.find(
+                    (post) => post.id === virtualItem.key
+                  );
+
+                  if (!post) {
+                    return null;
+                  }
+
+                  return (
+                    <li key={post.id} ref={measure}>
+                      <PostCard post={post} />
+                    </li>
+                  );
+                })}
+              </S.List>
+            </S.Container>
           </div>
 
           <div className={styles.topPostWrapper}>
@@ -52,15 +103,20 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
               </div>
 
               <div className={styles.topPostList}>
-                {/* {posts.map((post) => (
+                {trending.map((trending) => (
                   <>
-                    <a href="#" className={styles.topPostItem} key={post.id}>
-                      <div className={styles.thumbnail}>
-                        <img src={post.thumbnail} alt={post.title} />
-                      </div>
+                    <a className={styles.topPostItem} key={trending.id}>
+                      {trending?.author && (
+                        <div className={styles.thumbnail}>
+                          <img
+                            src={trending?.author.profilePicture?.url as any}
+                            alt={trending.author.nickname}
+                          />
+                        </div>
+                      )}
                       <div className={styles.titleHeader}>
-                        <span>{post.postDate}</span>
-                        <h3>{post.title}</h3>
+                        <span>{trending.createdAt}</span>
+                        <h3>{trending.title}</h3>
                       </div>
                       <div className={styles.share}>
                         <a href="#">
@@ -97,7 +153,7 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
                       </div>
                     </a>
                   </>
-                ))} */}
+                ))}
               </div>
             </div>
           </div>

@@ -5,13 +5,15 @@ import { useState } from "react";
 import ProgramSlider from "../ProgramSlider";
 import ForumArea from "../ForumArea";
 import { useUserFromNickname } from "@/client/users";
+import { IWatchedVideo } from "@/services/firebase/progress";
 
 type IProps = {
   isSigned: boolean;
   programas: any[];
+  watchedVideos: IWatchedVideo[];
 };
 
-const TabComponent = ({ isSigned, programas }: IProps) => {
+const TabComponent = ({ isSigned, programas, watchedVideos }: IProps) => {
   const [active, setActive] = useState(1);
 
   const { user } = useUserFromNickname({
@@ -40,7 +42,11 @@ const TabComponent = ({ isSigned, programas }: IProps) => {
 
       {active === 1 && (
         <>
-          <ProgramSlider user={user as any} programas={programas} />
+          <ProgramSlider
+            watchedVideos={watchedVideos}
+            user={user as any}
+            programas={programas}
+          />
         </>
       )}
 

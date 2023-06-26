@@ -13,7 +13,7 @@ export const Container = styled("header", {
   borderBottom: "1px solid $neutral200",
   zIndex: "$fixed",
 
-  padding: "$4 $2",
+  padding: "$2 $2",
 
   ".avatarLink": {
     width: "52px",

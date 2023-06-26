@@ -7,6 +7,7 @@ import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { User } from "@/client/users";
 import { handleProgramas } from "@/services/firebase/programas";
 import { useRouter } from "next/router";
+import { IWatchedVideo } from "@/services/firebase/progress";
 
 interface Curso {
   id: number;
@@ -27,6 +28,7 @@ interface Modulo {
 interface SliderProps {
   user: User;
   programas: any[];
+  watchedVideos: IWatchedVideo[];
 }
 
 const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {

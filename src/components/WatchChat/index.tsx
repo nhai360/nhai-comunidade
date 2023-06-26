@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import MessageItem from "../MessageItem";
 import {
   handleCreateChatMessage,
+  handleCreateLiveViewer,
   handleGetChat,
 } from "@/services/firebase/chat";
 import { User } from "@/client/users";
@@ -49,6 +50,12 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
 
   useEffect(() => {
     liveId && handleGetChat(liveId, setChat);
+    liveId &&
+      handleCreateLiveViewer(liveId, {
+        fullName: user?.fullName,
+        nickname: user?.nickname,
+        userId: user?.id,
+      });
   }, [liveId]);
 
   const handleComment = async ({ message }: CreateChatParams) => {

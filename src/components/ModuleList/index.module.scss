@@ -19,10 +19,8 @@
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
-  height: 100vh;
   position: relative;
   background-color: #ee0014;
-  overflow: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -42,12 +40,7 @@
 
     /* Safari */
     position: relative;
-    top: 30px;
     align-self: flex-end;
-
-    @media (max-width: 1024px) {
-      display: flex;
-    }
 
     .topVideoList {
       position: relative;
@@ -55,89 +48,109 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
+      overflow: auto;
 
       padding: 16px;
-    }
 
-    .moduleCard {
-      background: #fff;
-      border-radius: 10px;
-      padding: 0px 0px;
-      width: 100%;
-      overflow: hidden;
-      margin-bottom: 1rem;
+      .moduleCard {
+        background: #fff;
+        border-radius: 8px;
+        padding: 0px 0px;
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 1rem;
 
-      .rowCard {
-        padding: 20px 20px 8px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        position: -webkit-sticky;
+        top: 10px;
 
-        .moduleWatched {
-          strong {
-            color: #ee0014;
+        .rowCard {
+          padding: 20px 20px 8px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          .moduleWatched {
+            strong {
+              color: #ee0014;
+            }
+          }
+        }
+
+        .moduleTitle {
+          font-size: 18px;
+          margin-left: 20px;
+
+          font-weight: 700;
+        }
+
+        .divider {
+          margin: 10px 0px;
+          margin-bottom: 20px;
+        }
+
+        .videosInfo {
+          padding: 0px 20px;
+          font-size: 0.9rem;
+          font-weight: 500;
+
+          padding-bottom: 20px;
+
+          .numberVideosInfo {
+            margin-right: 10px;
+            color: #8c8c8c;
+          }
+
+          .minutesInfo {
+            margin-left: 10px;
+            color: #8c8c8c;
           }
         }
       }
 
-      .moduleTitle {
-        font-size: 18px;
-        margin-left: 20px;
-
-        font-weight: 700;
-      }
-
-      .divider {
-        margin: 10px 0px;
-        margin-bottom: 20px;
-      }
-
-      .videosInfo {
-        padding: 0px 20px;
-        font-size: 0.9rem;
-        font-weight: 500;
-
-        padding-bottom: 20px;
-
-        .numberVideosInfo {
-          margin-right: 10px;
-          color: #8c8c8c;
-        }
-
-        .minutesInfo {
-          margin-left: 10px;
-          color: #8c8c8c;
-        }
-      }
-    }
-
-    .cardVideo {
-      background: #fff;
-      border-radius: 10px;
-      padding: 0px 0px;
-      width: 100%;
-      height: auto;
-      margin-bottom: 16px;
-
-      .thumbnailWrapper {
-        padding: 20px;
-        background-color: #8c8c8c;
-        height: 200px;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        img {
-          width: 100%;
-          object-fit: cover;
-        }
-      }
-      padding: 16px;
-
-      .content {
+      .gridVideos {
+        display: grid;
         width: 100%;
+        grid-template-columns: repeat(1, 1fr);
 
-        .title {
-          font-weight: 600;
+        @media screen and (min-width: 528px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        gap: 16px;
+
+        .cardVideo {
+          background: #fff;
+          border-radius: 8px;
+          padding: 0px 0px;
+          width: 100%;
+
+          height: auto;
+
+          .thumbnailWrapper {
+            padding: 20px;
+            background-color: #8c8c8c;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            img {
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+          padding: 16px;
+
+          .content {
+            width: 100%;
+
+            .title {
+              font-weight: 600;
+            }
+          }
         }
       }
     }

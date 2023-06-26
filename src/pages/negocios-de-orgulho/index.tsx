@@ -10,6 +10,7 @@ import { useAuthContext } from "@/contexts";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { handleProgramas } from "@/services/firebase/programas";
+import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 
 function NegociosDeOrgulho() {
   const router = useRouter();
@@ -20,9 +21,14 @@ function NegociosDeOrgulho() {
   });
 
   const [programas, setProgramas] = useState<any[]>([]);
+  const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
 
   useEffect(() => {
     handleProgramas(setProgramas);
+  }, []);
+
+  useEffect(() => {
+    user && GetUserProgress(user?.id, setWatchedVideos);
   }, []);
 
   return (
@@ -59,7 +65,11 @@ function NegociosDeOrgulho() {
           </div>
         </div>
 
-        <TabComponent isSigned={!!session?.userId} programas={programas} />
+        <TabComponent
+          watchedVideos={watchedVideos}
+          isSigned={!!session?.userId}
+          programas={programas}
+        />
       </div>
     </>
   );
