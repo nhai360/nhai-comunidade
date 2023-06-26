@@ -67,11 +67,11 @@ const WatchLive = (): JSX.Element => {
 
   const handleReload = () => router.reload();
 
-  useEffect(() => {
-    if (firebaseStatus === "STARTED" && !showPlayer) {
-      handleReload();
-    }
-  }, [firebaseStatus]);
+  // useEffect(() => {
+  //   if (firebaseStatus === "STARTED" && !showPlayer) {
+  //     handleReload();
+  //   }
+  // }, [firebaseStatus]);
 
   useEffect(() => {
     if (videoRef.current) {
