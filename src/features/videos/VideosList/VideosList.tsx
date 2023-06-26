@@ -21,8 +21,6 @@ export function VideosList() {
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === "ADMIN";
-
   return (
     <S.Container>
       {/* <S.PlaylistHighlight>
@@ -41,7 +39,7 @@ export function VideosList() {
           ))}
         </Swiper>
       </S.PlaylistHighlight> */}
-      {lives?.length > 0 && isAdmin && (
+      {lives?.length > 0 && (
         <>
           <Typography.Text size="h3">Lives para assistir</Typography.Text>
           <S.VideosGridContainer>
