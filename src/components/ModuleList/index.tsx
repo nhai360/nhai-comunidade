@@ -81,7 +81,7 @@ const ModuleList: React.FC<ModulesProps> = ({
                   </div>
                   <div className={styles.content}>
                     <h3 className={styles.title}>{t?.title}</h3>
-                    <div className={styles.videoDuration}>0</div>
+                    {/* <div className={styles.videoDuration}>0</div> */}
                     {/* {e.watchedPercentage === 100 && (
                       <span className={styles.completedBadge}>COMPLETO</span>
                     )} */}
