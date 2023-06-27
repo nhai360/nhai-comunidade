@@ -78,10 +78,10 @@
         }
 
         .moduleTitle {
-          font-size: 18px;
+          font-size: 24px;
           margin-left: 20px;
-
-          font-weight: 700;
+          font-family: "RingBold";
+          text-transform: uppercase;
         }
 
         .divider {
@@ -128,13 +128,18 @@
           border-radius: 8px;
           padding: 0px 0px;
           width: 100%;
+          min-height: 300px;
+
+          @media screen and (min-width: 768px) {
+            min-height: 400px;
+          }
 
           height: auto;
 
           .thumbnailWrapper {
             padding: 20px;
             background-color: #8c8c8c;
-            height: 200px;
+            height: 300px;
             border-radius: 8px;
             margin-bottom: 1rem;
             img {

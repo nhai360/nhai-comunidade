@@ -15,8 +15,9 @@ import { handleCreateUserProgress } from "@/services/firebase/progress";
 import { toast } from "react-toastify";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimension";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface VideoProps {
   video: Video;
@@ -24,8 +25,9 @@ interface VideoProps {
 
 const Player: React.FC<VideoProps> = ({ video }) => {
   const { session } = useAuthContext();
-  const { width = 0 } = useWindowDimensions();
-  const [showComments, setShowComments] = useState(width > 1024);
+  // const { width = 0 } = useWindowDimensions();
+  const { width = 0 } = useWindowSize();
+  const [showComments, setShowComments] = useState(false);
 
   const { user } = useUser({
     id: session?.userId,
@@ -56,6 +58,10 @@ const Player: React.FC<VideoProps> = ({ video }) => {
       });
     }
   };
+
+  useEffect(() => {
+    width > 1024 && setShowComments(true);
+  }, [width]);
 
   return (
     <div className={styles.video}>
@@ -97,21 +103,21 @@ const Player: React.FC<VideoProps> = ({ video }) => {
               <Avatar.Square
                 size="small"
                 style={{ borderRadius: 32 }}
-                src={video?.author?.profilePicture?.url}
+                src={"/amstel.png"}
                 fallback={getInitials(video?.author?.fullName)}
               />
               <S.UserInformationContainer>
                 <Typography.Text css={{ color: "$textTitle" }}>
-                  {getFirstNameAndLastName(video?.author?.fullName)}
+                  {getFirstNameAndLastName("Negócios de Orgulho")}
                   <S.TimeLabel>{createdAt}</S.TimeLabel>
                 </Typography.Text>
                 <Typography.Text size="body3" color="secondary">
-                  @{video?.author?.nickname}
+                  @negociosdeorgulho
                 </Typography.Text>
               </S.UserInformationContainer>
             </S.UserContainer>
 
-            <LikeButton video={video} />
+            <LikeButton isAmstel video={video} />
           </S.UserAndLikeContainer>
         </div>
       </div>
