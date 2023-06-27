@@ -8,6 +8,8 @@ import { User } from "@/client/users";
 import { handleProgramas } from "@/services/firebase/programas";
 import { useRouter } from "next/router";
 import { IWatchedVideo } from "@/services/firebase/progress";
+import { limitText } from "@/features/lives/utils";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface Curso {
   id: number;
@@ -33,6 +35,7 @@ interface SliderProps {
 
 const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
   const router = useRouter();
+  const { width = 0 } = useWindowSize();
 
   const { userplaylists } = useUserPlaylists({
     userId: user?.id,
@@ -102,6 +105,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
             <div
               key={curso.id}
               className={`${styles.column} ${styles.boxPadding}`}
+              style={{marginBottom: 16}}
             >
               <div className={styles.rowHeader}>
                 <h5 className={styles.courseTitle}>{curso.title} </h5>

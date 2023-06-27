@@ -31,9 +31,10 @@ import * as S from "./PostCommentField.styles";
 type Props = {
   origin: any;
   originType: "posts" | "videos";
+  isAmstel?: boolean;
 };
 
-export function PostCommentField({ origin, originType }: Props) {
+export function PostCommentField({ origin, originType, isAmstel }: Props) {
   const { session } = useAuthContext();
   const { fieldRef, replyTo, setReplyTo } = useCommentContext();
 
@@ -113,6 +114,7 @@ export function PostCommentField({ origin, originType }: Props) {
         }
         handleReturn={handleSendComment}
         css={{
+          borderRadius: isAmstel ? 0 : 16,
           ".public-DraftEditor-content": {
             maxHeight: "50px",
           },

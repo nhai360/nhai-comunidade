@@ -97,7 +97,7 @@ export function AppLayout({ handleCreate }: Types) {
                     gap: 8,
                   }}
                 >
-                  <h3>{limitText(live?.title, 12)}</h3>
+                  <h3>{limitText(live?.title, 20)}</h3>
                   <h4>
                     {format(
                       new Date(live?.startTime),

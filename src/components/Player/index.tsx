@@ -101,14 +101,14 @@ const Player: React.FC<VideoProps> = ({ video }) => {
           <S.UserAndLikeContainer style={{ marginTop: 16 }}>
             <S.UserContainer>
               <Avatar.Square
-                size="small"
+                size={width > 768 ? "large" : "small"}
                 style={{ borderRadius: 32 }}
                 src={"/amstel.png"}
                 fallback={getInitials(video?.author?.fullName)}
               />
               <S.UserInformationContainer>
                 <Typography.Text css={{ color: "$textTitle" }}>
-                  {getFirstNameAndLastName("Negócios de Orgulho")}
+                  {getFirstNameAndLastName("Amstel")}
                   <S.TimeLabel>{createdAt}</S.TimeLabel>
                 </Typography.Text>
                 <Typography.Text size="body3" color="secondary">
@@ -124,7 +124,7 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
       <section className={styles.commentsSection}>
         <CommentProvider>
-          <Post.CommentField originType={"videos"} origin={video} />
+          <Post.CommentField isAmstel originType={"videos"} origin={video} />
           {width < 1024 && <div className={styles.divider}></div>}
 
           {width < 1024 && (
