@@ -46,6 +46,8 @@ export const WatchChat = ({ liveId, user, live }: Props) => {
 
   useEffect(() => {
     scrollToBottom();
+    live?.author?.id === user?.id &&
+      console.log(`Métricas: 💬${chat?.length} 👀 ${"0"}`);
   }, [chat]);
 
   useEffect(() => {

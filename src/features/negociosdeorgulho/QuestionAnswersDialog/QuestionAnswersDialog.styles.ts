@@ -10,7 +10,11 @@ export const QuestionHeader = styled("div", {
   display: "flex",
   backgroundColor: "#EE0014",
   flex: 1,
-  height: 180,
+  minHeight: 120,
+
+  "@media (max-width: 640px)": {
+    fontSize: "$h4",
+  },
 });
 
 export const QuestionHeaderTitleContainer = styled("div", {
@@ -24,39 +28,57 @@ export const QuestionHeaderTitleContainer = styled("div", {
 export const QuestionHeaderTitle = styled("h3", {
   color: "$neutral100",
   fontSize: "$h3",
+  fontFamily: "RingBold",
+
+  "@media (max-width: 640px)": {
+    fontSize: "$h4",
+  },
 });
 
 export const QuestionHeaderSubtitle = styled("p", {
   color: "$neutral300",
   fontSize: "$body1",
   marginTop: "$2",
+  fontFamily: "RingMedium",
+
+  "@media (max-width: 640px)": {
+    fontSize: "$body3",
+  },
 });
 
 export const QuestionHeaderImage = styled("img", {
-  width: 200,
-  height: 180,
+  width: 220,
+  height: 160,
   backgroundColor: "$neutral100",
+  objectFit: "cover",
+
+  "@media (max-width: 640px)": {
+    display: "none",
+  },
 });
 
-export const QuestionOptionContainer = styled("div", {
-  margin: "$4 0",
-});
+export const QuestionOptionContainer = styled("div", {});
 
-export const QuestionOptionTitle = styled("p", {});
+export const QuestionOptionTitle = styled("p", {
+  fontWeight: 700,
+  fontFamily: "RingBold",
+});
 
 export const NumberPickerContainer = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  marginTop: "$3",
-  overflow: "hidden",
+  marginTop: "$4",
+  overflowX: "hidden",
 });
 
 export const NumberPickerLine = styled("div", {
   backgroundColor: "#EE0014",
   display: "flex",
-  width: "100%",
   height: 2,
+  left: "$8",
+  right: "$8",
+  position: "absolute",
 });
 
 export const NumberPickerOptionContainer = styled("div", {
@@ -64,13 +86,19 @@ export const NumberPickerOptionContainer = styled("div", {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  width: 40,
-  height: 40,
+  width: 24,
+  height: 24,
   cursor: "pointer",
-  borderRadius: 4,
+  borderRadius: 100,
   backgroundColor: "$neutral200",
+  borderColor: "#EE0014",
+  borderWidth: 3,
+  borderStyle: "solid",
+  zIndex: 99,
 });
 
 export const NumberPickerOptionTitle = styled("p", {
   color: "#fff",
+  fontSize: 14,
+  fontFamily: "RingBold",
 });

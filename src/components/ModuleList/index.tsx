@@ -1,24 +1,5 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
-import { Video } from "@/client/videos";
-
-interface Modules {
-  id: number;
-  title: string;
-  thumbnail: string;
-  watchedPercentage: number;
-  episodes: number;
-  watchedEpisodes: number;
-  duration: number;
-  videos: videos[];
-}
-interface videos {
-  id: number;
-  title: string;
-  thumbnail: string;
-  watchedPercentage: number;
-  duration: number;
-}
 
 interface ModulesProps {
   programModule: {
@@ -26,7 +7,7 @@ interface ModulesProps {
     title: string;
     thumbnail: string;
     watched: number;
-    episodes: Video[];
+    episodes: any[];
   };
   setSelectedVideo: any;
 }
@@ -35,6 +16,12 @@ const ModuleList: React.FC<ModulesProps> = ({
   programModule,
   setSelectedVideo,
 }) => {
+  const watchedPercent = (
+    (programModule?.episodes.filter((e) => e.watched).length /
+      programModule?.episodes?.length) *
+    100
+  ).toFixed(0);
+
   return (
     <div className={styles.moduleWrapper}>
       <div className={styles.topVideo}>
@@ -55,7 +42,7 @@ const ModuleList: React.FC<ModulesProps> = ({
               </svg>
 
               <span className={styles.moduleWatched}>
-                <strong>0%</strong> assistido
+                <strong>{watchedPercent}%</strong> assistido
               </span>
             </div>
             <h4 className={styles.moduleTitle}>{programModule?.title}</h4>
@@ -64,7 +51,6 @@ const ModuleList: React.FC<ModulesProps> = ({
               <span className={styles.numberVideosInfo}>
                 Aula 1 de {programModule?.episodes?.length}
               </span>
-              •<span className={styles.minutesInfo}>0 minutos</span>
             </div>
           </div>
 
@@ -82,9 +68,9 @@ const ModuleList: React.FC<ModulesProps> = ({
                   <div className={styles.content}>
                     <h3 className={styles.title}>{t?.title}</h3>
                     {/* <div className={styles.videoDuration}>0</div> */}
-                    {/* {e.watchedPercentage === 100 && (
+                    {t.watched && (
                       <span className={styles.completedBadge}>COMPLETO</span>
-                    )} */}
+                    )}
                   </div>
                 </div>
               ))}

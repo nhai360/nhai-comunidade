@@ -12,10 +12,11 @@ import { LikeButton } from "@/features/video-player";
 import * as S from "./VideoPlayerCard.styles";
 import { format } from "date-fns";
 import { Post } from "@/features/posts";
+import { useEffect, useState } from "react";
+import { GetLiveMetrics } from "@/services/firebase/chat";
 
 export function VideoPlayerCard({ isMobile = false }) {
   const router = useRouter();
-
   const { session } = useAuthContext();
 
   const { user } = useUser({

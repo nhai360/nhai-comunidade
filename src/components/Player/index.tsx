@@ -15,17 +15,18 @@ import { handleCreateUserProgress } from "@/services/firebase/progress";
 import { toast } from "react-toastify";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
-import { useEffect, useState } from "react";
-import useWindowDimensions from "@/hooks/useWindowDimension";
+import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { useQuestion, useQuestionAnswers } from "@/client/questions";
+import { useQuestion } from "@/client/questions";
 import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
 
 interface VideoProps {
   video: Video;
+  watched: boolean;
 }
 
-const Player: React.FC<VideoProps> = ({ video }) => {
+const Player: React.FC<VideoProps> = ({ video, watched }) => {
+  const videoRef = useRef<any>(null);
   const { session } = useAuthContext();
   // const { width = 0 } = useWindowDimensions();
   const { width = 0 } = useWindowSize();
@@ -64,7 +65,7 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
   // Executar isso quando o vídeo acabar
   const handleCompleteVideo = async () => {
-    if (user && video) {
+    if (user && video && !watched) {
       await handleCreateUserProgress(user?.id, video).then(() => {
         toast.success("Episódio concluído :)");
       });
@@ -79,14 +80,22 @@ const Player: React.FC<VideoProps> = ({ video }) => {
     if (!loadingQuestion && question) {
       const findResponse = question.answers.find((a) => a?.userId === user?.id);
       if (question && !findResponse) {
-        setShowAnswers(true);
+        if (question?.type === "END" && watched) {
+          setShowAnswers(true);
+          videoRef?.current?.pause();
+        } else {
+          setShowAnswers(true);
+          videoRef?.current?.pause();
+        }
       } else {
+        !watched && videoRef?.current?.play();
         setShowAnswers(false);
       }
     } else {
+      !loadingQuestion && !watched && videoRef?.current?.play();
       setShowAnswers(false);
     }
-  }, [question]);
+  }, [question, watched]);
 
   return (
     <div className={styles.video}>
@@ -105,6 +114,7 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
       <div className={styles.videoWrapper}>
         <MuxVideo
+          ref={videoRef}
           playbackId={video?.playbackId as string}
           streamType="on-demand"
           metadata={{
@@ -117,8 +127,8 @@ const Player: React.FC<VideoProps> = ({ video }) => {
           width={"100%"}
           height={"100%"}
           style={{ backgroundColor: "#323232" }}
-          autoPlay
           muted
+          onEnded={handleCompleteVideo}
         />
 
         <div className={styles.videoDetailsContainer}>

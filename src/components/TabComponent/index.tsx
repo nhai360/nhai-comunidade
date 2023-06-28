@@ -9,11 +9,10 @@ import { IWatchedVideo } from "@/services/firebase/progress";
 
 type IProps = {
   isSigned: boolean;
-  programas: any[];
-  watchedVideos: IWatchedVideo[];
+  cursos: any[];
 };
 
-const TabComponent = ({ isSigned, programas, watchedVideos }: IProps) => {
+const TabComponent = ({ isSigned, cursos }: IProps) => {
   const [active, setActive] = useState(1);
 
   const { user } = useUserFromNickname({
@@ -42,11 +41,7 @@ const TabComponent = ({ isSigned, programas, watchedVideos }: IProps) => {
 
       {active === 1 && (
         <>
-          <ProgramSlider
-            watchedVideos={watchedVideos}
-            user={user as any}
-            programas={programas}
-          />
+          <ProgramSlider cursos={cursos} user={user as any} />
         </>
       )}
 

@@ -25,9 +25,7 @@ export function Header({ backUrl }: Props) {
 
   function handleLogout() {
     logout();
-
     authenticatedAPI.defaults.headers.Authorization = null;
-
     router.push("/auth/login");
   }
 

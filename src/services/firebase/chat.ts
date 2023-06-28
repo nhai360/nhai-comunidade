@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -84,6 +85,37 @@ export const handleCreateLiveViewer = async (
   } catch (error: any) {
     console.error("Falha ao criar novo arquivo:", error);
     toast.error("Falha ao criar novo arquivo: " + error.message);
+  }
+};
+
+export const GetLiveMetrics = async (liveId: string) => {
+  try {
+    console.log("GetLiveMetrics");
+    const liveChatDoc = doc(db, "LIVECHAT", liveId);
+
+    const messageCol = collection(liveChatDoc, "MESSAGES");
+    const chatSnapshot = await getDocs(
+      query(messageCol, orderBy("createdAt", "asc"))
+    );
+
+    const chat = chatSnapshot.docs.map((doc) => {
+      return { _id: doc.id, ...doc.data() };
+    });
+
+    const viewersCol = collection(liveChatDoc, "VIEWERS");
+    const viewersSnapshot = await getDocs(viewersCol);
+
+    const viewers = viewersSnapshot.docs.map((doc) => {
+      return { _id: doc.id, ...doc.data() };
+    });
+
+    return { chat, viewers };
+  } catch (error: any) {
+    toast.error("Falha ao pegar métricas: " + error.message);
+    return {
+      chat: [],
+      viewers: [],
+    };
   }
 };
 

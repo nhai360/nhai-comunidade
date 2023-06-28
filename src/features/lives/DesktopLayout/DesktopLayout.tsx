@@ -6,6 +6,7 @@ import { Broadcast, CaretRight } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { limitText } from "../utils";
 import { useUserLiveContext } from "@/contexts/UserLiveContext";
+import { GetLiveMetrics } from "@/services/firebase/chat";
 
 interface Types {
   handleCreate: () => void;
@@ -14,6 +15,12 @@ interface Types {
 export function DesktopLayout({ handleCreate }: Types) {
   const router = useRouter();
   const { userlives } = useUserLiveContext();
+
+  const handleGetMetrics = (liveId: string) => {
+    GetLiveMetrics(liveId).then((res) =>
+      alert(`Métricas: 🗨️ ${res?.chat?.length} | 👁️‍🗨️ ${res?.viewers?.length}`)
+    );
+  };
 
   return (
     <DefaultLayout hasSider={false}>
@@ -89,8 +96,9 @@ export function DesktopLayout({ handleCreate }: Types) {
                     cursor: live?.status !== "FINISHED" ? "pointer" : "default",
                   }}
                   onClick={() =>
-                    live?.status !== "FINISHED" &&
-                    router.push(`/lives/${live.id}`)
+                    live?.status !== "FINISHED"
+                      ? router.push(`/lives/${live.id}`)
+                      : handleGetMetrics(live?.id)
                   }
                 >
                   <div
