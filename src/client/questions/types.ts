@@ -42,3 +42,13 @@ export type GetQuestionParams = {
 export type GetQuestionAnswersParams = {
   questionId?: string;
 };
+
+interface PostQuestionAnswers {
+  optionId: string;
+  response: string;
+}
+
+export type PostQuestionAnswersParams = {
+  questionId: string;
+  answers: PostQuestionAnswers[];
+};

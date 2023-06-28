@@ -9,6 +9,7 @@ import { useCreatePlaylist } from "@/client/videos/useCreatePlaylist";
 import { Question } from "@/client/questions";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useCreateAnswers } from "@/client/questions/useCreateAnswers";
 
 type Props = {
   onClose: () => void;
@@ -26,27 +27,27 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
 
   const [answers, setAnswers] = useState<IAnswerOption[]>([]);
 
-  const {
-    createPlaylist,
-    isLoading: isCreatingPlaylist,
-    isSuccess,
-  } = useCreatePlaylist();
-
-  const isLoading = isCreatingPlaylist;
+  const { createAnswers, isLoading, isSuccess } = useCreateAnswers();
 
   function handleSendAnwsers() {
-    // createPlaylist(
-    //   {
-    //     title,
-    //   },
-    //   {
-    //     onSuccess: (media) => {
-    //     },
-    //     onError: () => {
-    //       toast.error("Não foi possível enviar suas respostas. Tente novamente!");
-    //     },
-    //   }
-    // );
+    if (answers?.length === question?.options?.length) {
+      createAnswers(
+        {
+          questionId: question?.id,
+          answers,
+        },
+        {
+          onSuccess: (media) => {},
+          onError: () => {
+            toast.error(
+              "Não foi possível enviar suas respostas. Tente novamente!"
+            );
+          },
+        }
+      );
+    } else {
+      toast.error("Preencha todas as opções");
+    }
   }
 
   if (isSuccess) {
@@ -137,7 +138,7 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
             <Button
               type="button"
               variant={"text"}
-              loading={isLoading}
+              disabled={isLoading}
               onClick={() => router.push("/negocios-de-orgulho")}
               style={{ borderRadius: 0, height: 48 }}
             >
