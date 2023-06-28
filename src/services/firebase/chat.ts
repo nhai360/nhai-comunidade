@@ -9,27 +9,32 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
+import { User } from "@/client/users";
 
 export const handleGetChat = async (liveId: string, setChat: any) => {
   try {
-    console.log("[CHAT]: handleGetChat");
+    console.log("[GET CHAT]");
     const liveChatDoc = doc(db, "LIVECHAT", liveId);
 
-    const messageCol = collection(liveChatDoc, "MESSAGES");
-    return onSnapshot(
-      query(messageCol, orderBy("createdAt", "asc")),
-      (snapshot) => {
-        const messageList = snapshot.docs.map((doc) => {
-          return { _id: doc?.id, ...doc.data() };
-        });
-        setChat(messageList);
-      }
+    const messageCol = query(
+      collection(liveChatDoc, "MESSAGES"),
+      orderBy("createdAt", "asc")
     );
+    return onSnapshot(messageCol, (snapshot) => {
+      const messageList = snapshot.docs
+        .map((doc) => {
+          return { _id: doc?.id, ...doc.data() };
+        })
+        .filter((m: any) => !m.deleted);
+      setChat(messageList);
+    });
   } catch (error: any) {
-    toast.error("Falha ao pegar chat: " + error.message);
+    toast.error("Falha ao pegar chat :(");
+    console.log("[GET CHAT ERROR]", error.message);
     return [];
   }
 };
@@ -56,15 +61,24 @@ export const handleCreateChatMessage = async (
 
 export const handleDeleteChatComment = async (
   liveId: string,
-  commentId: string
+  comment: any,
+  user: User
 ) => {
   try {
-    console.log("[CHAT]: handleDeleteChatComment");
+    console.log("[DELETE CHAT COMMENT]");
     const liveChatDocRef = doc(db, "LIVECHAT", liveId);
     const messageColRef = collection(liveChatDocRef, "MESSAGES");
 
-    const commentDocRef = doc(messageColRef, commentId);
-    await deleteDoc(commentDocRef);
+    const commentDocRef = doc(messageColRef, comment?._id);
+    await setDoc(commentDocRef, {
+      ...comment,
+      deleted: true,
+      deleter: {
+        userId: user?.id,
+        name: user?.fullName,
+      },
+      deletedAt: serverTimestamp(),
+    });
 
     console.log("Documento excluído com sucesso!");
   } catch (error: any) {

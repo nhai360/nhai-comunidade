@@ -241,6 +241,7 @@ const Home = (): JSX.Element => {
           liveId={live?.id}
           isOwner={userIsAuthor}
           isOpen={width > 800}
+          user={user as any}
         />
       </div>
       <div className={styles.toolbarWrapper}>

@@ -40,7 +40,11 @@ export const handleCreateUserProgress = async (
     const messageColRef = collection(liveChatDocRef, "VIDEOS");
     const viewerDocRef = doc(messageColRef, video?.id);
 
-    await setDoc(viewerDocRef, { id: video?.id, title: video?.title });
+    await setDoc(viewerDocRef, {
+      id: video?.id,
+      title: video?.title,
+      createdAt: serverTimestamp(),
+    });
   } catch (error: any) {
     console.error("Erro ao gerar progresso", error);
     toast.error("Erro ao gerar progresso " + error.message);
