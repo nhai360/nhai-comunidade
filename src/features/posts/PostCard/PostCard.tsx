@@ -8,11 +8,22 @@ import { Wrapper } from "./DesktopPostCardFooter/DesktopPostCardFooter.styles";
 
 type Props = {
   post: PostType;
+  isAmstel?: boolean;
 };
 
-export function PostCard({ post }: Props) {
+export function PostCard({ post, isAmstel }: Props) {
   return (
-    <Card ghost>
+    <Card
+      css={
+        isAmstel
+          ? {
+              borderRadius: 4,
+              fontFamily: "RingMedium",
+            }
+          : {}
+      }
+      ghost
+    >
       <Wrapper>
         <Post.Header post={post} />
         <Post.Content post={post} />

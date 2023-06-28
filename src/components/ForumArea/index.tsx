@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react"; 
 import "swiper/swiper-bundle.min.css";
 import styles from "./index.module.scss";
 import { User } from "@/client/users";
 import { useUserPosts } from "@/client/posts/useUserPosts";
 import { useUserTrending } from "@/client/posts/useUserTrending";
 import { useVirtual } from "@tanstack/react-virtual";
-import { PostCard } from "@/features/posts";
 import * as S from "./ForumArea.styles";
+import { PostCardAmstel } from "@/features/posts/PostCardAmstel/PostCardAmstel";
 
 interface Posts {
   id: number;
@@ -75,7 +75,7 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
 
                   return (
                     <li key={post.id} ref={measure}>
-                      <PostCard post={post} />
+                      <PostCardAmstel isAmstel post={post} />
                     </li>
                   );
                 })}

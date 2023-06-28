@@ -11,6 +11,7 @@ import { PostCommentField } from "./PostCommentField";
 type Props = {
   post: PostType;
   expanded?: boolean;
+  isAmstel?: boolean;
 };
 
 export function Post({ post, expanded }: Props) {

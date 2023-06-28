@@ -11,9 +11,10 @@ import { AppPostDialogStats } from "./AppPostDialogStats";
 type Props = {
   postId: string;
   onClose: () => void;
+  isAmstel?: boolean;
 };
 
-export function PostDialog({ postId, onClose }: Props) {
+export function PostDialog({ postId, isAmstel, onClose }: Props) {
   const { post } = usePost({
     postId,
   });
