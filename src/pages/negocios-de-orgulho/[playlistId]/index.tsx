@@ -14,6 +14,7 @@ import { Video, useVideo } from "@/client/videos";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimension";
 import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
+import { Amstel } from "@/features/negociosdeorgulho";
 
 const PlayerScreen = () => {
   const router = useRouter();
@@ -49,7 +50,8 @@ const PlayerScreen = () => {
 
   return (
     <>
-      {width >= 724 ? <Header user={user as User} /> : <HeaderMobile />}
+      <Amstel.DesktopLayout hasSider={false}></Amstel.DesktopLayout>
+      <Amstel.AppLayout></Amstel.AppLayout>
       <div className={styles.Container}>
         <div className={styles.RowVideo}>
           {selectedVideo && <Player video={selectedVideo as any} />}

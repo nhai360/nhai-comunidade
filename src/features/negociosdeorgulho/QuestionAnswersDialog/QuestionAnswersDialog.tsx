@@ -69,7 +69,7 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
 
   const handleOption = (answer: IAnswerOption) => {
     const findResponse = answers.find((a) => a?.optionId === answer?.optionId);
-    if (!!findResponse) {
+    if (findResponse) {
       setAnswers(
         answers.map((a) => (a?.optionId === answer?.optionId ? answer : a))
       );
