@@ -1,191 +1,184 @@
 .columnWrapper {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
 }
 
 .column {
-    flex: 1;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-
-
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .boxPadding {
-    padding: 0px 30px;
 }
-
-
 
 .moduleSlider {
+  width: 100%;
+  padding-top: 8px;
+  padding-inline: 16px;
+
+  @media screen and (min-width: 768px) {
+    padding-inline: 30px;
+  }
+
+  img {
+    transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 100%;
-    padding:15px;
-    @media (max-width:1024px){
-        padding:0px;  
-    }
-    img {
-        transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        width: 100%;
-        height: 400px;
-        z-index: 50;
-        object-fit: cover;
-    }
+    height: 400px;
+    z-index: 50;
+    object-fit: cover;
+  }
 
-    .swiper-slide {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        height: 200px;
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin: 10px;
-        cursor: pointer;
-
-    }
-
-
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    cursor: pointer;
+  }
 }
 
-
-
 .divider {
-    content: '';
-    width: 100%;
-    height: 2px;
-    background-color: #cccccc40;
-    margin: 15px 0px;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #cccccc40;
+  margin: 16px 0px;
+  margin-top: 0;
+}
+
+.dividerPrograms {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #cccccc40;
+  margin: 16px 0px;
 }
 
 .rowHeader {
-    display: flex;
+  display: flex;
+
+  width: 100%;
+  padding-inline: 16px;
+
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media screen and (min-width: 768px) {
     flex-direction: row;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
-    width: 100%;
-    margin:5px 0px;
+    padding-inline: 30px;
+  }
 
-    .courseTitle {
-        color: #E63432;
-        text-decoration: none;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin:0;
-        padding:0;
+  .courseTitle {
+    color: #e63432;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+  }
 
-        @media (max-width:768px) {
-            font-size: 0.9rem;
-        }
+  .courseInfo {
+    text-transform: lowercase;
+    color: #8c8c8c;
+    font-weight: 500;
+    span {
+      color: #ff0404;
+      font-weight: 700;
     }
-
-    .courseInfo {
-        text-transform: lowercase;
-        font-size: 0.9rem;
-        color: #8C8C8C;
-        font-weight: 500;
-        margin:0;
-        padding:0;
-        span {
-            color: #FF0404;
-            font-weight: 700;
-
-        }
-    }
+  }
 }
 
 .redHeader {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #E63432;
-    padding: 16px 20px;
-    z-index: 70;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e63432;
+  padding: 16px 20px;
+  z-index: 70;
 
-    h3 {
-        font-size: 0.75rem;
-        color: #fff;
-        font-weight: 900;
-        margin: 0;
-        margin-top: 5px;
+  h3 {
+    font-size: 0.75rem;
+    color: #fff;
+    font-weight: 900;
+    margin: 0;
+    margin-top: 5px;
+  }
+
+  .courseInfo {
+    text-transform: lowercase;
+    color: #fff;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+
+    span {
+      color: #ffc700;
+      font-weight: 700;
     }
-
-    .courseInfo {
-        text-transform: lowercase;
-        color: #fff;
-        font-size: 0.9rem;
-        padding: 0;
-        margin: 0;
-
-        span {
-            color: #FFC700;
-            font-weight: 700;
-        }
-    }
+  }
 }
 
 .sliderItem {
-    cursor: pointer;
+  cursor: pointer;
 
-
-
-    @media screen and (min-width:1024px) {
-
-
-
-        .itemHover:before {
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            width: 0%;
-            height: 0%;
-            content: '';
-            background-color: #E63432;
-            transition: 0.3s all ease-in-out;
-            z-index: 0;
-        }
-
-        .redHeader:before {
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            width: 0%;
-            height: 5px;
-            content: '';
-            background-color: #fff;
-            transition: 0.3s all ease-in-out;
-        }
-
-        &:hover {
-            .itemHover {
-                overflow: hidden;
-
-                img {
-                    transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    width: 115%;
-                    transform: translateX(-10px);
-                    object-fit: cover;
-                }
-            }
-
-            .redHeader:before {
-                left: 0px;
-                width: 100%;
-                transition: 0.3s all ease-in-out;
-            }
-
-            .itemHover:before {
-                left: -5px;
-                bottom: 0px;
-                width: 100%;
-                height: 98%;
-                padding: 5px;
-                transition: 0.3s all ease-in-out;
-            }
-
-        }
+  @media screen and (min-width: 1024px) {
+    .itemHover:before {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      width: 0%;
+      height: 0%;
+      content: "";
+      background-color: #e63432;
+      transition: 0.3s all ease-in-out;
+      z-index: 0;
     }
+
+    .redHeader:before {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      width: 0%;
+      height: 5px;
+      content: "";
+      background-color: #fff;
+      transition: 0.3s all ease-in-out;
+    }
+
+    &:hover {
+      .itemHover {
+        overflow: hidden;
+
+        img {
+          transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          width: 115%;
+          transform: translateX(-10px);
+          object-fit: cover;
+        }
+      }
+
+      .redHeader:before {
+        left: 0px;
+        width: 100%;
+        transition: 0.3s all ease-in-out;
+      }
+
+      .itemHover:before {
+        left: -5px;
+        bottom: 0px;
+        width: 100%;
+        height: 98%;
+        padding: 5px;
+        transition: 0.3s all ease-in-out;
+      }
+    }
+  }
 }

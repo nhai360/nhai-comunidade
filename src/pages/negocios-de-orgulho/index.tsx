@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { handleProgramas } from "@/services/firebase/programas";
 import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
+import { Amstel } from "@/features/negociosdeorgulho";
 
 function NegociosDeOrgulho() {
   const router = useRouter();
@@ -34,12 +35,14 @@ function NegociosDeOrgulho() {
   return (
     <>
       <div className={styles.Container}>
-        <Header
+        <Amstel.DesktopLayout hasSider={false}></Amstel.DesktopLayout>
+        <Amstel.AppLayout></Amstel.AppLayout>
+        {/* <Header
           user={user as any}
           canCreate={
             user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO
           }
-        />
+        /> */}
         <div className={styles.BannerProgram}>
           <div className={styles.Row}>
             <div className={styles.Breadcrumb}>

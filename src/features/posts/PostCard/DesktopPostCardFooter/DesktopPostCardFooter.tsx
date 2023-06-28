@@ -6,6 +6,7 @@ import * as S from "./DesktopPostCardFooter.styles";
 
 type Props = {
   post: PostType;
+  isAmstel?: boolean;
 };
 
 export function DesktopPostCardFooter({ post }: Props) {

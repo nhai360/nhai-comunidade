@@ -61,7 +61,7 @@ const WatchLive = (): JSX.Element => {
       firebaseStatus === "FINISHED" &&
         setTimeout(() => {
           router.push("/videos");
-        }, 10000);
+        }, 30000);
     }
   }, [firebaseStatus]);
 

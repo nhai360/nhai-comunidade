@@ -18,6 +18,8 @@ import { useComments } from "@/client/comments";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimension";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useQuestion, useQuestionAnswers } from "@/client/questions";
+import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
 
 interface VideoProps {
   video: Video;
@@ -43,6 +45,16 @@ const Player: React.FC<VideoProps> = ({ video }) => {
     }
   );
 
+  const { question, isLoading: loadingQuestion } = useQuestion({
+    videoId: video?.id,
+  });
+
+  // const { answers, isLoading: loadingAnswers } = useQuestionAnswers({
+  //   questionId: question?.id,
+  // });
+
+  const [showAnswers, setShowAnswers] = useState(false);
+
   const isCreator = video?.author?.id === user?.id;
   const createdAt = format(new Date(video?.createdAt), "dd MMM");
 
@@ -62,6 +74,19 @@ const Player: React.FC<VideoProps> = ({ video }) => {
   useEffect(() => {
     width > 1024 && setShowComments(true);
   }, [width]);
+
+  useEffect(() => {
+    if (!loadingQuestion && question) {
+      const findResponse = question.answers.find((a) => a?.userId === user?.id);
+      if (question && !findResponse) {
+        setShowAnswers(true);
+      } else {
+        setShowAnswers(false);
+      }
+    } else {
+      setShowAnswers(false);
+    }
+  }, [question]);
 
   return (
     <div className={styles.video}>
@@ -101,14 +126,14 @@ const Player: React.FC<VideoProps> = ({ video }) => {
           <S.UserAndLikeContainer style={{ marginTop: 16 }}>
             <S.UserContainer>
               <Avatar.Square
-                size="small"
+                size={width > 768 ? "large" : "small"}
                 style={{ borderRadius: 32 }}
                 src={"/amstel.png"}
                 fallback={getInitials(video?.author?.fullName)}
               />
               <S.UserInformationContainer>
                 <Typography.Text css={{ color: "$textTitle" }}>
-                  {getFirstNameAndLastName("Negócios de Orgulho")}
+                  {getFirstNameAndLastName("Amstel")}
                   <S.TimeLabel>{createdAt}</S.TimeLabel>
                 </Typography.Text>
                 <Typography.Text size="body3" color="secondary">
@@ -124,7 +149,7 @@ const Player: React.FC<VideoProps> = ({ video }) => {
 
       <section className={styles.commentsSection}>
         <CommentProvider>
-          <Post.CommentField originType={"videos"} origin={video} />
+          <Post.CommentField isAmstel originType={"videos"} origin={video} />
           {width < 1024 && <div className={styles.divider}></div>}
 
           {width < 1024 && (
@@ -147,6 +172,13 @@ const Player: React.FC<VideoProps> = ({ video }) => {
           ) : undefined}
         </CommentProvider>
       </section>
+      {showAnswers && question && (
+        <QuestionAnswersDialog
+          question={question}
+          onClose={() => setShowAnswers(false)}
+          video={video}
+        />
+      )}
     </div>
   );
 };

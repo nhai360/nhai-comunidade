@@ -54,7 +54,10 @@ export function LikeButton({ video, isAmstel, ...rest }: Props) {
       }
       onClick={handleLikeVideo}
     >
-      <HeartIcon color={"red"} fill={alreadyLiked ? "currentColor" : "none"} />
+      <HeartIcon
+        color={!isAmstel ? "white" : "red"}
+        fill={alreadyLiked ? "currentColor" : "none"}
+      />
       <span
         style={
           isAmstel

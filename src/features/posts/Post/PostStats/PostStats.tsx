@@ -10,13 +10,15 @@ import { Post as PostType, useLikePost } from "@/client/posts";
 import { LikedBy } from "./LikedBy";
 
 import * as S from "./PostStats.styles";
+import { PostDialogAmstel } from "../../PostDialogAmstel";
 
 type Props = {
   post: PostType;
   expanded?: boolean;
+  isAmstel?: boolean;
 };
 
-export function PostStats({ post, expanded = false }: Props) {
+export function PostStats({ post, isAmstel, expanded = false }: Props) {
   const [isPostDialogVisible, setIsPostDialogVisible] = useState(false);
 
   const { likePost, isLoading } = useLikePost();
@@ -24,7 +26,7 @@ export function PostStats({ post, expanded = false }: Props) {
   const { session } = useAuthContext();
 
   const alreadyLikedPost = Boolean(
-    post.likes.find((like) => like.authorId === session?.userId),
+    post.likes.find((like) => like.authorId === session?.userId)
   );
 
   function handleLikePost() {
@@ -44,6 +46,18 @@ export function PostStats({ post, expanded = false }: Props) {
             size="medium"
             variant="transparent"
             onClick={() => setIsPostDialogVisible(true)}
+            css={
+              isAmstel
+                ? {
+                    fontFamily: "RingBold",
+                    color: "red",
+                    borderRadius: 0,
+                    "&:not(:disabled):hover": {
+                      background: "red !important",
+                    },
+                  }
+                : {}
+            }
           >
             Ver mais {post.stats.comments} comentários
           </Button>
@@ -53,14 +67,52 @@ export function PostStats({ post, expanded = false }: Props) {
           loading={isLoading}
           variant="primary"
           onClick={handleLikePost}
+          css={
+            isAmstel
+              ? {
+                  fontFamily: "RingBold",
+                  color: "black",
+                  borderRadius: 0,
+                  backgroundColor: "white",
+                  textTransform: "uppercase",
+                  "&:not(:disabled):hover": {
+                    background: "#f1f1f1 !important",
+                  },
+                }
+              : {}
+          }
         >
-          <HeartIcon fill={alreadyLikedPost ? "currentColor" : "none"} />
-          <span>{alreadyLikedPost ? "Curtido" : "Curtir"}</span>
+          <HeartIcon
+            color={!isAmstel ? "white" : "red"}
+            fill={
+              alreadyLikedPost && isAmstel
+                ? "red"
+                : alreadyLikedPost
+                ? "currentColor"
+                : "none"
+            }
+          />
+          <span
+            style={
+              isAmstel
+                ? {
+                    textTransform: "uppercase",
+                    fontFamily: "RingBold",
+                    color: "black",
+                  }
+                : {
+                    textTransform: "unset",
+                  }
+            }
+          >
+            {alreadyLikedPost ? "Curtido" : "Curtir"}
+          </span>
         </Button>
       </S.Actions>
 
       {isPostDialogVisible && (
-        <PostDialog
+        <PostDialogAmstel
+          isAmstel
           postId={post.id}
           onClose={() => setIsPostDialogVisible(false)}
         />
