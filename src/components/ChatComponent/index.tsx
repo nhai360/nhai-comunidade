@@ -3,17 +3,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import MessageItem from "../MessageItem";
-import { handleGetChat } from "@/services/firebase/chat";
 
 interface Props {
   isOpen: boolean;
   liveId: string;
   isOwner: boolean;
+  chat: any[];
 }
 
-const Chat = ({ isOpen, liveId, isOwner }: Props) => {
+const Chat = ({ isOpen, liveId, isOwner, chat }: Props) => {
   const messagesEndRef = useRef<any>(null);
-  const [chat, setChat] = useState([]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,10 +21,6 @@ const Chat = ({ isOpen, liveId, isOwner }: Props) => {
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
-
-  useEffect(() => {
-    liveId && handleGetChat(liveId, setChat);
-  }, [liveId]);
 
   return (
     <>

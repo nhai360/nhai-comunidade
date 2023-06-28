@@ -18,6 +18,8 @@ import { useComments } from "@/client/comments";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimension";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useQuestion, useQuestionAnswers } from "@/client/questions";
+import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
 
 interface VideoProps {
   video: Video;
@@ -43,6 +45,16 @@ const Player: React.FC<VideoProps> = ({ video }) => {
     }
   );
 
+  const { question, isLoading: loadingQuestion } = useQuestion({
+    videoId: video?.id,
+  });
+
+  // const { answers, isLoading: loadingAnswers } = useQuestionAnswers({
+  //   questionId: question?.id,
+  // });
+
+  const [showAnswers, setShowAnswers] = useState(false);
+
   const isCreator = video?.author?.id === user?.id;
   const createdAt = format(new Date(video?.createdAt), "dd MMM");
 
@@ -62,6 +74,19 @@ const Player: React.FC<VideoProps> = ({ video }) => {
   useEffect(() => {
     width > 1024 && setShowComments(true);
   }, [width]);
+
+  useEffect(() => {
+    if (!loadingQuestion && question) {
+      const findResponse = question.answers.find((a) => a?.userId === user?.id);
+      if (question && !findResponse) {
+        setShowAnswers(true);
+      } else {
+        setShowAnswers(false);
+      }
+    } else {
+      setShowAnswers(false);
+    }
+  }, [question]);
 
   return (
     <div className={styles.video}>
@@ -147,6 +172,13 @@ const Player: React.FC<VideoProps> = ({ video }) => {
           ) : undefined}
         </CommentProvider>
       </section>
+      {showAnswers && question && (
+        <QuestionAnswersDialog
+          question={question}
+          onClose={() => setShowAnswers(false)}
+          video={video}
+        />
+      )}
     </div>
   );
 };
