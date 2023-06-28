@@ -43,6 +43,7 @@ import { Levels } from "react-activity";
 import JoinLive from "@/features/lives/JoinLive";
 import LiveNotFound from "@/features/lives/LiveNotFound";
 import { toast } from "react-toastify";
+import { handleGetChat } from "@/services/firebase/chat";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -190,6 +191,12 @@ const Home = (): JSX.Element => {
 
   const participantsPerPage = Math.round(rows * columns);
 
+  const [chat, setChat] = useState([]);
+
+  useEffect(() => {
+    live?.id && handleGetChat(live?.id, setChat);
+  }, [live?.id]);
+
   return !live?.spaceId || !userIsParticipant ? (
     <LiveNotFound />
   ) : participant?.interactionRequired ? (
@@ -203,6 +210,7 @@ const Home = (): JSX.Element => {
           <BroadcastIndicator
             playbackId={`${live?.playbackId}`}
             isOnline={isBroadcasting}
+            qntMessages={chat?.length}
           />
         </div>
       </div>
@@ -228,13 +236,19 @@ const Home = (): JSX.Element => {
             participantsPerPage={participantsPerPage}
           />
         </div>
-        <Chat liveId={live?.id} isOwner={userIsAuthor} isOpen={width > 800} />
+        <Chat
+          chat={chat}
+          liveId={live?.id}
+          isOwner={userIsAuthor}
+          isOpen={width > 800}
+        />
       </div>
       <div className={styles.toolbarWrapper}>
         <div className={styles.indicatorDot}>
           <BroadcastIndicator
             playbackId={`${live?.playbackId}`}
             isOnline={isBroadcasting}
+            qntMessages={chat?.length}
           />
         </div>
 

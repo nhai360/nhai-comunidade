@@ -29,6 +29,7 @@ export const Content = styled(Dialog.Content, {
   background: "$neutral100",
   borderRadius: "$large",
   border: "1px solid $neutral200",
+  overflowX: "hidden",
 
   position: "fixed",
   top: "50%",
