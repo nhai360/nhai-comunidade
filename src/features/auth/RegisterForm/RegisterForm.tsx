@@ -73,11 +73,14 @@ export function RegisterForm() {
           },
           {
             onSuccess: () => {
+              toast.success(
+                "Conta criada com sucesso! Agora basta fazer login 😉"
+              );
               router.push("/auth/login");
             },
             onError: (err: any) => {
               const message: string = err?.response?.data?.message;
-              const status: any = err?.response?.status;
+              const status: any = err?.statusCode;
               if (message === "User with this email already exists.") {
                 setTab(1);
                 setError("email", {
@@ -214,6 +217,7 @@ export function RegisterForm() {
             data={defaultEthnicity}
             onChange={setValue}
             name="ethnicity"
+            isSearchable={false}
           />
           <Field.Select
             required
@@ -224,6 +228,7 @@ export function RegisterForm() {
             data={defaultGenres}
             onChange={setValue}
             name="gender"
+            isSearchable={false}
           />
           <Field.Select
             required
@@ -234,6 +239,7 @@ export function RegisterForm() {
             data={defaultSexualOrientation}
             onChange={setValue}
             name="sexualOrientation"
+            isSearchable={false}
           />
         </S.FieldContainer>
       )}

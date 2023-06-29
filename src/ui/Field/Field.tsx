@@ -121,6 +121,7 @@ const FieldSelect = (
     required,
     data,
     onChange,
+    isSearchable = true,
     ...rest
   }: any,
   ref: any
@@ -142,8 +143,10 @@ const FieldSelect = (
         error={hasError}
         size="medium"
         isClearable
+        maxMenuHeight={120}
         defaultOptions={data}
         onChange={(a: any) => onChange(name, a?.value)}
+        isSearchable={isSearchable}
         {...rest}
       />
     </Field>
