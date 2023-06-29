@@ -128,7 +128,7 @@ export function InviteParticipantDialog({
       <Dialog.Content>
         <Dialog.Header title={"Convidar"} onClose={onClose} closable />
         <Dialog.Body>
-          {guests.length < 5 && (
+          {guests.length < 6 && (
             <S.FormContainer onSubmit={handleSubmit(handleCreatePlaylist)}>
               <Field.Input
                 label="Nickname"
@@ -183,11 +183,11 @@ export function InviteParticipantDialog({
           css={{
             display: "flex",
             alignItems: "center",
-            justifyContent: guests.length < 5 ? "flex-end" : "flex-start",
+            justifyContent: guests.length < 6 ? "flex-end" : "flex-start",
             padding: "$4",
           }}
         >
-          {guests.length >= 5 ? (
+          {guests.length >= 6 ? (
             <>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Info size={32} />

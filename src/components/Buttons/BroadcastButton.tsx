@@ -48,7 +48,7 @@ const BroadcastButton = ({ live }: Props) => {
           },
           onError: () => {
             setCanClick("");
-            toast.error("Falha iniciar a transmissão. Tente novamente");
+            toast.error("Falha encerrar a transmissão. Tente novamente");
           },
         });
       } else {
