@@ -24,8 +24,12 @@ export function usePosts(params: GetParams = {}) {
     queryFn: () => getPosts(params),
   });
 
+  const removeAmstel = posts?.filter(
+    (p) => p?.author?.nickname !== process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO
+  );
+
   return {
-    posts,
+    posts: removeAmstel,
     ...rest,
   };
 }

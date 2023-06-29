@@ -24,8 +24,12 @@ export function useVideos(params: GetVideosParams = {}) {
     queryFn: () => getVideos(params),
   });
 
+  const removeAmstel = videos?.filter(
+    (p) => p?.author?.nickname !== process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO
+  );
+
   return {
-    videos,
+    videos: removeAmstel,
     ...rest,
   };
 }
