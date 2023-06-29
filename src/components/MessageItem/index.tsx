@@ -3,14 +3,16 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import { DeleteIcon } from "@/ui/_icons";
 import DeleteChatDialog from "@/features/lives/DeleteChatDialog";
+import { User } from "@/client/users";
 
 interface Props {
-  commentId: string;
+  comment: any;
   name: string;
   message: string;
   nickname: string;
   isOwner?: boolean;
   liveId?: string;
+  user: User;
 }
 
 const MessageItem = ({
@@ -19,9 +21,10 @@ const MessageItem = ({
   message,
   nickname,
   isOwner = false,
-  commentId,
+  comment,
+  user,
 }: Props) => {
-  const [selectedId, setSelectedId] = useState("");
+  const [selected, setSelected] = useState<any>();
   function gerarCorAleatoria(string: string): string {
     let hash = 0;
     for (let i = 0; i < string.length; i++) {
@@ -39,7 +42,7 @@ const MessageItem = ({
     <>
       <li
         className={styles.ownerMessageItem}
-        onClick={() => setSelectedId(commentId)}
+        onClick={() => setSelected(comment)}
       >
         <Link href={`/profile/${nickname}`} target="_blank">
           <span className={styles.name} style={{ color: color }}>
@@ -51,11 +54,12 @@ const MessageItem = ({
           <DeleteIcon />
         </div>
       </li>
-      {!!selectedId && (
+      {!!selected && (
         <DeleteChatDialog
-          onClose={() => setSelectedId("")}
-          commentId={selectedId}
+          onClose={() => setSelected(undefined)}
+          comment={selected}
           liveId={liveId}
+          user={user}
         />
       )}
     </>

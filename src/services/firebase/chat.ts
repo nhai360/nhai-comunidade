@@ -3,32 +3,38 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
+import { User } from "@/client/users";
 
 export const handleGetChat = async (liveId: string, setChat: any) => {
   try {
-    console.log("[CHAT]: handleGetChat");
+    console.log("[GET CHAT]");
     const liveChatDoc = doc(db, "LIVECHAT", liveId);
 
-    const messageCol = collection(liveChatDoc, "MESSAGES");
-    return onSnapshot(
-      query(messageCol, orderBy("createdAt", "asc")),
-      (snapshot) => {
-        const messageList = snapshot.docs.map((doc) => {
-          return { _id: doc?.id, ...doc.data() };
-        });
-        setChat(messageList);
-      }
+    const messageCol = query(
+      collection(liveChatDoc, "MESSAGES"),
+      orderBy("createdAt", "asc")
     );
+    return onSnapshot(messageCol, (snapshot) => {
+      const messageList = snapshot.docs
+        .map((doc) => {
+          return { _id: doc?.id, ...doc.data() };
+        })
+        .filter((m: any) => !m.deleted);
+      setChat(messageList);
+    });
   } catch (error: any) {
-    toast.error("Falha ao pegar chat: " + error.message);
+    toast.error("Falha ao pegar chat :(");
+    console.log("[GET CHAT ERROR]", error.message);
     return [];
   }
 };
@@ -55,15 +61,24 @@ export const handleCreateChatMessage = async (
 
 export const handleDeleteChatComment = async (
   liveId: string,
-  commentId: string
+  comment: any,
+  user: User
 ) => {
   try {
-    console.log("[CHAT]: handleDeleteChatComment");
+    console.log("[DELETE CHAT COMMENT]");
     const liveChatDocRef = doc(db, "LIVECHAT", liveId);
     const messageColRef = collection(liveChatDocRef, "MESSAGES");
 
-    const commentDocRef = doc(messageColRef, commentId);
-    await deleteDoc(commentDocRef);
+    const commentDocRef = doc(messageColRef, comment?._id);
+    await setDoc(commentDocRef, {
+      ...comment,
+      deleted: true,
+      deleter: {
+        userId: user?.id,
+        name: user?.fullName,
+      },
+      deletedAt: serverTimestamp(),
+    });
 
     console.log("Documento excluído com sucesso!");
   } catch (error: any) {
@@ -84,6 +99,37 @@ export const handleCreateLiveViewer = async (
   } catch (error: any) {
     console.error("Falha ao criar novo arquivo:", error);
     toast.error("Falha ao criar novo arquivo: " + error.message);
+  }
+};
+
+export const GetLiveMetrics = async (liveId: string) => {
+  try {
+    console.log("GetLiveMetrics");
+    const liveChatDoc = doc(db, "LIVECHAT", liveId);
+
+    const messageCol = collection(liveChatDoc, "MESSAGES");
+    const chatSnapshot = await getDocs(
+      query(messageCol, orderBy("createdAt", "asc"))
+    );
+
+    const chat = chatSnapshot.docs.map((doc) => {
+      return { _id: doc.id, ...doc.data() };
+    });
+
+    const viewersCol = collection(liveChatDoc, "VIEWERS");
+    const viewersSnapshot = await getDocs(viewersCol);
+
+    const viewers = viewersSnapshot.docs.map((doc) => {
+      return { _id: doc.id, ...doc.data() };
+    });
+
+    return { chat, viewers };
+  } catch (error: any) {
+    toast.error("Falha ao pegar métricas: " + error.message);
+    return {
+      chat: [],
+      viewers: [],
+    };
   }
 };
 

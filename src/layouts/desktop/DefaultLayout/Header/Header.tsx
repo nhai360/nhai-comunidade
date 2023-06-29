@@ -21,6 +21,7 @@ import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard"
 import * as S from "./Header.styles";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { authenticatedAPI } from "@/client";
 
 const CreateArticleDialog = dynamic(
   () => import("../../../../features/articles/CreateArticleDialog"),
@@ -36,6 +37,8 @@ export function Header({ canCreate = true, user }: IHeader) {
   const router = useRouter();
   const { searchTerm, handleChange, handleSearch } = useSearch();
 
+  const { logout } = useAuthContext();
+
   const isAdmin = user?.role?.name === "ADMIN";
   const isEnabled = isAdmin;
 
@@ -49,6 +52,12 @@ export function Header({ canCreate = true, user }: IHeader) {
     useState(false);
 
   const [isCreateArticleVisible, setIsCreateArticleVisible] = useState(false);
+
+  function handleLogout() {
+    logout();
+    authenticatedAPI.defaults.headers.Authorization = null;
+    router.push("/auth/login");
+  }
 
   return (
     <>
@@ -164,7 +173,7 @@ export function Header({ canCreate = true, user }: IHeader) {
                   style={{
                     height: 48,
                   }}
-                  onClick={() => router.push("auth/login")}
+                  onClick={handleLogout}
                 >
                   Login
                 </Button>

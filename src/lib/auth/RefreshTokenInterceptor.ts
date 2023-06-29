@@ -28,7 +28,7 @@ export async function refreshTokenInterceptor(error: AxiosError) {
       JSON.stringify({
         userId: session.userId,
         ...response.data,
-      }),
+      })
     );
 
     const config = {
@@ -38,6 +38,8 @@ export async function refreshTokenInterceptor(error: AxiosError) {
         Authorization: `Bearer ${response.data.access_token}`,
       },
     };
+
+    authenticatedAPI.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
 
     return axios(config)
       .then((retrySuccess) => retrySuccess)

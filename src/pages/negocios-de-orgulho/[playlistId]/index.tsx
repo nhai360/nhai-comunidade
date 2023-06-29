@@ -21,7 +21,7 @@ const PlayerScreen = () => {
   const { width = 0 } = useWindowDimensions();
   const { session } = useAuthContext();
 
-  const [selectedVideo, setSelectedVideo] = useState();
+  const [selectedVideo, setSelectedVideo] = useState<Video>();
   const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
 
   const { playlistId } = router.query;
@@ -37,7 +37,13 @@ const PlayerScreen = () => {
     title: playlist?.title,
     thumbnail: playlist?.videos[0]?.thumbnail?.url,
     watched: 0,
-    episodes: playlist?.videos || [],
+    episodes:
+      playlist?.videos.map((video: any) => {
+        return {
+          ...video,
+          watched: !!watchedVideos?.find((w) => w.id === video.id),
+        };
+      }) || [],
   };
 
   useEffect(() => {
@@ -48,16 +54,23 @@ const PlayerScreen = () => {
     !selectedVideo && setSelectedVideo(programModule.episodes[0]);
   }, [programModule]);
 
+  const isWatched = !!watchedVideos?.find((w) => w?.id == selectedVideo?.id);
+
+  const { video } = useVideo({
+    videoId: selectedVideo?.id as string,
+  });
+
   return (
     <>
       <Amstel.DesktopLayout hasSider={false}></Amstel.DesktopLayout>
       <Amstel.AppLayout></Amstel.AppLayout>
       <div className={styles.Container}>
         <div className={styles.RowVideo}>
-          {selectedVideo && <Player video={selectedVideo as any} />}
+          {video && <Player video={video} watched={isWatched} />}
           <ModuleList
             programModule={programModule as any}
             setSelectedVideo={setSelectedVideo}
+            selectedVideo={selectedVideo}
           />
         </div>
       </div>

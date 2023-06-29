@@ -3,15 +3,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import MessageItem from "../MessageItem";
+import { User } from "@/client/users";
 
 interface Props {
   isOpen: boolean;
   liveId: string;
   isOwner: boolean;
   chat: any[];
+  user: User;
 }
 
-const Chat = ({ isOpen, liveId, isOwner, chat }: Props) => {
+const Chat = ({ isOpen, liveId, isOwner, chat, user }: Props) => {
   const messagesEndRef = useRef<any>(null);
 
   const scrollToBottom = () => {
@@ -36,12 +38,13 @@ const Chat = ({ isOpen, liveId, isOwner, chat }: Props) => {
           {chat.map((data: any, key) => (
             <MessageItem
               key={key}
-              commentId={data?._id}
+              comment={data}
               name={data.userName}
               message={data.message}
               nickname={data?.nickname}
               liveId={liveId}
               isOwner={isOwner}
+              user={user}
             />
           ))}
 

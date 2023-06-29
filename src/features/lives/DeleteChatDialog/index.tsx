@@ -1,3 +1,4 @@
+import { User } from "@/client/users";
 import { getToken } from "@/lib/auth";
 import { handleDeleteChatComment } from "@/services/firebase/chat";
 import { Button, Dialog, Divider } from "@/ui";
@@ -8,25 +9,27 @@ import { toast } from "react-toastify";
 type Props = {
   onClose: () => void;
   liveId: string;
-  commentId: string;
+  comment: string;
+  user: User;
 };
 
-const DeleteChatDialog = ({ onClose, commentId, liveId }: Props) => {
+const DeleteChatDialog = ({ onClose, comment, liveId, user }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    handleDeleteChatComment(liveId, commentId)
-      .then(() => {
-        toast.success("Comentário deletado");
-        setIsLoading(false);
-        onClose();
-      })
-      .catch(() => {
-        toast.error("Não foi possível deletar o comentário :(");
-        setIsLoading(false);
-      });
+    user &&
+      handleDeleteChatComment(liveId, comment, user)
+        .then(() => {
+          toast.success("Comentário deletado");
+          setIsLoading(false);
+          onClose();
+        })
+        .catch(() => {
+          toast.error("Não foi possível deletar o comentário :(");
+          setIsLoading(false);
+        });
   };
 
   return (

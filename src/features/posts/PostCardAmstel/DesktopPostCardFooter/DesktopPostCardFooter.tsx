@@ -1,4 +1,4 @@
-import { Post } from "@/features/posts";
+import { PostAmstel } from "@/features/posts";
 import { CommentProvider } from "@/contexts";
 import { Post as PostType } from "@/client/posts";
 
@@ -20,11 +20,11 @@ export function DesktopPostCardFooter({ post }: Props) {
         },
       }}
     >
-      <Post.Stats isAmstel post={post} />
+      <PostAmstel.Stats isAmstel post={post} />
 
       <CommentProvider>
-        <Post.CommentList origin={post} originType="posts" />
-        <Post.CommentField origin={post} originType="posts" />
+        <PostAmstel.CommentList origin={post} originType="posts" />
+        <PostAmstel.CommentField origin={post} originType="posts" />
       </CommentProvider>
     </S.Wrapper>
   );

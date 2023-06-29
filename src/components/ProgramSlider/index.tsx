@@ -29,24 +29,12 @@ interface Modulo {
 
 interface SliderProps {
   user: User;
-  programas: any[];
-  watchedVideos: IWatchedVideo[];
+  cursos: any[];
 }
 
-const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
+const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
   const router = useRouter();
   const { width = 0 } = useWindowSize();
-
-  const { userplaylists } = useUserPlaylists({
-    userId: user?.id,
-  });
-
-  const { videos } = useVideosFromUser({
-    nickname: process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
-  });
-
-  const validPlaylists = userplaylists?.filter((a) => a?.videos?.length > 0);
-  const validOtherVideos = videos?.filter((a) => !a?.playlist);
 
   const swiperBreakpoints = {
     320: {
@@ -75,26 +63,6 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
     },
   };
 
-  const cursos = programas?.map((programa) => {
-    return {
-      id: 0,
-      title: programa?.name,
-      watched: 10,
-      modules: programa?.modules?.length,
-      modulos: programa?.modules?.map((id: string) => {
-        const findPlaylist = validPlaylists?.find((v) => v?.id === id);
-
-        return {
-          id: id,
-          title: findPlaylist?.title,
-          thumbnail: findPlaylist?.videos[0]?.thumbnail?.url,
-          watched: 0,
-          episodes: findPlaylist?.videos?.length,
-        };
-      }),
-    };
-  });
-
   return (
     <div className={styles.columnWrapper}>
       {cursos &&
@@ -105,14 +73,14 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
             <div
               key={curso.id}
               className={`${styles.column} ${styles.boxPadding}`}
-              style={{marginBottom: 16}}
+              style={{ marginBottom: 16 }}
             >
               <div className={styles.rowHeader}>
                 <h5 className={styles.courseTitle}>{curso.title} </h5>
                 <p className={styles.courseInfo}>
                   {user && (
                     <>
-                      <span>{`0%`}</span> Assistido •{" "}
+                      <span>{curso.watched}%</span> Assistido •{" "}
                     </>
                   )}
                   <span>{curso?.modulos?.length}</span> Módulos
@@ -140,7 +108,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, programas }) => {
                           <p className={styles.courseInfo}>
                             {!!user && (
                               <>
-                                <span>{`0%`}</span> Assistido •{" "}
+                                <span>{modulo.watched}%</span> Assistido •{" "}
                               </>
                             )}
                             <span>{modulo.episodes}</span> episódios

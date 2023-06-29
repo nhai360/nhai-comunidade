@@ -91,36 +91,49 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
           </S.QuestionHeaderTitleContainer>
         </S.QuestionHeader>
         <Dialog.Body>
-          {question?.options?.map((option, index) => {
-            const res = answers.find((a) => a?.optionId === option?.id);
-            return (
-              <S.QuestionOptionContainer key={index}>
-                <S.QuestionOptionTitle>{option?.title}</S.QuestionOptionTitle>
-                <S.NumberPickerContainer>
-                  {/* <S.NumberPickerLine /> */}
-                  {[...Array(5)].map((_, index) => (
-                    <S.NumberPickerOptionContainer
-                      style={{
-                        backgroundColor:
-                          res?.response === `${index + 1}` ? "#EE0014" : "#000",
-                      }}
-                      key={index}
-                      onClick={() =>
-                        handleOption({
-                          optionId: option?.id,
-                          response: `${index + 1}`,
-                        })
-                      }
-                    >
-                      <S.NumberPickerOptionTitle>
-                        {index + 1}
-                      </S.NumberPickerOptionTitle>
-                    </S.NumberPickerOptionContainer>
-                  ))}
-                </S.NumberPickerContainer>
-              </S.QuestionOptionContainer>
-            );
-          })}
+          <div
+            style={{ rowGap: "2rem", display: "flex", flexDirection: "column" }}
+          >
+            {question?.options?.map((option, index) => {
+              const res = answers.find((a) => a?.optionId === option?.id);
+              return (
+                <S.QuestionOptionContainer key={index}>
+                  <S.QuestionOptionTitle>{option?.title}</S.QuestionOptionTitle>
+                  <S.NumberPickerContainer>
+                    <S.NumberPickerLine />
+                    {[...Array(5)].map((_, index) => (
+                      <S.NumberPickerOptionContainer
+                        style={{
+                          backgroundColor:
+                            res?.response === `${index + 1}`
+                              ? "#EE0014"
+                              : "#fff",
+                        }}
+                        key={index}
+                        onClick={() =>
+                          handleOption({
+                            optionId: option?.id,
+                            response: `${index + 1}`,
+                          })
+                        }
+                      >
+                        <S.NumberPickerOptionTitle
+                          style={{
+                            color:
+                              res?.response === `${index + 1}`
+                                ? "#fff"
+                                : "#EE0014",
+                          }}
+                        >
+                          {index + 1}
+                        </S.NumberPickerOptionTitle>
+                      </S.NumberPickerOptionContainer>
+                    ))}
+                  </S.NumberPickerContainer>
+                </S.QuestionOptionContainer>
+              );
+            })}
+          </div>
         </Dialog.Body>
         <Divider />
         <Dialog.Footer
@@ -131,16 +144,21 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
             padding: "$4",
           }}
         >
-          <Typography.Text>
+          <Typography.Text style={{ fontFamily: "RingMedium" }}>
             Preencha todos os campos para concluir...
           </Typography.Text>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", columnGap: 8 }}>
             <Button
               type="button"
-              variant={"text"}
+              variant={"outline"}
               disabled={isLoading}
               onClick={() => router.push("/negocios-de-orgulho")}
-              style={{ borderRadius: 0, height: 48 }}
+              style={{
+                borderRadius: 0,
+                height: 48,
+                fontFamily: "RingBold",
+                borderColor: "#c9c9c9",
+              }}
             >
               Voltar
             </Button>
@@ -149,6 +167,7 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
                 backgroundColor: "#EE0014",
                 borderRadius: 0,
                 height: 48,
+                fontFamily: "RingBold",
               }}
               type="submit"
               loading={isLoading}

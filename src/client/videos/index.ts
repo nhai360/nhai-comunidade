@@ -3,8 +3,6 @@ import { QueryClient } from "react-query";
 export function invalidateVideosQueries(queryClient: QueryClient) {
   queryClient.invalidateQueries("video");
   queryClient.invalidateQueries("videos");
-  queryClient.invalidateQueries("videos");
-  queryClient.invalidateQueries("userplaylists");
 }
 
 export function invalidatePlaylistsQueries(queryClient: QueryClient) {

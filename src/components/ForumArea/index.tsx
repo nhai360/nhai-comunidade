@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react"; 
+import React, { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./index.module.scss";
 import { User } from "@/client/users";
@@ -8,6 +8,14 @@ import { useUserTrending } from "@/client/posts/useUserTrending";
 import { useVirtual } from "@tanstack/react-virtual";
 import * as S from "./ForumArea.styles";
 import { PostCardAmstel } from "@/features/posts/PostCardAmstel/PostCardAmstel";
+import Link from "next/link";
+import { Avatar, Button } from "@/ui";
+import { theme } from "@/../stitches.config";
+
+import { ShareSquareIcon } from "@/ui/_icons";
+import { getInitials, getProfileUrl } from "@/lib/string";
+import { PostDialogAmstel } from "@/features/posts";
+import { formatDistanceToNow } from "date-fns";
 
 interface Posts {
   id: number;
@@ -22,6 +30,8 @@ interface PostProps {
 
 const ForumArea: React.FC<PostProps> = ({ user }) => {
   const parentRef = useRef(null);
+
+  const [trendId, setTrendId] = useState("");
 
   const { posts = [] } = useUserPosts({
     nickname: process?.env?.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
@@ -87,14 +97,14 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
             <div className={styles.topPost}>
               <div className={styles.topHeader}>
                 <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 28 28"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M3.66162 11.4079L16.1795 11.4079V13.6839L3.66162 13.6839V11.4079ZM3.66162 6.85598L16.1795 6.85598V9.13196L3.66162 9.13196L3.66162 6.85598ZM3.66162 15.9599L11.6275 15.9599V18.2359H3.66162L3.66162 15.9599ZM18.4555 14.8219L18.4555 23.9258L25.2834 19.3739L18.4555 14.8219Z"
+                    d="M3 10H14V12H3V10ZM3 6H14V8H3V6ZM3 14H10V16H3V14ZM16 13V21L22 17L16 13Z"
                     fill="white"
                   />
                 </svg>
@@ -103,57 +113,56 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
               </div>
 
               <div className={styles.topPostList}>
-                {trending.map((trending) => (
-                  <>
-                    <a className={styles.topPostItem} key={trending.id}>
-                      {trending?.author && (
-                        <div className={styles.thumbnail}>
-                          <img
-                            src={trending?.author.profilePicture?.url as any}
-                            alt={trending.author.nickname}
-                          />
+                {trending.map((trending) => {
+                  const createdAtFormatted = formatDistanceToNow(
+                    new Date(trending.createdAt)
+                  );
+
+                  return (
+                    <>
+                      <a className={styles.topPostItem} key={trending.id}>
+                        <div style={{ display: "flex", paddingBottom: 4 }}>
+                          {trending?.author && (
+                            <div className={styles.thumbnail}>
+                              <Avatar.Square
+                                alt={trending.author.fullName}
+                                src={trending.author.profilePicture?.url}
+                                fallback={getInitials(trending.author.fullName)}
+                                profileUrl={getProfileUrl(
+                                  trending.author.nickname
+                                )}
+                                level={trending.author.score?.level}
+                              />
+                            </div>
+                          )}
+                          <div className={styles.titleHeader}>
+                            <span>Há {createdAtFormatted}</span>
+                            <h3>{trending.title}</h3>
+                          </div>
                         </div>
-                      )}
-                      <div className={styles.titleHeader}>
-                        <span>{trending.createdAt}</span>
-                        <h3>{trending.title}</h3>
-                      </div>
-                      <div className={styles.share}>
-                        <a href="#">
-                          <svg
-                            width="19"
-                            height="19"
-                            viewBox="0 0 19 19"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <div className={styles.share}>
+                          <Button
+                            icon
+                            size="small"
+                            variant="transparent"
+                            onClick={() => setTrendId(trending.id)}
                           >
-                            <path
-                              d="M12.4126 2.38074L16.2059 2.38074V6.17403"
-                              stroke="#8C8C8C"
-                              strokeWidth="1.13799"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
+                            <ShareSquareIcon
+                              color={theme.colors.textSecondary.value}
                             />
-                            <path
-                              d="M10.8953 7.69135L16.2059 2.38074"
-                              stroke="#8C8C8C"
-                              strokeWidth="1.13799"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M14.6884 10.726V14.5193C14.6884 15.3576 14.0094 16.0366 13.171 16.0366H4.06712C3.2288 16.0366 2.5498 15.3576 2.5498 14.5193L2.5498 5.41537C2.5498 4.57706 3.2288 3.89806 4.06712 3.89806L7.86042 3.89806"
-                              stroke="#8C8C8C"
-                              strokeWidth="1.13799"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </a>
-                      </div>
-                    </a>
-                  </>
-                ))}
+                          </Button>
+                        </div>
+                      </a>
+                    </>
+                  );
+                })}
+                {trendId && (
+                  <PostDialogAmstel
+                    postId={trendId}
+                    isAmstel
+                    onClose={() => setTrendId("")}
+                  />
+                )}
               </div>
             </div>
           </div>

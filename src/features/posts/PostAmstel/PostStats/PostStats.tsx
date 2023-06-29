@@ -4,7 +4,7 @@ import { Button } from "@/ui";
 import { HeartIcon } from "@/ui/_icons";
 
 import { useAuthContext } from "@/contexts";
-import { PostDialog } from "@/features/posts";
+import { PostDialogAmstel } from "@/features/posts";
 import { Post as PostType, useLikePost } from "@/client/posts";
 
 import { LikedBy } from "./LikedBy";
@@ -52,6 +52,7 @@ export function PostStats({ post, isAmstel, expanded = false }: Props) {
                     color: "red",
                     "&:not(:disabled):hover": {
                       background: "red !important",
+                      borderRadius: 0,
                     },
                   }
                 : {}
@@ -109,7 +110,7 @@ export function PostStats({ post, isAmstel, expanded = false }: Props) {
       </S.Actions>
 
       {isPostDialogVisible && (
-        <PostDialog
+        <PostDialogAmstel
           postId={post.id}
           onClose={() => setIsPostDialogVisible(false)}
         />
