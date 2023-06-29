@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./index.module.scss";
@@ -14,6 +14,8 @@ import { theme } from "@/../stitches.config";
 
 import { ShareSquareIcon } from "@/ui/_icons";
 import { getInitials, getProfileUrl } from "@/lib/string";
+import { PostDialogAmstel } from "@/features/posts";
+import { formatDistanceToNow } from "date-fns";
 
 interface Posts {
   id: number;
@@ -28,6 +30,8 @@ interface PostProps {
 
 const ForumArea: React.FC<PostProps> = ({ user }) => {
   const parentRef = useRef(null);
+
+  const [trendId, setTrendId] = useState("");
 
   const { posts = [] } = useUserPosts({
     nickname: process?.env?.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
@@ -109,42 +113,56 @@ const ForumArea: React.FC<PostProps> = ({ user }) => {
               </div>
 
               <div className={styles.topPostList}>
-                {trending.map((trending) => (
-                  <>
-                    <a className={styles.topPostItem} key={trending.id}>
-                      <div style={{ display: "flex", paddingBottom: 4 }}>
-                        {trending?.author && (
-                          <div className={styles.thumbnail}>
-                            <Avatar.Square
-                              alt={trending.author.fullName}
-                              src={trending.author.profilePicture?.url}
-                              fallback={getInitials(trending.author.fullName)}
-                              profileUrl={getProfileUrl(
-                                trending.author.nickname
-                              )}
-                              level={trending.author.score?.level}
-                            />
+                {trending.map((trending) => {
+                  const createdAtFormatted = formatDistanceToNow(
+                    new Date(trending.createdAt)
+                  );
+
+                  return (
+                    <>
+                      <a className={styles.topPostItem} key={trending.id}>
+                        <div style={{ display: "flex", paddingBottom: 4 }}>
+                          {trending?.author && (
+                            <div className={styles.thumbnail}>
+                              <Avatar.Square
+                                alt={trending.author.fullName}
+                                src={trending.author.profilePicture?.url}
+                                fallback={getInitials(trending.author.fullName)}
+                                profileUrl={getProfileUrl(
+                                  trending.author.nickname
+                                )}
+                                level={trending.author.score?.level}
+                              />
+                            </div>
+                          )}
+                          <div className={styles.titleHeader}>
+                            <span>Há {createdAtFormatted}</span>
+                            <h3>{trending.title}</h3>
                           </div>
-                        )}
-                        <div className={styles.titleHeader}>
-                          <span>{trending.createdAt}</span>
-                          <h3>{trending.title}</h3>
                         </div>
-                      </div>
-                      <div className={styles.share}>
-                        <Link
-                          href={`/negocios-de-orgulho/?postId=${trending.id}`}
-                        >
-                          <Button icon size="small" variant="transparent">
+                        <div className={styles.share}>
+                          <Button
+                            icon
+                            size="small"
+                            variant="transparent"
+                            onClick={() => setTrendId(trending.id)}
+                          >
                             <ShareSquareIcon
                               color={theme.colors.textSecondary.value}
                             />
                           </Button>
-                        </Link>
-                      </div>
-                    </a>
-                  </>
-                ))}
+                        </div>
+                      </a>
+                    </>
+                  );
+                })}
+                {trendId && (
+                  <PostDialogAmstel
+                    postId={trendId}
+                    isAmstel
+                    onClose={() => setTrendId("")}
+                  />
+                )}
               </div>
             </div>
           </div>
