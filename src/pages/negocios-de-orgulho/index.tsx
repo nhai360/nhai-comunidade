@@ -112,9 +112,11 @@ function NegociosDeOrgulho() {
             Um programa para impulsionar negócios liderados por pessoas
             LGBTQIAPN+
           </span>
-          <div className={styles.buttonWrapper}>
-            <StartButton isSigned={!!session?.userId} />
-          </div>
+          {!session?.userId && (
+            <div className={styles.buttonWrapper}>
+              <StartButton isSigned={!!session?.userId} />
+            </div>
+          )}
         </div>
 
         <TabComponent isSigned={!!session?.userId} cursos={cursos} />

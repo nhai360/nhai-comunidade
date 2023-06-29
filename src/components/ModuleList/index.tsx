@@ -10,11 +10,13 @@ interface ModulesProps {
     episodes: any[];
   };
   setSelectedVideo: any;
+  selectedVideo: any;
 }
 
 const ModuleList: React.FC<ModulesProps> = ({
   programModule,
   setSelectedVideo,
+  selectedVideo,
 }) => {
   const watchedPercent = (
     (programModule?.episodes.filter((e) => e.watched).length /
@@ -61,15 +63,31 @@ const ModuleList: React.FC<ModulesProps> = ({
                   key={t.id}
                   className={styles.cardVideo}
                   onClick={() => setSelectedVideo(t)}
+                  style={{
+                    border:
+                      selectedVideo?.id === t.id
+                        ? "5px solid #dadada"
+                        : "unset",
+                  }}
                 >
-                  <div className={styles.thumbnailWrapper}>
-                    <img src={t?.thumbnail?.url as any} alt={t?.title} />
-                  </div>
+                  <div
+                    className={styles.thumbnailWrapper}
+                    style={{
+                      backgroundImage: `url(${t?.thumbnail?.url})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  ></div>
                   <div className={styles.content}>
                     <h3 className={styles.title}>{t?.title}</h3>
                     {/* <div className={styles.videoDuration}>0</div> */}
                     {t.watched && (
-                      <span className={styles.completedBadge}>COMPLETO</span>
+                      <>
+                        <div className={styles.completedBadge}>
+                          <span>COMPLETO</span>
+                        </div>
+                      </>
                     )}
                   </div>
                 </div>

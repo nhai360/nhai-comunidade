@@ -3,7 +3,7 @@ import { Post } from "@/client/posts";
 
 import { Button } from "@/ui";
 
-import { PostDialog } from "@/features/posts";
+import { PostDialogAmstel } from "@/features/posts";
 
 import { LikeButton } from "./LikeButton";
 import { CopyPostUrlButton } from "./CopyPostUrlButton";
@@ -46,7 +46,7 @@ export function AppPostCardFooter({ post, isAmstel }: Props) {
       </S.Action>
 
       {isPostDialogVisible && (
-        <PostDialog
+        <PostDialogAmstel
           postId={post.id}
           isAmstel
           onClose={() => setIsPostDialogVisible(false)}

@@ -105,7 +105,12 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           url={"/negocios-de-orgulho"}
         />
         <span className={styles.breadcrumbText}>
-          {"Contaí Comunidade > Vídeos > Espaço Amstel > "}{" "}
+          {"Contaí Comunidade > Vídeos > "}{" "}
+          <span
+            style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
+          >
+            ESPAÇO AMSTEL {" >"}
+          </span>
           <strong className={styles.breadcrumbPageIndicator}>
             Assistindo Vídeo
           </strong>

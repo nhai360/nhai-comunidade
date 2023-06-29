@@ -70,6 +70,7 @@ const PlayerScreen = () => {
           <ModuleList
             programModule={programModule as any}
             setSelectedVideo={setSelectedVideo}
+            selectedVideo={selectedVideo}
           />
         </div>
       </div>

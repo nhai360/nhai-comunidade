@@ -73,6 +73,7 @@
           .moduleWatched {
             strong {
               color: #ee0014;
+              font-family: "RingBold";
             }
           }
         }
@@ -124,6 +125,7 @@
         gap: 16px;
 
         .cardVideo {
+          cursor: pointer;
           background: #fff;
           border-radius: 8px;
           padding: 0px 0px;
@@ -137,11 +139,12 @@
           height: auto;
 
           .thumbnailWrapper {
-            padding: 20px;
             background-color: #8c8c8c;
             height: 300px;
             border-radius: 8px;
             margin-bottom: 1rem;
+            overflow: hidden;
+
             img {
               width: 100%;
               object-fit: cover;
@@ -150,10 +153,29 @@
           padding: 16px;
 
           .content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             width: 100%;
 
             .title {
+              font-family: "RingBold";
               font-weight: 600;
+              font-size: 24px;
+            }
+
+            .completedBadge {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 16px;
+              background-color: #e9f8e2;
+              max-width: 100px;
+              max-height: 42px;
+
+              span {
+                color: #1f8c65;
+              }
             }
           }
         }
