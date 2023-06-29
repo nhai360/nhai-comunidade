@@ -1,5 +1,5 @@
 import { Card, Divider } from "@/ui";
-import { Post } from "@/features/posts";
+import { PostAmstel } from "@/features/posts";
 import { Post as PostType } from "@/client/posts";
 
 import { AppPostCardFooter } from "./AppPostCardFooter";
@@ -25,8 +25,8 @@ export function PostCardAmstel({ post, isAmstel }: Props) {
       ghost
     >
       <Wrapper>
-        <Post.Header isAmstel post={post} />
-        <Post.Content isAmstel post={post} />
+        <PostAmstel.Header isAmstel post={post} />
+        <PostAmstel.Content isAmstel post={post} />
       </Wrapper>
       <Divider
         css={{

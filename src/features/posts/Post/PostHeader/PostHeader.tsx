@@ -77,7 +77,7 @@ export function PostHeader({ post, isAmstel }: Props) {
         />
 
         <S.Info>
-          <S.FullName css={{ color: isAmstel ? "red" : "black", fontFamily: "RingBold"}}>
+          <S.FullName>
             {isAmstel
               ? "AMSTEL"
               : getFirstNameAndLastName(post.author.fullName)}
