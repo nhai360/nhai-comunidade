@@ -44,6 +44,7 @@ import JoinLive from "@/features/lives/JoinLive";
 import LiveNotFound from "@/features/lives/LiveNotFound";
 import { toast } from "react-toastify";
 import { handleGetChat } from "@/services/firebase/chat";
+import { withAuth } from "@/middlewares";
 
 const headerHeight = 80;
 const chatWidth = 300;
@@ -82,19 +83,6 @@ const Home = (): JSX.Element => {
 
   const { isReady: isRouterReady } = router;
   const [canJoinSpace, setCanJoinSpace] = useState(true);
-
-  // useEffect(() => {
-  //   setCanJoinSpace((endsAt && moment(endsAt).diff(moment()) > 0) || !endsAt);
-  // }, [endsAt]);
-
-  // useEffect(() => {
-  //   if (spaceBackendURL) {
-  //     (window as any).MUX_SPACES_BACKEND_URL = spaceBackendURL;
-  //   }
-  //   if (heliosURL) {
-  //     (window as any).MUX_SPACES_HELIOS_URL = heliosURL;
-  //   }
-  // }, [spaceBackendURL, heliosURL]);
 
   const mutation = useMutation(tokenPOST, {
     onSuccess: async (data) => {
@@ -280,37 +268,4 @@ const Home = (): JSX.Element => {
   );
 };
 
-export default Home;
-
-// const { MUX_SPACES_BACKEND_URL = "", MUX_SPACES_HELIOS_URL = "" } = process.env;
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const { liveId } = context.query;
-//   let passthrough;
-//   let createdAt;
-
-//   try {
-//     if (typeof liveId === "string") {
-//       ({ passthrough, created_at: createdAt } = await fetchSpace(liveId));
-//     }
-//   } catch (error) {}
-
-//   let props: Record<string, any> = {
-//     heliosURL: MUX_SPACES_HELIOS_URL,
-//     spaceBackendURL: MUX_SPACES_BACKEND_URL,
-//     title: passthrough ? `${passthrough} | Mux Meet` : "Mux Meet Space",
-//   };
-
-//   if (
-//     process.env.SPACE_DURATION_SECONDS &&
-//     passthrough === TEMPORARY_SPACE_PASSTHROUGH &&
-//     createdAt
-//   ) {
-//     props.endsAt = moment(createdAt * 1000)
-//       .add(process.env.SPACE_DURATION_SECONDS, "seconds")
-//       .valueOf();
-//   }
-
-//   return {
-//     props,
-//   };
-// };
+export default withAuth(Home);

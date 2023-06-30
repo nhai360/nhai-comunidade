@@ -52,7 +52,7 @@ const BroadcastIndicator = ({
             <span>{viewers || 0} </span>
           </div>
         </Tooltip>
-        <Tooltip message="Pessoas assistindo" position="top">
+        <Tooltip message="Quantidade de comentários" position="top">
           <div className={styles.broadcastIndicator} style={{ gap: 4 }}>
             <ChatTeardropText size={18} />
             <span>{qntMessages} </span>

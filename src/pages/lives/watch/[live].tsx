@@ -20,6 +20,7 @@ import { WatchChat } from "@/components/WatchChat";
 import mux from "mux-embed";
 import { Header } from "@/layouts/desktop/DefaultLayout/Header";
 import { GetFirebaseBroadcastStatus } from "@/services/firebase/broadcast";
+import { withAuth } from "@/middlewares";
 
 const WatchLive = (): JSX.Element => {
   const router = useRouter();
@@ -157,4 +158,4 @@ const WatchLive = (): JSX.Element => {
   );
 };
 
-export default WatchLive;
+export default withAuth(WatchLive);

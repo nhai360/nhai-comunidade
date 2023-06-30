@@ -79,8 +79,10 @@ export function RegisterForm() {
               router.push("/auth/login");
             },
             onError: (err: any) => {
+              console.log("Error:", err);
               const message: string = err?.response?.data?.message;
-              const status: any = err?.statusCode;
+              const status: any = err?.response.status;
+              console.log("=>", status, message);
               if (message === "User with this email already exists.") {
                 setTab(1);
                 setError("email", {
@@ -110,7 +112,6 @@ export function RegisterForm() {
                   "Não foi possível realizar o cadastro. Tente novamente"
                 );
               }
-              console.log("REGISTER ERROR", status);
             },
           }
         );
