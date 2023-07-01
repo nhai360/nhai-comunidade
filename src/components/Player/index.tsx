@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useQuestion } from "@/client/questions";
 import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
+import Link from "next/link";
 
 interface VideoProps {
   video: Video;
@@ -106,11 +107,13 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
         />
         <span className={styles.breadcrumbText}>
           {"Contaí Comunidade > Vídeos > "}{" "}
-          <span
-            style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
-          >
-            ESPAÇO AMSTEL {" >"}
-          </span>
+          <Link href="/negocios-de-orgulho">
+            <span
+              style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
+            >
+              ESPAÇO AMSTEL {" >"}
+            </span>
+          </Link>
           <strong className={styles.breadcrumbPageIndicator}>
             Assistindo Vídeo
           </strong>
@@ -131,7 +134,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           controls
           width={"100%"}
           height={"100%"}
-          style={{ backgroundColor: "#323232" }}
+          style={{ backgroundColor: "#323232", maxHeight: 500 }}
           muted
           onEnded={handleCompleteVideo}
         />

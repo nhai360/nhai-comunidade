@@ -110,7 +110,7 @@ function NegociosDeOrgulho() {
           </div>
           <span className={styles.textBanner}>
             Um programa para impulsionar negócios liderados por pessoas
-            LGBTQIAPN+
+            LGBTQIAPN+. Veja abaixo os conteúdos disponíveis no programa.
           </span>
           {!session?.userId && (
             <div className={styles.buttonWrapper}>
