@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 function NotFound() {
   const router = useRouter();
   useEffect(() => {
-    setTimeout(() => router.push("/"), 3000);
+    setTimeout(() => router.push("/"), 2500);
   }, []);
   return (
     <div
@@ -17,7 +17,7 @@ function NotFound() {
         justifyContent: "center",
       }}
     >
-      <h1 style={{ color: "#fff" }}>
+      <h1 style={{ color: "#fff", margin: 24 }}>
         Esta página não existe, vamos te levar de voltar...
       </h1>
     </div>

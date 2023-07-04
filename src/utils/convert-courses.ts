@@ -33,6 +33,7 @@ export const ConvertCourses = (
 
           return {
             ...module,
+            _id: module?.public || isAdmin ? module?._id : "",
             episodes: watchedEpis.sort((a, b) => a?.order - b?.order),
             watchedPercent: parseInt(watchedPercent) || 0,
           };

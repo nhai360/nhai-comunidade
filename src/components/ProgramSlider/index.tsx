@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./slider.module.scss";
-import { useVideosFromUser } from "@/client/videos";
-import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { User } from "@/client/users";
-import { handleProgramas } from "@/services/firebase/programas";
 import { useRouter } from "next/router";
-import { IWatchedVideo } from "@/services/firebase/progress";
-import { limitText } from "@/features/lives/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { ICourses } from "@/@types/cousers";
 
@@ -80,15 +75,22 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                   <SwiperSlide
                     key={modulo._id}
                     className={styles.sliderItem}
+                    style={{ opacity: modulo?._id ? 1 : 0.7 }}
                     onClick={() => {
-                      user
-                        ? router?.push(
-                            `/negocios-de-orgulho/${curso?._id}/${modulo?._id}`
-                          )
-                        : router.push("/auth/register");
+                      modulo?._id &&
+                        (user
+                          ? router?.push(
+                              `/negocios-de-orgulho/${curso?._id}/${modulo?._id}`
+                            )
+                          : router.push("/auth/register"));
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
+                      {!modulo?._id && (
+                        <div className={styles.comingsoon}>
+                          <p>Em breve</p>
+                        </div>
+                      )}
                       <img src={modulo.bannerUrl as any} alt={modulo.name} />
                       <div className={styles.redHeader}>
                         <div className={styles.titleWrapper}>

@@ -4,6 +4,7 @@ export interface ICourses {
   order: number;
   modules: ICourseModule[];
   watchedPercent: number;
+  public: boolean;
 }
 
 export interface ICourseModule {
