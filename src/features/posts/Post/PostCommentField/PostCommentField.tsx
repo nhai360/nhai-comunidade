@@ -144,7 +144,7 @@ export function PostCommentField({ origin, originType, isAmstel }: Props) {
                   </S.Action>
                 </Popover.Trigger>
                 <CreatePollPopover
-                  originId={origin.id}
+                  originId={origin?.id}
                   originType={originType}
                 />
               </Popover.Root>

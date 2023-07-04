@@ -19,7 +19,7 @@ export function PostCommentList({
 }: Props) {
   const { comments } = useComments(
     {
-      originId: origin.id,
+      originId: origin?.id,
       originType,
     },
     {

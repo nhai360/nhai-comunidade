@@ -2,14 +2,13 @@ import { CommentProvider, useAuthContext } from "@/contexts";
 import styles from "./index.module.scss";
 import { Post } from "@/features/posts";
 import { Video } from "@/client/videos";
-import { Avatar, Typography } from "@/ui";
+import { Avatar, MuxVideo, Typography } from "@/ui";
 import { useUser } from "@/client/users";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
 import * as S from "@/features/video-player/VideoPlayerCard/VideoPlayerCard.styles";
 import { format } from "date-fns";
 import { LikeButton } from "@/features/video-player";
-import MuxVideo from "@mux/mux-video-react";
 import BtnGoBack from "@/ui/BtnGoBack";
 import { handleCreateUserProgress } from "@/services/firebase/progress";
 import { toast } from "react-toastify";
@@ -19,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useQuestion } from "@/client/questions";
 import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
+import Link from "next/link";
 
 interface VideoProps {
   video: Video;
@@ -38,7 +38,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
 
   const { comments } = useComments(
     {
-      originId: video.id,
+      originId: video?.id,
       originType: "videos",
     },
     {
@@ -57,7 +57,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
   const [showAnswers, setShowAnswers] = useState(false);
 
   const isCreator = video?.author?.id === user?.id;
-  const createdAt = format(new Date(video?.createdAt), "dd MMM");
+  const createdAt = video ? format(new Date(video?.createdAt), "dd MMM") : "";
 
   const handleShowComments = () => {
     setShowComments(!showComments);
@@ -106,11 +106,13 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
         />
         <span className={styles.breadcrumbText}>
           {"Contaí Comunidade > Vídeos > "}{" "}
-          <span
-            style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
-          >
-            ESPAÇO AMSTEL {" >"}
-          </span>
+          <Link href="/negocios-de-orgulho">
+            <span
+              style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
+            >
+              ESPAÇO AMSTEL {" >"}
+            </span>
+          </Link>
           <strong className={styles.breadcrumbPageIndicator}>
             Assistindo Vídeo
           </strong>
@@ -126,12 +128,13 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
             video_id: video?.playbackId as string,
             video_title: video?.title,
             viewer_user_id: session?.userId,
+            env_key: process.env.MUX_ENV_KEY_DATA,
           }}
           title={video?.title}
           controls
           width={"100%"}
           height={"100%"}
-          style={{ backgroundColor: "#323232" }}
+          style={{ backgroundColor: "#323232", maxHeight: 500 }}
           muted
           onEnded={handleCompleteVideo}
         />

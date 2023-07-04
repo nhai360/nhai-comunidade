@@ -65,7 +65,9 @@ export function VideoCard({ video, hasHover = true }: Props) {
         <Typography.Text
           css={{ display: "block", marginTop: "$3", color: "$textTitle" }}
         >
-          {video.title}
+          {video.title.length > 74
+            ? `${video.title.substring(0, 73)}...`
+            : video.title}
         </Typography.Text>
         <S.UserContainer>
           <Avatar

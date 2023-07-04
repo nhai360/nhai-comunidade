@@ -1,28 +1,27 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "./index.module.scss";
+import { ICourseEpisode, ICourseModule } from "@/@types/cousers";
 
 interface ModulesProps {
-  programModule: {
-    id: string;
-    title: string;
-    thumbnail: string;
-    watched: number;
-    episodes: any[];
-  };
-  setSelectedVideo: any;
-  selectedVideo: any;
+  modulo: ICourseModule;
+  setSelectedVideo: Dispatch<SetStateAction<ICourseEpisode | undefined>>;
+  selectedVideo: ICourseEpisode;
 }
 
 const ModuleList: React.FC<ModulesProps> = ({
-  programModule,
+  modulo,
   setSelectedVideo,
   selectedVideo,
 }) => {
   const watchedPercent = (
-    (programModule?.episodes.filter((e) => e.watched).length /
-      programModule?.episodes?.length) *
-    100
+    (modulo?.episodes?.filter((e) => e.watched).length /
+      modulo?.episodes?.length) *
+      100 || 0
   ).toFixed(0);
+
+  useEffect(() => {
+    setSelectedVideo(modulo?.episodes[0]);
+  }, [modulo]);
 
   return (
     <div className={styles.moduleWrapper}>
@@ -47,25 +46,25 @@ const ModuleList: React.FC<ModulesProps> = ({
                 <strong>{watchedPercent}%</strong> assistido
               </span>
             </div>
-            <h4 className={styles.moduleTitle}>{programModule?.title}</h4>
+            <h4 className={styles.moduleTitle}>{modulo?.name}</h4>
             <div className={styles.divider}></div>
             <div className={styles.videosInfo}>
               <span className={styles.numberVideosInfo}>
-                Aula 1 de {programModule?.episodes?.length}
+                Aula {selectedVideo?.order} de {modulo?.episodes?.length}
               </span>
             </div>
           </div>
 
           <div className={styles.gridVideos}>
-            {!!programModule?.episodes &&
-              programModule?.episodes?.map((t) => (
+            {!!modulo?.episodes &&
+              modulo?.episodes?.map((epi) => (
                 <div
-                  key={t.id}
+                  key={epi.videoId}
                   className={styles.cardVideo}
-                  onClick={() => setSelectedVideo(t)}
+                  onClick={() => setSelectedVideo(epi)}
                   style={{
                     border:
-                      selectedVideo?.id === t.id
+                      selectedVideo?.videoId === epi?.videoId
                         ? "5px solid #dadada"
                         : "unset",
                   }}
@@ -73,16 +72,16 @@ const ModuleList: React.FC<ModulesProps> = ({
                   <div
                     className={styles.thumbnailWrapper}
                     style={{
-                      backgroundImage: `url(${t?.thumbnail?.url})`,
+                      backgroundImage: `url(${epi?.thumbUrl})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }}
                   ></div>
                   <div className={styles.content}>
-                    <h3 className={styles.title}>{t?.title}</h3>
+                    <h3 className={styles.title}>{epi?.name}</h3>
                     {/* <div className={styles.videoDuration}>0</div> */}
-                    {t.watched && (
+                    {epi.watched && (
                       <>
                         <div className={styles.completedBadge}>
                           <span>COMPLETO</span>

@@ -6,10 +6,11 @@ import ProgramSlider from "../ProgramSlider";
 import ForumArea from "../ForumArea";
 import { useUserFromNickname } from "@/client/users";
 import { IWatchedVideo } from "@/services/firebase/progress";
+import { ICourses } from "@/@types/cousers";
 
 type IProps = {
   isSigned: boolean;
-  cursos: any[];
+  cursos: ICourses[];
 };
 
 const TabComponent = ({ isSigned, cursos }: IProps) => {

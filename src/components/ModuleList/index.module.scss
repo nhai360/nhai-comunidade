@@ -130,17 +130,15 @@
           border-radius: 8px;
           padding: 0px 0px;
           width: 100%;
-          min-height: 300px;
 
           @media screen and (min-width: 768px) {
-            min-height: 400px;
           }
 
           height: auto;
 
           .thumbnailWrapper {
             background-color: #8c8c8c;
-            height: 300px;
+            height: 220px;
             border-radius: 8px;
             margin-bottom: 1rem;
             overflow: hidden;

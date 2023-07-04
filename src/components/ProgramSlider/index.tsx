@@ -2,34 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./slider.module.scss";
-import { useVideosFromUser } from "@/client/videos";
-import { useUserPlaylists } from "@/client/videos/useUserPlaylists";
 import { User } from "@/client/users";
-import { handleProgramas } from "@/services/firebase/programas";
 import { useRouter } from "next/router";
-import { IWatchedVideo } from "@/services/firebase/progress";
-import { limitText } from "@/features/lives/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
-
-interface Curso {
-  id: number;
-  title: string;
-  watched: number;
-  modules: number;
-  modulos: Modulo[];
-}
-
-interface Modulo {
-  id: number;
-  title: string;
-  thumbnail: string;
-  watched: number;
-  episodes: number;
-}
+import { ICourses } from "@/@types/cousers";
 
 interface SliderProps {
   user: User;
-  cursos: any[];
+  cursos: ICourses[];
 }
 
 const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
@@ -71,19 +51,19 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
             <span className={styles.divider}></span>
 
             <div
-              key={curso.id}
+              key={curso._id}
               className={`${styles.column} ${styles.boxPadding}`}
               style={{ marginBottom: 16 }}
             >
               <div className={styles.rowHeader}>
-                <h5 className={styles.courseTitle}>{curso.title} </h5>
+                <h5 className={styles.courseTitle}>{curso.name} </h5>
                 <p className={styles.courseInfo}>
                   {user && (
                     <>
-                      <span>{curso.watched}%</span> Assistido •{" "}
+                      <span>{curso.watchedPercent}%</span> Assistido •{" "}
                     </>
                   )}
-                  <span>{curso?.modulos?.length}</span> Módulos
+                  <span>{curso?.modules?.length}</span> Módulos
                 </p>
               </div>
               <Swiper
@@ -91,30 +71,40 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                 slidesPerView={1.2}
                 className={styles.moduleSlider}
               >
-                {curso?.modulos?.map((modulo: any) => (
+                {curso?.modules?.map((modulo) => (
                   <SwiperSlide
-                    key={modulo.id}
+                    key={modulo._id}
                     className={styles.sliderItem}
+                    style={{ opacity: modulo?._id ? 1 : 0.7 }}
                     onClick={() => {
-                      user
-                        ? router?.push(`/negocios-de-orgulho/${modulo?.id}`)
-                        : router.push("/auth/register");
+                      modulo?._id &&
+                        (user
+                          ? router?.push(
+                              `/negocios-de-orgulho/${curso?._id}/${modulo?._id}`
+                            )
+                          : router.push("/auth/register"));
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
-                      <img src={modulo.thumbnail as any} alt={modulo.title} />
+                      {!modulo?._id && (
+                        <div className={styles.comingsoon}>
+                          <p>Em breve</p>
+                        </div>
+                      )}
+                      <img src={modulo.bannerUrl as any} alt={modulo.name} />
                       <div className={styles.redHeader}>
                         <div className={styles.titleWrapper}>
                           <p className={styles.courseInfo}>
                             {!!user && (
                               <>
-                                <span>{modulo.watched}%</span> Assistido •{" "}
+                                <span>{modulo.watchedPercent}%</span> Assistido
+                                •{" "}
                               </>
                             )}
-                            <span>{modulo.episodes}</span> episódios
+                            <span>{modulo.episodes.length}</span> episódios
                           </p>
 
-                          <h3>{modulo.title}</h3>
+                          <h3>{modulo.name}</h3>
                         </div>
                         <svg
                           width="13"
