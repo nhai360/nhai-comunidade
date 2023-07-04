@@ -16,12 +16,12 @@ export function LikeButton({ video, isAmstel, ...rest }: Props) {
   const { session } = useAuthContext();
 
   const alreadyLiked = Boolean(
-    video.likes?.find((like) => like.author.id === session?.userId)
+    video?.likes?.find((like) => like.author.id === session?.userId)
   );
 
   function handleLikeVideo() {
     likeVideo({
-      videoId: video.id,
+      videoId: video?.id,
       alreadyLiked,
     });
   }

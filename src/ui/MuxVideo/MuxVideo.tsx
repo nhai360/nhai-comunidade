@@ -25,6 +25,8 @@ import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
 import { toast } from "react-toastify";
 import dynamic from "next/dynamic";
 import mux from "mux-embed";
+import useWindowDimensions from "@/hooks/useWindowDimension";
+import { isModifier } from "typescript";
 
 const UploadVideoDialog = dynamic(
   () => import("../../features/videos/UploadVideoDialog/UploadVideoDialog"),
@@ -49,9 +51,10 @@ export function MuxVideo({
   controls = false,
   isCreator = false,
   video,
-  isMobile = false,
   ...rest
 }: any) {
+  const { width } = useWindowDimensions();
+  const isMobile = !!width && width < 1024;
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -210,10 +213,14 @@ export function MuxVideo({
           onClose={() => setShowEdit(false)}
         />
       )}
-      <S.Container>
+      <S.Container
+        style={{
+          borderRadius: isMobile ? 0 : 32,
+        }}
+      >
         <BaseVideo
           ref={videoRef}
-          controls={controls}
+          controls={isMobile}
           onTimeUpdate={(event) =>
             setCurrentTime(event.currentTarget.currentTime)
           }
@@ -224,11 +231,12 @@ export function MuxVideo({
           className="mux-video"
           envKey={process.env.NEXT_PUBLIC_MUX_ENV_KEY}
           {...rest}
+          style={{
+            borderRadius: isMobile ? 0 : 32,
+          }}
         />
         {!isMobile && (
-          <S.ControlsContainer
-            style={{ padding: isMobile ? "8px 12px" : "$6" }}
-          >
+          <S.ControlsContainer style={{ padding: isMobile ? "0" : "$6" }}>
             {!isMobile && (
               <VideoProgressBar
                 currentTime={currentTime}
