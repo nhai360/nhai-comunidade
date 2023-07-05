@@ -6,6 +6,7 @@ import { User } from "@/client/users";
 import { useRouter } from "next/router";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { ICourses } from "@/@types/cousers";
+import { LockSimple } from "@phosphor-icons/react";
 
 interface SliderProps {
   user: User;
@@ -56,7 +57,16 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
               style={{ marginBottom: 16 }}
             >
               <div className={styles.rowHeader}>
-                <h5 className={styles.courseTitle}>{curso.name} </h5>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    columnGap: 8,
+                  }}
+                >
+                  <h5 className={styles.courseTitle}>{curso.name}</h5>
+                  {!curso?.public && <LockSimple color="#e63432" />}
+                </div>
                 <p className={styles.courseInfo}>
                   {user && (
                     <>
@@ -86,23 +96,32 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
-                      {!modulo?._id && (
+                      {/* {!modulo?.public && (
                         <div className={styles.comingsoon}>
                           <p>Em breve</p>
                         </div>
-                      )}
+                      )} */}
                       <img src={modulo.bannerUrl as any} alt={modulo.name} />
                       <div className={styles.redHeader}>
                         <div className={styles.titleWrapper}>
-                          <p className={styles.courseInfo}>
-                            {!!user && (
-                              <>
-                                <span>{modulo.watchedPercent}%</span> Assistido
-                                •{" "}
-                              </>
-                            )}
-                            <span>{modulo.episodes.length}</span> episódios
-                          </p>
+                          {modulo?._id ? (
+                            <p className={styles.courseInfo}>
+                              {!!user && (
+                                <>
+                                  <span>{modulo.watchedPercent}%</span>{" "}
+                                  Assistido •{" "}
+                                </>
+                              )}
+                              <span>{modulo.episodes.length}</span> episódios
+                            </p>
+                          ) : (
+                            <p
+                              className={styles.courseInfo}
+                              style={{ textTransform: "uppercase" }}
+                            >
+                              Em breve
+                            </p>
+                          )}
 
                           <h3>{modulo.name}</h3>
                         </div>

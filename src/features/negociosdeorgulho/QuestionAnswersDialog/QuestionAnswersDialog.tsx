@@ -82,7 +82,7 @@ export function QuestionAnswersDialog({ onClose, question, video }: Props) {
     <Dialog open>
       <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
         <S.QuestionHeader>
-          <S.QuestionHeaderImage src={video?.thumbnail?.url as any} />
+          {/* <S.QuestionHeaderImage src={video?.thumbnail?.url as any} /> */}
           <S.QuestionHeaderTitleContainer>
             <S.QuestionHeaderTitle>{question?.title}</S.QuestionHeaderTitle>
             <S.QuestionHeaderSubtitle>

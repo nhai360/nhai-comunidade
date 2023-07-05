@@ -5,6 +5,9 @@ export interface ICourses {
   modules: ICourseModule[];
   watchedPercent: number;
   public: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export interface ICourseModule {
@@ -15,6 +18,9 @@ export interface ICourseModule {
   episodes: ICourseEpisode[];
   watchedPercent: number;
   public: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export interface ICourseEpisode {

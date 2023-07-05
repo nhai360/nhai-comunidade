@@ -50,7 +50,7 @@ const ModuleList: React.FC<ModulesProps> = ({
             <div className={styles.divider}></div>
             <div className={styles.videosInfo}>
               <span className={styles.numberVideosInfo}>
-                Aula {selectedVideo?.order} de {modulo?.episodes?.length}
+                Aula {selectedVideo?.order || 0} de {modulo?.episodes?.length}
               </span>
             </div>
           </div>
