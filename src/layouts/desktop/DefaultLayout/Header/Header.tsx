@@ -41,6 +41,8 @@ export function Header({ canCreate = true, user }: IHeader) {
 
   const isAdmin = user?.role?.name === "ADMIN";
   const isEnabled = isAdmin;
+  const isAmstel =
+    user && user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO;
 
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
     useState(false);
@@ -95,7 +97,7 @@ export function Header({ canCreate = true, user }: IHeader) {
               onChange={handleChange}
               onSearch={handleSearch}
             />
-            {canCreate && (
+            {canCreate && !isAmstel && (
               <Popover.Root>
                 <Popover.Trigger asChild>
                   <div>
@@ -113,9 +115,7 @@ export function Header({ canCreate = true, user }: IHeader) {
                   >
                     <Typography.Text>Publicação</Typography.Text>
                   </Popover.Action>
-                  {(isEnabled ||
-                    user?.nickname ===
-                      process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO) && (
+                  {isEnabled && (
                     <Popover.Action
                       onClick={() => setIsUploadVideoDialogVisible(true)}
                     >

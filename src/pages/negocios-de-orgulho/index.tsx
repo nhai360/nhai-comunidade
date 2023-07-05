@@ -10,6 +10,7 @@ import { handleProgramas } from "@/services/firebase/programas";
 import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 import { Amstel } from "@/features/negociosdeorgulho";
 import { ConvertCourses } from "@/utils/convert-courses";
+import { useUserFromNickname } from "@/client/users";
 
 function NegociosDeOrgulho() {
   const { session } = useAuthContext();
@@ -23,9 +24,11 @@ function NegociosDeOrgulho() {
 
   useEffect(() => {
     session?.userId && GetUserProgress(session?.userId, setWatchedVideos);
-  }, []);
+  }, [session]);
 
-  const cursos = ConvertCourses(programas, watchedVideos, "");
+  const { user } = useUserFromNickname({ id: session?.userId });
+
+  const cursos = ConvertCourses(programas, watchedVideos, user?.nickname);
 
   return (
     <>

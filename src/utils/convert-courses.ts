@@ -54,5 +54,5 @@ export const ConvertCourses = (
       };
     });
 
-  return cursos;
+  return isAdmin ? cursos : cursos?.filter((c) => c?.public);
 };
