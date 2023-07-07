@@ -41,13 +41,21 @@ import {
   handleAddProgramaModule,
   handleProgramas,
 } from "@/services/firebase/programas";
+import { handleEditProgram } from "@/services/firebase/courses";
 
 type Props = {
   onClose: () => void;
   video?: Video;
+  programId?: string;
+  moduleId?: string;
 };
 
-export const UploadVideoDialog = ({ onClose, video }: Props) => {
+export const UploadVideoDialog = ({
+  onClose,
+  video,
+  moduleId,
+  programId,
+}: Props) => {
   const {
     register,
     watch,
@@ -72,7 +80,6 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
   const [uploadPercent, setUploadPercent] = useState<number>(0);
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
   const [isUploadError, setIsUploadError] = useState(false);
-  const [program, setProgram] = useState<any>();
   const [playlist, setPlaylist] = useState<any>();
   const [source, setSource] = useState<Media>();
 
@@ -150,20 +157,14 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
       );
     }
 
-    if (isAmstel && (!playlist || !program)) {
+    const course = programas.find((c) => c?._id === programId);
+    const modulo = course?.modules.find((m: any) => m?._id === moduleId);
+
+    if (isAmstel && (!modulo || !course)) {
       return toast.error("Programa e módulo são obrigatórios!");
     }
 
-    if (isAmstel) {
-      await handleAddProgramaModule(program?.value, [
-        ...programas
-          ?.find((p) => p?._id === program?.value)
-          ?.modules?.filter((m: any) => m !== playlist?.value),
-        playlist?.value,
-      ]);
-    }
-
-    const tagsInArray = tags.split(",").map((tag) => tag.trim());
+    const tagsInArray = tags.split(",").map((tag: any) => tag.trim());
 
     uploadThumbnail(
       {
@@ -181,7 +182,7 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
               tags: tagsInArray,
             },
             {
-              onSuccess: (video) => {
+              onSuccess: async (video) => {
                 playlist?.value &&
                   addVideoPlaylist(
                     {
@@ -196,6 +197,35 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                       },
                     }
                   );
+
+                if (isAmstel && modulo && course) {
+                  await handleEditProgram({
+                    ...course,
+                    modules: [
+                      ...course?.modules.map((m: any) => {
+                        return m?._id === modulo?._id
+                          ? {
+                              ...m,
+                              episodes: [
+                                ...modulo?.episodes,
+                                {
+                                  name: video?.title,
+                                  order: modulo?.episodes.length + 1,
+                                  videoId: video?.id,
+                                  thumbUrl: media?.url,
+                                  public: true,
+                                },
+                              ],
+                              updatedAt: new Date(),
+                            }
+                          : m;
+                      }),
+                    ],
+                  }).catch((err) => {
+                    toast.error("Não foi possível adicionar o episódio");
+                    console.log("Error =>", err);
+                  });
+                }
               },
               onError: () => {
                 toast.error(
@@ -341,22 +371,16 @@ export const UploadVideoDialog = ({ onClose, video }: Props) => {
                   errorText={errors.title?.message}
                   {...register("title")}
                 />
-                {isAmstel && (
-                  <ProgramSelector
-                    playlist={program}
-                    setPlaylist={setProgram}
-                    handleCreatePlaylist={() => setIsCreateProgramVisible(true)}
-                    programas={programas}
+                {!isAmstel && (
+                  <PlaylistsSelector
+                    playlist={playlist}
+                    setPlaylist={setPlaylist}
+                    isOpicional={!isAmstel}
+                    handleCreatePlaylist={() =>
+                      setIsCreatePlaylistDialogVisible(true)
+                    }
                   />
                 )}
-                <PlaylistsSelector
-                  playlist={playlist}
-                  setPlaylist={setPlaylist}
-                  isOpicional={!isAmstel}
-                  handleCreatePlaylist={() =>
-                    setIsCreatePlaylistDialogVisible(true)
-                  }
-                />
                 {!video && (
                   <Field.Input
                     label="Tags"

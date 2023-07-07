@@ -51,6 +51,7 @@ export function MuxVideo({
   controls = false,
   isCreator = false,
   video,
+  isAmstel = false,
   ...rest
 }: any) {
   const { width } = useWindowDimensions();
@@ -261,7 +262,7 @@ export function MuxVideo({
                 {!isMobile && (
                   <>
                     <S.VolumeContainer>
-                      <Tooltip message={`${volume}%`}>
+                      {/* <Tooltip message={`${volume}%`}>
                         <Button
                           {...ICON_BUTTON_PROPS}
                           onClick={toggleVolumeState}
@@ -272,7 +273,7 @@ export function MuxVideo({
                             <SpeakerSimpleHigh size={20} />
                           )}
                         </Button>
-                      </Tooltip>
+                      </Tooltip> */}
                       <Slider
                         max={100}
                         min={0}
@@ -287,7 +288,7 @@ export function MuxVideo({
                 )}
               </S.ControlsRow>
               <S.ControlsRow style={{ marginTop: isMobile ? 0 : "$3" }}>
-                {isCreator && !isMobile && (
+                {isCreator && !isMobile && !isAmstel && (
                   <Button onClick={handleDeleteVideo} {...ICON_BUTTON_PROPS}>
                     <TrashIcon size={24} />
                   </Button>
