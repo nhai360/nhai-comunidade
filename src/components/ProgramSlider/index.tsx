@@ -96,11 +96,11 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
-                      {/* {!modulo?.public && (
+                      {!modulo?.public && modulo?._id && (
                         <div className={styles.comingsoon}>
                           <p>Em breve</p>
                         </div>
-                      )} */}
+                      )}
                       <img src={modulo.bannerUrl as any} alt={modulo.name} />
                       <div className={styles.redHeader}>
                         <div className={styles.titleWrapper}>

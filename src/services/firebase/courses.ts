@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { ICourses } from "@/@types/cousers";
+import { v4 as uuidv4 } from "uuid";
 
 export const GetFirebaseCourses = async (setCourses: any) => {
   try {
@@ -34,7 +35,7 @@ export const handleCreateCourse = async (program: ICreateCourse) => {
       public: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-      deletedAt: null,
+      deletedAt: "",
     };
 
     await addDoc(messageColRef, newCourse);
@@ -51,16 +52,19 @@ export const handleCreateCourseModule = async (
   try {
     const messageColRef = collection(db, "PROGRAMAS");
     const commentDocRef = doc(messageColRef, program._id);
+    const id = uuidv4();
 
     const modules = [
       ...program.modules,
       {
         ...newModule,
+        _id: id,
+        public: false,
         episodes: [],
         order: program.modules.length + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null,
+        deletedAt: "",
       },
     ];
 
@@ -92,6 +96,5 @@ interface ICreateCourse {
 
 interface ICreateCourseModule {
   name: string;
-  order: number;
   bannerUrl: string;
 }
