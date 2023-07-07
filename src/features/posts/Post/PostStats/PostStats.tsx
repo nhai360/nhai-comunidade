@@ -110,9 +110,15 @@ export function PostStats({ post, isAmstel, expanded = false }: Props) {
         </Button>
       </S.Actions>
 
-      {isPostDialogVisible && (
+      {isPostDialogVisible && isAmstel && (
         <PostDialogAmstel
-          isAmstel
+          postId={post.id}
+          onClose={() => setIsPostDialogVisible(false)}
+        />
+      )}
+
+      {isPostDialogVisible && !isAmstel && (
+        <PostDialog
           postId={post.id}
           onClose={() => setIsPostDialogVisible(false)}
         />
