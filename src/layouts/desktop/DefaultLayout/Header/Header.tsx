@@ -30,10 +30,11 @@ const CreateArticleDialog = dynamic(
 
 interface IHeader {
   canCreate?: boolean;
+  loginAmstel?: boolean;
   user: User;
 }
 
-export function Header({ canCreate = true, user }: IHeader) {
+export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
   const router = useRouter();
   const { searchTerm, handleChange, handleSearch } = useSearch();
 
@@ -58,7 +59,10 @@ export function Header({ canCreate = true, user }: IHeader) {
   function handleLogout() {
     logout();
     authenticatedAPI.defaults.headers.Authorization = null;
-    router.push("/auth/login");
+
+    loginAmstel
+      ? router.push("/auth/login/?layout=negocios-de-orgulho")
+      : router.push("/auth/login");
   }
 
   return (
@@ -184,7 +188,13 @@ export function Header({ canCreate = true, user }: IHeader) {
                     borderRadius: 8,
                     backgroundColor: "#01a1ff",
                   }}
-                  onClick={() => router.push("auth/register")}
+                  onClick={() =>
+                    loginAmstel
+                      ? router.push(
+                          "/auth/register/?layout=negocios-de-orgulho"
+                        )
+                      : router.push("auth/register")
+                  }
                 >
                   Registrar-se
                 </Button>

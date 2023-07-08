@@ -52,3 +52,19 @@ export type PostQuestionAnswersParams = {
   questionId: string;
   answers: PostQuestionAnswers[];
 };
+
+interface PostQuestionOption {
+  title: string;
+  description: string;
+  type: "NUMBER" | "TEXT";
+}
+
+export type PostQuestionAnswerParams = {
+  videoId: string;
+  question: {
+    title: string;
+    description: string;
+    type: "START" | "END";
+    options: PostQuestionOption[];
+  };
+};

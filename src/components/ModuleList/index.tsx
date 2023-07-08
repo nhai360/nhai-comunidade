@@ -19,10 +19,6 @@ const ModuleList: React.FC<ModulesProps> = ({
       100 || 0
   ).toFixed(0);
 
-  useEffect(() => {
-    setSelectedVideo(modulo?.episodes[0]);
-  }, [modulo]);
-
   return (
     <div className={styles.moduleWrapper}>
       <div className={styles.topVideo}>
@@ -57,9 +53,9 @@ const ModuleList: React.FC<ModulesProps> = ({
 
           <div className={styles.gridVideos}>
             {!!modulo?.episodes &&
-              modulo?.episodes?.map((epi) => (
+              modulo?.episodes?.map((epi, index) => (
                 <div
-                  key={epi.videoId}
+                  key={index}
                   className={styles.cardVideo}
                   onClick={() => setSelectedVideo(epi)}
                   style={{

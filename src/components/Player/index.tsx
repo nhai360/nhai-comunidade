@@ -19,6 +19,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { useQuestion } from "@/client/questions";
 import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface VideoProps {
   video: Video;
@@ -27,6 +28,7 @@ interface VideoProps {
 
 const Player: React.FC<VideoProps> = ({ video, watched }) => {
   const videoRef = useRef<any>(null);
+  const router = useRouter();
   const { session } = useAuthContext();
   // const { width = 0 } = useWindowDimensions();
   const { width = 0 } = useWindowSize();
@@ -97,6 +99,10 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
     }
   }, [question, watched]);
 
+  const handleBack = () => {
+    router.push("/negocios-de-orgulho");
+  };
+
   return (
     <div className={styles.video}>
       <div className={styles.breadcrumb}>
@@ -105,16 +111,15 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           url={"/negocios-de-orgulho"}
         />
         <span className={styles.breadcrumbText}>
-          {"Contaí Comunidade > Vídeos > "}{" "}
           <Link href="/negocios-de-orgulho">
             <span
               style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
             >
-              ESPAÇO AMSTEL {" >"}
+              {"Negócios de orgulho >"}
             </span>
           </Link>
           <strong className={styles.breadcrumbPageIndicator}>
-            Assistindo Vídeo
+            Assistindo episódio
           </strong>
         </span>
       </div>

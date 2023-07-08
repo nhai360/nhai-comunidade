@@ -10,7 +10,7 @@ type Props = {
 
 export function DesktopLayout({ hasSider }: Props) {
   return (
-    <DefaultLayout hasSider={hasSider}>
+    <DefaultLayout hasSider={hasSider} isAmstel>
       <></>
     </DefaultLayout>
   );

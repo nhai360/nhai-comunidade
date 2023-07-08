@@ -11,6 +11,7 @@ import useWindowDimensions from "@/hooks/useWindowDimension";
 import { AddCircleIcon, SettingsIcon } from "@/ui/_icons";
 import { CourseManagerDialog } from "@/features/negociosdeorgulho/CourseManagerDialog";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
+import { useAuthContext } from "@/contexts";
 
 type IProps = {
   isSigned: boolean;
@@ -18,6 +19,7 @@ type IProps = {
 };
 
 const TabComponent = ({ isSigned, cursos }: IProps) => {
+  const { session } = useAuthContext();
   const [active, setActive] = useState(1);
   const [showManager, setShowManager] = useState(false);
   const [isCreatePostDialogVisible, setIsCreatePostDialogVisible] =
@@ -29,8 +31,8 @@ const TabComponent = ({ isSigned, cursos }: IProps) => {
   const { user } = useUserFromNickname({
     nickname: process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
   });
-  const isAmstel =
-    user && user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO;
+
+  const isAmstel = user?.id === session?.userId;
 
   return (
     <>
@@ -52,7 +54,7 @@ const TabComponent = ({ isSigned, cursos }: IProps) => {
             {isSigned ? "FÓRUM AMSTEL" : "VISITAR FÓRUM"}
           </a>
         </div>
-        {!isMobile && active === 1 && (
+        {!isMobile && active === 1 && isAmstel && (
           <div
             className={styles.settingsButton}
             onClick={() => setShowManager(true)}

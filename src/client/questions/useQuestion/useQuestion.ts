@@ -7,7 +7,9 @@ async function getQuestion({ videoId }: GetQuestionParams) {
   if (videoId) {
     const response = await authenticatedAPI.get(`/videos/${videoId}/questions`);
 
-    return decodeResponse<Question>(response, QuestionDecoder);
+    return !response?.data
+      ? null
+      : decodeResponse<Question>(response, QuestionDecoder);
   }
 
   return null;

@@ -13,9 +13,10 @@ import * as S from "./Header.styles";
 
 type Props = {
   backUrl?: string;
+  loginAmstel?: boolean;
 };
 
-export function Header({ backUrl }: Props) {
+export function Header({ backUrl, loginAmstel }: Props) {
   const router = useRouter();
   const { session, logout } = useAuthContext();
 
@@ -26,7 +27,9 @@ export function Header({ backUrl }: Props) {
   function handleLogout() {
     logout();
     authenticatedAPI.defaults.headers.Authorization = null;
-    router.push("/auth/login");
+    loginAmstel
+      ? router.push("/auth/login/?layout=negocios-de-orgulho")
+      : router.push("/auth/login");
   }
 
   return (

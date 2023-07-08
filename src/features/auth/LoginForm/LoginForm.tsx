@@ -16,7 +16,11 @@ import * as S from "./LoginForm.styles";
 import { authenticatedAPI } from "@/client";
 import { useEffect } from "react";
 
-export function LoginForm() {
+interface ILoginForm {
+  layoutAmstel?: boolean;
+}
+
+export function LoginForm({ layoutAmstel }: ILoginForm) {
   const router = useRouter();
 
   const { login } = useAuthContext();
@@ -44,7 +48,7 @@ export function LoginForm() {
           remember: params.remember,
         });
 
-        router.push("/");
+        router.push(layoutAmstel ? "/negocios-de-orgulho" : "/");
       },
       onError: () => {
         const fields = ["password", "email"] as const;

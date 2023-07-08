@@ -15,9 +15,10 @@ import { useUser } from "@/client/users";
 type Props = {
   children: ReactNode;
   hasSider?: boolean;
+  isAmstel?: boolean;
 };
 
-export function DefaultLayout({ children, hasSider = true }: Props) {
+export function DefaultLayout({ children, hasSider = true, isAmstel }: Props) {
   const [loading, setLoading] = useState(false);
   const [isSubscribe, setIsSubscribe] = useState(true);
 
@@ -57,39 +58,7 @@ export function DefaultLayout({ children, hasSider = true }: Props) {
 
   return (
     <S.Wrapper>
-      {!isSubscribe && (
-        <div className={styles.containerHightlight}>
-          <h4>
-            • 6 Edição do Contaí! Encontro que geram negócios!{" "}
-            <span>| 70% das vagas preenchidas, esperamos por vocês!</span>{" "}
-          </h4>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {!isSubscribe && <p>Ainda não se inscreveu?</p>}
-            <Button
-              variant={"primary"}
-              style={{
-                height: 48,
-                borderRadius: 8,
-                backgroundColor: isSubscribe ? "#c82560" : "#01a1ff",
-              }}
-              loading={loading}
-              onClick={handleSubscribe}
-              disabled={isSubscribe}
-            >
-              {isSubscribe ? (
-                <>
-                  Inscrito <Check size={24} />
-                </>
-              ) : (
-                <>
-                  Inscrever <PencilSimpleLine size={24} />
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      )}
-      <Header user={user as any} />
+      <Header user={user as any} loginAmstel={isAmstel} />
       {hasSider && <Sidebar />}
       {children}
     </S.Wrapper>

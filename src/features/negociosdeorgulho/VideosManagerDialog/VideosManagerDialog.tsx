@@ -1,16 +1,17 @@
 import styles from "./styles.module.scss";
 import Switch from "react-switch";
 
-import { Dialog, Divider } from "@/ui";
+import { Dialog, Divider, Tooltip } from "@/ui";
 
 import * as S from "./VideosManagerDialog.styles";
 import { useState } from "react";
-import { ICourseModule, ICourses } from "@/@types/cousers";
+import { ICourseEpisode, ICourseModule, ICourses } from "@/@types/cousers";
 import { handleEditProgram } from "@/services/firebase/courses";
 import { toast } from "react-toastify";
 import { UploadVideoDialog } from "@/features/videos";
-import { TrashIcon } from "@/ui/_icons";
+import { SearchIcon, TrashIcon } from "@/ui/_icons";
 import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
+import { QuestionManagerDialog } from "../QuestionManagerDialog";
 
 type Props = {
   onClose: () => void;
@@ -27,6 +28,7 @@ export function VideosManagerDialog({
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [showNewVideo, setShowNewVideo] = useState(false);
+  const [videoQuestion, setVideoQuestion] = useState<ICourseEpisode>();
   const course = courses.find((c) => c?._id === courseId);
 
   const modulo = course?.modules.find((m) => m?._id === moduleId);
@@ -90,11 +92,21 @@ export function VideosManagerDialog({
                   return (
                     <div key={index} className={styles.row}>
                       <p>{episode?.name}</p>
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleDeleteVideo(episode?.videoId)}
-                      >
-                        <TrashIcon size={20} />
+                      <div style={{ display: "flex", columnGap: 12 }}>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setVideoQuestion(episode)}
+                          title={"Gerenciar pesquisa"}
+                        >
+                          <SearchIcon size={20} />
+                        </div>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleDeleteVideo(episode?.videoId)}
+                          title={"Excluir episódio"}
+                        >
+                          <TrashIcon size={20} />
+                        </div>
                       </div>
                     </div>
                   );
@@ -116,6 +128,13 @@ export function VideosManagerDialog({
           onClose={() => setShowNewVideo(false)}
           moduleId={moduleId}
           programId={courseId}
+        />
+      )}
+      {videoQuestion && (
+        <QuestionManagerDialog
+          onClose={() => setVideoQuestion(undefined)}
+          videoId={videoQuestion?.videoId || ""}
+          episode={videoQuestion}
         />
       )}
     </>
