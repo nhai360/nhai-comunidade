@@ -47,8 +47,8 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
   return (
     <div className={styles.columnWrapper}>
       {cursos &&
-        cursos.map((curso) => (
-          <>
+        cursos.map((curso, indexCourse) => (
+          <div key={indexCourse}>
             <span className={styles.divider}></span>
 
             <div
@@ -143,7 +143,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                 ))}
               </Swiper>
             </div>
-          </>
+          </div>
         ))}
     </div>
   );

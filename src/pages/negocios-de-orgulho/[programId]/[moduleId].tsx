@@ -13,7 +13,7 @@ import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 import { Amstel } from "@/features/negociosdeorgulho";
 import { ConvertCourses } from "@/utils/convert-courses";
 import { handleProgramas } from "@/services/firebase/programas";
-import { ICourseEpisode } from "@/@types/cousers";
+import { ICourseEpisode, ICourses } from "@/@types/cousers";
 import { useUserFromNickname } from "@/client/users";
 
 const PlayerScreen = () => {
@@ -26,6 +26,7 @@ const PlayerScreen = () => {
   const [selectedVideo, setSelectedVideo] = useState<ICourseEpisode>();
   const [programas, setProgramas] = useState<any[]>([]);
   const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
+  const [modulo, setModulo] = useState<any[]>([]);
 
   const { user } = useUserFromNickname({ id: session?.userId });
 
@@ -37,9 +38,14 @@ const PlayerScreen = () => {
     session?.userId && GetUserProgress(session?.userId, setWatchedVideos);
   }, [session]);
 
-  const modulo = ConvertCourses(programas, watchedVideos, user?.nickname)
-    .find((p) => p?._id === programId)
-    ?.modules.find((m) => m?._id === moduleId);
+  useEffect(() => {
+    const mod = ConvertCourses(programas, watchedVideos, user?.nickname)
+      .find((p) => p?._id === programId)
+      ?.modules.find((m) => m?._id === moduleId);
+    setModulo(mod as any);
+
+    mod && setSelectedVideo(mod?.episodes[0] as any);
+  }, [programas, watchedVideos]);
 
   const isWatched = !!watchedVideos?.find(
     (w) => w?.id == selectedVideo?.videoId

@@ -8,21 +8,16 @@ import {
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 
-export const handleProgramas = async (setProgramas: any) => {
-  try {
-    console.log("[CHAT]: handleProgramas");
+export const handleProgramas = (setProgramas: any) => {
+  console.log("[CHAT]: handleProgramas");
 
-    const programasCol = collection(db, "PROGRAMAS");
-    return onSnapshot(programasCol, (snapshot) => {
-      const programasList = snapshot.docs.map((doc) => {
-        return { _id: doc?.id, ...doc.data() };
-      });
-      setProgramas(programasList);
+  const programasCol = collection(db, "PROGRAMAS");
+  return onSnapshot(programasCol, (snapshot) => {
+    const programasList = snapshot.docs.map((doc) => {
+      return { _id: doc?.id, ...doc.data() };
     });
-  } catch (error: any) {
-    toast.error("Falha ao pegar programas: " + error.message);
-    return [];
-  }
+    setProgramas(programasList);
+  });
 };
 
 export const handleCreatePrograma = async (name: string) => {
