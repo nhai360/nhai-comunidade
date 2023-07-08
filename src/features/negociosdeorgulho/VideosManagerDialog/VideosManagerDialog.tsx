@@ -5,7 +5,7 @@ import { Dialog, Divider, Tooltip } from "@/ui";
 
 import * as S from "./VideosManagerDialog.styles";
 import { useState } from "react";
-import { ICourseModule, ICourses } from "@/@types/cousers";
+import { ICourseEpisode, ICourseModule, ICourses } from "@/@types/cousers";
 import { handleEditProgram } from "@/services/firebase/courses";
 import { toast } from "react-toastify";
 import { UploadVideoDialog } from "@/features/videos";
@@ -28,7 +28,7 @@ export function VideosManagerDialog({
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [showNewVideo, setShowNewVideo] = useState(false);
-  const [videoQuestionId, setVideoQuestionId] = useState("");
+  const [videoQuestion, setVideoQuestion] = useState<ICourseEpisode>();
   const course = courses.find((c) => c?._id === courseId);
 
   const modulo = course?.modules.find((m) => m?._id === moduleId);
@@ -95,7 +95,7 @@ export function VideosManagerDialog({
                       <div style={{ display: "flex", columnGap: 12 }}>
                         <div
                           style={{ cursor: "pointer" }}
-                          onClick={() => setVideoQuestionId(episode?.videoId)}
+                          onClick={() => setVideoQuestion(episode)}
                           title={"Gerenciar pesquisa"}
                         >
                           <SearchIcon size={20} />
@@ -130,10 +130,11 @@ export function VideosManagerDialog({
           programId={courseId}
         />
       )}
-      {videoQuestionId && (
+      {videoQuestion && (
         <QuestionManagerDialog
-          onClose={() => setVideoQuestionId("")}
-          videoId={videoQuestionId}
+          onClose={() => setVideoQuestion(undefined)}
+          videoId={videoQuestion?.videoId || ""}
+          episode={videoQuestion}
         />
       )}
     </>
