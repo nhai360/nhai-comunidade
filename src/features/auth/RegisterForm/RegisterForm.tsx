@@ -19,7 +19,11 @@ import { defaultEthnicity } from "../../../../public/data/ethnicity";
 import { defaultSexualOrientation } from "../../../../public/data/sexualOrientation";
 import { toast } from "react-toastify";
 
-export function RegisterForm() {
+interface IRegisterForm {
+  layoutAmstel?: boolean;
+}
+
+export function RegisterForm({ layoutAmstel }: IRegisterForm) {
   const router = useRouter();
 
   const [tab, setTab] = useState(1);
@@ -76,7 +80,11 @@ export function RegisterForm() {
               toast.success(
                 "Conta criada com sucesso! Agora basta fazer login 😉"
               );
-              router.push("/auth/login");
+              router.push(
+                layoutAmstel
+                  ? "/auth/login/?layout=negocios-de-orgulho"
+                  : "/auth/login"
+              );
             },
             onError: (err: any) => {
               console.log("Error:", err);
@@ -258,7 +266,13 @@ export function RegisterForm() {
           {tab === 1 ? "Continuar" : "Criar conta"}
           <ArrowNarrowRightIcon />
         </Button>
-        <S.RecoverPasswordLink href="/auth/login">
+        <S.RecoverPasswordLink
+          href={
+            layoutAmstel
+              ? "/auth/login/?layout=negocios-de-orgulho"
+              : "/auth/login"
+          }
+        >
           Já sou membro
         </S.RecoverPasswordLink>
 

@@ -1,0 +1,41 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e3e3e3;
+  border-radius: 2px;
+  font-family: "RingBold";
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #efefef;
+    padding: 0.8rem 1rem;
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      background-color: #e7e7e7;
+    }
+  }
+}
+
+.optionContainer {
+  padding: 8px 12px;
+  transition: all 0.2s ease-in;
+  border-radius: 2px;
+  border-color: #fafafa;
+
+  legend {
+    font-family: "RingBold";
+    font-size: 14px;
+    color: #ee0014;
+    background-color: #fff;
+    padding: 0 8px;
+  }
+
+  &:hover {
+    border-color: #ee0014;
+  }
+}

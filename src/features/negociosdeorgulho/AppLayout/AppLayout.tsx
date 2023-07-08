@@ -7,7 +7,7 @@ type Props = {
 export function AppLayout({ hasSider }: Props) {
   return (
     <DefaultLayout>
-      <DefaultLayout.Header />
+      <DefaultLayout.Header loginAmstel />
     </DefaultLayout>
   );
 }
