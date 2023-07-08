@@ -259,7 +259,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
               >
                 Voltar
               </Button>
-              {!!question ? (
+              {question ? (
                 <Button
                   style={{
                     backgroundColor: "#EE0014",

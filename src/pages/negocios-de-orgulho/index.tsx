@@ -17,6 +17,7 @@ function NegociosDeOrgulho() {
 
   const [programas, setProgramas] = useState<any[]>([]);
   const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
+  const [cursos, setCursos] = useState<any[]>([]);
 
   useEffect(() => {
     handleProgramas(setProgramas);
@@ -28,7 +29,10 @@ function NegociosDeOrgulho() {
 
   const { user } = useUserFromNickname({ id: session?.userId });
 
-  const cursos = ConvertCourses(programas, watchedVideos, user?.nickname);
+  useEffect(() => {
+    const cur = ConvertCourses(programas, watchedVideos, user?.nickname);
+    setCursos(cur);
+  }, [programas, watchedVideos, user?.nickname]);
 
   return (
     <>
