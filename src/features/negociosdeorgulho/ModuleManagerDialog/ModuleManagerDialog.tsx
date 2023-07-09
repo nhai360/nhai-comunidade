@@ -10,7 +10,7 @@ import { handleEditProgram } from "@/services/firebase/courses";
 import { toast } from "react-toastify";
 import { CreateModuleDialog } from "../CreateModuleDialog";
 import { VideosManagerDialog } from "../VideosManagerDialog";
-import { AppWindow } from "@phosphor-icons/react";
+import { AppWindow, CaretLeft } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -47,6 +47,22 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
             <S.QuestionHeaderTitleContainer style={{ background: "white" }}>
+              <div
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 32,
+                  height: 32,
+                  borderRadius: 32,
+                  backgroundColor: "white",
+                  border: "1px solid black",
+                  marginBottom: 8,
+                }}
+              >
+                <CaretLeft onClick={onClose} size={20} />
+              </div>
               <S.QuestionHeaderTitle
                 style={{
                   color: "red",
@@ -55,10 +71,10 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
                   gap: 4,
                 }}
               >
-                <AppWindow size={32} /> Programa: {course?.name}
+                Programa: {course?.name}
               </S.QuestionHeaderTitle>
               <S.QuestionHeaderSubtitle style={{ color: "#414141" }}>
-                Gerencie abaixo seus módulos.
+                Gerencie abaixo os módulos do {`"${course?.name}"`}.
               </S.QuestionHeaderSubtitle>
             </S.QuestionHeaderTitleContainer>
           </S.QuestionHeader>
@@ -67,11 +83,12 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
               {course &&
                 course.modules?.map((modulo, index) => {
                   return (
-                    <div key={index} className={styles.cardProgram}>
-                      <div
-                        style={{ flex: 1 }}
-                        onClick={() => setModuleId(modulo?._id)}
-                      >
+                    <div
+                      key={index}
+                      className={styles.cardProgram}
+                      onClick={() => setModuleId(modulo?._id)}
+                    >
+                      <div style={{ flex: 1 }}>
                         <p>{modulo?.name}</p>
                       </div>
                       <Switch

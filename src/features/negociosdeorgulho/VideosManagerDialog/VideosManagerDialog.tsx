@@ -12,7 +12,13 @@ import { UploadVideoDialog } from "@/features/videos";
 import { SearchIcon, TrashIcon } from "@/ui/_icons";
 import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
 import { QuestionManagerDialog } from "../QuestionManagerDialog";
-import { List, ListMagnifyingGlass, Video } from "@phosphor-icons/react";
+import {
+  CaretLeft,
+  List,
+  ListMagnifyingGlass,
+  Video,
+} from "@phosphor-icons/react";
+import { BackButton } from "@/features/auth";
 
 type Props = {
   onClose: () => void;
@@ -80,15 +86,29 @@ export function VideosManagerDialog({
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
             <S.QuestionHeaderTitleContainer>
+              <div
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 32,
+                  height: 32,
+                  borderRadius: 32,
+                  backgroundColor: "white",
+                  marginBottom: 8,
+                }}
+              >
+                <CaretLeft onClick={onClose} size={20} />
+              </div>
               <S.QuestionHeaderTitle
                 style={{ display: "flex", gap: 4, alignItems: "center" }}
               >
                 {" "}
-                <List size={32} />
-                {modulo?.name}
+                {`"${modulo?.name}"`}
               </S.QuestionHeaderTitle>
               <S.QuestionHeaderSubtitle>
-                Gerencie abaixo os episódios deste módulo.
+                Gerencie abaixo os episódios.
               </S.QuestionHeaderSubtitle>
             </S.QuestionHeaderTitleContainer>
           </S.QuestionHeader>

@@ -34,15 +34,16 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
       <Dialog open onOpenChange={onClose}>
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <Dialog.Header isAmstel title={"Gerenciamento Amstel"} closable />
-         
+
           <Dialog.Body>
             {courses?.map((program, index) => {
               return (
-                <div key={index} className={styles.cardProgram}>
-                  <div
-                    style={{ flex: 1 }}
-                    onClick={() => setShowManager(program?._id)}
-                  >
+                <div
+                  key={index}
+                  className={styles.cardProgram}
+                  onClick={() => setShowManager(program?._id)}
+                >
+                  <div style={{ flex: 1 }}>
                     <p
                       style={{ display: "flex", alignItems: "center", gap: 4 }}
                     >
