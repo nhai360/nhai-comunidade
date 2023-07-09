@@ -3,21 +3,25 @@
   flex-direction: column;
   height: 300px;
   overflow-y: auto;
-  border: 1px solid #e3e3e3;
   border-radius: 2px;
-  font-family: "RingBold";
 
-  .row {
+  .cardProgram {
+    font-family: "RingMedium";
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #efefef;
-    padding: 0.8rem 1rem;
+    padding: 20px 1rem;
     transition: all 0.2s ease-in;
     cursor: pointer;
 
+    border: 1px solid #dadada;
+
+    margin-bottom: 8px;
+
     &:hover {
       background-color: #e7e7e7;
+      color: red;
     }
   }
 }

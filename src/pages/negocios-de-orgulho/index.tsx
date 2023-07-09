@@ -68,7 +68,6 @@ function NegociosDeOrgulho() {
             </div>
           )}
         </div>
-
         <TabComponent isSigned={!!session?.userId} cursos={cursos as any} />
       </div>
     </>

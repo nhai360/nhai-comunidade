@@ -10,6 +10,7 @@ import { handleEditProgram } from "@/services/firebase/courses";
 import { toast } from "react-toastify";
 import { CreateModuleDialog } from "../CreateModuleDialog";
 import { VideosManagerDialog } from "../VideosManagerDialog";
+import { AppWindow } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -45,10 +46,19 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
       <Dialog open onOpenChange={onClose}>
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
-            <S.QuestionHeaderTitleContainer>
-              <S.QuestionHeaderTitle>{course?.name}</S.QuestionHeaderTitle>
-              <S.QuestionHeaderSubtitle>
-                Gerencie seus módulos
+            <S.QuestionHeaderTitleContainer style={{ background: "white" }}>
+              <S.QuestionHeaderTitle
+                style={{
+                  color: "red",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <AppWindow size={32} /> Programa: {course?.name}
+              </S.QuestionHeaderTitle>
+              <S.QuestionHeaderSubtitle style={{ color: "#414141" }}>
+                Gerencie abaixo seus módulos.
               </S.QuestionHeaderSubtitle>
             </S.QuestionHeaderTitleContainer>
           </S.QuestionHeader>
@@ -57,7 +67,7 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
               {course &&
                 course.modules?.map((modulo, index) => {
                   return (
-                    <div key={index} className={styles.row}>
+                    <div key={index} className={styles.cardProgram}>
                       <div
                         style={{ flex: 1 }}
                         onClick={() => setModuleId(modulo?._id)}
@@ -74,7 +84,7 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
                   );
                 })}
               <div
-                className={styles.row}
+                className={styles.cardProgram}
                 style={{ justifyContent: "center" }}
                 onClick={() => setShowNewModule(true)}
               >

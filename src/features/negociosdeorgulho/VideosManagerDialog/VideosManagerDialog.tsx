@@ -12,6 +12,7 @@ import { UploadVideoDialog } from "@/features/videos";
 import { SearchIcon, TrashIcon } from "@/ui/_icons";
 import { useDeleteVideo } from "@/client/videos/useDeleteVideo";
 import { QuestionManagerDialog } from "../QuestionManagerDialog";
+import { List, ListMagnifyingGlass, Video } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -79,9 +80,15 @@ export function VideosManagerDialog({
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
             <S.QuestionHeaderTitleContainer>
-              <S.QuestionHeaderTitle>{modulo?.name}</S.QuestionHeaderTitle>
+              <S.QuestionHeaderTitle
+                style={{ display: "flex", gap: 4, alignItems: "center" }}
+              >
+                {" "}
+                <List size={32} />
+                {modulo?.name}
+              </S.QuestionHeaderTitle>
               <S.QuestionHeaderSubtitle>
-                Gerencie os episódios deste módulo
+                Gerencie abaixo os episódios deste módulo.
               </S.QuestionHeaderSubtitle>
             </S.QuestionHeaderTitleContainer>
           </S.QuestionHeader>
@@ -90,15 +97,18 @@ export function VideosManagerDialog({
               {modulo &&
                 modulo?.episodes?.map((episode, index) => {
                   return (
-                    <div key={index} className={styles.row}>
-                      <p>{episode?.name}</p>
+                    <div key={index} className={styles.videoCard}>
+                      <p style={{ display: "flex", gap: 8 }}>
+                        {" "}
+                        <Video size={20} /> {episode?.name}
+                      </p>
                       <div style={{ display: "flex", columnGap: 12 }}>
                         <div
                           style={{ cursor: "pointer" }}
                           onClick={() => setVideoQuestion(episode)}
                           title={"Gerenciar pesquisa"}
                         >
-                          <SearchIcon size={20} />
+                          <ListMagnifyingGlass size={20} />
                         </div>
                         <div
                           style={{ cursor: "pointer" }}
@@ -112,7 +122,7 @@ export function VideosManagerDialog({
                   );
                 })}
               <div
-                className={styles.row}
+                className={styles.newVideoCard}
                 style={{ justifyContent: "center" }}
                 onClick={() => setShowNewVideo(true)}
               >
