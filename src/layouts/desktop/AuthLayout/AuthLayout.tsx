@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 import * as S from "./AuthLayout.styles";
 import { Logo, Typography } from "@/ui";
+import Image from "next/image";
 
 type Props = {
   children: ReactNode;
@@ -11,13 +12,23 @@ type Props = {
 
 export function AuthLayout({ children, title, layoutAmstel }: Props) {
   return layoutAmstel ? (
-    <S.Container style={{ background: "#ee0014" }}>
+    <S.Container style={{ background: "white" }}>
       <S.Content>{children}</S.Content>
-      <S.TitleContainer>
+      <S.TitleContainer
+        css={{
+          backgroundImage: "url(/amstel-auth-banner.png)",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <Logo />
-        <Typography.Title as="h1" size="h1" weight="black" color="neutral">
-          Negócios de orgulho
-        </Typography.Title>
+        <Image
+          width={400}
+          height={90}
+          src={"/amstel-auth-logo.png"}
+          alt={"amstel-auth-logo"}
+          style={{objectFit: 'contain'}}
+        />
         <Typography.Text size="caption" color="neutral" weight="bold">
           © 2023. Powered by Nhaí
         </Typography.Text>
