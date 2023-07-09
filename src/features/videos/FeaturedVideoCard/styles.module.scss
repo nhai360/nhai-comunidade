@@ -1,3 +1,21 @@
 .customButton {
   width: 100%;
 }
+
+.LogoAmstel {
+  display: flex;
+  flex-direction: column;
+}
+
+.LogoAmstel img:nth-of-type(1) {
+  max-width: 148px;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.LogoAmstel img:nth-of-type(2) {
+  max-width: 200px;
+  width: 100%;
+
+  margin-top: 15px;
+}
