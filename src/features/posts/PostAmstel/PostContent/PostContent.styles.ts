@@ -6,6 +6,8 @@ export const DefaultContainer = styled("article", {
   flexDirection: "column",
   gap: "$4",
   paddingBlock: "$4",
+  paddingInline: "$6"
+
 });
 
 export const ColoredContainer = styled("article", {

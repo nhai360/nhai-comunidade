@@ -24,10 +24,9 @@ export function PostCardAmstel({ post, isAmstel }: Props) {
       }
       ghost
     >
-      <Wrapper>
-        <PostAmstel.Header isAmstel post={post} />
-        <PostAmstel.Content isAmstel post={post} />
-      </Wrapper>
+      <PostAmstel.Header isAmstel post={post} />
+      <PostAmstel.Content isAmstel post={post} />
+
       <Divider
         css={{
           marginBlock: "$6",

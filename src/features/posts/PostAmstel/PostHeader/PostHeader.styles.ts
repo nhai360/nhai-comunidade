@@ -6,6 +6,7 @@ export const Container = styled("header", {
   alignItems: "center",
   justifyContent: "space-between",
   paddingBlock: "$6",
+  paddingInline: "$6"
 });
 
 export const User = styled("div", {

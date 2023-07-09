@@ -66,7 +66,7 @@ export function PostHeader({ post, isAmstel }: Props) {
   }
 
   return (
-    <S.Container>
+    <S.Container css={{ backgroundColor: "red" }}>
       <S.User>
         <Avatar.Square
           src={isAmstel ? "/amstel.png" : post.author.profilePicture?.url}
@@ -77,15 +77,25 @@ export function PostHeader({ post, isAmstel }: Props) {
         />
 
         <S.Info>
-          <S.FullName css={{ color: isAmstel ? "red" : "black", fontFamily: "RingBold"}}>
+          <S.FullName
+            css={{ color: "white", fontFamily: "RingBold", fontSize: 24 }}
+          >
             {isAmstel
               ? "AMSTEL"
               : getFirstNameAndLastName(post.author.fullName)}
-            <Typography.Text color="secondary" size="caption">
+            <Typography.Text
+              style={{ color: "white" }}
+              color="secondary"
+              size="caption"
+            >
               {createdAtFormatted} atrás
             </Typography.Text>
           </S.FullName>
-          <Typography.Text color="secondary" size="caption">
+          <Typography.Text
+            style={{ color: "white" }}
+            color="secondary"
+            size="caption"
+          >
             @{post.author.nickname}
           </Typography.Text>
         </S.Info>
@@ -96,19 +106,26 @@ export function PostHeader({ post, isAmstel }: Props) {
             <Button
               icon
               variant="transparent"
+              css={{
+                "&:active": {
+                  background: "#dadada",
+                  color: "white",
+                  cursor: "not-allowed",
+                },
+              }}
               loading={isLoading}
               onClick={handleDeletePost}
             >
-              <TrashIcon color={theme.colors.textSecondary.value} />
+              <TrashIcon color={"white"} />
             </Button>
           </Tooltip>
         )}
         <Tooltip message={isCopied ? "Copiado" : "Copiar link"}>
           <Button icon variant="transparent" onClick={handleCopyPostUrl}>
             {isCopied ? (
-              <CheckIcon size={20} color={theme.colors.textSecondary.value} />
+              <CheckIcon size={20} color={"white"} />
             ) : (
-              <LinkIcon color={theme.colors.textSecondary.value} />
+              <LinkIcon color={"white"} />
             )}
           </Button>
         </Tooltip>

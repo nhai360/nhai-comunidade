@@ -14,6 +14,7 @@ export function DesktopPostCardFooter({ post }: Props) {
     <S.Wrapper
       css={{
         paddingBottom: "$6",
+        paddingInline: "$6",
 
         "@mobile": {
           display: "none",
