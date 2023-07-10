@@ -10,6 +10,7 @@ import { useDeleteQuestion } from "@/client/questions/useDeleteQuestion";
 import { useState } from "react";
 import { ICourseEpisode } from "@/@types/cousers";
 import { TrashIcon } from "@/ui/_icons";
+import { ListMagnifyingGlass } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -119,7 +120,10 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
             <S.QuestionHeaderTitleContainer>
-              <S.QuestionHeaderTitle>
+              <S.QuestionHeaderTitle
+                style={{ display: "flex", alignItems: "center", gap: 4 }}
+              >
+                <ListMagnifyingGlass size={20} />{" "}
                 {question?.title ||
                   "Pesquisa | Este episódio não possui nenhuma pesquisa"}
               </S.QuestionHeaderTitle>
@@ -159,8 +163,14 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
               {!question && (
                 <div>
                   <S.QuestionOptionContainer>
-                    <S.QuestionOptionTitle>
-                      Esta pesquisa aparecerá
+                    <S.QuestionOptionTitle
+                      style={{
+                        fontFamily: "RingMedium",
+                        fontSize: 20,
+                        marginBottom: 8,
+                      }}
+                    >
+                      Esta pesquisa aparecerá:
                     </S.QuestionOptionTitle>
                     <div className={styles.questionTypeContainer}>
                       <div className={styles.typeContainer}>
@@ -168,6 +178,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
                           id="type-start"
                           type="radio"
                           value={"START"}
+                          style={{ cursor: "pointer" }}
                           checked={type === "START"}
                           onChange={(e) => setType("START")}
                         />
@@ -180,6 +191,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
                           id="type-start"
                           type="radio"
                           value={"END"}
+                          style={{ cursor: "pointer" }}
                           checked={type === "END"}
                           onChange={(e) => setType("END")}
                         />
@@ -188,7 +200,13 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
                         </label>
                       </div>
                     </div>
-                    <S.QuestionOptionTitle>
+                    <S.QuestionOptionTitle
+                      style={{
+                        fontFamily: "RingMedium",
+                        fontSize: 20,
+                        marginBottom: 8,
+                      }}
+                    >
                       Perguntas da pesquisa:
                     </S.QuestionOptionTitle>
                     {options?.map((option, index) => {

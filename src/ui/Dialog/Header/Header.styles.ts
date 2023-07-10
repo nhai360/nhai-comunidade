@@ -22,6 +22,7 @@ export const Title = styled(Dialog.Title, {
   },
 });
 
+
 export const Close = styled(Dialog.Close, {
   marginLeft: "auto",
   color: "$textPrimary",

@@ -10,6 +10,7 @@ import { handleEditProgram } from "@/services/firebase/courses";
 import { toast } from "react-toastify";
 import { CreateModuleDialog } from "../CreateModuleDialog";
 import { VideosManagerDialog } from "../VideosManagerDialog";
+import { AppWindow, CaretLeft } from "@phosphor-icons/react";
 
 type Props = {
   onClose: () => void;
@@ -45,10 +46,35 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
       <Dialog open onOpenChange={onClose}>
         <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
           <S.QuestionHeader>
-            <S.QuestionHeaderTitleContainer>
-              <S.QuestionHeaderTitle>{course?.name}</S.QuestionHeaderTitle>
-              <S.QuestionHeaderSubtitle>
-                Gerencie seus módulos
+            <S.QuestionHeaderTitleContainer style={{ background: "white" }}>
+              <div
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 32,
+                  height: 32,
+                  borderRadius: 32,
+                  backgroundColor: "white",
+                  border: "1px solid black",
+                  marginBottom: 8,
+                }}
+              >
+                <CaretLeft onClick={onClose} size={20} />
+              </div>
+              <S.QuestionHeaderTitle
+                style={{
+                  color: "red",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                Programa: {course?.name}
+              </S.QuestionHeaderTitle>
+              <S.QuestionHeaderSubtitle style={{ color: "#414141" }}>
+                Gerencie abaixo os módulos do {`"${course?.name}"`}.
               </S.QuestionHeaderSubtitle>
             </S.QuestionHeaderTitleContainer>
           </S.QuestionHeader>
@@ -57,10 +83,10 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
               {course &&
                 course.modules?.map((modulo, index) => {
                   return (
-                    <div key={index} className={styles.row}>
+                    <div key={index} className={styles.cardProgram}>
                       <div
-                        style={{ flex: 1 }}
                         onClick={() => setModuleId(modulo?._id)}
+                        className={styles.clickableArea}
                       >
                         <p>{modulo?.name}</p>
                       </div>
@@ -74,8 +100,8 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
                   );
                 })}
               <div
-                className={styles.row}
-                style={{ justifyContent: "center" }}
+                className={styles.cardProgram}
+                style={{ justifyContent: "center", padding: "20px 1rem" }}
                 onClick={() => setShowNewModule(true)}
               >
                 <p>Novo módulo +</p>

@@ -80,9 +80,25 @@ export const handleEditProgram = async (newProgram: ICourses) => {
     const messageColRef = collection(db, "PROGRAMAS");
     const commentDocRef = doc(messageColRef, newProgram._id);
 
-    const { watchedPercent, _id, createdAt, ...rest } = newProgram;
+    const { watchedPercent, _id, createdAt, modules, ...rest } = newProgram;
 
-    await updateDoc(commentDocRef, { ...rest, updatedAt: new Date() });
+    const adjustedProgram = {
+      ...rest,
+      modules: modules?.map((a) => {
+        const { watchedPercent, ...rest } = a;
+        return {
+          ...rest,
+          episodes: rest?.episodes?.map((e) => {
+            const { watched, ...restEpisode } = e;
+
+            return restEpisode;
+          }),
+        };
+      }),
+      updatedAt: new Date(),
+    };
+
+    await updateDoc(commentDocRef, adjustedProgram);
   } catch (error: any) {
     console.error("Não foi possível alterar o programa", error);
     toast.error("Não foi possível alterar o programa :(");

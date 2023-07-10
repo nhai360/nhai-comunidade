@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight, Queue } from "@phosphor-icons/react";
 
 type ICardHightlight = {
   isMobile?: boolean;
@@ -17,14 +17,15 @@ const CardHighlight = ({ isMobile }: ICardHightlight) => {
             <div className={styles.articleImg}></div>
           </div>
           <div>
-            <p>Evento • 26.06.2023</p>
+            <Queue color={"black"} size={16} />
+            <p>Cresça seu negócio.</p>
             <Link
-              href={"https://nhai.com.br/semana-digital"}
+              href={"https://contaiapp.com/negocios-de-orgulho"}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h3 className={styles.title}>
-                Semana Digital <ArrowUpRight size={24} />
+              <h3 className={styles.title} style={{ fontFamily: "RingBold" }}>
+                Negócios de Orgulho <ArrowUpRight color="red" size={24} />
               </h3>
             </Link>
           </div>

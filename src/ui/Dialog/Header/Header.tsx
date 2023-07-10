@@ -7,17 +7,25 @@ type Props = {
   title?: string;
   closable?: boolean;
   onClose?: () => void;
+  isAmstel?: boolean;
 };
 
-export function DialogHeader({ title, closable, onClose }: Props) {
+export function DialogHeader({
+  title,
+  closable,
+  onClose,
+  isAmstel = false,
+}: Props) {
   return (
-    <S.Container>
+    <S.Container
+      style={isAmstel ? { backgroundColor: "red", color: "white" } : {}}
+    >
       {title && <S.Title>{title}</S.Title>}
 
       {closable && (
         <S.Close asChild onClick={onClose}>
           <Button icon variant="transparent" type="button">
-            <CloseIcon />
+            <CloseIcon color={isAmstel ? 'white' : 'black'} />
           </Button>
         </S.Close>
       )}
