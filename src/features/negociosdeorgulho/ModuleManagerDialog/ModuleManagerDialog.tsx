@@ -83,12 +83,11 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
               {course &&
                 course.modules?.map((modulo, index) => {
                   return (
-                    <div
-                      key={index}
-                      className={styles.cardProgram}
-                      onClick={() => setModuleId(modulo?._id)}
-                    >
-                      <div style={{ flex: 1 }}>
+                    <div key={index} className={styles.cardProgram}>
+                      <div
+                        onClick={() => setModuleId(modulo?._id)}
+                        className={styles.clickableArea}
+                      >
                         <p>{modulo?.name}</p>
                       </div>
                       <Switch
@@ -102,7 +101,7 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
                 })}
               <div
                 className={styles.cardProgram}
-                style={{ justifyContent: "center" }}
+                style={{ justifyContent: "center", padding: "20px 1rem" }}
                 onClick={() => setShowNewModule(true)}
               >
                 <p>Novo módulo +</p>

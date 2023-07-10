@@ -11,13 +11,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 1rem;
     transition: all 0.2s ease-in;
     cursor: pointer;
+    padding-right: 1rem;
 
     border: 1px solid #dadada;
 
     margin-bottom: 8px;
+
+    .clickableArea {
+      width: 100%;
+      padding: 20px 1rem;
+    }
 
     &:hover {
       background-color: #e7e7e7;

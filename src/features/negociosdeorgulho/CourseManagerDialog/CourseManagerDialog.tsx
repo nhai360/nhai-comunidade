@@ -23,10 +23,7 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
   const [showNewCourse, setShowNewCourse] = useState(false);
 
   const handleSwitchPublic = (program: ICourses) => {
-    handleEditProgram({ ...program, public: !program.public }).catch((err) => {
-      toast.error("Não foi possível alterar a privacidade do programa");
-      console.log("Error =>", err);
-    });
+    handleEditProgram({ ...program, public: !program.public });
   };
 
   return (
@@ -38,12 +35,11 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
           <Dialog.Body>
             {courses?.map((program, index) => {
               return (
-                <div
-                  key={index}
-                  className={styles.cardProgram}
-                  onClick={() => setShowManager(program?._id)}
-                >
-                  <div style={{ flex: 1 }}>
+                <div key={index} className={styles.cardProgram}>
+                  <div
+                    className={styles.clickableArea}
+                    onClick={() => setShowManager(program?._id)}
+                  >
                     <p
                       style={{ display: "flex", alignItems: "center", gap: 4 }}
                     >
@@ -63,7 +59,11 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
             })}
             <div
               className={styles.cardProgram}
-              style={{ justifyContent: "center", backgroundColor: "white" }}
+              style={{
+                justifyContent: "center",
+                backgroundColor: "white",
+                padding: "20px 1rem",
+              }}
               onClick={() => setShowNewCourse(true)}
             >
               <p>Novo programa +</p>
