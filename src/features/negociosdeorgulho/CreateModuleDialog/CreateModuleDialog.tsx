@@ -75,7 +75,7 @@ export function CreateModuleDialog({ onClose, course, editModule }: Props) {
                 ...editModule,
                 updatedAt: new Date(),
                 name,
-                bannerUrl: url ? url : editModule?.bannerUrl,
+                bannerUrl: url || editModule?.bannerUrl,
               }
             : a;
         }),
