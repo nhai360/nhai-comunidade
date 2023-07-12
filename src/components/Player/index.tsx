@@ -140,7 +140,6 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           width={"100%"}
           height={"100%"}
           style={{ backgroundColor: "#323232", maxHeight: 500 }}
-          muted
           isAmstel
           onEnded={handleCompleteVideo}
         />

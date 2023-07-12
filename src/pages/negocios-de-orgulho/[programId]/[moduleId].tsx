@@ -12,9 +12,9 @@ import useWindowDimensions from "@/hooks/useWindowDimension";
 import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 import { Amstel } from "@/features/negociosdeorgulho";
 import { ConvertCourses } from "@/utils/convert-courses";
-import { handleProgramas } from "@/services/firebase/programas";
-import { ICourseEpisode, ICourses } from "@/@types/cousers";
+import { ICourseEpisode } from "@/@types/cousers";
 import { useUserFromNickname } from "@/client/users";
+import { GetFirebaseCourses } from "@/services/firebase/courses";
 
 const PlayerScreen = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const PlayerScreen = () => {
   const { user } = useUserFromNickname({ id: session?.userId });
 
   useEffect(() => {
-    handleProgramas(setProgramas);
+    GetFirebaseCourses(setProgramas);
   }, []);
 
   useEffect(() => {

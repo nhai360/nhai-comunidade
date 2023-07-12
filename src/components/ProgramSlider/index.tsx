@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import styles from "./slider.module.scss";
@@ -80,6 +81,8 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                 breakpoints={swiperBreakpoints}
                 slidesPerView={1.2}
                 className={styles.moduleSlider}
+                navigation
+                modules={[Navigation]}
               >
                 {curso?.modules?.map((modulo) => (
                   <SwiperSlide

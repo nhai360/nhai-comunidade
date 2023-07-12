@@ -1,27 +1,32 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button, Dialog, Divider, Field, Success } from "@/ui";
-import { useState } from "react";
-import { ICourses } from "@/@types/cousers";
-import { handleCreateCourseModule } from "@/services/firebase/courses";
+import { useEffect, useState } from "react";
+import { ICourseModule, ICourses } from "@/@types/cousers";
+import {
+  handleCreateCourseModule,
+  handleEditProgram,
+} from "@/services/firebase/courses";
 import { UploadThumbnail } from "@/features/videos/UploadVideoDialog/UploadThumbnail";
 import { MediaCategory, useUpload } from "@/client/media";
 
 type Props = {
   course: ICourses;
   onClose: () => void;
+  editModule: ICourseModule | null;
 };
 
-export function CreateModuleDialog({ onClose, course }: Props) {
+export function CreateModuleDialog({ onClose, course, editModule }: Props) {
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
 
   const {
     register,
     control,
     getValues,
+    setValue,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm();
 
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
@@ -60,10 +65,76 @@ export function CreateModuleDialog({ onClose, course }: Props) {
     }
   };
 
+  const editWithImage = async (url: string | null) => {
+    await handleEditProgram({
+      ...course,
+      modules: [
+        ...course?.modules.map((a) => {
+          return a?._id === editModule?._id
+            ? {
+                ...editModule,
+                updatedAt: new Date(),
+                name,
+                bannerUrl: url || editModule?.bannerUrl,
+              }
+            : a;
+        }),
+      ],
+    })
+      .then(() => {
+        toast.success("Módulo atualizado com sucesso!");
+        onClose();
+      })
+      .catch((err) => {
+        toast.error("Não foi possível atualizar o módulo");
+        console.log("Error =>", err);
+      });
+  };
+
+  const handleEdit = () => {
+    if (editModule && name) {
+      const newBanner = getValues("bannerUrl");
+      if (newBanner) {
+        uploadThumbnail(
+          {
+            file: newBanner,
+            category: MediaCategory.IMAGE,
+          },
+          {
+            onSuccess: async (media) => {
+              setLoading(true);
+              await editWithImage(media?.url);
+              setLoading(false);
+            },
+            onError: () => {
+              toast.error(
+                "Não foi possível completar o upload da sua thumbnail. Tente novamente"
+              );
+            },
+          }
+        );
+      } else {
+        editWithImage(null);
+      }
+    } else {
+      toast.error("Insira o nome do módulo");
+    }
+  };
+
+  useEffect(() => {
+    if (editModule) {
+      setName(editModule?.name);
+    }
+  }, [editModule]);
+
   return (
     <Dialog open>
       <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
-        <Dialog.Header title={"Novo módulo"} onClose={onClose} closable />
+        <Dialog.Header
+          title={editModule ? "Editar módulo" : "Novo módulo"}
+          onClose={onClose}
+          closable
+        />
         <Dialog.Body>
           <Field.Input
             label="Nome do módulo"
@@ -102,9 +173,9 @@ export function CreateModuleDialog({ onClose, course }: Props) {
             }}
             type="submit"
             loading={isUploadingThumbnail || loading}
-            onClick={handleCreate}
+            onClick={editModule ? handleEdit : handleCreate}
           >
-            Criar módulo
+            {editModule ? "Salvar alterações" : "Criar módulo"}
           </Button>
         </Dialog.Footer>
       </Dialog.Content>

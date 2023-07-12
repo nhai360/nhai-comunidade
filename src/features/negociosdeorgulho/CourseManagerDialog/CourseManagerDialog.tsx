@@ -8,10 +8,14 @@ import { Button, Dialog, Divider } from "@/ui";
 import * as S from "./CourseManagerDialog.styles";
 import { useState } from "react";
 import { ICourses } from "@/@types/cousers";
-import { handleEditProgram } from "@/services/firebase/courses";
+import {
+  handleDeleteProgram,
+  handleEditProgram,
+} from "@/services/firebase/courses";
 import { ModuleManagerDialog } from "../ModuleManagerDialog";
 import { CreateCourseDialog } from "../CreateCourseDialog";
 import { AppWindow } from "@phosphor-icons/react";
+import { EditIcon, TrashIcon } from "@/ui/_icons";
 
 type Props = {
   onClose: () => void;
@@ -21,9 +25,14 @@ type Props = {
 export function CourseManagerDialog({ onClose, courses }: Props) {
   const [showManager, setShowManager] = useState("");
   const [showNewCourse, setShowNewCourse] = useState(false);
+  const [showEdit, setShowEdit] = useState<ICourses | null>(null);
 
   const handleSwitchPublic = (program: ICourses) => {
     handleEditProgram({ ...program, public: !program.public });
+  };
+
+  const handleDelete = async (program: ICourses) => {
+    await handleDeleteProgram(program);
   };
 
   return (
@@ -48,12 +57,28 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
                       {program?.name}
                     </p>
                   </div>
-                  <Switch
-                    onChange={() => handleSwitchPublic(program)}
-                    checked={program.public}
-                    offColor={"#c9c9c9"}
-                    onColor="#EE0014"
-                  />
+                  <div style={{ display: "flex", columnGap: 12 }}>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setShowEdit(program)}
+                      title={"Editar programa"}
+                    >
+                      <EditIcon size={20} />
+                    </div>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(program)}
+                      title={"Excluir programa"}
+                    >
+                      <TrashIcon size={20} />
+                    </div>
+                    <Switch
+                      onChange={() => handleSwitchPublic(program)}
+                      checked={program.public}
+                      offColor={"#c9c9c9"}
+                      onColor="#EE0014"
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -79,10 +104,14 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
           onClose={() => setShowManager("")}
         />
       )}
-      {showNewCourse && (
+      {(showNewCourse || showEdit) && (
         <CreateCourseDialog
           courses={courses}
-          onClose={() => setShowNewCourse(false)}
+          onClose={() => {
+            setShowNewCourse(false);
+            setShowEdit(null);
+          }}
+          editCourse={showEdit}
         />
       )}
     </>

@@ -6,18 +6,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateVideo } from "@/client/videos";
 import { MediaCategory, useUpload } from "@/client/media";
 import { Button, Dialog, Divider, Field, Success } from "@/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICourses } from "@/@types/cousers";
-import { handleCreateCourse } from "@/services/firebase/courses";
+import {
+  handleCreateCourse,
+  handleEditProgram,
+} from "@/services/firebase/courses";
 
 type Props = {
   courses: ICourses[];
   onClose: () => void;
+  editCourse: ICourses | null;
 };
 
-export function CreateCourseDialog({ onClose, courses }: Props) {
+export function CreateCourseDialog({ onClose, courses, editCourse }: Props) {
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
 
   const handleCreate = async () => {
     const order = courses.length + 1;
@@ -35,10 +39,33 @@ export function CreateCourseDialog({ onClose, courses }: Props) {
     }
   };
 
+  const handleEdit = () => {
+    if (editCourse && name) {
+      handleEditProgram({ ...editCourse, updatedAt: new Date(), name }).then(
+        () => {
+          toast.success("Programa atualizado com sucesso!");
+          onClose();
+        }
+      );
+    } else {
+      toast.error("Insira o nome do programa");
+    }
+  };
+
+  useEffect(() => {
+    if (editCourse) {
+      setName(editCourse?.name);
+    }
+  }, [editCourse]);
+
   return (
     <Dialog open>
       <Dialog.Content style={{ borderRadius: 0, border: "none" }}>
-        <Dialog.Header title={"Novo programa"} onClose={onClose} closable />
+        <Dialog.Header
+          title={editCourse ? "Editar programa" : "Novo programa"}
+          onClose={onClose}
+          closable
+        />
         <Dialog.Body>
           <Field.Input
             label="Nome do programa"
@@ -65,9 +92,9 @@ export function CreateCourseDialog({ onClose, courses }: Props) {
             }}
             type="submit"
             loading={loading}
-            onClick={handleCreate}
+            onClick={editCourse ? handleEdit : handleCreate}
           >
-            Criar programa
+            {editCourse ? "Salvar alterações" : "Criar programa"}
           </Button>
         </Dialog.Footer>
       </Dialog.Content>
