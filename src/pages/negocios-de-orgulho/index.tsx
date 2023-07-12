@@ -6,11 +6,11 @@ import StartButton from "@/components/StartButton";
 import TabComponent from "@/components/TabComponent";
 import { useAuthContext } from "@/contexts";
 import { useEffect, useState } from "react";
-import { handleProgramas } from "@/services/firebase/programas";
 import { GetUserProgress, IWatchedVideo } from "@/services/firebase/progress";
 import { Amstel } from "@/features/negociosdeorgulho";
 import { ConvertCourses } from "@/utils/convert-courses";
 import { useUserFromNickname } from "@/client/users";
+import { GetFirebaseCourses } from "@/services/firebase/courses";
 
 function NegociosDeOrgulho() {
   const { session } = useAuthContext();
@@ -20,7 +20,7 @@ function NegociosDeOrgulho() {
   const [cursos, setCursos] = useState<any[]>([]);
 
   useEffect(() => {
-    handleProgramas(setProgramas);
+    GetFirebaseCourses(setProgramas);
   }, []);
 
   useEffect(() => {

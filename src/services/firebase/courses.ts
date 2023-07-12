@@ -3,11 +3,12 @@ import {
   collection,
   doc,
   onSnapshot,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
-import { ICourses } from "@/@types/cousers";
+import { ICourseModule, ICourses } from "@/@types/cousers";
 import { v4 as uuidv4 } from "uuid";
 
 export const GetFirebaseCourses = async (setCourses: any) => {
@@ -17,7 +18,22 @@ export const GetFirebaseCourses = async (setCourses: any) => {
       const programasList = snapshot.docs.map((doc) => {
         return { _id: doc?.id, ...doc.data() };
       });
-      setCourses(programasList);
+      const programs = programasList
+        ?.filter((p: any) => !p?.deletedAt)
+        ?.map((p: any) => {
+          return {
+            ...p,
+            modules: p?.modules
+              .filter((m: any) => !m?.deletedAt)
+              .map((p: any) => {
+                return {
+                  ...p,
+                  episodes: p?.episodes.filter((m: any) => !m?.deletedAt),
+                };
+              }),
+          };
+        });
+      setCourses(programs);
     });
   } catch (error: any) {
     toast.error("Falha ao pegar programas: " + error.message);
@@ -102,6 +118,39 @@ export const handleEditProgram = async (newProgram: ICourses) => {
   } catch (error: any) {
     console.error("Não foi possível alterar o programa", error);
     toast.error("Não foi possível alterar o programa :(");
+  }
+};
+
+export const handleDeleteProgram = async (program: ICourses) => {
+  try {
+    console.log("[DELETE PROGRAM]");
+    const programRef = doc(db, "PROGRAMAS", program?._id);
+
+    const { watchedPercent, _id, createdAt, modules, ...rest } = program;
+
+    const adjustedProgram = {
+      ...rest,
+      modules: modules?.map((a) => {
+        const { watchedPercent, ...rest } = a;
+        return {
+          ...rest,
+          episodes: rest?.episodes?.map((e) => {
+            const { watched, ...restEpisode } = e;
+
+            return restEpisode;
+          }),
+        };
+      }),
+      deletedAt: new Date(),
+    };
+
+    await updateDoc(programRef, adjustedProgram);
+
+    console.log("Programa excluído com sucesso!");
+    toast.success("Programa excluído com sucesso!");
+  } catch (error: any) {
+    console.log("Falha ao excluir programa =>", error);
+    toast.error("Falha ao excluir programa");
   }
 };
 

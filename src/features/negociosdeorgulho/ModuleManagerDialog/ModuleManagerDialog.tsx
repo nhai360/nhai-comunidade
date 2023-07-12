@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { CreateModuleDialog } from "../CreateModuleDialog";
 import { VideosManagerDialog } from "../VideosManagerDialog";
 import { AppWindow, CaretLeft } from "@phosphor-icons/react";
+import { EditIcon, TrashIcon } from "@/ui/_icons";
 
 type Props = {
   onClose: () => void;
@@ -21,6 +22,7 @@ type Props = {
 export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
   const [loading, setLoading] = useState(false);
   const [showNewModule, setShowNewModule] = useState(false);
+  const [showEdit, setShowEdit] = useState<ICourseModule | null>(null);
   const [moduleId, setModuleId] = useState("");
   const course = courses.find((c) => c?._id === courseId);
 
@@ -37,6 +39,23 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
         ],
       }).catch((err) => {
         toast.error("Não foi possível alterar a privacidade do módulo");
+        console.log("Error =>", err);
+      });
+  };
+
+  const handleDelete = async (modulo: ICourseModule) => {
+    course &&
+      handleEditProgram({
+        ...course,
+        modules: [
+          ...course?.modules.map((a) => {
+            return a?._id === modulo?._id
+              ? { ...modulo, deletedAt: new Date() }
+              : a;
+          }),
+        ],
+      }).catch((err) => {
+        toast.error("Não foi possível deletar o módulo");
         console.log("Error =>", err);
       });
   };
@@ -90,12 +109,29 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
                       >
                         <p>{modulo?.name}</p>
                       </div>
-                      <Switch
-                        onChange={() => handleSwitchPublic(modulo)}
-                        checked={modulo.public}
-                        offColor={"#c9c9c9"}
-                        onColor="#EE0014"
-                      />
+                      <div style={{ display: "flex", columnGap: 12 }}>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setShowEdit(modulo)}
+                          title={"Editar módulo"}
+                        >
+                          <EditIcon size={20} />
+                        </div>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleDelete(modulo)}
+                          title={"Excluir módulo"}
+                        >
+                          <TrashIcon size={20} />
+                        </div>
+
+                        <Switch
+                          onChange={() => handleSwitchPublic(modulo)}
+                          checked={modulo.public}
+                          offColor={"#c9c9c9"}
+                          onColor="#EE0014"
+                        />
+                      </div>
                     </div>
                   );
                 })}
@@ -112,10 +148,14 @@ export function ModuleManagerDialog({ onClose, courseId, courses }: Props) {
         </Dialog.Content>
       </Dialog>
 
-      {showNewModule && course && (
+      {(showEdit || showNewModule) && course && (
         <CreateModuleDialog
           course={course}
-          onClose={() => setShowNewModule(false)}
+          editModule={showEdit}
+          onClose={() => {
+            setShowNewModule(false);
+            setShowEdit(null);
+          }}
         />
       )}
       {moduleId && course && (

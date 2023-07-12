@@ -16,8 +16,12 @@ export function useVideoSuggestions({ videoId }: GetVideoParams) {
     queryFn: () => getVideoSuggestions({ videoId }),
   });
 
+  const removeAmstel = videosuggestions?.filter(
+    (p) => p?.author?.nickname !== process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO
+  );
+
   return {
-    videosuggestions: videosuggestions || [],
+    videosuggestions: removeAmstel || [],
     ...rest,
   };
 }
