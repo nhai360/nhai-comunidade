@@ -32,7 +32,8 @@ const TabComponent = ({ isSigned, cursos }: IProps) => {
     nickname: process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO,
   });
 
-  const isAmstel = user?.id === session?.userId;
+  const isAmstel =
+    user?.nickname === process.env.NEXT_PUBLIC_NEGOCIOS_DE_ORGULHO;
 
   return (
     <>
