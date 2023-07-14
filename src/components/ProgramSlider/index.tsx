@@ -95,7 +95,9 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                           ? router?.push(
                               `/negocios-de-orgulho/${curso?._id}/${modulo?._id}`
                             )
-                          : router.push("/auth/register"));
+                          : router.push(
+                              "/auth/register/?layout=negocios-de-orgulho"
+                            ));
                     }}
                   >
                     <div className={`${styles.column} ${styles.itemHover}`}>
