@@ -10,7 +10,8 @@ async function createUserRequest(params: CreateUserParams) {
     birthDate: new Date(params?.birthDate),
   });
 
-  return decodeResponse<User>(response, UserDecoder);
+  return response?.data;
+  // return decodeResponse<User>(response, UserDecoder);
 }
 
 export function useCreateUser() {
