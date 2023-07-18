@@ -18,6 +18,7 @@ import { defaultGenres } from "../../../../public/data/genres";
 import { defaultEthnicity } from "../../../../public/data/ethnicity";
 import { defaultSexualOrientation } from "../../../../public/data/sexualOrientation";
 import { toast } from "react-toastify";
+import { api } from "@/client";
 
 interface IRegisterForm {
   layoutAmstel?: boolean;
@@ -26,13 +27,12 @@ interface IRegisterForm {
 export function RegisterForm({ layoutAmstel }: IRegisterForm) {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(1);
   const { formState, register, handleSubmit, control, setError, setValue } =
     useForm<CreateUserParams>({
       resolver: zodResolver(CreateUserDecoder),
     });
-
-  const { createUser, isLoading, isError } = useCreateUser();
 
   const { errors } = formState;
 
@@ -54,7 +54,7 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
     return idade;
   }
 
-  function handleRegister(params: CreateUserParams) {
+  const handleRegister = async (params: CreateUserParams) => {
     const idade = calcularIdade(new Date(params?.birthDate));
     if (idade < 18) {
       setError("birthDate", {
@@ -71,73 +71,59 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
         params?.gender &&
         params?.sexualOrientation
       ) {
-        createUser(
-          {
+        setLoading(true);
+        await api
+          .post("/auth/signup", {
             ...params,
-          },
-          {
-            onSuccess: () => {
-              toast.success(
-                "Conta criada com sucesso! Agora basta fazer login 😉"
+            birthDate: new Date(params?.birthDate),
+          })
+          .then(() => {
+            toast.success(
+              "Conta criada com sucesso! Agora basta fazer login 😉"
+            );
+            router.push(
+              layoutAmstel
+                ? "/auth/login/?layout=negocios-de-orgulho"
+                : "/auth/login"
+            );
+          })
+          .catch((err: any) => {
+            const message: string = err?.response?.data?.message;
+            const status: any = err?.response.status;
+            if (message === "User with this email already exists.") {
+              setTab(1);
+              setError("email", {
+                message: "Este e-mail já foi usado por outro usuário",
+              });
+            } else if (message === "User with this nickname already exists.") {
+              setTab(1);
+              setError("nickname", {
+                message: "Este nickname já foi usado por outro usuário",
+              });
+            } else if (status === 409) {
+              toast.error(
+                "Este usuário já utilizou este e-mail ou nome de usuário"
               );
-              router.push(
-                layoutAmstel
-                  ? "/auth/login/?layout=negocios-de-orgulho"
-                  : "/auth/login"
+              setTab(1);
+              setError("email", {
+                message: "Este e-mail já foi usado por outro usuário",
+              });
+              setError("nickname", {
+                message: "Este nickname já foi usado por outro usuário",
+              });
+            } else {
+              console.log("REGISTER ERROR", status);
+              toast.error(
+                "Não foi possível realizar o cadastro. Tente novamente"
               );
-            },
-            onError: (err: any) => {
-              const message: string = err?.response?.data?.message;
-              const status: any = err?.response.status;
-              if (message === "User with this email already exists.") {
-                setTab(1);
-                setError("email", {
-                  message: "Este e-mail já foi usado por outro usuário",
-                });
-              } else if (
-                message === "User with this nickname already exists."
-              ) {
-                setTab(1);
-                setError("nickname", {
-                  message: "Este nickname já foi usado por outro usuário",
-                });
-              } else if (status === 409) {
-                toast.error(
-                  "Este usuário já utilizou este e-mail ou nome de usuário"
-                );
-                setTab(1);
-                setError("email", {
-                  message: "Este e-mail já foi usado por outro usuário",
-                });
-                setError("nickname", {
-                  message: "Este nickname já foi usado por outro usuário",
-                });
-              } else {
-                console.log("REGISTER ERROR", status);
-                toast.error(
-                  "Não foi possível realizar o cadastro. Tente novamente"
-                );
-              }
-            },
-          }
-        );
+            }
+          });
+        setLoading(false);
       } else {
         toast.error("Preencha todos os campos!");
       }
     }
-  }
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log("Error =>", isError);
-  //     toast.error("Este usuário já utilizou este e-mail ou nome de usuário");
-  //     setTab(1);
-  //     setError("email", { message: "*" });
-  //     setError("nickname", { message: "*" });
-  //   } else {
-  //     console.log("Without errors");
-  //   }
-  // }, [isError]);
+  };
 
   return (
     <S.FormContainer onSubmit={handleSubmit(handleRegister)}>
@@ -272,7 +258,7 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
           gap: 16,
         }}
       >
-        <Button fullWidth type="submit" loading={isLoading}>
+        <Button fullWidth type="submit" loading={loading}>
           {tab === 1 ? "Continuar" : "Criar conta"}
           <ArrowNarrowRightIcon />
         </Button>
