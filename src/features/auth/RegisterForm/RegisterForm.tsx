@@ -87,9 +87,9 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
               );
             },
             onError: (err: any) => {
-              // const message: string = err?.response?.data?.message;
-              // const status: any = err?.response.status;
-              // console.log("=>", status, message);
+              const message: string = err?.response?.data?.message;
+              const status: any = err?.response.status;
+              console.log("=>", status, message);
               toast.error(
                 "Este usuário já utilizou este e-mail ou nome de usuário"
               );
