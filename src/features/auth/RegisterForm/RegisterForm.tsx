@@ -13,7 +13,7 @@ import {
 
 import * as S from "./RegisterForm.styles";
 import ProgressFormBar from "@/ui/ProgressFormBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { defaultGenres } from "../../../../public/data/genres";
 import { defaultEthnicity } from "../../../../public/data/ethnicity";
 import { defaultSexualOrientation } from "../../../../public/data/sexualOrientation";
@@ -32,7 +32,7 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
       resolver: zodResolver(CreateUserDecoder),
     });
 
-  const { createUser, isLoading } = useCreateUser();
+  const { createUser, isLoading, isError } = useCreateUser();
 
   const { errors } = formState;
 
@@ -87,9 +87,9 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
               );
             },
             onError: (err: any) => {
-              const message: string = err?.response?.data?.message;
-              const status: any = err?.response.status;
-              console.log("=>", status, message);
+              // const message: string = err?.response?.data?.message;
+              // const status: any = err?.response.status;
+              // console.log("=>", status, message);
               toast.error(
                 "Este usuário já utilizou este e-mail ou nome de usuário"
               );
@@ -133,6 +133,18 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
       }
     }
   }
+
+  useEffect(() => {
+    if (isError) {
+      console.log("Error =>", isError);
+      toast.error("Este usuário já utilizou este e-mail ou nome de usuário");
+      setTab(1);
+      setError("email", { message: "*" });
+      setError("nickname", { message: "*" });
+    } else {
+      console.log("Without errors");
+    }
+  }, [isError]);
 
   return (
     <S.FormContainer onSubmit={handleSubmit(handleRegister)}>
