@@ -87,39 +87,44 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
               );
             },
             onError: (err: any) => {
-              console.log("Error:", err);
               const message: string = err?.response?.data?.message;
               const status: any = err?.response.status;
               console.log("=>", status, message);
-              if (message === "User with this email already exists.") {
-                setTab(1);
-                setError("email", {
-                  message: "Este e-mail já foi usado por outro usuário",
-                });
-              } else if (
-                message === "User with this nickname already exists."
-              ) {
-                setTab(1);
-                setError("nickname", {
-                  message: "Este nickname já foi usado por outro usuário",
-                });
-              } else if (status === 409) {
-                toast.error(
-                  "Este usuário já utilizou este e-mail ou nome de usuário"
-                );
-                setTab(1);
-                setError("email", {
-                  message: "Este e-mail já foi usado por outro usuário",
-                });
-                setError("nickname", {
-                  message: "Este nickname já foi usado por outro usuário",
-                });
-              } else {
-                console.log("REGISTER ERROR", status);
-                toast.error(
-                  "Não foi possível realizar o cadastro. Tente novamente"
-                );
-              }
+              toast.error(
+                "Este usuário já utilizou este e-mail ou nome de usuário"
+              );
+              setTab(1);
+              setError("email", { message: "*" });
+              setError("nickname", { message: "*" });
+              // if (message === "User with this email already exists.") {
+              //   setTab(1);
+              //   setError("email", {
+              //     message: "Este e-mail já foi usado por outro usuário",
+              //   });
+              // } else if (
+              //   message === "User with this nickname already exists."
+              // ) {
+              //   setTab(1);
+              //   setError("nickname", {
+              //     message: "Este nickname já foi usado por outro usuário",
+              //   });
+              // } else if (status === 409) {
+              //   toast.error(
+              //     "Este usuário já utilizou este e-mail ou nome de usuário"
+              //   );
+              //   setTab(1);
+              //   setError("email", {
+              //     message: "Este e-mail já foi usado por outro usuário",
+              //   });
+              //   setError("nickname", {
+              //     message: "Este nickname já foi usado por outro usuário",
+              //   });
+              // } else {
+              //   console.log("REGISTER ERROR", status);
+              //   toast.error(
+              //     "Não foi possível realizar o cadastro. Tente novamente"
+              //   );
+              // }
             },
           }
         );
