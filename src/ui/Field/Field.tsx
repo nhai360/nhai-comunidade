@@ -1,4 +1,9 @@
-import { ForwardRefRenderFunction, forwardRef, ReactNode } from "react";
+import {
+  ForwardRefRenderFunction,
+  forwardRef,
+  ReactNode,
+  useState,
+} from "react";
 
 import MaskedInput from "react-text-mask";
 
@@ -7,6 +12,7 @@ import { Input, InputProps, SelectProps, Label, Typography } from "@/ui";
 import * as S from "./Field.styles";
 
 import AsyncCreatableSelect from "react-select/async-creatable";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 
 type FieldProps = {
   htmlFor?: string;
@@ -69,6 +75,8 @@ const FieldInput: ForwardRefRenderFunction<
 ) => {
   const hasError = Boolean(errorText);
 
+  const [hidePassword, setHidePassword] = useState(rest?.type === "password");
+
   return (
     <Field
       label={label}
@@ -97,14 +105,37 @@ const FieldInput: ForwardRefRenderFunction<
           )}
         />
       ) : (
-        <Input
-          ref={ref}
-          id={name}
-          name={name}
-          error={hasError}
-          {...rest}
-          size="medium"
-        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Input
+            ref={ref}
+            id={name}
+            name={name}
+            error={hasError}
+            {...rest}
+            size="medium"
+            type={
+              rest?.type !== "password"
+                ? rest?.type
+                : hidePassword
+                ? "password"
+                : "text"
+            }
+          />
+          {rest?.type === "password" && !hidePassword && (
+            <Eye
+              style={{ marginLeft: -40 }}
+              onClick={() => setHidePassword(!hidePassword)}
+              size={18}
+            />
+          )}
+          {rest?.type === "password" && hidePassword && (
+            <EyeClosed
+              style={{ marginLeft: -40 }}
+              onClick={() => setHidePassword(!hidePassword)}
+              size={18}
+            />
+          )}
+        </div>
       )}
     </Field>
   );
