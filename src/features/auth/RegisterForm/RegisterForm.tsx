@@ -72,35 +72,24 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
         params?.sexualOrientation
       ) {
         setLoading(true);
-        await api
-          .post("/auth/signup", {
-            ...params,
-            birthDate: new Date(params?.birthDate),
-          })
-          .then(() => {
-            toast.success(
-              "Conta criada com sucesso! Agora basta fazer login 😉"
-            );
-            router.push(
-              layoutAmstel
-                ? "/auth/login/?layout=negocios-de-orgulho"
-                : "/auth/login"
-            );
-          })
-          .catch((err: any) => {
-            const message: string = err?.response?.data?.message;
-            const status: any = err?.response.status;
-            if (message === "User with this email already exists.") {
-              setTab(1);
-              setError("email", {
-                message: "Este e-mail já foi usado por outro usuário",
-              });
-            } else if (message === "User with this nickname already exists.") {
-              setTab(1);
-              setError("nickname", {
-                message: "Este nickname já foi usado por outro usuário",
-              });
-            } else if (status === 409) {
+        try {
+          await api
+            .post("/auth/signup", {
+              ...params,
+              birthDate: new Date(params?.birthDate),
+            })
+            .then(() => {
+              toast.success(
+                "Conta criada com sucesso! Agora basta fazer login 😉"
+              );
+              router.push(
+                layoutAmstel
+                  ? "/auth/login/?layout=negocios-de-orgulho"
+                  : "/auth/login"
+              );
+            })
+            .catch((err: any) => {
+              setLoading(false);
               toast.error(
                 "Este usuário já utilizou este e-mail ou nome de usuário"
               );
@@ -111,13 +100,21 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
               setError("nickname", {
                 message: "Este nickname já foi usado por outro usuário",
               });
-            } else {
-              console.log("REGISTER ERROR", status);
-              toast.error(
-                "Não foi possível realizar o cadastro. Tente novamente"
-              );
-            }
+            });
+        } catch (error) {
+          console.log("❌ CATCH:", error);
+          setLoading(false);
+          toast.error(
+            "Este usuário já utilizou este e-mail ou nome de usuário"
+          );
+          setTab(1);
+          setError("email", {
+            message: "Este e-mail já foi usado por outro usuário",
           });
+          setError("nickname", {
+            message: "Este nickname já foi usado por outro usuário",
+          });
+        }
         setLoading(false);
       } else {
         toast.error("Preencha todos os campos!");
