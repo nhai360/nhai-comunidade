@@ -43,8 +43,7 @@ function NegociosDeOrgulho() {
           <div className={styles.Row}>
             <div className={styles.Breadcrumb}>
               <span className={styles.BreadcrumbText}>
-                {"Contaí Comunidade > Episódios > "}{" "}
-                <strong>Espaço Amstel</strong>
+                {"Contaí Comunidade > "} <strong>Negócios de orgulho</strong>
               </span>
             </div>
 
