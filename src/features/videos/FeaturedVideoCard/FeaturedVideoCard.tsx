@@ -90,7 +90,6 @@ export function FeaturedVideoCard({ isMobile = false }: IFeaturedVideoCard) {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <div className={styles.LogoAmstel}>
               <img src="logonhaiamstel2.png" alt="" />
-              <img src="negociosdeorgulhologo.png" alt="" />
             </div>
 
             {isMobile ? (
@@ -98,7 +97,7 @@ export function FeaturedVideoCard({ isMobile = false }: IFeaturedVideoCard) {
                 Negócios de Orgulho.
               </Typography.Title>
             ) : (
-              <Typography.Title size="h2" weight="bold" color="title">
+              <Typography.Title size="h3" weight="bold" color="title">
                 Negócios de Orgulho.
               </Typography.Title>
             )}
