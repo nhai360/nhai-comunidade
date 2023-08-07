@@ -52,7 +52,7 @@ const TabComponent = ({ isSigned, cursos }: IProps) => {
             onClick={() => isSigned && setActive(2)}
             href={isSigned ? "javascript:void(0)" : "/auth/register"}
           >
-            {isSigned ? "FÓRUM AMSTEL" : "VISITAR FÓRUM"}
+            {isSigned ? "FÓRUM DE DISCUSSÃO" : "VISITAR FÓRUM"}
           </a>
         </div>
         {!isMobile && active === 1 && isAmstel && (

@@ -105,7 +105,7 @@ const WatchLive = (): JSX.Element => {
   }, [videoRef]);
 
   useEffect(() => {
-    !session?.userId && router.push("/videos");
+    !session?.userId && router.push("/");
   }, []);
 
   return isLoading || loading ? (

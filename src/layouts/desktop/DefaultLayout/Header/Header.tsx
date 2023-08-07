@@ -1,27 +1,27 @@
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 import { Avatar, Button, Logo, Popover, Tooltip, Typography } from "@/ui";
 import { InputSearch } from "@/ui/Input/Search";
 import { AddCircleIcon } from "@/ui/_icons";
 
+import { User } from "@/client/users";
 import { useSearch } from "@/lib/search";
 import {
   getFirstNameAndLastName,
   getInitials,
   getProfileUrl,
 } from "@/lib/string";
-import { User, useUser } from "@/client/users";
 
 import { useAuthContext } from "@/contexts";
+import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 import { CreatePostDialog } from "@/features/posts/CreatePostCard/CreatePostDialog";
 import { UploadVideoDialog } from "@/features/videos";
-import { CreateBroadcastDialog } from "@/features/broadcast/CreateBroadcastCard";
 
-import * as S from "./Header.styles";
+import { authenticatedAPI } from "@/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { authenticatedAPI } from "@/client";
+import * as S from "./Header.styles";
 
 const CreateArticleDialog = dynamic(
   () => import("../../../../features/articles/CreateArticleDialog"),
@@ -90,11 +90,24 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
         />
       )}
 
-      <S.Container>
+      <S.Container
+        style={
+          loginAmstel
+            ? { backgroundColor: "#ee0014" }
+            : { backgroundColor: "$neutral100" }
+        }
+      >
         <S.Content>
-          <Link href="/">
-            <Logo variant="rainbow" />
-          </Link>
+          {loginAmstel ? (
+            <Link href="/negocios-de-orgulho">
+              <img src="/negociosdeorgulhologo.png" width={120} />
+            </Link>
+          ) : (
+            <Link href="/">
+              <Logo variant="rainbow" />
+            </Link>
+          )}
+
           <S.Actions>
             <InputSearch
               value={searchTerm}
@@ -107,7 +120,9 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
                   <div>
                     <Tooltip message="Criar" position="bottom">
                       <Button icon variant="transparent">
-                        <AddCircleIcon />
+                        <AddCircleIcon
+                          color={loginAmstel ? "#efefef" : "#333"}
+                        />
                       </Button>
                     </Tooltip>
                   </div>
@@ -162,7 +177,13 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
                     {user?.nickname && (
                       <Typography.Text
                         size="body3"
-                        color={isAdmin ? "pink" : "secondary"}
+                        color={
+                          !isAdmin
+                            ? "secondary"
+                            : loginAmstel
+                            ? "neutral"
+                            : "pink"
+                        }
                       >
                         @{user?.nickname}
                       </Typography.Text>

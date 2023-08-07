@@ -74,7 +74,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                       <span>{curso.watchedPercent}%</span> Assistido •{" "}
                     </>
                   )}
-                  <span>{curso?.modules?.length}</span> Módulos
+                  <span>{curso?.modules?.length}</span> Programas
                 </p>
               </div>
               <Swiper

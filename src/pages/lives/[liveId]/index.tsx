@@ -61,13 +61,15 @@ const Home = (): JSX.Element => {
   const userIsParticipant =
     !isLoading && live?.guests?.find((g) => g?.guest?.id === session?.userId);
 
-  const userIsAuthor = live?.author?.id === session?.userId;
-
   const participant = useContext(ParticipantContext);
 
   const { user } = useUser({
     id: session?.userId,
   });
+
+  const userIsAuthor = live?.author?.id === session?.userId;
+
+  const isAdmin = user?.role?.name === "ADMIN";
 
   let gap = 10;
 
@@ -227,7 +229,7 @@ const Home = (): JSX.Element => {
         <Chat
           chat={chat}
           liveId={live?.id}
-          isOwner={userIsAuthor}
+          isOwner={userIsAuthor || isAdmin}
           isOpen={width > 800}
           user={user as any}
         />
@@ -242,7 +244,7 @@ const Home = (): JSX.Element => {
         </div>
 
         <div className={styles.mainTools}>
-          {userIsAuthor && (
+          {(userIsAuthor || isAdmin) && (
             <InviteParticipantButton
               spaceId={live?.spaceId}
               liveId={live?.id}
@@ -251,7 +253,7 @@ const Home = (): JSX.Element => {
           )}
           <CameraButton />
           <MicButton />
-          {userIsAuthor && <BroadcastButton live={live} />}
+          {(userIsAuthor || isAdmin) && <BroadcastButton live={live} />}
         </div>
 
         <div className={styles.callOut}>
