@@ -100,7 +100,7 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
         <S.Content>
           {loginAmstel ? (
             <Link href="/negocios-de-orgulho">
-              <img src="/negociosdeorgulhologo.png" width={120} />
+              <img src="logo-white.svg" width={120} />
             </Link>
           ) : (
             <Link href="/">
@@ -171,7 +171,10 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
                     />
                   )}
                   <S.UserInfo>
-                    <Typography.Text color="primary" weight="medium">
+                    <Typography.Text
+                      color={loginAmstel ? "neutral" : "primary"}
+                      weight="medium"
+                    >
                       {getFirstNameAndLastName(user?.fullName)}
                     </Typography.Text>
                     {user?.nickname && (
@@ -197,6 +200,7 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
                   variant={"text"}
                   style={{
                     height: 48,
+                    color: "#fefefe",
                   }}
                   onClick={handleLogout}
                 >
