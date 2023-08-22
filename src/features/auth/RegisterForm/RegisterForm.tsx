@@ -75,6 +75,7 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
         await api
           .post("/auth/signup", {
             ...params,
+            fullName: `${params?.firstName} ${params?.lastName}`,
             birthDate: new Date(params?.birthDate),
           })
           .then(() => {
@@ -135,13 +136,22 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
       {tab === 1 ? (
         <>
           <S.FieldContainer>
-            <Field.Input
-              required
-              label="Nome"
-              placeholder="Digite seu nome"
-              errorText={errors.fullName?.message}
-              {...register("fullName")}
-            />
+            <div style={{ display: "flex", gap: 32 }}>
+              <Field.Input
+                required
+                label="Nome"
+                placeholder="Digite seu nome"
+                errorText={errors.firstName?.message}
+                {...register("firstName")}
+              />
+              <Field.Input
+                required
+                label="Sobrenome"
+                placeholder="Digite seu sobrenome"
+                errorText={errors.lastName?.message}
+                {...register("lastName")}
+              />
+            </div>
 
             <div style={{ display: "flex", gap: 32 }}>
               <Field.Input

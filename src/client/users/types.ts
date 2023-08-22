@@ -40,7 +40,8 @@ export const UserDecoder = t.object({
 export type User = t.TypeOf<typeof UserDecoder>;
 
 export const CreateUserDecoder = t.object({
-  fullName: t.string().min(1, "Nome é obrigatório"),
+  firstName: t.string().min(2, "Nome é obrigatório"),
+  lastName: t.string().min(2, "Sobrenome é obrigatório"),
   nickname: t
     .string()
     .min(1, "Apelido é obrigatório")
