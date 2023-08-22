@@ -166,7 +166,7 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
                     <Avatar
                       progressBar
                       alt={user?.fullName}
-                      src={user.profilePicture?.url}
+                      src={isAmstel ? "/amstel.png" : user.profilePicture?.url}
                       fallback={getInitials(user.fullName)}
                     />
                   )}
