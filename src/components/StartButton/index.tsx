@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./index.module.scss";
 import Link from "next/link";
 
@@ -10,7 +9,7 @@ const StartButton = ({ isSigned }: IProps) => {
     <>
       <Link
         className={styles.ctaBanner}
-        href={isSigned ? "" : "/auth/register"}
+        href={isSigned ? "" : "/auth/register/?layout=negocios-de-orgulho"}
       >
         {!isSigned && "Venha fazer parte "}
         {isSigned && "COMEÇAR"}
