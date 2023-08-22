@@ -15,7 +15,7 @@
 }
 
 .moduleWrapper {
-  height: 100vh;
+  min-height: 100vh;
   width: 40%;
   @media screen and (max-width: 1024px) {
     width: 100%;

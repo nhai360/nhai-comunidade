@@ -160,7 +160,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
                   <S.TimeLabel>{createdAt}</S.TimeLabel>
                 </Typography.Text>
                 <Typography.Text size="body3" color="secondary">
-                  @negociosdeorgulho
+                  @amstelbr
                 </Typography.Text>
               </S.UserInformationContainer>
             </S.UserContainer>
