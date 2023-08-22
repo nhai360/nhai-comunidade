@@ -54,8 +54,8 @@ function NegociosDeOrgulho() {
           </div>
 
           <div className={styles.LogoAmstel}>
-            <img src="logonhaiamstel.png" alt="" />
-            <img src="negociosdeorgulhologo.png" alt="" />
+            <img src="/banner-marcas.png" alt="" />
+            <img src="banner-logo.png" alt="" />
           </div>
           <span className={styles.textBanner}>
             Um programa para impulsionar negócios liderados por pessoas
