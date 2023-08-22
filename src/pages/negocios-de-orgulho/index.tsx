@@ -42,9 +42,9 @@ function NegociosDeOrgulho() {
         <div className={styles.BannerProgram}>
           <div className={styles.Row}>
             <div className={styles.Breadcrumb}>
-              <span className={styles.BreadcrumbText}>
+              {/* <span className={styles.BreadcrumbText}>
                 {"Contaí Comunidade > "} <strong>Negócios de orgulho</strong>
-              </span>
+              </span> */}
             </div>
 
             <StepProgram

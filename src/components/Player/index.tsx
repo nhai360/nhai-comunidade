@@ -110,7 +110,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           style={{ border: "1px solid #dadadd", width: 32, height: 32 }}
           url={"/negocios-de-orgulho"}
         />
-        <span className={styles.breadcrumbText}>
+        {/* <span className={styles.breadcrumbText}>
           <Link href="/negocios-de-orgulho">
             <span
               style={{ fontFamily: "RingBold", marginRight: 4, color: "red" }}
@@ -121,7 +121,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           <strong className={styles.breadcrumbPageIndicator}>
             Assistindo episódio
           </strong>
-        </span>
+        </span> */}
       </div>
 
       <div className={styles.videoWrapper}>

@@ -99,8 +99,8 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
       >
         <S.Content>
           {loginAmstel ? (
-            <Link href="/negocios-de-orgulho">
-              <img src="logo-white.svg" width={120} />
+            <Link href="/">
+              <img src="/logo-white.svg" width={120} />
             </Link>
           ) : (
             <Link href="/">
