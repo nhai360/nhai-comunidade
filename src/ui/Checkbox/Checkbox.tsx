@@ -14,12 +14,14 @@ import { CheckIcon } from "../_icons";
 type Props<T extends FieldValues> = {
   label?: string;
   disabled?: boolean;
+  onClick?: () => void;
 } & UseControllerProps<T, FieldPath<T>> &
   CheckboxProps;
 
 function CheckboxControlled<T extends FieldValues>({
   name,
   label,
+  onClick,
   ...rest
 }: Props<T>) {
   return (
@@ -30,7 +32,15 @@ function CheckboxControlled<T extends FieldValues>({
         </S.Indicator>
       </S.Root>
 
-      {label && <Label htmlFor={name}>{label}</Label>}
+      {label && (
+        <Label
+          htmlFor={name}
+          style={{ cursor: !onClick ? "default" : "pointer" }}
+          onClick={onClick}
+        >
+          {label}
+        </Label>
+      )}
     </S.Container>
   );
 }
