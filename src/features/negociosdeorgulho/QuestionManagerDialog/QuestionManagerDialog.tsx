@@ -70,7 +70,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
             ? "PARA COMEÇAR, PREENCHA..."
             : "PARA CONCLUIR, PREENCHA...",
         description:
-          "Sendo 1 (pouco) e 5 (muito), quão você se sente uma pessoa preparada para administrar o seu negócio em relação à:",
+          "Sendo 1 (pouco) e 5 (muito), quanto você se sente uma pessoa preparada para administrar o seu negócio em relação à:",
         type,
         options: validOptions,
       };
