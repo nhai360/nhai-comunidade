@@ -34,6 +34,7 @@ const TermsDialog = ({ onClose }: Props) => {
               <a
                 href="https://www.amstelbrasil.com/informacoes-legais/termos-de-uso/"
                 target="_blank"
+                rel="noreferrer"
               >
                 Termos de Uso
               </a>{" "}
@@ -41,6 +42,7 @@ const TermsDialog = ({ onClose }: Props) => {
               <a
                 href="https://www.amstelbrasil.com/informacoes-legais/politica-de-privacidade/"
                 target="_blank"
+                rel="noreferrer"
               >
                 Política de Privacidade
               </a>
