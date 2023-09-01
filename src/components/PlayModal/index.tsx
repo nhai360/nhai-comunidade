@@ -42,7 +42,7 @@ const PlayModal: React.FC<ModalProps> = ({ onClose }) => {
                 PARA CONCLUIR, PREENCHA...
               </span>
               <span className={styles.modalParagraph}>
-                Sendo 1 (pouco) e 5 (muito), quão você se sente uma pessoa
+                Sendo 1 (pouco) e 5 (muito), quanto você se sente uma pessoa
                 preparada para administrar o seu negócio em relação à:
               </span>
             </span>
