@@ -9,7 +9,8 @@ import {
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { ICourseModule, ICourses } from "@/@types/cousers";
-import { v4 as uuidv4 } from "uuid";
+
+import * as uuid from 'uuid'
 
 export const GetFirebaseCourses = async (setCourses: any) => {
   try {
@@ -68,7 +69,8 @@ export const handleCreateCourseModule = async (
   try {
     const messageColRef = collection(db, "PROGRAMAS");
     const commentDocRef = doc(messageColRef, program._id);
-    const id = uuidv4();
+    const id = Math.floor(Math.random() * 1000)
+    
 
     const modules = [
       ...program.modules,
@@ -83,6 +85,8 @@ export const handleCreateCourseModule = async (
         deletedAt: "",
       },
     ];
+
+    console.log("FIELD:::: ", modules );
 
     await updateDoc(commentDocRef, { ...program, modules });
   } catch (error: any) {

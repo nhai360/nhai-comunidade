@@ -28,6 +28,7 @@ export function CreateModuleDialog({ onClose, course, editModule }: Props) {
     formState: { errors },
   } = useForm();
 
+
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
