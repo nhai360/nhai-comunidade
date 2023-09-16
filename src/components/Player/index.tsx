@@ -146,6 +146,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
 
         <div className={styles.videoDetailsContainer}>
           <span className={styles.videoTitle}>{video?.title}</span>
+          <span className={styles.videoDescription}>{video?.description}</span>
           <S.UserAndLikeContainer style={{ marginTop: 16 }}>
             <S.UserContainer>
               <Avatar.Square

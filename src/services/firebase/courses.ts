@@ -76,7 +76,7 @@ export const handleCreateCourseModule = async (
       ...program.modules,
       {
         ...newModule,
-        _id: id,
+        _id: 'ajajajaj',
         public: false,
         episodes: [],
         order: program.modules.length + 1,
@@ -86,7 +86,7 @@ export const handleCreateCourseModule = async (
       },
     ];
 
-    console.log("FIELD:::: ", modules );
+    console.log("FIELD:::: ",  { ...program, modules } );
 
     await updateDoc(commentDocRef, { ...program, modules });
   } catch (error: any) {
