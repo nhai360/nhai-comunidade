@@ -23,7 +23,7 @@ export function DesktopLayout() {
         </DefaultLayout.Content>
         <DefaultLayout.Sider>
           <MainTrends />
-          {isAdmin && <CardHighlight />}
+          <CardHighlight />
 
           {/* <PopularToday />
               <Suggestions />*/}
