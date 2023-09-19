@@ -21,7 +21,7 @@ export function FeaturedVideoCard({ isMobile = false }: IFeaturedVideoCard) {
     id: session?.userId,
   });
 
-  const isAdmin = user?.role?.name === "ADMIN";
+  const showAmstel = true; //user?.role?.name === "ADMIN";
 
   const featuredVideo = videos[0];
 
@@ -41,7 +41,7 @@ export function FeaturedVideoCard({ isMobile = false }: IFeaturedVideoCard) {
     novaAba.focus();
   };
 
-  return !isAdmin ? (
+  return !showAmstel ? (
     <Card>
       <S.FlexContainer style={{ maxHeight: isMobile ? 420 : 360 }}>
         <S.Content>
