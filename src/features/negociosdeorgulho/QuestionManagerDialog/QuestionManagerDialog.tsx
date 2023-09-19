@@ -34,7 +34,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
 
   const handleAddOption = () => {
     const validOptions = options?.filter((o) => o?.title);
-    options?.length < 5 &&
+    options?.length < 7 &&
       setOptions([
         ...validOptions,
         {
@@ -238,7 +238,7 @@ export function QuestionManagerDialog({ onClose, videoId, episode }: Props) {
                       onClick={handleAddOption}
                     >
                       <p>
-                        {options?.length < 5
+                        {options?.length < 7
                           ? "Adicionar pergunta +"
                           : "Limite de perguntas atingido"}
                       </p>
