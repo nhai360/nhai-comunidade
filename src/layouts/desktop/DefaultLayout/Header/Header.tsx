@@ -91,11 +91,10 @@ export function Header({ canCreate = true, user, loginAmstel }: IHeader) {
       )}
 
       <S.Container
-        style={
-          loginAmstel
-            ? { backgroundColor: "#ee0014" }
-            : { backgroundColor: "$neutral100" }
-        }
+        style={{
+          backgroundColor: loginAmstel ? "#ee0014" : "#ffffff",
+          borderColor: loginAmstel ? "#e63432" : "#efefef"
+        }}
       >
         <S.Content>
           {loginAmstel ? (
