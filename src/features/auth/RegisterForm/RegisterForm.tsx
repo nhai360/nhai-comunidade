@@ -77,6 +77,7 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
         await api
           .post("/auth/signup", {
             ...params,
+            email: params?.email.toLowerCase(),
             fullName: `${params?.firstName} ${params?.lastName}`,
             birthDate: new Date(params?.birthDate),
           })

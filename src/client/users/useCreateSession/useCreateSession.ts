@@ -8,7 +8,8 @@ import {
 import { api, decodeResponse } from "@/client";
 
 async function createSessionRequest({ email, password }: CreateSessionParams) {
-  const response = await api.post("/auth/login", { email, password });
+  const formatEmail = email.toLowerCase()
+  const response = await api.post("/auth/login", { email: formatEmail, password });
 
   return decodeResponse<Session>(response, SessionDecoder);
 }

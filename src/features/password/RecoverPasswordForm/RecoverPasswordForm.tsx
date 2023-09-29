@@ -25,10 +25,10 @@ export function RecoverPasswordForm({ onSendEmail }: Props) {
   const { recoverPassword, isLoading } = useRecoverPassword();
 
   function handleRecoverPassword({ email }: RecoverPasswordParams) {
+    const formatEmail = email.toLocaleLowerCase()
+
     recoverPassword(
-      {
-        email,
-      },
+      { email: formatEmail },
       {
         onSuccess: () => {
           onSendEmail(email);
