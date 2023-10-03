@@ -13,7 +13,7 @@ export const ResetPasswordDecoder = t.object({
   password: t
     .string()
     .min(1, "Senha é obrigatória")
-    .regex(/^[a-zA-Z\d@$!%*?&]{8,}$/, "O formato da senha é inválido"),
+    .regex(/^[a-zA-Z\d!@#$%&*()+=~^<>.,;?/]{8,}$/, "O formato da senha é inválido"),
   confirmPassword: t.string().min(1, "Confirmar senha é obrigatório"),
 });
 
