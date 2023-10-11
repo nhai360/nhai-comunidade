@@ -6,20 +6,21 @@ import { Avatar, MuxVideo, Typography } from "@/ui";
 import { useUser } from "@/client/users";
 import { getFirstNameAndLastName, getInitials } from "@/lib/string";
 
-import * as S from "@/features/video-player/VideoPlayerCard/VideoPlayerCard.styles";
 import { format } from "date-fns";
 import { LikeButton } from "@/features/video-player";
 import BtnGoBack from "@/ui/BtnGoBack";
-import { handleCreateUserProgress } from "@/services/firebase/progress";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { CaretDown, CaretUp, ChatText } from "@phosphor-icons/react";
 import { useComments } from "@/client/comments";
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useQuestion } from "@/client/questions";
+import { handleCreateUserProgress } from "@/services/firebase/progress";
+import { GetUserStartedVideo, handleCreateUserStartedVideo } from "@/services/firebase/started-video";
 import { QuestionAnswersDialog } from "@/features/negociosdeorgulho/QuestionAnswersDialog";
-import Link from "next/link";
-import { useRouter } from "next/router";
+
+import * as S from "@/features/video-player/VideoPlayerCard/VideoPlayerCard.styles";
 
 interface VideoProps {
   video: Video;
@@ -33,6 +34,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
   // const { width = 0 } = useWindowDimensions();
   const { width = 0 } = useWindowSize();
   const [showComments, setShowComments] = useState(false);
+  const [onUserStartedVideo, setOnUserStartedVideo] = useState<any[]>([]);
 
   const { user } = useUser({
     id: session?.userId,
@@ -74,6 +76,17 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
     }
   };
 
+  // Executar isso quando o iniciar o video pela primeira vez
+  const handlePlayerVideo = async () => {
+    if (user && video) {
+      GetUserStartedVideo(user?.id, setOnUserStartedVideo)
+
+      if (!onUserStartedVideo.length) {
+        await handleCreateUserStartedVideo(user?.id, video)
+      }
+    }
+  }
+
   useEffect(() => {
     width > 1024 && setShowComments(true);
   }, [width]);
@@ -98,10 +111,6 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
       setShowAnswers(false);
     }
   }, [question, watched]);
-
-  const handleBack = () => {
-    router.push("/negocios-de-orgulho");
-  };
 
   return (
     <div className={styles.video}>
@@ -142,6 +151,7 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           style={{ backgroundColor: "#323232", maxHeight: 500 }}
           isAmstel
           onEnded={handleCompleteVideo}
+          onPlay={handlePlayerVideo}
         />
 
         <div className={styles.videoDetailsContainer}>
