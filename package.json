@@ -50,6 +50,7 @@
     "firebase": "^9.22.2",
     "framer-motion": "^10.10.0",
     "http-status-codes": "^2.2.0",
+    "https": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

@@ -1,4 +1,5 @@
 import * as t from "zod";
+import https from 'https'
 import { fromZodError } from "zod-validation-error";
 import axios, { AxiosResponse } from "axios";
 
@@ -10,6 +11,13 @@ import {
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
+  httpsAgent: new https.Agent({ keepAlive: true }),
+  timeout: 30000,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  },
 });
 
 export const authenticatedAPI = axios.create({
