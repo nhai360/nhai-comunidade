@@ -49,14 +49,18 @@ export function AppLayout({ hasSider }: Props) {
   const getProgressUser = async () => {
     if (!user?.id) return
 
-    await GetUserProgress(user?.id, setComapreWatchedVideos)
+    setTimeout(async () => {
+      if (!showTerms) {
+        await GetUserProgress(user?.id, setComapreWatchedVideos)
 
-    if (!watchedVideos.length || compareWatchedVideos.length > watchedVideos.length) {
-      await GetUserProgress(user?.id, setWatchedVideos)
-      showQuizzes()
-    }
-
-    showQuizzes()
+        if (!watchedVideos.length || compareWatchedVideos.length > watchedVideos.length) {
+          await GetUserProgress(user?.id, setWatchedVideos)
+          showQuizzes()
+        }
+    
+        showQuizzes()
+      }
+    }, 8000)
   }
 
   const showQuizzes = async () => {
@@ -104,7 +108,7 @@ export function AppLayout({ hasSider }: Props) {
   return (
     <DefaultLayout>
       <DefaultLayout.Header loginAmstel />
-      {showQuizAnswers && quizData && (
+      {!showTerms && showQuizAnswers && quizData && (
         <QuizAnswersDialog
           data={quizData}
           onClose={() => {
