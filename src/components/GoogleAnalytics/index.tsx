@@ -15,10 +15,10 @@ export const GoogleAnalytics = () => {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}');
+          gtag('config', 'G-51264N467S');
         `}
       </Script>
-      <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`} />
+      <Script async src={`https://www.googletagmanager.com/gtag/js?id=G-51264N467S`} />
     </>
   )
 }
