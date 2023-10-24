@@ -88,7 +88,7 @@ export function QuizAnswersDialog({ data, onClose }: Props) {
         <S.QuestionHeader>
           {/* <S.QuestionHeaderImage src={video?.thumbnail?.url as any} /> */}
           <S.QuestionHeaderTitleContainer>
-            <S.QuestionHeaderTitle>PARA CONCLUIR, PREENCHA...</S.QuestionHeaderTitle>
+            <S.QuestionHeaderTitle>PREENCHA O QUESTIONÁRIO</S.QuestionHeaderTitle>
             <S.QuestionHeaderSubtitle>
               Sendo 1 (pouco) e 5 (muito), quão preparado(a) você se sente para administrar o seu negócio em relação à:
             </S.QuestionHeaderSubtitle>
