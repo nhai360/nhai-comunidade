@@ -206,13 +206,13 @@ const Player: React.FC<VideoProps> = ({ video, watched }) => {
           ) : undefined}
         </CommentProvider>
       </section>
-      {showAnswers && question && (
+      {/* {showAnswers && question && (
         <QuestionAnswersDialog
           question={question}
           onClose={() => setShowAnswers(false)}
           video={video}
         />
-      )}
+      )} */}
     </div>
   );
 };
