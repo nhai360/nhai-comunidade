@@ -1,11 +1,7 @@
 import {
-  addDoc,
   collection,
-  deleteDoc,
   doc,
   onSnapshot,
-  orderBy,
-  query,
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
@@ -23,6 +19,7 @@ export const GetUserProgress = async (userId: string, setProgress: any) => {
       const videoList = snapshot.docs.map((doc) => {
         return { _id: doc?.id, ...doc.data() };
       });
+
       setProgress(videoList || []);
     });
   } catch (error: any) {

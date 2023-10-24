@@ -13,11 +13,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "react-toastify/dist/ReactToastify.css";
 
+import Cookies from "@/components/Cookies";
 import { setDefaultOptions } from "date-fns";
 import { pt } from "date-fns/locale";
 import { SpaceProvider } from "@/contexts/Space";
 import { ParticipantProvider } from "@/contexts/Participant";
 import { ParticipantMediaProvider } from "@/contexts/ParticipantMedia";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const queryClient = new QueryClient();
 // Definindo a localização padrão para português
@@ -45,6 +47,8 @@ export default function App({ Component, pageProps }: AppProps) {
           </ScoreProvider>
         </AuthProvider>
         <ToastContainer />
+        <Cookies />
+        <GoogleAnalytics />
       </QueryClientProvider>
     </>
   );

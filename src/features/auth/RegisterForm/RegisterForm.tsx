@@ -1,25 +1,23 @@
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button, Checkbox, Field, Typography } from "@/ui";
 import { ArrowNarrowRightIcon } from "@/ui/_icons";
-
-import {
-  CreateUserDecoder,
-  CreateUserParams,
-  useCreateUser,
-} from "@/client/users";
+import { api } from "@/client";
+import { CreateUserDecoder, CreateUserParams } from "@/client/users";
+import { IPInfoContext } from 'ip-info-react';
 
 import * as S from "./RegisterForm.styles";
 import ProgressFormBar from "@/ui/ProgressFormBar";
-import { useEffect, useState } from "react";
+import TermsDialog from "../TermsDialog";
 import { defaultGenres } from "../../../../public/data/genres";
 import { defaultEthnicity } from "../../../../public/data/ethnicity";
 import { defaultSexualOrientation } from "../../../../public/data/sexualOrientation";
-import { toast } from "react-toastify";
-import { api } from "@/client";
-import TermsDialog from "../TermsDialog";
+import { CreateUserInformations } from "@/services/firebase/user-informations";
+import moment from "moment";
 
 interface IRegisterForm {
   layoutAmstel?: boolean;
@@ -27,6 +25,7 @@ interface IRegisterForm {
 
 export function RegisterForm({ layoutAmstel }: IRegisterForm) {
   const router = useRouter();
+  const userInfo = useContext(IPInfoContext);
 
   const [loading, setLoading] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
@@ -56,8 +55,34 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
     return idade;
   }
 
+  const getIPAddress = () => {
+    if (typeof window === "undefined") return
+
+    const sUsrAg = navigator.userAgent;
+    let sBrowser = "";
+
+    if (sUsrAg.indexOf("Chrome") > -1) {
+      sBrowser = "Google Chrome";
+    } else if (sUsrAg.indexOf("Safari") > -1) {
+      sBrowser = "Apple Safari";
+    } else if (sUsrAg.indexOf("Opera") > -1) {
+      sBrowser = "Opera";
+    } else if (sUsrAg.indexOf("Firefox") > -1) {
+      sBrowser = "Mozilla Firefox";
+    } else if (sUsrAg.indexOf("MSIE") > -1) {
+      sBrowser = "Microsoft Internet Explorer";
+    }
+
+    return {
+      browser: sBrowser ?? 'unknown',
+      ip: userInfo.ip,
+      date: `${moment(new Date())}`
+    }
+  }
+
   const handleRegister = async (params: CreateUserParams) => {
     const idade = calcularIdade(new Date(params?.birthDate));
+    
     if (idade < 18) {
       setError("birthDate", {
         message: "Você precisa ser maior de idade",
@@ -81,10 +106,21 @@ export function RegisterForm({ layoutAmstel }: IRegisterForm) {
             fullName: `${params?.firstName} ${params?.lastName}`,
             birthDate: new Date(params?.birthDate),
           })
-          .then(() => {
-            toast.success(
-              "Conta criada com sucesso! Agora basta fazer login 😉"
-            );
+          .then((response) => {
+            const ipInfo = getIPAddress()
+            const userId = response.data.id
+
+            CreateUserInformations(
+              userId,
+              {
+                browser: ipInfo?.browser ?? 'unknown',
+                date: ipInfo?.date ?? `${moment(new Date())}`,
+                ip: ipInfo?.ip ?? 'invalid',
+                session: router.query.layout as string ?? 'default'
+              }
+            )
+
+            toast.success("Conta criada com sucesso! Agora basta fazer login 😉");
             router.push(
               layoutAmstel
                 ? "/auth/login/?layout=negocios-de-orgulho"

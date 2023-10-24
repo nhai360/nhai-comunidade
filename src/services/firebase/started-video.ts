@@ -22,7 +22,7 @@ export const GetUserStartedVideo = async (userId: string, setProgress: any) => {
       setProgress(videoList || []);
     });
   } catch (error: any) {
-    toast.error("Falha ao pegar progresso: " + error.message);
+    toast.error("Falha ao obter starter video: " + error.message);
     return [];
   }
 };
@@ -42,7 +42,7 @@ export const handleCreateUserStartedVideo = async (
       createdAt: serverTimestamp(),
     });
   } catch (error: any) {
-    console.error("Erro ao gerar progresso", error);
-    toast.error("Erro ao gerar progresso " + error.message);
+    console.error("Erro ao gerar starter video", error);
+    toast.error("Erro ao gerar starter video " + error.message);
   }
 };

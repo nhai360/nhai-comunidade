@@ -34,15 +34,26 @@
   }
 }
 
-.settingsButton {
-  cursor: pointer;
+.settingsButtonsWrapper {
   display: flex;
-  align-items: center;
-  color: #ee0014;
-  column-gap: 8px;
-  transition: all 0.1s ease-in;
+  gap: 16px;
 
-  &:hover {
-    transform: scale(1.04);
+  button {
+    background-color: transparent;
+    transition: 0.2s ease;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    color: #ee0014;
+    font-size: 1rem;
+    font-family: "RingMedium", sans-serif;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 }

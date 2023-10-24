@@ -1,0 +1,78 @@
+.cookiesWrapper {
+  max-width: 438px;
+
+  position: fixed;
+  bottom: 2.65rem;
+  right: 1.5rem;
+  z-index: 1000;
+
+  &:before {
+    content: '';
+
+    width: calc(100% + 3px);
+    height: calc(100% + 3px);
+    border-radius: 20px;
+
+    background: linear-gradient(270deg, #F23F7F 3.97%, #FDB413 38.38%, #6BD12E 74.89%, #01A0FB 100%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+  }
+
+  > div {
+    width: 100%;
+    background-color: #F23D80;
+    border-radius: 20px;
+
+    > p {
+      padding: 22px;
+      color: #FFFFFF;
+      font-weight: 400;
+  
+      a {
+        color: inherit;
+        font-weight: 700;
+        text-decoration: underline;
+      }
+    }
+
+    > div {
+      display: grid;
+      overflow: hidden;
+      grid-template-columns: repeat(2, 1fr);
+      border-radius: 0 0 20px 20px;
+  
+      button {
+        padding: 12px 0;
+        border: 0;
+  
+        font-size: 14px;
+        font-family: "Outfit";
+  
+        &:first-child {
+          background-color: #0AA5E9;
+          color: #FFFFFF;
+          font-weight: 700;
+          transition: 0.2s ease;
+
+          &:hover {
+            filter: brightness(0.8);
+          }
+        }
+        
+        &:last-child {
+          background-color: #B9B9B9;
+          color: #D7D7D7;
+          font-weight: 500;
+          transition: 0.2s ease;
+
+          &:hover {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+  }
+}

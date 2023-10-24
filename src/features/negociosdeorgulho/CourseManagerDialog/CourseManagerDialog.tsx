@@ -16,6 +16,7 @@ import { ModuleManagerDialog } from "../ModuleManagerDialog";
 import { CreateCourseDialog } from "../CreateCourseDialog";
 import { AppWindow } from "@phosphor-icons/react";
 import { EditIcon, TrashIcon } from "@/ui/_icons";
+import { IconPlus } from "@/ui/_icons/icons";
 
 type Props = {
   onClose: () => void;
@@ -49,9 +50,7 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
                     className={styles.clickableArea}
                     onClick={() => setShowManager(program?._id)}
                   >
-                    <p
-                      style={{ display: "flex", alignItems: "center", gap: 4 }}
-                    >
+                    <p style={{ display: "flex", alignItems: "center", gap: 4 }}>
                       {" "}
                       <AppWindow size={20} />
                       {program?.name}
@@ -91,7 +90,8 @@ export function CourseManagerDialog({ onClose, courses }: Props) {
               }}
               onClick={() => setShowNewCourse(true)}
             >
-              <p>Novo programa +</p>
+              <p>Novo programa</p>
+              <IconPlus size={16} strokeWidth={0} />
             </div>
           </Dialog.Body>
           <Divider />

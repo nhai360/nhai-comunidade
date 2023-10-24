@@ -1,0 +1,188 @@
+.header {
+  padding: 12px 24px;
+
+  font-size: 20px;
+  font-weight: 800;
+  font-family: "RingBold", sans-serif;
+
+  > div {
+    position: relative;
+    margin-top: 32px;
+
+    span {
+      background-color: #ffffff;
+      padding: 0 12px;
+      position: absolute;
+      left: 8px;
+      transform: translateY(-50%);
+
+      color: red;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dadada;
+
+      color: #404040;
+      font-size: 1rem;
+      font-family: "RingMedium", sans-serif;
+    }
+  }
+}
+
+.session {
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.inputRange {
+  position: relative;
+
+  input[type=range] {
+    width: 100%;
+
+    &::-webkit-slider-thumb {
+      cursor: pointer;
+    }
+    
+    &::-moz-range-thumb {
+      cursor: pointer;
+    }
+  }
+
+  span {
+    color: red;
+    font-size: 14px;
+    font-family: "RingMedium", sans-serif;
+
+    position: absolute;
+    top: -32px;
+    right: 0;
+  }
+}
+
+.title {
+  margin-bottom: 18px;
+
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "RingMedium", sans-serif;
+}
+
+.listOptionsWrapper {
+  width: 100%;
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  li {
+    width: 100%;
+    padding: 12px 0 0;
+    border: 1px solid #dadada;
+    background-color: transparent;
+    position: relative;
+
+    span {
+      background-color: #ffffff;
+      padding: 0 12px;
+      color: red;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: "RingBold", sans-serif;
+
+      position: absolute;
+      left: 8px;
+      top: 0;
+      z-index: 2;
+      transform: translateY(-50%);
+    }
+
+    div {
+      display: flex;
+      gap: 12px;
+
+      input {
+        flex: 1;
+        border: 0;
+        padding: 4px 12px 12px;
+  
+        color: #404040;
+        font-size: 1rem;
+        font-family: "RingMedium", sans-serif;
+      }
+
+      button {
+        cursor: pointer;
+        padding: 4px 8px;
+        border: 0;
+        background-color: transparent;
+        transition: 0.2s ease;
+
+        &:hover {
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+.addOptionsWrapper {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    border: none;
+    background-color: transparent;
+    transition: all 0.2s ease-in;
+  
+    color: #454545;
+    font-size: 1rem;
+    font-family: "RingMedium", sans-serif;
+  
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.sendBttonsWrapper {
+  padding: 1rem;
+  border-top: 2px solid #efefef;
+
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  button {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 12px 18px;
+    
+    border: none;
+    background-color: red;
+    transition: all 0.2s ease-in;
+    
+    color: #ffffff;
+    font-size: 18px;
+    font-family: "RingSemiBold", sans-serif;
+
+    &:hover {
+      background-color: #0081cc;
+    }
+  }
+}

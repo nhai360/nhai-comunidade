@@ -26,6 +26,7 @@
   font-family: "RingMedium";
 
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
   transition: all 0.2s ease-in;
@@ -33,7 +34,6 @@
   padding-right: 1rem;
 
   border: 1px solid #dadada;
-
   margin-bottom: 8px;
 
   .clickableArea {

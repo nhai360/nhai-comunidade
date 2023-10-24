@@ -1,0 +1,66 @@
+.listFormsWrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    width: 100%;
+    position: relative;
+
+    button {
+      border: none;
+      background-color: transparent;
+      transition: all 0.2s ease-in;
+
+      color: #454545;
+    }
+
+    .buttonDelete {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+
+      &:hover { color: red; }
+    }
+
+    button:not(.buttonDelete) {
+      width: 100%;
+      padding: 20px;
+      border: 1px solid #dadada;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+
+      color: #454545;
+      font-size: 1rem;
+      font-family: "RingMedium", sans-serif;
+
+      &:hover {
+        background-color: #e7e7e7;
+        color: red;
+      }
+
+      span {
+        border-right: 1px solid #dadada;
+        padding-right: 10px;
+      }
+    }
+
+    &.addQuiz {
+      margin-top: 24px;
+      
+      button {
+        justify-content: center;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
