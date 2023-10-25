@@ -1,7 +1,7 @@
+/* eslint-disable no-void */
 import { ComponentType, ReactNode, useEffect } from "react";
-import { useRouter } from "next/router";
-
 import { useAuthContext } from "@/contexts";
+import { useRouter } from "next/router";
 
 type NavigateProps = {
   href: string;
@@ -20,18 +20,33 @@ function Navigate({ href }: NavigateProps) {
 export function withAuth<T extends { children?: ReactNode }>(
   Component: ComponentType<T>,
 ) {
+  // const AuthenticatedComponent = (props: T) => {
+  //   const { isAuthenticated, isLoading } = useAuthContext();
+
+  //   if (isLoading) return <></>;
+  //   if (isAuthenticated) {
+  //     return <Component {...props} />;
+  //   }
+
+  //   return <Navigate href="/auth/register" />;
+  // };
+
+  // return AuthenticatedComponent;
+
   const AuthenticatedComponent = (props: T) => {
+    const router = useRouter()
     const { isAuthenticated, isLoading } = useAuthContext();
 
-    if (isLoading) {
-      return <></>;
+    if (typeof window !== 'undefined') {
+      if (isLoading) return <></>
+  
+      if (!isAuthenticated) {
+        void router.replace('/auth/register')
+        return <></>
+      }
+  
+      return <Component {...props} />
     }
-
-    if (isAuthenticated) {
-      return <Component {...props} />;
-    }
-
-    return <Navigate href="/auth/register" />;
   };
 
   return AuthenticatedComponent;
