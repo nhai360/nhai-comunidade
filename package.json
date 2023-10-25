@@ -58,6 +58,7 @@
     "moment": "^2.29.4",
     "mux-embed": "^4.25.1",
     "next": "13.2.3",
+    "nextjs-progressbar": "^0.0.16",
     "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-activity": "^2.1.3",

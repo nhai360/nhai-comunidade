@@ -30,6 +30,7 @@ export const UserDecoder = t.object({
   gender: t.string().nullish(),
   phone: t.string().nullish(),
   ethnicity: t.string().nullish(),
+  locality: t.string().nullish(),
   sexualOrientation: t.string().nullish(),
   //TODO: Revisar se o "nullish()" no "createAt" está correto...
   createdAt: t.string().datetime().nullish(),
@@ -78,18 +79,19 @@ export type CreateUserParams = t.TypeOf<typeof CreateUserDecoder>;
 export const UpdateUserDecoder = t.object({
   fullName: t.string().min(1, "Nome é obrigatório"),
   nickname: t
-    .string()
-    .min(1, "Apelido é obrigatório")
-    .max(20, "O apelido deve ter no máximo 20 caracteres")
-    .regex(
-      /^[a-zA-Z0-9_@]+$/,
-      'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
+  .string()
+  .min(1, "Apelido é obrigatório")
+  .max(20, "O apelido deve ter no máximo 20 caracteres")
+  .regex(
+    /^[a-zA-Z0-9_@]+$/,
+    'O apelido só pode conter letras maiúsculas/minúsculas, números e caracteres understore (Ex: "_")'
     )
     .transform((arg) => arg.toLowerCase().replace("@", "")),
   bio: t
-    .string()
-    .min(1, "Bio é obrigatório")
-    .max(255, "A bio deve ter no máximo 255 caracteres"),
+  .string()
+  .min(1, "Bio é obrigatório")
+  .max(255, "A bio deve ter no máximo 255 caracteres"),
+  locality: t.string().optional(),
   avatar: t.any().optional(),
   gender: t.string().optional(),
   birthDate: t.string().optional(),

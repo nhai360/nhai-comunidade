@@ -3,6 +3,8 @@ import { withAuth } from "@/middlewares";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import IPInfo from 'ip-info-react';
+
 function ProfilePage() {
   const router = useRouter();
 
@@ -14,10 +16,10 @@ function ProfilePage() {
   }, [nickname]);
 
   return (
-    <>
+    <IPInfo>
       <Profile.AppLayout />
       <Profile.DesktopLayout />
-    </>
+    </IPInfo>
   );
 }
 

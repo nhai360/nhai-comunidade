@@ -16,14 +16,19 @@ export const api = axios.create({
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    'Access-Control-Allow-Credentials': true
+    'Access-Control-Allow-Credentials': true,
   },
 });
 
 export const authenticatedAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
+  httpsAgent: new https.Agent({ keepAlive: true }),
+  timeout: 30000,
   headers: {
     Authorization: `Bearer ${getToken()}`,
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    'Access-Control-Allow-Credentials': true,
   },
 });
 

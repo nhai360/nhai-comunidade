@@ -57,7 +57,10 @@ const ModuleList: React.FC<ModulesProps> = ({
                 <div
                   key={index}
                   className={styles.cardVideo}
-                  onClick={() => setSelectedVideo(epi)}
+                  onClick={event => {
+                    window.scrollTo(0, 0)
+                    setSelectedVideo(epi)
+                  }}
                   style={{
                     border:
                       selectedVideo?.videoId === epi?.videoId

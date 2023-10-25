@@ -14,6 +14,8 @@ import "swiper/css/navigation";
 import "react-toastify/dist/ReactToastify.css";
 
 import Cookies from "@/components/Cookies";
+import NextNProgress from 'nextjs-progressbar';
+
 import { setDefaultOptions } from "date-fns";
 import { pt } from "date-fns/locale";
 import { SpaceProvider } from "@/contexts/Space";
@@ -46,8 +48,15 @@ export default function App({ Component, pageProps }: AppProps) {
             </ParticipantProvider>
           </ScoreProvider>
         </AuthProvider>
-        <ToastContainer />
         <Cookies />
+        <NextNProgress
+          color="linear-gradient(270deg, #F23F7F 3.97%, #FDB413 38.38%, #6BD12E 74.89%, #01A0FB 100%)"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={5}
+          showOnShallow={true}
+        />
+        <ToastContainer />
         <GoogleAnalytics />
       </QueryClientProvider>
     </>

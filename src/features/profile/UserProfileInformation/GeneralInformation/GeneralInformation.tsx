@@ -18,24 +18,25 @@ import { EditProfileButton } from "./EditProfileButton";
 import * as S from "./GeneralInformation.styles";
 
 export function GeneralInformation() {
+  const router = useRouter();
+
   const { isEnabled: isEnabledProfileLocation } = useFeatureFlag(
     FeatureDecoder.Values.PROFILE_LOCATION
   );
 
   const [bio, setBio] = useState(createEditorStateWithText(""));
+  const [locality, setLocality] = useState('');
 
-  const router = useRouter();
   const { session } = useAuthContext();
-
   const { nickname } = router.query;
-
   const { user } = useUserFromNickname(
     {
       nickname: nickname as string,
     },
     {
-      onSuccess: ({ bio }) => {
+      onSuccess: ({ bio, locality }) => {
         setBio(createEditorStateWithText(bio ?? "Nenhuma biografia informada"));
+        setLocality(locality ?? "Nenhuma localizão informada");
       },
     }
   );
@@ -64,7 +65,7 @@ export function GeneralInformation() {
           <S.InformationField>
             <img src="/flags/brasil.svg" />
             <Typography.Text color="secondary" size="body3">
-              Brasil, São Paulo
+              {locality}
             </Typography.Text>
           </S.InformationField>
         </S.InformationField>

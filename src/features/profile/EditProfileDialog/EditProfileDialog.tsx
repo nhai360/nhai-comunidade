@@ -40,6 +40,7 @@ export function EditProfileDialog({ onClose }: Props) {
     defaultValues: {
       fullName: user?.fullName,
       nickname: user?.nickname ?? undefined,
+      locality: user?.locality ?? undefined,
       bio: user?.bio ?? undefined,
     },
     resolver: zodResolver(UpdateUserDecoder),
@@ -158,7 +159,10 @@ export function EditProfileDialog({ onClose }: Props) {
               </Field>
               {isEnabledProfileLocation && (
                 <Field label="Localização">
-                  <Input placeholder="Digite sua localização" />
+                  <Input
+                    placeholder="Digite sua localização"
+                    {...register("locality")}
+                  />
                 </Field>
               )}
               <Field label="Bio" errorText={errors.bio?.message}>
