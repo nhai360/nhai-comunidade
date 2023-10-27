@@ -31,8 +31,6 @@ export function withAuth<T extends { children?: ReactNode }>(
   //   return <Navigate href="/auth/register" />;
   // };
 
-  // return AuthenticatedComponent;
-
   const AuthenticatedComponent = (props: T) => {
     const router = useRouter()
     const { isAuthenticated, isLoading } = useAuthContext();

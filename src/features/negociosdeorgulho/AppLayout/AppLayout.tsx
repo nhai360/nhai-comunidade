@@ -60,7 +60,7 @@ export function AppLayout({ hasSider }: Props) {
     
         showQuizzes()
       }
-    }, 8000)
+    }, 3000)
   }
 
   const showQuizzes = async () => {
@@ -69,7 +69,7 @@ export function AppLayout({ hasSider }: Props) {
     const userResponse = await GetOneResponsesQuiz(user.id)
     const quizzes = await GetQuizzes()
     const userProgress = watchedVideos.length * 100 / totalVideo
-
+    
     const quiz = quizzes.filter(q => parseInt(`${q.data.show_percentage}`) >= userProgress)
 
     const closest = quiz.length > 0 && quiz.reduce((prev, curr) =>  {
@@ -103,7 +103,7 @@ export function AppLayout({ hasSider }: Props) {
       }
     })
 
-  }, [router.asPath, user?.id, showTerms])
+  }, [watchedVideos, router.asPath, user?.id, showTerms])
 
   return (
     <DefaultLayout>
