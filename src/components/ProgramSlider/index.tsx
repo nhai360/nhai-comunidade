@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { ICourses } from "@/@types/cousers";
 import { LockSimple } from "@phosphor-icons/react";
+import { GetUserProgress, type IWatchedVideo } from "@/services/firebase/progress";
 
 interface SliderProps {
   user: User;
@@ -17,6 +18,11 @@ interface SliderProps {
 const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
   const router = useRouter();
   const { width = 0 } = useWindowSize();
+
+  const [watchedVideos, setWatchedVideos] = useState<IWatchedVideo[]>([]);
+
+  const totalVideo = 20
+  const userProgress = watchedVideos.length * 100 / totalVideo;
 
   const swiperBreakpoints = {
     320: {
@@ -45,6 +51,15 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
     },
   };
 
+  const getProgressUser = async () => {
+    if (!user?.id) return
+    await GetUserProgress(user?.id, setWatchedVideos)
+  }
+
+  useEffect(() => {
+    getProgressUser()
+  }, [router.asPath, user?.id])
+
   return (
     <div className={styles.columnWrapper}>
       {cursos &&
@@ -71,7 +86,7 @@ const ProgramSlider: React.FC<SliderProps> = ({ user, cursos }) => {
                 <p className={styles.courseInfo}>
                   {user && (
                     <>
-                      <span>{curso.watchedPercent}%</span> Assistido •{" "}
+                      <span>{userProgress}%</span> Assistido •{" "}
                     </>
                   )}
                   <span>{curso?.modules?.length}</span> Programas

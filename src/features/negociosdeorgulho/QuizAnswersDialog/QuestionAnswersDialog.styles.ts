@@ -70,14 +70,15 @@ export const NumberPickerContainer = styled("div", {
   justifyContent: "space-between",
   marginTop: "$4",
   overflowX: "hidden",
+  position: "relative",
 });
 
 export const NumberPickerLine = styled("div", {
   backgroundColor: "#EE0014",
   display: "flex",
   height: 2,
-  left: "$8",
-  right: "$8",
+  left: "$1",
+  right: "$1",
   position: "absolute",
 });
 
