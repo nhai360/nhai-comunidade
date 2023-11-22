@@ -39,7 +39,7 @@ export function withAuth<T extends { children?: ReactNode }>(
       if (isLoading) return <></>
   
       if (!isAuthenticated) {
-        void router.replace('/auth/register')
+        void router.replace('/auth/login')
         return <></>
       }
   

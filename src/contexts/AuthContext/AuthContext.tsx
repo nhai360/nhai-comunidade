@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { Session } from "@/client/users";
+import { Session, useUser } from "@/client/users";
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -31,7 +31,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [session, setSession] = useState<Session | null>(null);
 
-  const isAuthenticated = session !== null;
+  const { user } = useUser({
+    id: session?.userId,
+  });
+
+  const isAuthenticated = user !== undefined;
 
   useEffect(() => {
     if (!session) {
