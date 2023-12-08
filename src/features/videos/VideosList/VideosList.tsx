@@ -50,9 +50,15 @@ export function VideosList() {
         </>
       )}
 
-      <Typography.Text size="h3">Vídeos sugeridos</Typography.Text>
+      <Typography.Text size="h3">Vídeos sugeridosss</Typography.Text>
       <S.VideosGridContainer>
-        {videos.map((video) => (
+        {videos
+          .sort((a, b) =>
+            parseInt(a.createdAt.replace(/[^\d]/g, "")) > parseInt(b.createdAt.replace(/[^\d]/g, ""))
+              ? -1
+              : 1
+          )
+          .map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}
       </S.VideosGridContainer>

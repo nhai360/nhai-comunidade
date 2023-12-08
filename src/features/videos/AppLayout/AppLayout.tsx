@@ -29,9 +29,16 @@ export function AppLayout() {
         >
           Vídeos sugeridos
         </Typography.Text>
-        {videos.map((video) => (
-          <VideoCard hasHover={false} key={video.id} video={video} />
-        ))}
+        {videos
+          .sort((a, b) =>
+            parseInt(a.createdAt.replace(/[^\d]/g, "")) > parseInt(b.createdAt.replace(/[^\d]/g, ""))
+              ? -1
+              : 1
+          )
+          .map((video) => (
+            <VideoCard hasHover={false} key={video.id} video={video} />
+          ))
+        }
       </DefaultLayout.Content>
       <DefaultLayout.CreatePostButton />
       <DefaultLayout.BottomBar />
