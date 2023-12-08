@@ -50,7 +50,7 @@ export function VideosList() {
         </>
       )}
 
-      <Typography.Text size="h3">Vídeos sugeridosss</Typography.Text>
+      <Typography.Text size="h3">Vídeos sugeridos</Typography.Text>
       <S.VideosGridContainer>
         {videos
           .sort((a, b) =>
