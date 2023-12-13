@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCreateVideo } from "@/client/videos";
 import { MediaCategory, useUpload } from "@/client/media";
 import { Button, Dialog, Divider, Field, Success } from "@/ui";
 import { useEffect, useState } from "react";

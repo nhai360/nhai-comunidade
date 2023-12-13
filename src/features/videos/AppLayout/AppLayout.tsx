@@ -35,7 +35,7 @@ export function AppLayout() {
               ? -1
               : 1
           )
-          .map((video) => (
+          .map((video) => video.visible && (
             <VideoCard hasHover={false} key={video.id} video={video} />
           ))
         }

@@ -44,6 +44,7 @@ export type GetUserLivesParams = {
 export type PostParams = {
   tags: string[];
   title: string;
+  visible?: boolean;
   description?: string | null | undefined;
   startTime: Date;
   thumbnail: {

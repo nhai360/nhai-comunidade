@@ -11,9 +11,7 @@ async function uploadRequest({ file, ...params }: PostParams) {
   if (media.id) {
     const uploadFile = await authenticatedAPI.putForm(
       `/media/${media.id}/upload`,
-      {
-        file,
-      }
+      { file }
     );
     return { ...media, url: uploadFile?.data?.url };
   }

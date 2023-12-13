@@ -28,6 +28,7 @@ export const PlaylistDecoder = t.object({
 export const VideoDecoder = t.object({
   id: t.string(),
   title: t.string(),
+  visible: t.boolean().optional(),
   description: t.string().nullish(),
   playlistId: t.string().nullish(),
   source: MediaDecoder.nullish(),
@@ -51,6 +52,7 @@ export const CreateVideoResolver = t.object({
   description: t.string().nullish(),
   tags: t.string().min(1, "Tags é obrigatório"),
   file: t.any().optional(),
+  visible: t.boolean().optional(),
   thumbnail: t.any().refine((file) => file, "Foto de capa é obrigatório"),
 });
 
@@ -60,6 +62,7 @@ export const UpdateVideoResolver = t.object({
   description: t.string().nullish(),
   tags: t.string().min(1, "Tags é obrigatório"),
   file: t.any().optional(),
+  visible: t.boolean().optional(),
   thumbnail: t
     .any()
     .refine((file) => file, "Foto de capa é obrigatório")

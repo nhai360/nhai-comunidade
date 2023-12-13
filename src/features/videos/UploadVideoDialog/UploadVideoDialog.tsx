@@ -35,12 +35,8 @@ import { useVideoPlaylist } from "@/client/videos/useAddVideoPlaylist";
 import { UploadVideoToMux } from "@/client/media/UploadVideoToMux";
 import { PlaylistsSelector } from "../PlaylistsSelector";
 import { useUser } from "@/client/users";
-import { ProgramSelector } from "../ProgramSelector";
 import { CreateProgramDialog } from "../CreateProgramDialog";
-import {
-  handleAddProgramaModule,
-  handleProgramas,
-} from "@/services/firebase/programas";
+import { handleProgramas } from "@/services/firebase/programas";
 import { handleEditProgram } from "@/services/firebase/courses";
 
 type Props = {
@@ -167,10 +163,7 @@ export const UploadVideoDialog = ({
     const tagsInArray = tags.split(",").map((tag: any) => tag.trim());
 
     uploadThumbnail(
-      {
-        file: thumbnail,
-        category: MediaCategory.IMAGE,
-      },
+      { file: thumbnail, category: MediaCategory.IMAGE },
       {
         onSuccess: (media) => {
           createVideo(

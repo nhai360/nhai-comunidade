@@ -5,7 +5,6 @@ import styles from "./index.module.scss";
 import BroadcastIndicator from "@/components/BroadcastIndicator";
 import Chat from "@/components/ChatComponent";
 import MicButton from "@/components/Buttons/MicButton";
-import ScreenShareButton from "@/components/Buttons/ScreenShareButton";
 import CameraButton from "@/components/Buttons/CameraButton";
 import BroadcastButton from "@/components/Buttons/BroadcastButton";
 
@@ -13,7 +12,6 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 
@@ -22,23 +20,16 @@ import useWindowDimensions from "../../../hooks/useWindowDimension";
 
 import Gallery from "@/components/Gallery";
 import Timer from "@/components/Timer/Timer";
-import ChatContext from "../../../contexts/Chat";
 import CancelButton from "@/components/Buttons/CancelButton";
 import { useRouter } from "next/router";
-import moment from "moment";
 import { useMutation } from "react-query";
-import { GetServerSideProps } from "next";
 import { tokenPOST } from "@/client/token";
-import { fetchSpace } from "@/pages/api/spaces/[id]";
-import { TEMPORARY_SPACE_PASSTHROUGH } from "@/lib/constants";
 import { useUser } from "@/client/users";
 import { useAuthContext } from "@/contexts";
 import ParticipantContext from "@/contexts/Participant";
 import InviteParticipantButton from "@/components/Buttons/InviteParticipantButton";
 import { useLive } from "@/client/lives";
 
-import { Button } from "@/ui";
-import { Broadcast } from "@phosphor-icons/react";
 import { Levels } from "react-activity";
 import JoinLive from "@/features/lives/JoinLive";
 import LiveNotFound from "@/features/lives/LiveNotFound";

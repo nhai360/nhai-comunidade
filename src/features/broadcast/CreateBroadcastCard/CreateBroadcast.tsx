@@ -3,20 +3,15 @@ import { toast } from "react-toastify";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCreateVideo } from "@/client/videos";
 import { MediaCategory, useUpload } from "@/client/media";
 import {
   Button,
+  Checkbox,
   Dialog,
   Divider,
-  Dropzone,
   Field,
-  Loading,
-  Success,
   TextArea,
-  Typography,
 } from "@/ui";
-import { CheckCircleIcon } from "@/ui/_icons";
 
 import { CreateVideoResolver, CreateVideoParams } from "@/client/videos/types";
 
@@ -45,7 +40,7 @@ export function CreateBroadcastDialog({ onClose }: Props) {
   const { upload: uploadThumbnail, isLoading: isUploadingThumbnail } =
     useUpload();
 
-  const { createLive, isLoading: isCreatingLive, isSuccess } = useCreateLive();
+  const { createLive, isLoading: isCreatingLive } = useCreateLive();
 
   const isLoading = isUploadingThumbnail || isCreatingLive;
 
@@ -54,21 +49,21 @@ export function CreateBroadcastDialog({ onClose }: Props) {
     description,
     thumbnail,
     tags,
+    visible,
   }: CreateVideoParams) => {
     const tagsInArray = tags.split(",").map((tag) => tag.trim());
 
     const source = await authenticatedAPI.post("/media", {
       category: MediaCategory?.VIDEO,
     });
+
     if (!source?.data?.id) {
       toast.error("Não foi possível criar a mídia :(");
       return;
     }
+
     uploadThumbnail(
-      {
-        file: thumbnail,
-        category: MediaCategory.IMAGE,
-      },
+      { file: thumbnail, category: MediaCategory.IMAGE },
       {
         onSuccess: (media) => {
           createLive(
@@ -81,6 +76,7 @@ export function CreateBroadcastDialog({ onClose }: Props) {
               source: {
                 id: source?.data?.id,
               },
+              visible,
               tags: tagsInArray,
               startTime: new Date(),
             },
@@ -136,6 +132,14 @@ export function CreateBroadcastDialog({ onClose }: Props) {
                     maxHeight: "200px",
                   },
                 }}
+              />
+            </Field>
+            <Field errorText={errors.visible?.message as string}>
+              <Checkbox
+                name="visible"
+                defaultChecked={true}
+                label="Deixar a gravação dessa live disponivel?"
+                control={control}
               />
             </Field>
             <Field
